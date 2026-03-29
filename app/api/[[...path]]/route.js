@@ -49,7 +49,9 @@ async function handleAppointments(request, method) {
   const collection = db.collection('appointments');
 
   if (method === 'GET') {
-    const appointments = await collection.find({}).sort({ createdAt: -1 }).toArray();
+    const appointments = await collection.find({}, { 
+      projection: { _id: 0, id: 1, name: 1, phone: 1, service: 1, preferredDate: 1, preferredTime: 1, status: 1, createdAt: 1 } 
+    }).sort({ createdAt: -1 }).limit(100).toArray();
     return NextResponse.json({ appointments }, { headers: corsHeaders });
   }
 
