@@ -29,7 +29,7 @@ export default function AboutPage() {
     <PageWrapper>
       {/* Hero */}
       <section className="pt-32 pb-16 bg-gradient-to-b from-teal-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -86,7 +86,7 @@ export default function AboutPage() {
 
       {/* Our Story */}
       <section className="section-spacing">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container-narrow">
           <AnimatedSection className="text-center mb-12">
             <Badge className="mb-4 bg-teal-50 text-teal-700">Our Story</Badge>
             <h2 className="text-3xl lg:text-4xl font-semibold text-gray-900">
@@ -112,7 +112,7 @@ export default function AboutPage() {
 
       {/* Stats */}
       <section className="section-spacing-sm bg-teal-600">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               { number: '10+', label: 'Years of Experience' },
@@ -133,7 +133,7 @@ export default function AboutPage() {
 
       {/* Our Values */}
       <section className="section-spacing">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container">
           <SectionHeading 
             badge="Our Values"
             title="What We Stand For"
@@ -181,7 +181,7 @@ export default function AboutPage() {
 
       {/* Inclusivity */}
       <section className="section-spacing bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container">
           <SectionHeading 
             badge="Everyone Welcome"
             title="A Space for Everyone"
@@ -211,7 +211,7 @@ export default function AboutPage() {
 
       {/* Clinic Experience */}
       <section className="section-spacing">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container">
           <div className="relative rounded-3xl overflow-hidden">
             <img 
               src="https://images.pexels.com/photos/5619462/pexels-photo-5619462.jpeg?auto=compress&cs=tinysrgb&w=1200" 
@@ -237,7 +237,7 @@ export default function AboutPage() {
 
       {/* CTA */}
       <section className="section-spacing bg-gradient-to-b from-teal-50 to-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="main-container-narrow text-center">
           <AnimatedSection>
             <h2 className="text-3xl lg:text-4xl font-semibold text-gray-900 mb-6">
               Experience the Aesthedent Difference

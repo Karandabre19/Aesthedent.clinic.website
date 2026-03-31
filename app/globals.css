@@ -103,6 +103,17 @@
   }
 }
 
+@layer components {
+  /* Main Container - Reduced margins */
+  .main-container {
+    @apply w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16;
+  }
+  
+  .main-container-narrow {
+    @apply w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-12;
+  }
+}
+
 @layer utilities {
   /* Animation Utilities */
   .animate-fade-in {

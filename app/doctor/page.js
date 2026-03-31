@@ -43,7 +43,7 @@ export default function DoctorPage() {
     <PageWrapper>
       {/* Hero */}
       <section className="pt-32 pb-16 bg-gradient-to-b from-teal-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container">
           <motion.div
             className="max-w-3xl mx-auto text-center"
             initial={{ opacity: 0, y: 20 }}
@@ -63,7 +63,7 @@ export default function DoctorPage() {
 
       {/* Doctors */}
       <section className="section-spacing">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container">
           <div className="space-y-24">
             {doctors.map((doctor, i) => (
               <AnimatedSection key={i} delay={i * 0.2}>
@@ -130,7 +130,7 @@ export default function DoctorPage() {
 
       {/* Team Values */}
       <section className="section-spacing bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container">
           <SectionHeading 
             badge="Our Values"
             title="What Drives Our Team"
@@ -173,7 +173,7 @@ export default function DoctorPage() {
 
       {/* CTA */}
       <section className="section-spacing">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container-narrow">
           <AnimatedSection>
             <div className="bg-gradient-to-br from-teal-600 to-teal-700 rounded-3xl p-8 lg:p-12 text-center text-white">
               <h2 className="text-2xl lg:text-3xl font-semibold mb-4">

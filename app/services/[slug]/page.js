@@ -38,7 +38,7 @@ export default function ServiceDetailPage({ params }) {
     <PageWrapper>
       {/* Hero */}
       <section className="pt-32 pb-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -101,7 +101,7 @@ export default function ServiceDetailPage({ params }) {
 
       {/* About This Service */}
       <section className="section-spacing bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container-narrow">
           <AnimatedSection>
             <h2 className="text-2xl lg:text-3xl font-semibold text-gray-900 mb-6">
               About This Treatment
@@ -117,7 +117,7 @@ export default function ServiceDetailPage({ params }) {
 
       {/* Benefits */}
       <section className="section-spacing">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container">
           <AnimatedSection className="text-center mb-12">
             <Badge className="mb-4 bg-teal-50 text-teal-700">Benefits</Badge>
             <h2 className="text-2xl lg:text-3xl font-semibold text-gray-900">
@@ -142,7 +142,7 @@ export default function ServiceDetailPage({ params }) {
 
       {/* Process */}
       <section className="section-spacing bg-gradient-to-b from-teal-50 to-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container-narrow">
           <AnimatedSection className="text-center mb-12">
             <Badge className="mb-4 bg-teal-100 text-teal-700">The Process</Badge>
             <h2 className="text-2xl lg:text-3xl font-semibold text-gray-900">
@@ -211,7 +211,7 @@ export default function ServiceDetailPage({ params }) {
 
       {/* CTA */}
       <section className="section-spacing-sm bg-teal-600">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="main-container-narrow text-center">
           <AnimatedSection>
             <h2 className="text-2xl lg:text-3xl font-semibold text-white mb-4">
               Ready to Get Started?
@@ -248,7 +248,7 @@ export default function ServiceDetailPage({ params }) {
 
       {/* Other Services */}
       <section className="section-spacing">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container">
           <AnimatedSection className="text-center mb-12">
             <h2 className="text-2xl lg:text-3xl font-semibold text-gray-900">
               Explore Other Services

@@ -30,7 +30,7 @@ export default function ServicesPage() {
     <PageWrapper>
       {/* Hero */}
       <section className="pt-32 pb-16 bg-gradient-to-b from-teal-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container">
           <motion.div
             className="max-w-3xl mx-auto text-center"
             initial={{ opacity: 0, y: 20 }}
@@ -49,7 +49,7 @@ export default function ServicesPage() {
 
       {/* Services Grid */}
       <section className="section-spacing">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, i) => {
               const IconComponent = iconMap[service.icon] || Sparkles;
@@ -90,7 +90,7 @@ export default function ServicesPage() {
 
       {/* Why Our Services */}
       <section className="section-spacing bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container">
           <SectionHeading 
             badge="Our Approach"
             title="What Makes Our Services Different"
@@ -120,7 +120,7 @@ export default function ServicesPage() {
 
       {/* CTA */}
       <section className="section-spacing">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container-narrow">
           <AnimatedSection>
             <div className="bg-teal-600 rounded-3xl p-8 lg:p-12 text-center text-white">
               <h2 className="text-2xl lg:text-3xl font-semibold mb-4">

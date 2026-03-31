@@ -98,7 +98,7 @@ export default function ContactPage() {
     <PageWrapper>
       {/* Hero */}
       <section className="pt-32 pb-16 bg-gradient-to-b from-teal-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container">
           <motion.div
             className="max-w-3xl mx-auto text-center"
             initial={{ opacity: 0, y: 20 }}
@@ -118,7 +118,7 @@ export default function ContactPage() {
 
       {/* Quick Contact Buttons */}
       <section className="section-spacing-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container-narrow">
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               size="lg" 
@@ -147,7 +147,7 @@ export default function ContactPage() {
 
       {/* Contact Info Cards */}
       <section className="section-spacing">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {contactInfo.map((info, i) => (
               <AnimatedSection key={i} delay={i * 0.1}>
@@ -182,7 +182,7 @@ export default function ContactPage() {
 
       {/* Map & Form */}
       <section className="section-spacing bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Map */}
             <AnimatedSection direction="left">
@@ -304,7 +304,7 @@ export default function ContactPage() {
 
       {/* CTA */}
       <section className="section-spacing">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container-narrow">
           <AnimatedSection>
             <div className="bg-gradient-to-br from-teal-600 to-teal-700 rounded-3xl p-8 lg:p-12 text-center text-white">
               <h2 className="text-2xl lg:text-3xl font-semibold mb-4">

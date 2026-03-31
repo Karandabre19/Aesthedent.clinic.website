@@ -40,8 +40,8 @@ export default function HomePage() {
   return (
     <PageWrapper>
       {/* Hero Section */}
-      <section className="pt-24 lg:pt-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+      <section className="pt-[80px] lg:pt-[88px]">
+        <div className="main-container py-12 lg:py-20">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div 
               className="space-y-8"
@@ -138,7 +138,7 @@ export default function HomePage() {
 
       {/* Trust Strip */}
       <AnimatedSection className="bg-gray-50 border-y border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="main-container py-6 lg:py-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
               { icon: Star, label: '5.0 Rated', sublabel: 'Google Reviews' },
@@ -162,7 +162,7 @@ export default function HomePage() {
 
       {/* Services Preview */}
       <section className="section-spacing">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container">
           <SectionHeading 
             badge="Our Services"
             title="Expert Dental Care, Tailored for You"
@@ -214,7 +214,7 @@ export default function HomePage() {
 
       {/* Why Choose Us */}
       <section className="section-spacing bg-gradient-to-b from-gray-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <AnimatedSection direction="left">
               <Badge className="mb-4 bg-teal-50 text-teal-700 hover:bg-teal-100">Why Aesthedent</Badge>
@@ -276,7 +276,7 @@ export default function HomePage() {
 
       {/* Doctor Preview */}
       <section className="section-spacing">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container">
           <SectionHeading 
             badge="Our Team"
             title="Meet Your Dentists"
@@ -330,7 +330,7 @@ export default function HomePage() {
 
       {/* Testimonials */}
       <section className="section-spacing bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="main-container">
           <SectionHeading 
             badge="Patient Stories"
             title="What Our Patients Say"
@@ -379,7 +379,7 @@ export default function HomePage() {
 
       {/* Final CTA */}
       <section className="section-spacing bg-gradient-to-b from-teal-50 to-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="main-container-narrow text-center">
           <AnimatedSection>
             <div className="w-20 h-20 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-8">
               <Smile className="w-10 h-10 text-teal-600" />
