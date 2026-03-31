@@ -1,35 +1,24 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
+import { useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import PageWrapper from '@/components/layout/PageWrapper';
-import SectionHeading from '@/components/ui/SectionHeading';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import { services } from '@/lib/services';
 import { 
   Phone, 
   MessageCircle, 
   Star, 
-  Shield, 
-  Heart, 
-  Users, 
-  Sparkles,
-  CheckCircle2,
+  Play,
   ArrowRight,
   MapPin,
   Clock,
-  Smile,
-  Baby,
-  Leaf,
-  Stethoscope
+  ChevronRight,
+  Quote
 } from 'lucide-react';
-
-const iconMap = {
-  Sparkles, Shield, Leaf, Baby, Stethoscope
-};
 
 const whatsappNumber = '919876543210';
 const whatsappMessage = encodeURIComponent('Hi, I would like to book an appointment at Aesthedent Dental Clinic.');
@@ -37,383 +26,508 @@ const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 const phoneNumber = '+919876543210';
 
 export default function HomePage() {
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  });
+  
+  const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+
   return (
     <PageWrapper>
-      {/* Hero Section */}
-      <section className="pt-[80px] lg:pt-[88px]">
-        <div className="main-container py-12 lg:py-20">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <motion.div 
-              className="space-y-8"
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-teal-50 rounded-full">
-                <div className="flex items-center">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
-                  ))}
-                </div>
-                <span className="text-sm font-medium text-gray-700">5.0 • 263 Reviews</span>
-              </div>
-              
-              <h1 className="text-4xl sm:text-5xl lg:text-[52px] font-semibold text-gray-900 leading-[1.15] tracking-tight">
-                Dental Care That
-                <span className="block text-teal-600">Feels Like Care</span>
-              </h1>
-              
-              <p className="text-lg lg:text-xl text-gray-600 leading-relaxed max-w-lg">
-                Experience painless treatments, honest advice, and a calm environment where your comfort comes first.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  size="lg" 
-                  className="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-base font-medium animate-pulse-soft"
-                  asChild
-                >
-                  <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                    <MessageCircle className="w-5 h-5 mr-2" />
-                    Book on WhatsApp
-                  </a>
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-6 text-base font-medium"
-                  asChild
-                >
-                  <a href={`tel:${phoneNumber}`}>
-                    <Phone className="w-5 h-5 mr-2" />
-                    Call Now
-                  </a>
-                </Button>
-              </div>
-
-              <div className="flex items-center gap-6 pt-4">
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <MapPin className="w-4 h-4 text-teal-600" />
-                  Kothrud, Pune
-                </div>
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <Clock className="w-4 h-4 text-teal-600" />
-                  Mon-Sat: 10AM - 8PM
-                </div>
-              </div>
-            </motion.div>
-            
-            <motion.div 
-              className="relative"
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-teal-100 to-teal-50 rounded-3xl transform rotate-3"></div>
-              <img 
-                src="https://images.pexels.com/photos/5622232/pexels-photo-5622232.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Caring dentist with patient" 
-                className="relative rounded-3xl shadow-2xl object-cover w-full h-[400px] lg:h-[500px]"
-              />
-              <motion.div 
-                className="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-xl p-4 hidden lg:block"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center">
-                    <Shield className="w-6 h-6 text-teal-600" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900">100% Painless</p>
-                    <p className="text-sm text-gray-500">Gentle procedures</p>
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Trust Strip */}
-      <AnimatedSection className="bg-gray-50 border-y border-gray-100">
-        <div className="main-container py-6 lg:py-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              { icon: Star, label: '5.0 Rated', sublabel: 'Google Reviews' },
-              { icon: Shield, label: 'Painless Treatment', sublabel: 'Modern Techniques' },
-              { icon: Heart, label: 'Honest Advice', sublabel: 'No Unnecessary Procedures' },
-              { icon: Users, label: 'Patient-First Care', sublabel: 'Your Comfort Matters' },
-            ].map((item, i) => (
-              <div key={i} className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center flex-shrink-0">
-                  <item.icon className="w-6 h-6 text-teal-600" />
-                </div>
-                <div>
-                  <p className="font-semibold text-gray-900 text-sm lg:text-base">{item.label}</p>
-                  <p className="text-xs lg:text-sm text-gray-500">{item.sublabel}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </AnimatedSection>
-
-      {/* Services Preview */}
-      <section className="section-spacing">
-        <div className="main-container">
-          <SectionHeading 
-            badge="Our Services"
-            title="Expert Dental Care, Tailored for You"
-            subtitle="From routine check-ups to advanced procedures, we ensure comfort at every step."
+      {/* Hero Section - Full Screen Cinematic */}
+      <section ref={heroRef} className="relative h-screen min-h-[700px] overflow-hidden">
+        {/* Background Image with Parallax */}
+        <motion.div 
+          className="absolute inset-0"
+          style={{ scale: heroScale }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 via-gray-900/50 to-transparent z-10" />
+          <img 
+            src="https://images.pexels.com/photos/3762441/pexels-photo-3762441.jpeg?auto=compress&cs=tinysrgb&w=1920" 
+            alt="Beautiful Smile" 
+            className="w-full h-full object-cover"
           />
+        </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
-            {services.slice(0, 4).map((service, i) => {
-              const IconComponent = iconMap[service.icon] || Sparkles;
-              return (
-                <AnimatedSection key={service.slug} delay={i * 0.1}>
-                  <Link href={`/services/${service.slug}`}>
-                    <Card className="group border-gray-100 hover:border-teal-200 hover:shadow-lg transition-all duration-300 overflow-hidden h-full cursor-pointer">
-                      <CardContent className="p-8">
-                        <div className="flex items-start gap-4">
-                          <div className="w-14 h-14 bg-teal-50 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:bg-teal-100 transition-colors">
-                            <IconComponent className="w-7 h-7 text-teal-600" />
-                          </div>
-                          <div className="space-y-3">
-                            <h3 className="text-xl font-semibold text-gray-900 group-hover:text-teal-700 transition-colors">{service.title}</h3>
-                            <div className="space-y-2">
-                              <p className="text-gray-500 text-sm">{service.problem}</p>
-                              <p className="text-gray-700"><span className="text-teal-600 font-medium">→</span> {service.solution}</p>
-                              <p className="text-teal-700 font-medium flex items-center gap-2">
-                                <CheckCircle2 className="w-4 h-4" />
-                                {service.benefit}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                </AnimatedSection>
-              );
-            })}
+        {/* Hero Content */}
+        <motion.div 
+          className="relative z-20 h-full flex items-center"
+          style={{ opacity: heroOpacity }}
+        >
+          <div className="main-container">
+            <div className="max-w-3xl">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                <p className="text-teal-400 text-sm md:text-base font-medium tracking-[0.3em] uppercase mb-6">
+                  Aesthedent Dental Clinic
+                </p>
+              </motion.div>
+              
+              <motion.h1
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-white leading-[1.1] mb-8"
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                Look{' '}
+                <span className="font-semibold italic">beautiful.</span>
+                <br />
+                <span className="text-teal-400">Inside out.</span>
+              </motion.h1>
+              
+              <motion.p
+                className="text-lg md:text-xl text-gray-300 max-w-xl mb-10 leading-relaxed"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
+                Where painless dentistry meets honest care. Experience dental treatments designed around your comfort.
+              </motion.p>
+              
+              <motion.div
+                className="flex flex-col sm:flex-row gap-4"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.8 }}
+              >
+                <a 
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-3 px-8 py-4 bg-teal-500 hover:bg-teal-400 text-white font-medium rounded-full transition-all duration-300"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                  Book Appointment
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </a>
+                <a 
+                  href={`tel:${phoneNumber}`}
+                  className="inline-flex items-center gap-3 px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-medium rounded-full backdrop-blur-sm border border-white/20 transition-all duration-300"
+                >
+                  <Phone className="w-5 h-5" />
+                  +91 98765 43210
+                </a>
+              </motion.div>
+            </div>
           </div>
+        </motion.div>
 
-          <div className="text-center mt-12">
-            <Button variant="outline" size="lg" className="border-teal-200 text-teal-700 hover:bg-teal-50" asChild>
-              <Link href="/services">
-                View All Services
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Link>
-            </Button>
+        {/* Scroll Indicator */}
+        <motion.div 
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2 }}
+        >
+          <div className="flex flex-col items-center gap-2 text-white/60">
+            <span className="text-xs tracking-widest uppercase">Scroll</span>
+            <motion.div 
+              className="w-px h-12 bg-gradient-to-b from-white/60 to-transparent"
+              animate={{ scaleY: [1, 0.5, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            />
           </div>
+        </motion.div>
+      </section>
+
+      {/* Trust Badges - Floating */}
+      <section className="relative z-30 -mt-20">
+        <div className="main-container">
+          <motion.div 
+            className="bg-white rounded-2xl shadow-2xl shadow-black/10 p-6 md:p-8"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+              {[
+                { number: '5.0', label: 'Google Rating', sub: '263 Reviews' },
+                { number: '10+', label: 'Years', sub: 'Experience' },
+                { number: '5000+', label: 'Happy', sub: 'Patients' },
+                { number: '100%', label: 'Painless', sub: 'Treatments' },
+              ].map((stat, i) => (
+                <div key={i} className="text-center">
+                  <p className="text-3xl md:text-4xl font-bold text-teal-600 mb-1">{stat.number}</p>
+                  <p className="text-sm font-medium text-gray-900">{stat.label}</p>
+                  <p className="text-xs text-gray-500">{stat.sub}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Why Choose Us */}
-      <section className="section-spacing bg-gradient-to-b from-gray-50 to-white">
+      {/* About Section - Story Style */}
+      <section className="py-24 lg:py-32">
         <div className="main-container">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             <AnimatedSection direction="left">
-              <Badge className="mb-4 bg-teal-50 text-teal-700 hover:bg-teal-100">Why Aesthedent</Badge>
-              <h2 className="text-3xl lg:text-4xl font-semibold text-gray-900 mb-8">Dentistry That Puts You at Ease</h2>
-              
-              <div className="space-y-6">
-                {[
-                  { title: 'Pain-Free Experience', desc: 'Modern anesthesia and gentle techniques' },
-                  { title: 'No Unnecessary Treatments', desc: 'Honest diagnosis, only what you need' },
-                  { title: 'Step-by-Step Explanation', desc: 'We explain every procedure before starting' },
-                  { title: 'Friendly, Approachable Doctors', desc: 'Ask questions, get real answers' },
-                  { title: 'Online Consultation Support', desc: 'Get advice from the comfort of home' },
-                ].map((item, i) => (
-                  <motion.div 
-                    key={i} 
-                    className="flex items-start gap-4"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                  >
-                    <div className="w-6 h-6 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <CheckCircle2 className="w-4 h-4 text-teal-600" />
+              <div className="relative">
+                <div className="absolute -inset-4 bg-teal-100 rounded-3xl transform -rotate-3" />
+                <img 
+                  src="https://images.pexels.com/photos/6502635/pexels-photo-6502635.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                  alt="Dr. Sahil at Aesthedent" 
+                  className="relative rounded-2xl shadow-xl w-full aspect-[4/5] object-cover"
+                />
+                <div className="absolute -bottom-6 -right-6 bg-white rounded-2xl shadow-xl p-6 hidden md:block">
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 bg-teal-100 rounded-full flex items-center justify-center">
+                      <Play className="w-6 h-6 text-teal-600 ml-1" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900">{item.title}</h4>
-                      <p className="text-gray-600 text-sm">{item.desc}</p>
+                      <p className="font-semibold text-gray-900">Watch Our Story</p>
+                      <p className="text-sm text-gray-500">2 min video</p>
                     </div>
-                  </motion.div>
-                ))}
-              </div>
-              
-              <div className="mt-8">
-                <Button className="bg-teal-600 hover:bg-teal-700 text-white" asChild>
-                  <Link href="/about">
-                    Learn More About Us
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Link>
-                </Button>
-              </div>
-            </AnimatedSection>
-            
-            <AnimatedSection direction="right" className="relative">
-              <img 
-                src="https://images.pexels.com/photos/5619462/pexels-photo-5619462.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Modern dental equipment" 
-                className="rounded-3xl shadow-xl object-cover w-full h-[450px]"
-              />
-              <div className="absolute -bottom-8 -right-8 bg-white rounded-2xl shadow-xl p-6 hidden lg:block">
-                <div className="text-center">
-                  <p className="text-4xl font-bold text-teal-600">10+</p>
-                  <p className="text-sm text-gray-600">Years Experience</p>
+                  </div>
                 </div>
               </div>
             </AnimatedSection>
-          </div>
-        </div>
-      </section>
-
-      {/* Doctor Preview */}
-      <section className="section-spacing">
-        <div className="main-container">
-          <SectionHeading 
-            badge="Our Team"
-            title="Meet Your Dentists"
-            subtitle="Skilled, friendly, and dedicated to your comfort."
-          />
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {[
-              {
-                name: 'Dr. Sahil',
-                role: 'Lead Dentist',
-                desc: 'Specializes in implants and restorative dentistry. Known for his calm demeanor and thorough explanations.',
-                image: 'https://images.pexels.com/photos/14235194/pexels-photo-14235194.jpeg?auto=compress&cs=tinysrgb&w=500'
-              },
-              {
-                name: 'Dr. Aishwarya',
-                role: 'Dental Surgeon',
-                desc: 'Expert in painless extractions and pediatric dentistry. Patients love her gentle, reassuring approach.',
-                image: 'https://images.pexels.com/photos/31043312/pexels-photo-31043312.jpeg?auto=compress&cs=tinysrgb&w=500'
-              }
-            ].map((doctor, i) => (
-              <AnimatedSection key={i} delay={i * 0.15}>
-                <Card className="border-gray-100 overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                  <div className="aspect-[4/3] overflow-hidden">
-                    <img 
-                      src={doctor.image} 
-                      alt={doctor.name}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-semibold text-gray-900">{doctor.name}</h3>
-                    <p className="text-teal-600 font-medium text-sm mb-3">{doctor.role}</p>
-                    <p className="text-gray-600 text-sm leading-relaxed">{doctor.desc}</p>
-                  </CardContent>
-                </Card>
-              </AnimatedSection>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <Button variant="outline" size="lg" className="border-teal-200 text-teal-700 hover:bg-teal-50" asChild>
-              <Link href="/doctor">
-                Meet the Full Team
-                <ArrowRight className="w-4 h-4 ml-2" />
+            
+            <AnimatedSection direction="right">
+              <p className="text-teal-600 font-medium tracking-wide uppercase text-sm mb-4">Our Philosophy</p>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-gray-900 leading-tight mb-6">
+                Dentistry is an{' '}
+                <span className="font-semibold italic">art</span> and{' '}
+                <span className="font-semibold italic">science</span>{' '}
+                of precision.
+              </h2>
+              <p className="text-lg text-gray-600 leading-relaxed mb-8">
+                At Aesthedent, we believe every smile tells a story. Our approach combines cutting-edge technology with a deeply personal touch, ensuring that your journey to a healthier smile is as comfortable as it is transformative.
+              </p>
+              <p className="text-gray-600 leading-relaxed mb-10">
+                Founded by Dr. Sahil with a simple vision: to create a dental clinic where patients actually want to visit. Where fear is replaced with comfort, and every treatment is explained with honesty and care.
+              </p>
+              <Link 
+                href="/about"
+                className="group inline-flex items-center gap-2 text-teal-600 font-semibold hover:text-teal-700 transition-colors"
+              >
+                Learn our story
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
-            </Button>
+            </AnimatedSection>
           </div>
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="section-spacing bg-gray-50">
+      {/* Smile Stories Section */}
+      <section className="py-24 lg:py-32 bg-gray-50">
         <div className="main-container">
-          <SectionHeading 
-            badge="Patient Stories"
-            title="What Our Patients Say"
-          />
+          <AnimatedSection className="text-center mb-16">
+            <p className="text-teal-600 font-medium tracking-wide text-4xl md:text-5xl mb-4">#SmileStories</p>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Stories that drive us. Stories that give purpose. Stories that bring smiles.
+            </p>
+          </AnimatedSection>
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                quote: "Not even a pinch of pain during my root canal. I was genuinely surprised!",
-                name: "Priya M.",
-                treatment: "Root Canal Treatment"
+                name: 'Priya Mehta',
+                image: 'https://images.pexels.com/photos/3756680/pexels-photo-3756680.jpeg?auto=compress&cs=tinysrgb&w=400',
+                quote: 'I was terrified of dentists. Dr. Sahil changed everything. Not a pinch of pain during my root canal!',
+                treatment: 'Root Canal Treatment'
               },
               {
-                quote: "The doctor explained everything step by step. No surprises, no hidden costs.",
-                name: "Rahul K.",
-                treatment: "Dental Implant"
+                name: 'Rahul Sharma',
+                image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400',
+                quote: 'The doctor explained every step. No surprises, no hidden costs. Just honest, quality care.',
+                treatment: 'Dental Implant'
               },
               {
-                quote: "My daughter was so comfortable. She actually wants to come back! Best pediatric care.",
-                name: "Sneha P.",
-                treatment: "Kids Dentistry"
+                name: 'Sneha Patil',
+                image: 'https://images.pexels.com/photos/3776932/pexels-photo-3776932.jpeg?auto=compress&cs=tinysrgb&w=400',
+                quote: 'My daughter actually wants to go back! The team made her first dental visit magical.',
+                treatment: 'Kids Dentistry'
               }
-            ].map((testimonial, i) => (
+            ].map((story, i) => (
               <AnimatedSection key={i} delay={i * 0.1}>
-                <Card className="bg-white border-gray-100 h-full">
-                  <CardContent className="p-8">
-                    <div className="flex gap-1 mb-6">
-                      {[...Array(5)].map((_, j) => (
-                        <Star key={j} className="w-5 h-5 fill-amber-400 text-amber-400" />
-                      ))}
-                    </div>
-                    <blockquote className="text-lg text-gray-700 mb-6 leading-relaxed">
-                      "{testimonial.quote}"
-                    </blockquote>
-                    <div>
-                      <p className="font-semibold text-gray-900">{testimonial.name}</p>
-                      <p className="text-sm text-gray-500">{testimonial.treatment}</p>
+                <Card className="group bg-white border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden">
+                  <div className="aspect-square overflow-hidden">
+                    <img 
+                      src={story.image} 
+                      alt={story.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                  </div>
+                  <CardContent className="p-6 md:p-8">
+                    <Quote className="w-8 h-8 text-teal-200 mb-4" />
+                    <p className="text-gray-700 leading-relaxed mb-6">{story.quote}</p>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-semibold text-gray-900">{story.name}</p>
+                        <p className="text-sm text-gray-500">{story.treatment}</p>
+                      </div>
+                      <button className="w-10 h-10 bg-teal-50 rounded-full flex items-center justify-center text-teal-600 hover:bg-teal-100 transition-colors">
+                        <Play className="w-4 h-4 ml-0.5" />
+                      </button>
                     </div>
                   </CardContent>
                 </Card>
               </AnimatedSection>
             ))}
           </div>
+
+          <AnimatedSection className="text-center mt-12">
+            <Link 
+              href="/testimonials"
+              className="inline-flex items-center gap-2 text-teal-600 font-semibold hover:text-teal-700 transition-colors"
+            >
+              See more stories
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </AnimatedSection>
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="section-spacing bg-gradient-to-b from-teal-50 to-white">
-        <div className="main-container-narrow text-center">
-          <AnimatedSection>
-            <div className="w-20 h-20 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-8">
-              <Smile className="w-10 h-10 text-teal-600" />
-            </div>
-            <h2 className="text-3xl lg:text-4xl font-semibold text-gray-900 mb-6">
-              Ready for a Pain-Free Dental Experience?
+      {/* Painless Dentistry Section */}
+      <section className="py-24 lg:py-32">
+        <div className="main-container">
+          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+            <AnimatedSection>
+              <p className="text-teal-600 font-medium tracking-wide uppercase text-sm mb-4">The Experience</p>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-gray-900 leading-tight mb-6">
+                Say hello to{' '}
+                <span className="font-semibold italic text-teal-600">painless</span>{' '}
+                dentistry!
+              </h2>
+              <p className="text-lg text-gray-600 leading-relaxed mb-8">
+                Sounds too good to be true? It's absolutely true. We do a bunch of things at our clinic that ensures your experience is top notch. No more getting frightened at Aesthedent.
+              </p>
+              
+              <div className="space-y-4 mb-10">
+                {[
+                  'Advanced numbing techniques - you won\'t feel a thing',
+                  'Calm, spa-like environment designed for relaxation',
+                  'Step-by-step explanation before any procedure',
+                  'Gentle approach with modern, quiet equipment'
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <div className="w-6 h-6 bg-teal-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <ChevronRight className="w-4 h-4 text-teal-600" />
+                    </div>
+                    <p className="text-gray-700">{item}</p>
+                  </div>
+                ))}
+              </div>
+              
+              <Link 
+                href="/about"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-gray-900 hover:bg-gray-800 text-white font-medium rounded-full transition-colors"
+              >
+                Know more
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </AnimatedSection>
+            
+            <AnimatedSection direction="right" className="relative">
+              <div className="grid grid-cols-2 gap-4">
+                <img 
+                  src="https://images.pexels.com/photos/5622232/pexels-photo-5622232.jpeg?auto=compress&cs=tinysrgb&w=500" 
+                  alt="Gentle dental care" 
+                  className="rounded-2xl shadow-lg w-full aspect-[3/4] object-cover"
+                />
+                <img 
+                  src="https://images.pexels.com/photos/5619462/pexels-photo-5619462.jpeg?auto=compress&cs=tinysrgb&w=500" 
+                  alt="Modern equipment" 
+                  className="rounded-2xl shadow-lg w-full aspect-[3/4] object-cover mt-8"
+                />
+              </div>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section className="py-24 lg:py-32 bg-gray-900 text-white">
+        <div className="main-container">
+          <AnimatedSection className="text-center mb-16">
+            <p className="text-teal-400 font-medium tracking-wide uppercase text-sm mb-4">Our Services</p>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-light leading-tight">
+              Expert care for{' '}
+              <span className="font-semibold italic">every</span> smile
             </h2>
-            <p className="text-lg text-gray-600 mb-10 max-w-xl mx-auto">
-              Take the first step towards a healthier smile. We promise gentle care, honest advice, and your comfort above all.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                size="lg" 
-                className="bg-green-600 hover:bg-green-700 text-white px-10 py-6 text-base font-medium animate-pulse-soft"
-                asChild
-              >
-                <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                  <MessageCircle className="w-5 h-5 mr-2" />
-                  Book Your Appointment
-                </a>
-              </Button>
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="border-gray-300 text-gray-700 hover:bg-gray-50 px-10 py-6 text-base font-medium"
-                asChild
-              >
-                <Link href="/contact">
-                  Contact Us
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Link>
-              </Button>
-            </div>
           </AnimatedSection>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.slice(0, 6).map((service, i) => (
+              <AnimatedSection key={service.slug} delay={i * 0.08}>
+                <Link href={`/services/${service.slug}`}>
+                  <div className="group relative overflow-hidden rounded-2xl bg-gray-800 hover:bg-gray-750 transition-all duration-300">
+                    <div className="aspect-[16/10] overflow-hidden">
+                      <img 
+                        src={service.image} 
+                        alt={service.title}
+                        className="w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-500"
+                      />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                      <h3 className="text-xl font-semibold mb-2 group-hover:text-teal-400 transition-colors">
+                        {service.title}
+                      </h3>
+                      <p className="text-gray-400 text-sm mb-4">{service.shortDesc}</p>
+                      <span className="inline-flex items-center gap-2 text-teal-400 text-sm font-medium">
+                        Learn more
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              </AnimatedSection>
+            ))}
+          </div>
+
+          <AnimatedSection className="text-center mt-12">
+            <Link 
+              href="/services"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-teal-500 hover:bg-teal-400 text-white font-medium rounded-full transition-colors"
+            >
+              View all services
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Doctors Section */}
+      <section className="py-24 lg:py-32">
+        <div className="main-container">
+          <AnimatedSection className="text-center mb-16">
+            <p className="text-teal-600 font-medium tracking-wide uppercase text-sm mb-4">Meet the Team</p>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-gray-900 leading-tight">
+              We're the{' '}
+              <span className="font-semibold italic">dentists</span> of dentists
+            </h2>
+          </AnimatedSection>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {[
+              {
+                name: 'Dr. Sahil Sharma',
+                role: 'Lead Dentist & Founder',
+                image: 'https://images.pexels.com/photos/14235194/pexels-photo-14235194.jpeg?auto=compress&cs=tinysrgb&w=600',
+                desc: 'Specializes in implants and restorative dentistry. Known for his calm demeanor and thorough explanations.'
+              },
+              {
+                name: 'Dr. Aishwarya Kulkarni',
+                role: 'Dental Surgeon',
+                image: 'https://images.pexels.com/photos/31043312/pexels-photo-31043312.jpeg?auto=compress&cs=tinysrgb&w=600',
+                desc: 'Expert in painless extractions and pediatric dentistry. Patients love her gentle, reassuring approach.'
+              }
+            ].map((doctor, i) => (
+              <AnimatedSection key={i} delay={i * 0.15}>
+                <div className="group relative overflow-hidden rounded-3xl">
+                  <div className="aspect-[4/5] overflow-hidden">
+                    <img 
+                      src={doctor.image} 
+                      alt={doctor.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/30 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-8">
+                    <p className="text-teal-400 font-medium text-sm mb-2">{doctor.role}</p>
+                    <h3 className="text-2xl font-semibold text-white mb-3">{doctor.name}</h3>
+                    <p className="text-gray-300 text-sm leading-relaxed">{doctor.desc}</p>
+                  </div>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+
+          <AnimatedSection className="text-center mt-12">
+            <Link 
+              href="/doctor"
+              className="inline-flex items-center gap-2 text-teal-600 font-semibold hover:text-teal-700 transition-colors"
+            >
+              Meet the full team
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section className="py-24 lg:py-32 bg-teal-600">
+        <div className="main-container">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <AnimatedSection>
+              <p className="text-teal-200 font-medium tracking-wide uppercase text-sm mb-4">Visit Us</p>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-8">
+                Ready for your{' '}
+                <span className="font-semibold italic">best</span> smile?
+              </h2>
+              
+              <div className="space-y-6 mb-10">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-white mb-1">Location</p>
+                    <p className="text-teal-100">Near Karve Statue, Kothrud, Pune 411038</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Clock className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-white mb-1">Opening Hours</p>
+                    <p className="text-teal-100">Monday - Saturday: 10:00 AM - 8:00 PM</p>
+                    <p className="text-teal-200 text-sm">Sunday: Closed (By appointment only)</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-white mb-1">For Appointments</p>
+                    <a href={`tel:${phoneNumber}`} className="text-teal-100 hover:text-white transition-colors">
+                      +91 98765 43210
+                    </a>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a 
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-teal-600 font-medium rounded-full hover:bg-gray-100 transition-colors"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                  Book on WhatsApp
+                </a>
+                <Link 
+                  href="/contact"
+                  className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white/10 text-white font-medium rounded-full hover:bg-white/20 border border-white/20 transition-colors"
+                >
+                  Get Directions
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </AnimatedSection>
+            
+            <AnimatedSection direction="right">
+              <div className="rounded-2xl overflow-hidden shadow-2xl">
+                <img 
+                  src="https://images.pexels.com/photos/4269950/pexels-photo-4269950.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                  alt="Aesthedent Clinic" 
+                  className="w-full aspect-[4/3] object-cover"
+                />
+              </div>
+            </AnimatedSection>
+          </div>
         </div>
       </section>
     </PageWrapper>
