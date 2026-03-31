@@ -10,8 +10,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/services', label: 'Services' },
-  { href: '/doctor', label: 'Our Doctors' },
-  { href: '/about', label: 'About Us' },
+  { href: '/doctor', label: 'Doctors' },
+  { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ];
 
@@ -61,30 +61,30 @@ export default function Navbar() {
         }`}
       >
         <div className="main-container">
-          <div className="flex items-center justify-between h-[72px] lg:h-[80px]">
+          <div className="flex items-center justify-between h-[64px] lg:h-[72px]">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3">
-              <div className="w-10 h-10 lg:w-11 lg:h-11 rounded-xl bg-teal-600 flex items-center justify-center">
-                <svg className="w-6 h-6 lg:w-7 lg:h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <Link href="/" className="flex items-center gap-2.5">
+              <div className="w-9 h-9 lg:w-10 lg:h-10 rounded-xl bg-teal-600 flex items-center justify-center">
+                <svg className="w-5 h-5 lg:w-6 lg:h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" />
                   <path d="M8 14s1.5 2 4 2 4-2 4-2" />
                   <circle cx="9" cy="9" r="1" fill="currentColor" />
                   <circle cx="15" cy="9" r="1" fill="currentColor" />
                 </svg>
               </div>
-              <span className="text-[22px] lg:text-2xl font-bold text-gray-900 tracking-tight">
+              <span className="text-xl lg:text-[22px] font-bold text-gray-900 tracking-tight">
                 Aesthedent
               </span>
             </Link>
             
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center">
+            {/* Desktop Navigation - Only show on xl screens and up */}
+            <nav className="hidden xl:flex items-center">
               <ul className="flex items-center gap-1">
                 {navLinks.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className={`relative px-4 py-2 text-[15px] font-medium rounded-lg transition-colors ${
+                      className={`relative px-4 py-2 text-[15px] font-medium rounded-lg transition-colors whitespace-nowrap ${
                         pathname === link.href
                           ? 'text-teal-600'
                           : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
@@ -104,11 +104,11 @@ export default function Navbar() {
               </ul>
             </nav>
 
-            {/* CTA Buttons */}
-            <div className="hidden lg:flex items-center gap-3">
+            {/* Desktop CTA Buttons - Only show on xl screens */}
+            <div className="hidden xl:flex items-center gap-3">
               <a 
                 href={`tel:${phoneNumber}`}
-                className="flex items-center gap-2 px-4 py-2.5 text-[15px] font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
+                className="flex items-center gap-2 px-4 py-2 text-[15px] font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
               >
                 <Phone className="w-4 h-4" />
                 <span>Call Now</span>
@@ -125,23 +125,37 @@ export default function Navbar() {
               </a>
             </div>
 
-            {/* Mobile Menu Button */}
-            <button 
-              className="lg:hidden w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle menu"
-            >
-              {mobileMenuOpen ? (
-                <X className="w-5 h-5 text-gray-700" />
-              ) : (
-                <Menu className="w-5 h-5 text-gray-700" />
-              )}
-            </button>
+            {/* Tablet & Mobile - CTA + Menu Button */}
+            <div className="flex xl:hidden items-center gap-2">
+              {/* Show Book button on tablet only */}
+              <a 
+                href={whatsappLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden sm:flex items-center gap-2 px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium rounded-lg transition-colors"
+              >
+                <MessageCircle className="w-4 h-4" />
+                <span>Book Now</span>
+              </a>
+              
+              {/* Menu Button */}
+              <button 
+                className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label="Toggle menu"
+              >
+                {mobileMenuOpen ? (
+                  <X className="w-5 h-5 text-gray-700" />
+                ) : (
+                  <Menu className="w-5 h-5 text-gray-700" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </motion.header>
 
-      {/* Mobile Menu */}
+      {/* Mobile & Tablet Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <>
@@ -149,7 +163,7 @@ export default function Navbar() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/40 z-40 lg:hidden"
+              className="fixed inset-0 bg-black/40 z-40 xl:hidden"
               onClick={() => setMobileMenuOpen(false)}
             />
             
@@ -158,10 +172,10 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="fixed top-0 right-0 bottom-0 w-[300px] bg-white z-50 lg:hidden shadow-2xl"
+              className="fixed top-0 right-0 bottom-0 w-full sm:w-[320px] bg-white z-50 xl:hidden shadow-2xl"
             >
               {/* Mobile Header */}
-              <div className="flex items-center justify-between h-[72px] px-5 border-b border-gray-100">
+              <div className="flex items-center justify-between h-[64px] px-5 border-b border-gray-100">
                 <Link href="/" className="flex items-center gap-2.5" onClick={() => setMobileMenuOpen(false)}>
                   <div className="w-9 h-9 rounded-lg bg-teal-600 flex items-center justify-center">
                     <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
