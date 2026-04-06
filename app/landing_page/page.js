@@ -7,6 +7,7 @@ import Link from 'next/link';
 import PageWrapper from '@/components/layout/PageWrapper';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import { landingPageContent } from '@/lib/landing-page-content';
+import TestimonialsSection from '@/components/sections/TestimonialsSection';
 import {
   Phone,
   MessageCircle,
@@ -395,89 +396,13 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Testimonials - #SmileStories */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="main-container">
-          <AnimatedSection className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-teal-600 mb-4">
-              {landingPageContent.testimonials.title}
-            </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              {landingPageContent.testimonials.subtitle}
-            </p>
-          </AnimatedSection>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {landingPageContent.testimonials.reviews.map((testimonial, index) => (
-              <AnimatedSection
-                key={index}
-                delay={index * 0.1}
-                className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all border border-gray-200 overflow-hidden"
-              >
-                {/* Patient Photo - Compact */}
-                <div className="relative h-40 overflow-hidden bg-gray-200">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-
-                {/* Review Content */}
-                <div className="p-6">
-                  {/* Quotation Mark - Smaller */}
-                  <div className="text-teal-300 mb-3">
-                    <svg
-                      className="w-6 h-6 opacity-60"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M3 21c3 0 7-1 7-8V5c0-1.25-4.716-5-7-5m14 0c-3 0-7 1-7 8v8c0 1.25 4.716 5 7 5" />
-                    </svg>
-                  </div>
-
-                  {/* Review Text */}
-                  <p className="text-gray-700 text-sm leading-relaxed mb-4 line-clamp-3">
-                    {testimonial.text}
-                  </p>
-
-                  {/* Divider */}
-                  <div className="border-t border-gray-100 pt-4 mb-4">
-                    {/* Patient Info & Rating */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-gray-900 text-sm">
-                          {testimonial.name}
-                        </h4>
-                        <p className="text-xs text-teal-600 font-medium">
-                          {testimonial.service}
-                        </p>
-                      </div>
-                      {/* Rating Stars */}
-                      <div className="flex gap-0.5">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <Star
-                            key={i}
-                            size={14}
-                            className="fill-yellow-400 text-yellow-400"
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Read More Link */}
-                  <div className="flex items-center text-teal-600 text-xs font-medium hover:text-teal-700 cursor-pointer">
-                    <span>Read More</span>
-                    <ArrowRight size={14} className="ml-1" />
-                  </div>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Testimonials - #SmileStories - Dynamic */}
+      <TestimonialsSection 
+        title="#SmileStories"
+        subtitle="Stories that drive us. Stories that give purpose. Stories that bring smiles."
+        limit={3}
+        variant="compact"
+      />
 
       {/* FAQs */}
       <section className="py-16 md:py-24">

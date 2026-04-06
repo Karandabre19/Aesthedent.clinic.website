@@ -19,6 +19,7 @@ import {
   ChevronRight,
   Quote
 } from 'lucide-react';
+import TestimonialsSection from '@/components/sections/TestimonialsSection';
 
 const whatsappNumber = '919876543210';
 const whatsappMessage = encodeURIComponent('Hi, I would like to book an appointment at Aesthedent Dental Clinic.');
@@ -216,65 +217,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Smile Stories Section */}
-      <section className="py-24 lg:py-32 bg-gray-50">
+      {/* Smile Stories Section - Dynamic */}
+      <TestimonialsSection 
+        title="#SmileStories"
+        subtitle="Stories that drive us. Stories that give purpose. Stories that bring smiles."
+        limit={3}
+        variant="compact"
+      />
+
+      <section className="py-6 bg-white">
         <div className="main-container">
-          <AnimatedSection className="text-center mb-16">
-            <p className="text-teal-600 font-medium tracking-wide text-4xl md:text-5xl mb-4">#SmileStories</p>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Stories that drive us. Stories that give purpose. Stories that bring smiles.
-            </p>
-          </AnimatedSection>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                name: 'Priya Mehta',
-                image: 'https://images.pexels.com/photos/3756680/pexels-photo-3756680.jpeg?auto=compress&cs=tinysrgb&w=400',
-                quote: 'I was terrified of dentists. Dr. Sahil changed everything. Not a pinch of pain during my root canal!',
-                treatment: 'Root Canal Treatment'
-              },
-              {
-                name: 'Rahul Sharma',
-                image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400',
-                quote: 'The doctor explained every step. No surprises, no hidden costs. Just honest, quality care.',
-                treatment: 'Dental Implant'
-              },
-              {
-                name: 'Sneha Patil',
-                image: 'https://images.pexels.com/photos/3776932/pexels-photo-3776932.jpeg?auto=compress&cs=tinysrgb&w=400',
-                quote: 'My daughter actually wants to go back! The team made her first dental visit magical.',
-                treatment: 'Kids Dentistry'
-              }
-            ].map((story, i) => (
-              <AnimatedSection key={i} delay={i * 0.1}>
-                <Card className="group bg-white border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden">
-                  <div className="aspect-square overflow-hidden">
-                    <img 
-                      src={story.image} 
-                      alt={story.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                  </div>
-                  <CardContent className="p-6 md:p-8">
-                    <Quote className="w-8 h-8 text-teal-200 mb-4" />
-                    <p className="text-gray-700 leading-relaxed mb-6">{story.quote}</p>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-semibold text-gray-900">{story.name}</p>
-                        <p className="text-sm text-gray-500">{story.treatment}</p>
-                      </div>
-                      <button className="w-10 h-10 bg-teal-50 rounded-full flex items-center justify-center text-teal-600 hover:bg-teal-100 transition-colors">
-                        <Play className="w-4 h-4 ml-0.5" />
-                      </button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </AnimatedSection>
-            ))}
-          </div>
-
-          <AnimatedSection className="text-center mt-12">
+          <AnimatedSection className="text-center">
             <Link 
               href="/testimonials"
               className="inline-flex items-center gap-2 text-teal-600 font-semibold hover:text-teal-700 transition-colors"
