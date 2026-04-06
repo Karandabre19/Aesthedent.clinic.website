@@ -395,45 +395,80 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-16 md:py-24 bg-gray-50">
+      {/* Testimonials - #SmileStories */}
+      <section className="py-16 md:py-24 bg-white">
         <div className="main-container">
           <AnimatedSection className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              Patient Success Stories
+            <h2 className="text-4xl md:text-5xl font-bold text-teal-600 mb-4">
+              {landingPageContent.testimonials.title}
             </h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Hear from our satisfied patients about their transformation
+              {landingPageContent.testimonials.subtitle}
             </p>
           </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {landingPageContent.testimonials.map((testimonial, index) => (
+            {landingPageContent.testimonials.reviews.map((testimonial, index) => (
               <AnimatedSection
                 key={index}
                 delay={index * 0.1}
-                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow"
+                className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all overflow-hidden border border-gray-100"
               >
-                <div className="flex items-center gap-3 mb-4">
+                {/* Patient Photo */}
+                <div className="relative h-64 overflow-hidden bg-gray-200">
                   <img
                     src={testimonial.image}
                     alt={testimonial.name}
-                    className="w-14 h-14 rounded-full object-cover"
+                    className="w-full h-full object-cover"
                   />
-                  <div>
-                    <h4 className="font-bold text-gray-900">{testimonial.name}</h4>
-                    <p className="text-sm text-gray-500">{testimonial.location}</p>
+                </div>
+
+                {/* Review Content */}
+                <div className="p-8">
+                  {/* Quotation Mark */}
+                  <div className="text-teal-400 mb-4">
+                    <svg
+                      className="w-8 h-8"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M3 21c3 0 7-1 7-8V5c0-1.25-4.716-5-7-5m14 0c-3 0-7 1-7 8v8c0 1.25 4.716 5 7 5" />
+                    </svg>
+                  </div>
+
+                  {/* Review Text */}
+                  <p className="text-gray-700 leading-relaxed mb-6 min-h-20">
+                    {testimonial.text}
+                  </p>
+
+                  {/* Patient Name & Service */}
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <h4 className="font-bold text-gray-900 text-lg">
+                        {testimonial.name}
+                      </h4>
+                      <p className="text-sm text-teal-600 font-medium">
+                        {testimonial.service}
+                      </p>
+                    </div>
+                    {/* Rating Stars */}
+                    <div className="flex gap-1">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <Star
+                          key={i}
+                          size={16}
+                          className="fill-yellow-400 text-yellow-400"
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Read More Arrow */}
+                  <div className="mt-4 flex justify-end">
+                    <ArrowRight className="text-teal-600" size={20} />
                   </div>
                 </div>
-
-                <div className="flex gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} size={16} className="fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-
-                <Quote className="text-teal-600 mb-3" size={24} />
-                <p className="text-gray-600 leading-relaxed">{testimonial.text}</p>
               </AnimatedSection>
             ))}
           </div>
