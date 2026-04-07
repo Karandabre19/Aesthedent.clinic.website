@@ -365,13 +365,13 @@ export default function HomePage() {
               {
                 name: 'Dr. Sahil Sharma',
                 role: 'Lead Dentist & Founder',
-                image: 'https://images.pexels.com/photos/14235194/pexels-photo-14235194.jpeg?auto=compress&cs=tinysrgb&w=600',
+                image: '/assets/doctor-male.jpeg',
                 desc: 'Specializes in implants and restorative dentistry. Known for his calm demeanor and thorough explanations.'
               },
               {
                 name: 'Dr. Aishwarya Kulkarni',
                 role: 'Dental Surgeon',
-                image: 'https://images.pexels.com/photos/31043312/pexels-photo-31043312.jpeg?auto=compress&cs=tinysrgb&w=600',
+                image: '/assets/doctor-female.jpeg',
                 desc: 'Expert in painless extractions and pediatric dentistry. Patients love her gentle, reassuring approach.'
               }
             ].map((doctor, i) => (

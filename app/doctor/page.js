@@ -21,7 +21,7 @@ const doctors = [
   {
     name: 'Dr. Sahil Sharma',
     role: 'Lead Dentist & Founder',
-    image: 'https://images.pexels.com/photos/14235194/pexels-photo-14235194.jpeg?auto=compress&cs=tinysrgb&w=600',
+    image: '/assets/doctor-male.jpeg',
     bio: 'Dr. Sahil is the founder of Aesthedent Dental Clinic. With over 12 years of experience, he specializes in dental implants, cosmetic dentistry, and full-mouth rehabilitation. Known for his calm demeanor and thorough explanations, he ensures every patient feels comfortable and well-informed.',
     qualifications: ['BDS - Government Dental College, Mumbai', 'MDS - Prosthodontics, Pune University', 'Fellowship in Implantology, Germany'],
     specializations: ['Dental Implants', 'Full Mouth Rehabilitation', 'Cosmetic Dentistry', 'Smile Design'],
@@ -30,7 +30,7 @@ const doctors = [
   {
     name: 'Dr. Aishwarya Kulkarni',
     role: 'Dental Surgeon',
-    image: 'https://images.pexels.com/photos/31043312/pexels-photo-31043312.jpeg?auto=compress&cs=tinysrgb&w=600',
+    image: '/assets/doctor-female.jpeg',
     bio: 'Dr. Aishwarya is known for her gentle, reassuring approach, especially with anxious patients and children. She specializes in painless extractions, pediatric dentistry, and preventive care. Her patients often comment on how comfortable they feel during treatments.',
     qualifications: ['BDS - Bharati Vidyapeeth, Pune', 'Certificate in Pediatric Dentistry', 'Advanced Training in Painless Dentistry'],
     specializations: ['Pediatric Dentistry', 'Painless Extractions', 'Root Canal Treatment', 'Preventive Care'],
