@@ -63,18 +63,12 @@ export default function Navbar() {
         <div className="main-container">
           <div className="flex items-center justify-between h-[64px] lg:h-[72px]">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2.5">
-              <div className="w-9 h-9 lg:w-10 lg:h-10 rounded-xl bg-teal-600 flex items-center justify-center">
-                <svg className="w-5 h-5 lg:w-6 lg:h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" />
-                  <path d="M8 14s1.5 2 4 2 4-2 4-2" />
-                  <circle cx="9" cy="9" r="1" fill="currentColor" />
-                  <circle cx="15" cy="9" r="1" fill="currentColor" />
-                </svg>
-              </div>
-              <span className="text-xl lg:text-[22px] font-bold text-gray-900 tracking-tight">
-                Aesthedent
-              </span>
+            <Link href="/" className="flex items-center">
+              <img 
+                src="/aesthadent_logo.png" 
+                alt="Aesthedent Logo" 
+                className="h-12 lg:h-14 w-auto"
+              />
             </Link>
             
             {/* Desktop Navigation - Only show on xl screens and up */}

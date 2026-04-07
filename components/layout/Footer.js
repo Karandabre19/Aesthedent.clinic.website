@@ -33,11 +33,12 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {/* Brand Column */}
           <div className="lg:col-span-1">
-            <Link href="/" className="flex items-center gap-2.5 mb-6">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center">
-                <Smile className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-semibold">Aesthedent</span>
+            <Link href="/" className="flex items-center mb-6">
+              <img 
+                src="/aesthadent_logo.png" 
+                alt="Aesthedent Logo" 
+                className="h-12 w-auto"
+              />
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
               Premium dental care in Kothrud, Pune. Experience painless treatments, honest advice, and a patient-first approach.
