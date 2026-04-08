@@ -14,13 +14,13 @@ export default function TestimonialsSection({
 
   if (variant === 'compact') {
     return (
-      <section className="py-16 md:py-24 bg-white">
+      <section className="py-16 md:py-24 bg-[hsl(var(--background))]">
         <div className="main-container">
           <AnimatedSection className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-teal-600 mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-[hsl(var(--accent))] mb-4">
               {title}
             </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+            <p className="text-[hsl(var(--color-text-muted))] text-lg max-w-2xl mx-auto">
               {subtitle}
             </p>
           </AnimatedSection>
@@ -30,10 +30,10 @@ export default function TestimonialsSection({
               <AnimatedSection
                 key={testimonial.id}
                 delay={index * 0.1}
-                className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all border border-gray-200 overflow-hidden"
+                className="bg-[hsl(var(--background))] rounded-lg shadow-sm hover:shadow-md transition-all border border-[hsl(var(--border))] overflow-hidden"
               >
                 {/* Patient Photo - Compact */}
-                <div className="relative h-40 overflow-hidden bg-gray-200">
+                <div className="relative h-40 overflow-hidden bg-[hsl(var(--color-bg-alt))]">
                   <img
                     src={testimonial.image}
                     alt={testimonial.name}
@@ -44,7 +44,7 @@ export default function TestimonialsSection({
                 {/* Review Content */}
                 <div className="p-6">
                   {/* Quotation Mark */}
-                  <div className="text-teal-300 mb-3">
+                  <div className="text-[hsl(var(--color-primary))]/30 mb-3">
                     <svg
                       className="w-6 h-6 opacity-60"
                       fill="currentColor"
@@ -56,19 +56,19 @@ export default function TestimonialsSection({
                   </div>
 
                   {/* Review Text */}
-                  <p className="text-gray-700 text-sm leading-relaxed mb-4 line-clamp-3">
+                  <p className="text-[hsl(var(--color-text))] text-sm leading-relaxed mb-4 line-clamp-3">
                     {testimonial.text}
                   </p>
 
                   {/* Divider */}
-                  <div className="border-t border-gray-100 pt-4 mb-4">
+                  <div className="border-t border-[hsl(var(--border))] pt-4 mb-4">
                     {/* Patient Info & Rating */}
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
-                        <h4 className="font-semibold text-gray-900 text-sm">
+                        <h4 className="font-semibold text-[hsl(var(--color-text))] text-sm">
                           {testimonial.name}
                         </h4>
-                        <p className="text-xs text-teal-600 font-medium">
+                        <p className="text-xs text-[hsl(var(--color-primary))] font-medium">
                           {testimonial.service}
                         </p>
                       </div>
@@ -86,7 +86,7 @@ export default function TestimonialsSection({
                   </div>
 
                   {/* Read More Link */}
-                  <div className="flex items-center text-teal-600 text-xs font-medium hover:text-teal-700 cursor-pointer">
+                  <div className="flex items-center text-[hsl(var(--color-primary))] text-xs font-medium hover:text-[hsl(var(--color-primary-dark))] cursor-pointer">
                     <span>Read More</span>
                     <ArrowRight size={14} className="ml-1" />
                   </div>
@@ -101,13 +101,13 @@ export default function TestimonialsSection({
 
   // Full variant for testimonials page
   return (
-    <section className="py-16 md:py-24 bg-gray-50">
+    <section className="py-16 md:py-24 bg-[hsl(var(--color-bg-alt))]">
       <div className="main-container">
         <AnimatedSection className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-[hsl(var(--color-text))] mb-4">
             {title}
           </h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          <p className="text-[hsl(var(--color-text-muted))] text-lg max-w-2xl mx-auto">
             {subtitle}
           </p>
         </AnimatedSection>
@@ -117,9 +117,9 @@ export default function TestimonialsSection({
             <AnimatedSection
               key={testimonial.id}
               delay={index * 0.1}
-              className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all border border-gray-200 overflow-hidden"
+              className="bg-[hsl(var(--background))] rounded-lg shadow-sm hover:shadow-md transition-all border border-[hsl(var(--border))] overflow-hidden"
             >
-              <div className="relative h-40 overflow-hidden bg-gray-200">
+              <div className="relative h-40 overflow-hidden bg-[hsl(var(--color-bg-alt))]">
                 <img
                   src={testimonial.image}
                   alt={testimonial.name}
@@ -128,7 +128,7 @@ export default function TestimonialsSection({
               </div>
 
               <div className="p-6">
-                <div className="text-teal-300 mb-3">
+                <div className="text-[hsl(var(--color-primary))]/30 mb-3">
                   <svg
                     className="w-6 h-6 opacity-60"
                     fill="currentColor"
@@ -139,17 +139,17 @@ export default function TestimonialsSection({
                   </svg>
                 </div>
 
-                <p className="text-gray-700 text-sm leading-relaxed mb-4 line-clamp-3">
+                <p className="text-[hsl(var(--color-text))] text-sm leading-relaxed mb-4 line-clamp-3">
                   {testimonial.text}
                 </p>
 
-                <div className="border-t border-gray-100 pt-4 mb-4">
+                <div className="border-t border-[hsl(var(--border))] pt-4 mb-4">
                   <div className="flex items-center justify-between">
                     <div className="flex-1">
-                      <h4 className="font-semibold text-gray-900 text-sm">
+                      <h4 className="font-semibold text-[hsl(var(--color-text))] text-sm">
                         {testimonial.name}
                       </h4>
-                      <p className="text-xs text-teal-600 font-medium">
+                      <p className="text-xs text-[hsl(var(--color-primary))] font-medium">
                         {testimonial.service}
                       </p>
                     </div>
@@ -165,7 +165,7 @@ export default function TestimonialsSection({
                   </div>
                 </div>
 
-                <div className="flex items-center text-teal-600 text-xs font-medium hover:text-teal-700 cursor-pointer">
+                <div className="flex items-center text-[hsl(var(--color-primary))] text-xs font-medium hover:text-[hsl(var(--color-primary-dark))] cursor-pointer">
                   <span>Read More</span>
                   <ArrowRight size={14} className="ml-1" />
                 </div>
