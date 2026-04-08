@@ -27,7 +27,7 @@ export default function Footer() {
   const phoneNumber = '+919876543210';
 
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-[hsl(var(--color-secondary))] text-[hsl(var(--primary-foreground))]">
       {/* Main Footer */}
       <div className="main-container py-16 lg:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
@@ -40,7 +40,7 @@ export default function Footer() {
                 className="h-12 w-auto"
               />
             </Link>
-            <p className="text-gray-400 text-sm leading-relaxed mb-6">
+            <p className="text-[hsl(var(--color-text-light))] text-sm leading-relaxed mb-6">
               Premium dental care in Kothrud, Pune. Experience painless treatments, honest advice, and a patient-first approach.
             </p>
             <div className="flex gap-3">
@@ -48,21 +48,21 @@ export default function Footer() {
                 href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-teal-600 transition-colors"
+                className="w-10 h-10 bg-[hsl(var(--color-secondary-light))] rounded-full flex items-center justify-center hover:bg-[hsl(var(--color-primary))] transition-colors text-[hsl(var(--color-secondary))] hover:text-[hsl(var(--primary-foreground))]"
                 aria-label="WhatsApp"
               >
                 <MessageCircle className="w-5 h-5" />
               </a>
               <a 
                 href={`tel:${phoneNumber}`}
-                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-teal-600 transition-colors"
+                className="w-10 h-10 bg-[hsl(var(--color-secondary-light))] rounded-full flex items-center justify-center hover:bg-[hsl(var(--color-primary))] transition-colors text-[hsl(var(--color-secondary))] hover:text-[hsl(var(--primary-foreground))]"
                 aria-label="Call"
               >
                 <Phone className="w-5 h-5" />
               </a>
               <a 
                 href="mailto:info@aesthedent.com"
-                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-teal-600 transition-colors"
+                className="w-10 h-10 bg-[hsl(var(--color-secondary-light))] rounded-full flex items-center justify-center hover:bg-[hsl(var(--color-primary))] transition-colors text-[hsl(var(--color-secondary))] hover:text-[hsl(var(--primary-foreground))]"
                 aria-label="Email"
               >
                 <Mail className="w-5 h-5" />
@@ -72,13 +72,13 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-6">Services</h4>
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-[hsl(var(--color-text-light))] mb-6">Services</h4>
             <ul className="space-y-3">
               {footerLinks.services.map((link) => (
                 <li key={link.href}>
                   <Link 
                     href={link.href}
-                    className="text-gray-300 hover:text-white transition-colors text-sm flex items-center gap-2 group"
+                    className="text-[hsl(var(--color-text-light))] hover:text-[hsl(var(--primary-foreground))] transition-colors text-sm flex items-center gap-2 group"
                   >
                     <ArrowRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" />
                     {link.label}
@@ -90,13 +90,13 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-6">Quick Links</h4>
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-[hsl(var(--color-text-light))] mb-6">Quick Links</h4>
             <ul className="space-y-3">
               {footerLinks.quickLinks.map((link) => (
                 <li key={link.href}>
                   <Link 
                     href={link.href}
-                    className="text-gray-300 hover:text-white transition-colors text-sm flex items-center gap-2 group"
+                    className="text-[hsl(var(--color-text-light))] hover:text-[hsl(var(--primary-foreground))] transition-colors text-sm flex items-center gap-2 group"
                   >
                     <ArrowRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" />
                     {link.label}
@@ -108,25 +108,25 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-6">Contact Us</h4>
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-[hsl(var(--color-text-light))] mb-6">Contact Us</h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-teal-500 flex-shrink-0 mt-0.5" />
-                <span className="text-gray-300 text-sm">Near Karve Statue, Kothrud, Pune, Maharashtra 411038</span>
+                <MapPin className="w-5 h-5 text-[hsl(var(--color-primary))] flex-shrink-0 mt-0.5" />
+                <span className="text-[hsl(var(--color-text-light))] text-sm">Near Karve Statue, Kothrud, Pune, Maharashtra 411038</span>
               </li>
               <li className="flex items-center gap-3">
-                <Clock className="w-5 h-5 text-teal-500 flex-shrink-0" />
-                <span className="text-gray-300 text-sm">Mon - Sat: 10:00 AM - 8:00 PM</span>
+                <Clock className="w-5 h-5 text-[hsl(var(--color-primary))] flex-shrink-0" />
+                <span className="text-[hsl(var(--color-text-light))] text-sm">Mon - Sat: 10:00 AM - 8:00 PM</span>
               </li>
               <li className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-teal-500 flex-shrink-0" />
-                <a href={`tel:${phoneNumber}`} className="text-gray-300 text-sm hover:text-white transition-colors">
+                <Phone className="w-5 h-5 text-[hsl(var(--color-primary))] flex-shrink-0" />
+                <a href={`tel:${phoneNumber}`} className="text-[hsl(var(--color-text-light))] text-sm hover:text-[hsl(var(--primary-foreground))] transition-colors">
                   +91 98765 43210
                 </a>
               </li>
               <li className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-teal-500 flex-shrink-0" />
-                <a href="mailto:info@aesthedent.com" className="text-gray-300 text-sm hover:text-white transition-colors">
+                <Mail className="w-5 h-5 text-[hsl(var(--color-primary))] flex-shrink-0" />
+                <a href="mailto:info@aesthedent.com" className="text-[hsl(var(--color-text-light))] text-sm hover:text-[hsl(var(--primary-foreground))] transition-colors">
                   info@aesthedent.com
                 </a>
               </li>
@@ -136,15 +136,15 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-gray-800">
+      <div className="border-t border-[hsl(var(--color-secondary-light))]">
         <div className="main-container py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-500 text-sm">
+            <p className="text-[hsl(var(--color-text-light))] text-sm">
               © 2025 Aesthedent Dental Clinic. All rights reserved.
             </p>
             <div className="flex gap-6 text-sm">
-              <Link href="/privacy" className="text-gray-500 hover:text-gray-300 transition-colors">Privacy Policy</Link>
-              <Link href="/terms" className="text-gray-500 hover:text-gray-300 transition-colors">Terms of Service</Link>
+              <Link href="/privacy" className="text-[hsl(var(--color-text-light))] hover:text-[hsl(var(--primary-foreground))] transition-colors">Privacy Policy</Link>
+              <Link href="/terms" className="text-[hsl(var(--color-text-light))] hover:text-[hsl(var(--primary-foreground))] transition-colors">Terms of Service</Link>
             </div>
           </div>
         </div>

@@ -56,8 +56,8 @@ export default function Navbar() {
         transition={{ duration: 0.5, ease: 'easeOut' }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled 
-            ? 'bg-white shadow-lg shadow-black/5' 
-            : 'bg-white'
+            ? 'bg-[hsl(var(--background))] shadow-lg shadow-black/5' 
+            : 'bg-[hsl(var(--background))]'
         }`}
       >
         <div className="main-container">
@@ -80,15 +80,15 @@ export default function Navbar() {
                       href={link.href}
                       className={`relative px-4 py-2 text-[15px] font-medium rounded-lg transition-colors whitespace-nowrap ${
                         pathname === link.href
-                          ? 'text-teal-600'
-                          : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                          ? 'text-[hsl(var(--color-primary))]'
+                          : 'text-[hsl(var(--color-text-muted))] hover:text-[hsl(var(--color-text))] hover:bg-[hsl(var(--color-bg-alt))]'
                       }`}
                     >
                       {link.label}
                       {pathname === link.href && (
                         <motion.div
                           layoutId="activeNav"
-                          className="absolute bottom-0 left-4 right-4 h-0.5 bg-teal-600 rounded-full"
+                          className="absolute bottom-0 left-4 right-4 h-0.5 bg-[hsl(var(--color-primary))] rounded-full"
                           transition={{ type: 'spring', stiffness: 500, damping: 35 }}
                         />
                       )}
@@ -102,7 +102,7 @@ export default function Navbar() {
             <div className="hidden xl:flex items-center gap-3">
               <a 
                 href={`tel:${phoneNumber}`}
-                className="flex items-center gap-2 px-4 py-2 text-[15px] font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
+                className="flex items-center gap-2 px-4 py-2 text-[15px] font-medium text-[hsl(var(--color-text))] hover:text-[hsl(var(--color-text))] hover:bg-[hsl(var(--color-bg-alt))] rounded-lg transition-colors"
               >
                 <Phone className="w-4 h-4" />
                 <span>Call Now</span>
@@ -112,7 +112,7 @@ export default function Navbar() {
                 href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-[15px] font-medium rounded-lg transition-colors"
+                className="flex items-center gap-2 px-5 py-2.5 bg-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary-dark))] text-[hsl(var(--primary-foreground))] text-[15px] font-medium rounded-lg transition-colors"
               >
                 <MessageCircle className="w-4 h-4" />
                 <span>Book Appointment</span>
@@ -126,7 +126,7 @@ export default function Navbar() {
                 href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden sm:flex items-center gap-2 px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium rounded-lg transition-colors"
+                className="hidden sm:flex items-center gap-2 px-4 py-2 bg-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary-dark))] text-[hsl(var(--primary-foreground))] text-sm font-medium rounded-lg transition-colors"
               >
                 <MessageCircle className="w-4 h-4" />
                 <span>Book Now</span>
@@ -134,14 +134,14 @@ export default function Navbar() {
               
               {/* Menu Button */}
               <button 
-                className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors"
+                className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-[hsl(var(--color-bg-alt))] transition-colors"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 aria-label="Toggle menu"
               >
                 {mobileMenuOpen ? (
-                  <X className="w-5 h-5 text-gray-700" />
+                  <X className="w-5 h-5 text-[hsl(var(--color-text))]" />
                 ) : (
-                  <Menu className="w-5 h-5 text-gray-700" />
+                  <Menu className="w-5 h-5 text-[hsl(var(--color-text))]" />
                 )}
               </button>
             </div>
@@ -166,26 +166,26 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="fixed top-0 right-0 bottom-0 w-full sm:w-[320px] bg-white z-50 xl:hidden shadow-2xl"
+              className="fixed top-0 right-0 bottom-0 w-full sm:w-[320px] bg-[hsl(var(--background))] z-50 xl:hidden shadow-2xl"
             >
               {/* Mobile Header */}
-              <div className="flex items-center justify-between h-[64px] px-5 border-b border-gray-100">
+              <div className="flex items-center justify-between h-[64px] px-5 border-b border-[hsl(var(--color-border))]">
                 <Link href="/" className="flex items-center gap-2.5" onClick={() => setMobileMenuOpen(false)}>
-                  <div className="w-9 h-9 rounded-lg bg-teal-600 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <div className="w-9 h-9 rounded-lg bg-[hsl(var(--color-primary))] flex items-center justify-center">
+                    <svg className="w-5 h-5 text-[hsl(var(--primary-foreground))]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" />
                       <path d="M8 14s1.5 2 4 2 4-2 4-2" />
                       <circle cx="9" cy="9" r="1" fill="currentColor" />
                       <circle cx="15" cy="9" r="1" fill="currentColor" />
                     </svg>
                   </div>
-                  <span className="text-lg font-bold text-gray-900">Aesthedent</span>
+                  <span className="text-lg font-bold text-[hsl(var(--color-text))]">Aesthedent</span>
                 </Link>
                 <button 
-                  className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-gray-100"
+                  className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-[hsl(var(--color-bg-alt))]"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <X className="w-5 h-5 text-gray-500" />
+                  <X className="w-5 h-5 text-[hsl(var(--color-text-muted))]" />
                 </button>
               </div>
 
@@ -204,12 +204,12 @@ export default function Navbar() {
                         onClick={() => setMobileMenuOpen(false)}
                         className={`flex items-center justify-between px-4 py-3.5 rounded-xl text-[15px] font-medium transition-colors ${
                           pathname === link.href
-                            ? 'bg-teal-50 text-teal-700'
-                            : 'text-gray-700 hover:bg-gray-50'
+                            ? 'bg-[hsl(var(--color-primary-light))] text-[hsl(var(--color-primary))]'
+                            : 'text-[hsl(var(--color-text))] hover:bg-[hsl(var(--color-bg-alt))]'
                         }`}
                       >
                         {link.label}
-                        <ChevronRight className={`w-4 h-4 ${pathname === link.href ? 'text-teal-500' : 'text-gray-400'}`} />
+                        <ChevronRight className={`w-4 h-4 ${pathname === link.href ? 'text-[hsl(var(--color-primary))]' : 'text-[hsl(var(--color-text-muted))]'}`} />
                       </Link>
                     </motion.li>
                   ))}
@@ -217,20 +217,20 @@ export default function Navbar() {
               </nav>
 
               {/* Mobile CTAs */}
-              <div className="absolute bottom-0 left-0 right-0 p-5 border-t border-gray-100 bg-gray-50">
+              <div className="absolute bottom-0 left-0 right-0 p-5 border-t border-[hsl(var(--color-border))] bg-[hsl(var(--color-bg-alt))]">
                 <div className="space-y-3">
                   <a 
                     href={whatsappLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full py-3.5 bg-teal-600 hover:bg-teal-700 text-white text-[15px] font-medium rounded-xl transition-colors"
+                    className="flex items-center justify-center gap-2 w-full py-3.5 bg-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary-dark))] text-[hsl(var(--primary-foreground))] text-[15px] font-medium rounded-xl transition-colors"
                   >
                     <MessageCircle className="w-4 h-4" />
                     Book on WhatsApp
                   </a>
                   <a 
                     href={`tel:${phoneNumber}`}
-                    className="flex items-center justify-center gap-2 w-full py-3.5 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 text-[15px] font-medium rounded-xl transition-colors"
+                    className="flex items-center justify-center gap-2 w-full py-3.5 bg-[hsl(var(--background))] border border-[hsl(var(--color-border))] text-[hsl(var(--color-text))] hover:bg-[hsl(var(--color-bg-alt))] text-[15px] font-medium rounded-xl transition-colors"
                   >
                     <Phone className="w-4 h-4" />
                     +91 98765 43210

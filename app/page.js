@@ -45,7 +45,7 @@ export default function HomePage() {
           className="absolute inset-0"
           style={{ scale: heroScale }}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 via-gray-900/50 to-transparent z-10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[hsl(var(--color-secondary))]/80 via-[hsl(var(--color-secondary))]/50 to-transparent z-10" />
           <img 
             src="https://images.pexels.com/photos/3762441/pexels-photo-3762441.jpeg?auto=compress&cs=tinysrgb&w=1920" 
             alt="Beautiful Smile" 
@@ -65,7 +65,7 @@ export default function HomePage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
               >
-                <p className="text-teal-400 text-sm md:text-base font-medium tracking-[0.3em] uppercase mb-6">
+                <p className="text-[hsl(var(--color-accent))] text-sm md:text-base font-medium tracking-[0.3em] uppercase mb-6">
                   Aesthedent Dental Clinic
                 </p>
               </motion.div>
@@ -79,11 +79,11 @@ export default function HomePage() {
                 Look{' '}
                 <span className="font-semibold italic">beautiful.</span>
                 <br />
-                <span className="text-teal-400">Inside out.</span>
+                <span className="text-[hsl(var(--color-accent))]">Inside out.</span>
               </motion.h1>
               
               <motion.p
-                className="text-lg md:text-xl text-gray-300 max-w-xl mb-10 leading-relaxed"
+                className="text-lg md:text-xl text-[hsl(var(--color-text-light))] max-w-xl mb-10 leading-relaxed"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
@@ -101,7 +101,7 @@ export default function HomePage() {
                   href={whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-3 px-8 py-4 bg-teal-500 hover:bg-teal-400 text-white font-medium rounded-full transition-all duration-300"
+                  className="group inline-flex items-center gap-3 px-8 py-4 bg-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary-light))] text-[hsl(var(--primary-foreground))] font-medium rounded-full transition-all duration-300"
                 >
                   <MessageCircle className="w-5 h-5" />
                   Book Appointment
@@ -109,7 +109,7 @@ export default function HomePage() {
                 </a>
                 <a 
                   href={`tel:${phoneNumber}`}
-                  className="inline-flex items-center gap-3 px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-medium rounded-full backdrop-blur-sm border border-white/20 transition-all duration-300"
+                  className="inline-flex items-center gap-3 px-8 py-4 bg-[hsl(var(--primary-foreground))]/10 hover:bg-[hsl(var(--primary-foreground))]/20 text-[hsl(var(--primary-foreground))] font-medium rounded-full backdrop-blur-sm border border-[hsl(var(--primary-foreground))]/20 transition-all duration-300"
                 >
                   <Phone className="w-5 h-5" />
                   +91 98765 43210
@@ -141,7 +141,7 @@ export default function HomePage() {
       <section className="relative z-30 -mt-20">
         <div className="main-container">
           <motion.div 
-            className="bg-white rounded-2xl shadow-2xl shadow-black/10 p-6 md:p-8"
+            className="bg-[hsl(var(--background))] rounded-2xl shadow-2xl shadow-black/10 p-6 md:p-8"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -155,9 +155,9 @@ export default function HomePage() {
                 { number: '100%', label: 'Painless', sub: 'Treatments' },
               ].map((stat, i) => (
                 <div key={i} className="text-center">
-                  <p className="text-3xl md:text-4xl font-bold text-teal-600 mb-1">{stat.number}</p>
-                  <p className="text-sm font-medium text-gray-900">{stat.label}</p>
-                  <p className="text-xs text-gray-500">{stat.sub}</p>
+                  <p className="text-3xl md:text-4xl font-bold text-[hsl(var(--color-primary))] mb-1">{stat.number}</p>
+                  <p className="text-sm font-medium text-[hsl(var(--color-text))]">{stat.label}</p>
+                  <p className="text-xs text-[hsl(var(--color-text-muted))]">{stat.sub}</p>
                 </div>
               ))}
             </div>
@@ -171,7 +171,7 @@ export default function HomePage() {
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             <AnimatedSection direction="left">
               <div className="relative">
-                <div className="absolute -inset-4 bg-teal-100 rounded-3xl transform -rotate-3" />
+                <div className="absolute -inset-4 bg-[hsl(var(--color-primary-light))] rounded-3xl transform -rotate-3" />
                 <img 
                   src="https://images.pexels.com/photos/6502635/pexels-photo-6502635.jpeg?auto=compress&cs=tinysrgb&w=800" 
                   alt="Dr. Sahil at Aesthedent" 
@@ -179,8 +179,8 @@ export default function HomePage() {
                 />
                 <div className="absolute -bottom-6 -right-6 bg-white rounded-2xl shadow-xl p-6 hidden md:block">
                   <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 bg-teal-100 rounded-full flex items-center justify-center">
-                      <Play className="w-6 h-6 text-teal-600 ml-1" />
+                    <div className="w-14 h-14 bg-[hsl(var(--color-primary-light))] rounded-full flex items-center justify-center">
+                      <Play className="w-6 h-6 text-[hsl(var(--color-primary))] ml-1" />
                     </div>
                     <div>
                       <p className="font-semibold text-gray-900">Watch Our Story</p>
@@ -192,8 +192,8 @@ export default function HomePage() {
             </AnimatedSection>
             
             <AnimatedSection direction="right">
-              <p className="text-teal-600 font-medium tracking-wide uppercase text-sm mb-4">Our Philosophy</p>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-gray-900 leading-tight mb-6">
+              <p className="text-[hsl(var(--color-primary))] font-medium tracking-wide uppercase text-sm mb-4">Our Philosophy</p>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-[hsl(var(--color-text))] leading-tight mb-6">
                 Dentistry is an{' '}
                 <span className="font-semibold italic">art</span> and{' '}
                 <span className="font-semibold italic">science</span>{' '}
