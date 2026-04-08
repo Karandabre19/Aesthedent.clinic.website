@@ -13,7 +13,7 @@ export default function WhatsAppButton() {
       href={whatsappLink}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition-colors animate-pulse-soft"
+      className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[hsl(var(--accent))] rounded-full flex items-center justify-center shadow-lg hover:opacity-90 transition-opacity animate-pulse-soft"
       aria-label="Chat on WhatsApp"
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
@@ -21,7 +21,7 @@ export default function WhatsAppButton() {
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
     >
-      <MessageCircle className="w-7 h-7 text-white" />
+      <MessageCircle className="w-7 h-7 text-[hsl(var(--accent-foreground))]" />
     </motion.a>
   );
 }

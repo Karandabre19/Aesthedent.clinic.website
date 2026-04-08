@@ -42,7 +42,7 @@ export default function DoctorPage() {
   return (
     <PageWrapper>
       {/* Hero */}
-      <section className="pt-32 pb-16 bg-gradient-to-b from-teal-50 to-white">
+      <section className="pt-32 pb-16 bg-gradient-to-b from-[hsl(var(--color-primary-light))] to-[hsl(var(--background))]">
         <div className="main-container">
           <motion.div
             className="max-w-3xl mx-auto text-center"
@@ -50,11 +50,11 @@ export default function DoctorPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Badge className="mb-4 bg-teal-100 text-teal-700">Our Team</Badge>
-            <h1 className="text-4xl lg:text-[52px] font-semibold text-gray-900 mb-6 leading-tight">
+            <Badge className="mb-4 bg-[hsl(var(--color-primary-light))] text-[hsl(var(--color-primary))]">Our Team</Badge>
+            <h1 className="text-4xl lg:text-[52px] font-semibold text-[hsl(var(--color-text))] mb-6 leading-tight">
               Meet Your Dentists
             </h1>
-            <p className="text-lg lg:text-xl text-gray-600 leading-relaxed">
+            <p className="text-lg lg:text-xl text-[hsl(var(--color-text-muted))] leading-relaxed">
               Skilled, compassionate, and dedicated to your comfort. Our doctors bring years of experience with a patient-first approach.
             </p>
           </motion.div>
@@ -80,21 +80,21 @@ export default function DoctorPage() {
                   </div>
                   
                   <div className={i % 2 === 1 ? 'lg:order-1' : ''}>
-                    <h2 className="text-3xl font-semibold text-gray-900 mb-2">{doctor.name}</h2>
-                    <p className="text-teal-600 font-medium mb-6">{doctor.role}</p>
+                    <h2 className="text-3xl font-semibold text-[hsl(var(--color-text))] mb-2">{doctor.name}</h2>
+                    <p className="text-[hsl(var(--color-primary))] font-medium mb-6">{doctor.role}</p>
                     
-                    <p className="text-gray-600 leading-relaxed mb-8">{doctor.bio}</p>
+                    <p className="text-[hsl(var(--color-text-muted))] leading-relaxed mb-8">{doctor.bio}</p>
                     
                     {/* Qualifications */}
                     <div className="mb-8">
                       <div className="flex items-center gap-2 mb-4">
-                        <GraduationCap className="w-5 h-5 text-teal-600" />
-                        <h4 className="font-semibold text-gray-900">Qualifications</h4>
+                        <GraduationCap className="w-5 h-5 text-[hsl(var(--color-primary))]" />
+                        <h4 className="font-semibold text-[hsl(var(--color-text))]">Qualifications</h4>
                       </div>
                       <ul className="space-y-2">
                         {doctor.qualifications.map((q, j) => (
-                          <li key={j} className="text-gray-600 text-sm flex items-start gap-2">
-                            <span className="w-1.5 h-1.5 bg-teal-600 rounded-full mt-2 flex-shrink-0"></span>
+                          <li key={j} className="text-[hsl(var(--color-text-muted))] text-sm flex items-start gap-2">
+                            <span className="w-1.5 h-1.5 bg-[hsl(var(--color-primary))] rounded-full mt-2 flex-shrink-0"></span>
                             {q}
                           </li>
                         ))}
@@ -104,12 +104,12 @@ export default function DoctorPage() {
                     {/* Specializations */}
                     <div className="mb-8">
                       <div className="flex items-center gap-2 mb-4">
-                        <Award className="w-5 h-5 text-teal-600" />
-                        <h4 className="font-semibold text-gray-900">Specializations</h4>
+                        <Award className="w-5 h-5 text-[hsl(var(--color-primary))]" />
+                        <h4 className="font-semibold text-[hsl(var(--color-text))]">Specializations</h4>
                       </div>
                       <div className="flex flex-wrap gap-2">
                         {doctor.specializations.map((s, j) => (
-                          <Badge key={j} variant="secondary" className="bg-teal-50 text-teal-700 hover:bg-teal-100">
+                          <Badge key={j} variant="secondary" className="bg-[hsl(var(--color-primary-light))] text-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary-light))]/70">
                             {s}
                           </Badge>
                         ))}
@@ -117,8 +117,8 @@ export default function DoctorPage() {
                     </div>
                     
                     {/* Philosophy */}
-                    <div className="bg-gray-50 rounded-2xl p-6 border-l-4 border-teal-600">
-                      <p className="text-gray-700 italic">"{doctor.philosophy}"</p>
+                    <div className="bg-[hsl(var(--color-bg-alt))] rounded-2xl p-6 border-l-4 border-[hsl(var(--color-primary))]">
+                      <p className="text-[hsl(var(--color-text))] italic">"{doctor.philosophy}"</p>
                     </div>
                   </div>
                 </div>
@@ -129,7 +129,7 @@ export default function DoctorPage() {
       </section>
 
       {/* Team Values */}
-      <section className="section-spacing bg-gray-50">
+      <section className="section-spacing bg-[hsl(var(--color-bg-alt))]">
         <div className="main-container">
           <SectionHeading 
             badge="Our Values"
@@ -156,13 +156,13 @@ export default function DoctorPage() {
               }
             ].map((value, i) => (
               <AnimatedSection key={i} delay={i * 0.1}>
-                <Card className="border-gray-100 h-full text-center hover:shadow-lg transition-shadow">
+                <Card className="border-[hsl(var(--color-border))] h-full text-center hover:shadow-lg transition-shadow">
                   <CardContent className="p-8">
-                    <div className="w-14 h-14 bg-teal-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                      <value.icon className="w-7 h-7 text-teal-600" />
+                    <div className="w-14 h-14 bg-[hsl(var(--color-primary-light))] rounded-2xl flex items-center justify-center mx-auto mb-6">
+                      <value.icon className="w-7 h-7 text-[hsl(var(--color-primary))]" />
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3">{value.title}</h3>
-                    <p className="text-gray-600">{value.desc}</p>
+                    <h3 className="text-xl font-semibold text-[hsl(var(--color-text))] mb-3">{value.title}</h3>
+                    <p className="text-[hsl(var(--color-text-muted))]">{value.desc}</p>
                   </CardContent>
                 </Card>
               </AnimatedSection>
@@ -175,16 +175,16 @@ export default function DoctorPage() {
       <section className="section-spacing">
         <div className="main-container-narrow">
           <AnimatedSection>
-            <div className="bg-gradient-to-br from-teal-600 to-teal-700 rounded-3xl p-8 lg:p-12 text-center text-white">
+            <div className="bg-gradient-to-br from-[hsl(var(--color-primary))] to-[hsl(var(--color-primary-dark))] rounded-3xl p-8 lg:p-12 text-center text-[hsl(var(--primary-foreground))]">
               <h2 className="text-2xl lg:text-3xl font-semibold mb-4">
                 Ready to Meet Our Team?
               </h2>
-              <p className="text-teal-100 mb-8 max-w-xl mx-auto">
+              <p className="text-[hsl(var(--primary-foreground))]/80 mb-8 max-w-xl mx-auto">
                 Book your appointment today and experience the difference of compassionate, expert dental care.
               </p>
               <Button 
                 size="lg" 
-                className="bg-white text-teal-700 hover:bg-gray-100 px-8 py-6 text-base font-medium"
+                className="bg-[hsl(var(--background))] text-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-bg-alt))] px-8 py-6 text-base font-medium"
                 asChild
               >
                 <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
