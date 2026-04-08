@@ -97,7 +97,7 @@ export default function ContactPage() {
   return (
     <PageWrapper>
       {/* Hero */}
-      <section className="pt-32 pb-16 bg-gradient-to-b from-teal-50 to-white">
+      <section className="pt-32 pb-16 bg-gradient-to-b from-[hsl(var(--color-primary-light))] to-[hsl(var(--background))]">
         <div className="main-container">
           <motion.div
             className="max-w-3xl mx-auto text-center"
@@ -105,11 +105,11 @@ export default function ContactPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Badge className="mb-4 bg-teal-100 text-teal-700">Contact Us</Badge>
-            <h1 className="text-4xl lg:text-[52px] font-semibold text-gray-900 mb-6 leading-tight">
+            <Badge className="mb-4 bg-[hsl(var(--color-primary-light))] text-[hsl(var(--color-primary))]">Contact Us</Badge>
+            <h1 className="text-4xl lg:text-[52px] font-semibold text-[hsl(var(--color-text))] mb-6 leading-tight">
               Get in Touch
             </h1>
-            <p className="text-lg lg:text-xl text-gray-600 leading-relaxed">
+            <p className="text-lg lg:text-xl text-[hsl(var(--color-text-muted))] leading-relaxed">
               Have questions? Want to book an appointment? We're here to help. Reach out to us through any of the channels below.
             </p>
           </motion.div>
@@ -151,15 +151,15 @@ export default function ContactPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {contactInfo.map((info, i) => (
               <AnimatedSection key={i} delay={i * 0.1}>
-                <Card className="border-gray-100 hover:border-teal-200 hover:shadow-lg transition-all h-full">
+                <Card className="border-[hsl(var(--color-border))] hover:border-[hsl(var(--color-primary))] hover:shadow-lg transition-all h-full">
                   <CardContent className="p-6 text-center">
-                    <div className="w-14 h-14 bg-teal-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                      <info.icon className="w-7 h-7 text-teal-600" />
+                    <div className="w-14 h-14 bg-[hsl(var(--color-primary-light))] rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <info.icon className="w-7 h-7 text-[hsl(var(--color-primary))]" />
                     </div>
-                    <h3 className="font-semibold text-gray-900 mb-3">{info.title}</h3>
+                    <h3 className="font-semibold text-[hsl(var(--color-text))] mb-3">{info.title}</h3>
                     <div className="space-y-1 mb-4">
                       {info.details.map((detail, j) => (
-                        <p key={j} className="text-gray-600 text-sm">{detail}</p>
+                        <p key={j} className="text-[hsl(var(--color-text-muted))] text-sm">{detail}</p>
                       ))}
                     </div>
                     {info.action && (
@@ -167,7 +167,7 @@ export default function ContactPage() {
                         href={info.action.href}
                         target={info.action.href.startsWith('http') ? '_blank' : undefined}
                         rel={info.action.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                        className="text-teal-600 font-medium text-sm hover:text-teal-700 transition-colors"
+                        className="text-[hsl(var(--color-primary))] font-medium text-sm hover:text-[hsl(var(--color-primary-dark))] transition-colors"
                       >
                         {info.action.label} →
                       </a>
@@ -181,7 +181,7 @@ export default function ContactPage() {
       </section>
 
       {/* Map & Form */}
-      <section className="section-spacing bg-gray-50">
+      <section className="section-spacing bg-[hsl(var(--color-bg-alt))]">
         <div className="main-container">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Map */}
@@ -202,10 +202,10 @@ export default function ContactPage() {
 
             {/* Contact Form */}
             <AnimatedSection direction="right">
-              <Card className="border-gray-100 shadow-lg">
+              <Card className="border-[hsl(var(--color-border))] shadow-lg">
                 <CardContent className="p-8">
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-2">Send Us a Message</h3>
-                  <p className="text-gray-600 mb-6">We'll get back to you within 24 hours.</p>
+                  <h3 className="text-2xl font-semibold text-[hsl(var(--color-text))] mb-2">Send Us a Message</h3>
+                  <p className="text-[hsl(var(--color-text-muted))] mb-6">We'll get back to you within 24 hours.</p>
                   
                   {isSubmitted ? (
                     <motion.div 
@@ -216,8 +216,8 @@ export default function ContactPage() {
                       <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <CheckCircle2 className="w-8 h-8 text-green-600" />
                       </div>
-                      <h4 className="text-xl font-semibold text-gray-900 mb-2">Message Sent!</h4>
-                      <p className="text-gray-600 mb-6">Thank you for contacting us. We'll reach out to you soon.</p>
+                      <h4 className="text-xl font-semibold text-[hsl(var(--color-text))] mb-2">Message Sent!</h4>
+                      <p className="text-[hsl(var(--color-text-muted))] mb-6">Thank you for contacting us. We'll reach out to you soon.</p>
                       <Button 
                         variant="outline" 
                         onClick={() => setIsSubmitted(false)}
@@ -281,7 +281,7 @@ export default function ContactPage() {
                       <Button 
                         type="submit" 
                         size="lg" 
-                        className="w-full bg-teal-600 hover:bg-teal-700 text-white py-6"
+                        className="w-full bg-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary-dark))] text-[hsl(var(--primary-foreground))] py-6"
                         disabled={isLoading}
                       >
                         {isLoading ? (
@@ -306,16 +306,16 @@ export default function ContactPage() {
       <section className="section-spacing">
         <div className="main-container-narrow">
           <AnimatedSection>
-            <div className="bg-gradient-to-br from-teal-600 to-teal-700 rounded-3xl p-8 lg:p-12 text-center text-white">
+            <div className="bg-gradient-to-br from-[hsl(var(--color-primary))] to-[hsl(var(--color-primary-dark))] rounded-3xl p-8 lg:p-12 text-center text-[hsl(var(--primary-foreground))]">
               <h2 className="text-2xl lg:text-3xl font-semibold mb-4">
                 Prefer Instant Booking?
               </h2>
-              <p className="text-teal-100 mb-8 max-w-xl mx-auto">
+              <p className="text-[hsl(var(--primary-foreground))]/80 mb-8 max-w-xl mx-auto">
                 Skip the form and book directly on WhatsApp. Our team will confirm your appointment within minutes.
               </p>
               <Button 
                 size="lg" 
-                className="bg-white text-teal-700 hover:bg-gray-100 px-8 py-6 text-base font-medium"
+                className="bg-[hsl(var(--background))] text-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-bg-alt))] px-8 py-6 text-base font-medium"
                 asChild
               >
                 <a href={whatsappLink} target="_blank" rel="noopener noreferrer">

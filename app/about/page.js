@@ -28,7 +28,7 @@ export default function AboutPage() {
   return (
     <PageWrapper>
       {/* Hero */}
-      <section className="pt-32 pb-16 bg-gradient-to-b from-teal-50 to-white">
+      <section className="pt-32 pb-16 bg-gradient-to-b from-[hsl(var(--color-primary-light))] to-[hsl(var(--background))]">
         <div className="main-container">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div
@@ -36,17 +36,17 @@ export default function AboutPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <Badge className="mb-4 bg-teal-100 text-teal-700">About Us</Badge>
-              <h1 className="text-4xl lg:text-[52px] font-semibold text-gray-900 mb-6 leading-tight">
+              <Badge className="mb-4 bg-[hsl(var(--color-primary-light))] text-[hsl(var(--color-primary))]">About Us</Badge>
+              <h1 className="text-4xl lg:text-[52px] font-semibold text-[hsl(var(--color-text))] mb-6 leading-tight">
                 Redefining Dental Care in Pune
               </h1>
-              <p className="text-lg lg:text-xl text-gray-600 leading-relaxed mb-8">
+              <p className="text-lg lg:text-xl text-[hsl(var(--color-text-muted))] leading-relaxed mb-8">
                 At Aesthedent, we believe dental care should be gentle, honest, and accessible to everyone. Founded with a mission to remove the fear from dentistry.
               </p>
               <div className="flex gap-4">
                 <Button 
                   size="lg" 
-                  className="bg-teal-600 hover:bg-teal-700 text-white px-8 py-6"
+                  className="bg-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary-dark))] text-[hsl(var(--primary-foreground))] px-8 py-6"
                   asChild
                 >
                   <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
@@ -57,7 +57,7 @@ export default function AboutPage() {
                 <Button 
                   variant="outline" 
                   size="lg" 
-                  className="border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-6"
+                  className="border-[hsl(var(--color-border))] text-[hsl(var(--color-text))] hover:bg-[hsl(var(--color-bg-alt))] px-8 py-6"
                   asChild
                 >
                   <Link href="/doctor">
@@ -73,7 +73,7 @@ export default function AboutPage() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="relative"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-teal-100 to-teal-50 rounded-3xl transform -rotate-3"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--color-primary-light))] to-[hsl(var(--color-primary-light))]/50 rounded-3xl transform -rotate-3"></div>
               <img 
                 src="https://images.pexels.com/photos/4269950/pexels-photo-4269950.jpeg?auto=compress&cs=tinysrgb&w=800" 
                 alt="Aesthedent Clinic" 
@@ -88,14 +88,14 @@ export default function AboutPage() {
       <section className="section-spacing">
         <div className="main-container-narrow">
           <AnimatedSection className="text-center mb-12">
-            <Badge className="mb-4 bg-teal-50 text-teal-700">Our Story</Badge>
-            <h2 className="text-3xl lg:text-4xl font-semibold text-gray-900">
+            <Badge className="mb-4 bg-[hsl(var(--color-primary-light))] text-[hsl(var(--color-primary))]">Our Story</Badge>
+            <h2 className="text-3xl lg:text-4xl font-semibold text-[hsl(var(--color-text))]">
               Born from a Simple Belief
             </h2>
           </AnimatedSection>
 
           <AnimatedSection delay={0.1}>
-            <div className="prose prose-lg max-w-none text-gray-600">
+            <div className="prose prose-lg max-w-none text-[hsl(var(--color-text-muted))]">
               <p className="text-lg leading-relaxed mb-6">
                 Aesthedent was founded in 2015 by Dr. Sahil Sharma with a simple vision: to create a dental clinic where patients actually want to come. A place where fear is replaced with comfort, where every treatment is explained clearly, and where honesty guides every recommendation.
               </p>
@@ -111,7 +111,7 @@ export default function AboutPage() {
       </section>
 
       {/* Stats */}
-      <section className="section-spacing-sm bg-teal-600">
+      <section className="section-spacing-sm bg-[hsl(var(--color-primary))]">
         <div className="main-container">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {[
@@ -121,9 +121,9 @@ export default function AboutPage() {
               { number: '263', label: 'Reviews' }
             ].map((stat, i) => (
               <AnimatedSection key={i} delay={i * 0.1}>
-                <div className="text-center text-white">
+                <div className="text-center text-[hsl(var(--primary-foreground))]">
                   <p className="text-4xl lg:text-5xl font-bold mb-2">{stat.number}</p>
-                  <p className="text-teal-100">{stat.label}</p>
+                  <p className="text-[hsl(var(--primary-foreground))]/80">{stat.label}</p>
                 </div>
               </AnimatedSection>
             ))}
@@ -164,13 +164,13 @@ export default function AboutPage() {
               }
             ].map((value, i) => (
               <AnimatedSection key={i} delay={i * 0.1}>
-                <Card className="border-gray-100 hover:border-teal-200 hover:shadow-lg transition-all h-full">
+                <Card className="border-[hsl(var(--color-border))] hover:border-[hsl(var(--color-primary))] hover:shadow-lg transition-all h-full">
                   <CardContent className="p-8">
-                    <div className="w-14 h-14 bg-teal-50 rounded-2xl flex items-center justify-center mb-6">
-                      <value.icon className="w-7 h-7 text-teal-600" />
+                    <div className="w-14 h-14 bg-[hsl(var(--color-primary-light))] rounded-2xl flex items-center justify-center mb-6">
+                      <value.icon className="w-7 h-7 text-[hsl(var(--color-primary))]" />
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3">{value.title}</h3>
-                    <p className="text-gray-600 leading-relaxed">{value.desc}</p>
+                    <h3 className="text-xl font-semibold text-[hsl(var(--color-text))] mb-3">{value.title}</h3>
+                    <p className="text-[hsl(var(--color-text-muted))] leading-relaxed">{value.desc}</p>
                   </CardContent>
                 </Card>
               </AnimatedSection>
@@ -180,7 +180,7 @@ export default function AboutPage() {
       </section>
 
       {/* Inclusivity */}
-      <section className="section-spacing bg-gray-50">
+      <section className="section-spacing bg-[hsl(var(--color-bg-alt))]">
         <div className="main-container">
           <SectionHeading 
             badge="Everyone Welcome"
@@ -196,12 +196,12 @@ export default function AboutPage() {
               { icon: CreditCard, title: 'Easy Payments', desc: 'UPI, cards, NFC accepted' },
             ].map((item, i) => (
               <AnimatedSection key={i} delay={i * 0.1}>
-                <div className="text-center p-6 bg-white rounded-2xl border border-gray-100 hover:border-teal-200 hover:shadow-md transition-all">
-                  <div className="w-14 h-14 bg-teal-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <item.icon className="w-7 h-7 text-teal-600" />
+                <div className="text-center p-6 bg-[hsl(var(--background))] rounded-2xl border border-[hsl(var(--color-border))] hover:border-[hsl(var(--color-primary))] hover:shadow-md transition-all">
+                  <div className="w-14 h-14 bg-[hsl(var(--color-primary-light))] rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <item.icon className="w-7 h-7 text-[hsl(var(--color-primary))]" />
                   </div>
-                  <h4 className="font-semibold text-gray-900 mb-2">{item.title}</h4>
-                  <p className="text-sm text-gray-600">{item.desc}</p>
+                  <h4 className="font-semibold text-[hsl(var(--color-text))] mb-2">{item.title}</h4>
+                  <p className="text-sm text-[hsl(var(--color-text-muted))]">{item.desc}</p>
                 </div>
               </AnimatedSection>
             ))}
@@ -218,13 +218,13 @@ export default function AboutPage() {
               alt="Aesthedent Clinic Interior" 
               className="w-full h-[350px] lg:h-[500px] object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 to-transparent flex items-center">
+            <div className="absolute inset-0 bg-gradient-to-r from-[hsl(var(--color-secondary))]/80 to-transparent flex items-center">
               <div className="p-8 lg:p-16 max-w-lg">
-                <h3 className="text-2xl lg:text-4xl font-semibold text-white mb-4">Modern, Clean, Comfortable</h3>
-                <p className="text-gray-200 mb-6 text-lg">
+                <h3 className="text-2xl lg:text-4xl font-semibold text-[hsl(var(--primary-foreground))] mb-4">Modern, Clean, Comfortable</h3>
+                <p className="text-[hsl(var(--primary-foreground))]/80 mb-6 text-lg">
                   Our clinic is designed to feel more like a spa than a dental office. State-of-the-art equipment in a calm, welcoming environment.
                 </p>
-                <Button className="bg-white text-gray-900 hover:bg-gray-100" asChild>
+                <Button className="bg-[hsl(var(--background))] text-[hsl(var(--color-text))] hover:bg-[hsl(var(--color-bg-alt))]" asChild>
                   <Link href="/contact">
                     Visit Us Today <ArrowRight className="w-4 h-4 ml-2" />
                   </Link>
@@ -236,13 +236,13 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="section-spacing bg-gradient-to-b from-teal-50 to-white">
+      <section className="section-spacing bg-gradient-to-b from-[hsl(var(--color-primary-light))] to-[hsl(var(--background))]">
         <div className="main-container-narrow text-center">
           <AnimatedSection>
-            <h2 className="text-3xl lg:text-4xl font-semibold text-gray-900 mb-6">
+            <h2 className="text-3xl lg:text-4xl font-semibold text-[hsl(var(--color-text))] mb-6">
               Experience the Aesthedent Difference
             </h2>
-            <p className="text-lg text-gray-600 mb-10 max-w-xl mx-auto">
+            <p className="text-lg text-[hsl(var(--color-text-muted))] mb-10 max-w-xl mx-auto">
               Join thousands of happy patients who have discovered dental care that truly puts them first.
             </p>
             <Button 

@@ -199,15 +199,15 @@ export default function HomePage() {
                 <span className="font-semibold italic">science</span>{' '}
                 of precision.
               </h2>
-              <p className="text-lg text-gray-600 leading-relaxed mb-8">
+              <p className="text-lg text-[hsl(var(--color-text-muted))] leading-relaxed mb-8">
                 At Aesthedent, we believe every smile tells a story. Our approach combines cutting-edge technology with a deeply personal touch, ensuring that your journey to a healthier smile is as comfortable as it is transformative.
               </p>
-              <p className="text-gray-600 leading-relaxed mb-10">
+              <p className="text-[hsl(var(--color-text-muted))] leading-relaxed mb-10">
                 Founded by Dr. Sahil with a simple vision: to create a dental clinic where patients actually want to visit. Where fear is replaced with comfort, and every treatment is explained with honesty and care.
               </p>
               <Link 
                 href="/about"
-                className="group inline-flex items-center gap-2 text-teal-600 font-semibold hover:text-teal-700 transition-colors"
+                className="group inline-flex items-center gap-2 text-[hsl(var(--color-primary))] font-semibold hover:text-[hsl(var(--color-primary-dark))] transition-colors"
               >
                 Learn our story
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -225,12 +225,12 @@ export default function HomePage() {
         variant="compact"
       />
 
-      <section className="py-6 bg-white">
+      <section className="py-6 bg-[hsl(var(--background))]">
         <div className="main-container">
           <AnimatedSection className="text-center">
             <Link 
               href="/testimonials"
-              className="inline-flex items-center gap-2 text-teal-600 font-semibold hover:text-teal-700 transition-colors"
+              className="inline-flex items-center gap-2 text-[hsl(var(--color-primary))] font-semibold hover:text-[hsl(var(--color-primary-dark))] transition-colors"
             >
               See more stories
               <ArrowRight className="w-4 h-4" />
@@ -244,13 +244,13 @@ export default function HomePage() {
         <div className="main-container">
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             <AnimatedSection>
-              <p className="text-teal-600 font-medium tracking-wide uppercase text-sm mb-4">The Experience</p>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-gray-900 leading-tight mb-6">
+              <p className="text-[hsl(var(--color-primary))] font-medium tracking-wide uppercase text-sm mb-4">The Experience</p>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-[hsl(var(--color-text))] leading-tight mb-6">
                 Say hello to{' '}
-                <span className="font-semibold italic text-teal-600">painless</span>{' '}
+                <span className="font-semibold italic text-[hsl(var(--color-primary))]">painless</span>{' '}
                 dentistry!
               </h2>
-              <p className="text-lg text-gray-600 leading-relaxed mb-8">
+              <p className="text-lg text-[hsl(var(--color-text-muted))] leading-relaxed mb-8">
                 Sounds too good to be true? It's absolutely true. We do a bunch of things at our clinic that ensures your experience is top notch. No more getting frightened at Aesthedent.
               </p>
               
@@ -262,17 +262,17 @@ export default function HomePage() {
                   'Gentle approach with modern, quiet equipment'
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-teal-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <ChevronRight className="w-4 h-4 text-teal-600" />
+                    <div className="w-6 h-6 bg-[hsl(var(--color-primary-light))] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <ChevronRight className="w-4 h-4 text-[hsl(var(--color-primary))]" />
                     </div>
-                    <p className="text-gray-700">{item}</p>
+                    <p className="text-[hsl(var(--color-text))]">{item}</p>
                   </div>
                 ))}
               </div>
               
               <Link 
                 href="/about"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-gray-900 hover:bg-gray-800 text-white font-medium rounded-full transition-colors"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-[hsl(var(--color-secondary))] hover:bg-[hsl(var(--color-secondary-dark))] text-[hsl(var(--primary-foreground))] font-medium rounded-full transition-colors"
               >
                 Know more
                 <ArrowRight className="w-4 h-4" />
@@ -298,10 +298,10 @@ export default function HomePage() {
       </section>
 
       {/* Services Section */}
-      <section className="py-24 lg:py-32 bg-gray-900 text-white">
+      <section className="py-24 lg:py-32 bg-[hsl(var(--color-secondary))] text-[hsl(var(--primary-foreground))]">
         <div className="main-container">
           <AnimatedSection className="text-center mb-16">
-            <p className="text-teal-400 font-medium tracking-wide uppercase text-sm mb-4">Our Services</p>
+            <p className="text-[hsl(var(--color-accent))] font-medium tracking-wide uppercase text-sm mb-4">Our Services</p>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-light leading-tight">
               Expert care for{' '}
               <span className="font-semibold italic">every</span> smile
@@ -312,7 +312,7 @@ export default function HomePage() {
             {services.slice(0, 6).map((service, i) => (
               <AnimatedSection key={service.slug} delay={i * 0.08}>
                 <Link href={`/services/${service.slug}`}>
-                  <div className="group relative overflow-hidden rounded-2xl bg-gray-800 hover:bg-gray-750 transition-all duration-300">
+                  <div className="group relative overflow-hidden rounded-2xl bg-[hsl(var(--color-secondary-light))] hover:bg-[hsl(var(--color-secondary-light))]/80 transition-all duration-300">
                     <div className="aspect-[16/10] overflow-hidden">
                       <img 
                         src={service.image} 
@@ -320,13 +320,13 @@ export default function HomePage() {
                         className="w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-500"
                       />
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--color-secondary))] via-[hsl(var(--color-secondary))]/50 to-transparent" />
                     <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <h3 className="text-xl font-semibold mb-2 group-hover:text-teal-400 transition-colors">
+                      <h3 className="text-xl font-semibold mb-2 group-hover:text-[hsl(var(--color-accent))] transition-colors">
                         {service.title}
                       </h3>
-                      <p className="text-gray-400 text-sm mb-4">{service.shortDesc}</p>
-                      <span className="inline-flex items-center gap-2 text-teal-400 text-sm font-medium">
+                      <p className="text-[hsl(var(--color-text-light))] text-sm mb-4">{service.shortDesc}</p>
+                      <span className="inline-flex items-center gap-2 text-[hsl(var(--color-accent))] text-sm font-medium">
                         Learn more
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </span>
@@ -340,7 +340,7 @@ export default function HomePage() {
           <AnimatedSection className="text-center mt-12">
             <Link 
               href="/services"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-teal-500 hover:bg-teal-400 text-white font-medium rounded-full transition-colors"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-[hsl(var(--color-accent))] hover:bg-[hsl(var(--color-accent))]/90 text-[hsl(var(--color-secondary))] font-medium rounded-full transition-colors"
             >
               View all services
               <ArrowRight className="w-4 h-4" />
@@ -353,8 +353,8 @@ export default function HomePage() {
       <section className="py-24 lg:py-32">
         <div className="main-container">
           <AnimatedSection className="text-center mb-16">
-            <p className="text-teal-600 font-medium tracking-wide uppercase text-sm mb-4">Meet the Team</p>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-gray-900 leading-tight">
+            <p className="text-[hsl(var(--color-primary))] font-medium tracking-wide uppercase text-sm mb-4">Meet the Team</p>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-[hsl(var(--color-text))] leading-tight">
               We're the{' '}
               <span className="font-semibold italic">dentists</span> of dentists
             </h2>
@@ -384,11 +384,11 @@ export default function HomePage() {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/30 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--color-secondary))] via-[hsl(var(--color-secondary))]/30 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-8">
-                    <p className="text-teal-400 font-medium text-sm mb-2">{doctor.role}</p>
-                    <h3 className="text-2xl font-semibold text-white mb-3">{doctor.name}</h3>
-                    <p className="text-gray-300 text-sm leading-relaxed">{doctor.desc}</p>
+                    <p className="text-[hsl(var(--color-accent))] font-medium text-sm mb-2">{doctor.role}</p>
+                    <h3 className="text-2xl font-semibold text-[hsl(var(--primary-foreground))] mb-3">{doctor.name}</h3>
+                    <p className="text-[hsl(var(--color-text-light))] text-sm leading-relaxed">{doctor.desc}</p>
                   </div>
                 </div>
               </AnimatedSection>
@@ -398,7 +398,7 @@ export default function HomePage() {
           <AnimatedSection className="text-center mt-12">
             <Link 
               href="/doctor"
-              className="inline-flex items-center gap-2 text-teal-600 font-semibold hover:text-teal-700 transition-colors"
+              className="inline-flex items-center gap-2 text-[hsl(var(--color-primary))] font-semibold hover:text-[hsl(var(--color-primary-dark))] transition-colors"
             >
               Meet the full team
               <ArrowRight className="w-4 h-4" />
@@ -408,12 +408,12 @@ export default function HomePage() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-24 lg:py-32 bg-teal-600">
+      <section className="py-24 lg:py-32 bg-[hsl(var(--color-primary))]">
         <div className="main-container">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <AnimatedSection>
-              <p className="text-teal-200 font-medium tracking-wide uppercase text-sm mb-4">Visit Us</p>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-8">
+              <p className="text-[hsl(var(--primary-foreground))]/80 font-medium tracking-wide uppercase text-sm mb-4">Visit Us</p>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-[hsl(var(--primary-foreground))] leading-tight mb-8">
                 Ready for your{' '}
                 <span className="font-semibold italic">best</span> smile?
               </h2>
