@@ -181,15 +181,11 @@ export default function Navbar() {
               {/* Mobile Header */}
               <div className="flex items-center justify-between h-[64px] px-5 border-b border-[hsl(var(--color-border))]">
                 <Link href="/" className="flex items-center gap-2.5" onClick={() => setMobileMenuOpen(false)}>
-                  <div className="w-9 h-9 rounded-lg bg-[hsl(var(--color-primary))] flex items-center justify-center">
-                    <svg className="w-5 h-5 text-[hsl(var(--primary-foreground))]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" />
-                      <path d="M8 14s1.5 2 4 2 4-2 4-2" />
-                      <circle cx="9" cy="9" r="1" fill="currentColor" />
-                      <circle cx="15" cy="9" r="1" fill="currentColor" />
-                    </svg>
-                  </div>
-                  <span className="text-lg font-bold text-[hsl(var(--color-text))]">Aesthedent</span>
+                  <img 
+                    src="/aesthadent_logo.png" 
+                    alt="Aesthedent Logo"
+                    className="h-9 w-auto"
+                  />
                 </Link>
                 <button 
                   className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-[hsl(var(--color-bg-alt))]"
