@@ -180,11 +180,11 @@ export default function Navbar() {
             >
               {/* Mobile Header */}
               <div className="flex items-center justify-between h-[64px] px-5 border-b border-[hsl(var(--color-border))]">
-                <Link href="/" className="flex items-center gap-2.5" onClick={() => setMobileMenuOpen(false)}>
+                <Link href="/" className="flex items-center" onClick={() => setMobileMenuOpen(false)}>
                   <img 
                     src="/aesthadent_logo.png" 
                     alt="Aesthedent Logo"
-                    className="h-9 w-auto"
+                    className="h-12 w-auto object-contain"
                   />
                 </Link>
                 <button 
