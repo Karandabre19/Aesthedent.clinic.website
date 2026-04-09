@@ -17,6 +17,9 @@ const nextConfig = {
     pagesBufferLength: 2,
   },
 
+  // ✅ Allow v0 preview domain for HMR
+  allowedDevOrigins: ['vm-s7gaxwcf0az60lraamcg84.vusercontent.net'],
+
   async headers() {
     return [
       {

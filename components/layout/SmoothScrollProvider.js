@@ -26,30 +26,41 @@ export default function SmoothScrollProvider({ children }) {
   const pathname = usePathname();
   const lenisRef = useRef(null);
 
+  console.log('[v0] SmoothScrollProvider rendering');
+
   useEffect(() => {
+    console.log('[v0] SmoothScrollProvider useEffect - shouldEnableSmoothScroll:', shouldEnableSmoothScroll());
+    
     if (!shouldEnableSmoothScroll()) {
+      console.log('[v0] Smooth scroll disabled');
       return undefined;
     }
 
-    const lenis = new Lenis({
-      autoRaf: true,
-      smoothWheel: true,
-      syncTouch: false,
-      wheelMultiplier: 0.9,
-      lerp: 0.12,
-      anchors: true,
-      prevent: (node) =>
-        node?.closest?.(
-          '[data-lenis-prevent], [data-radix-scroll-area-viewport], [data-scroll-locked]'
-        ),
-    });
+    try {
+      const lenis = new Lenis({
+        autoRaf: true,
+        smoothWheel: true,
+        syncTouch: false,
+        wheelMultiplier: 0.9,
+        lerp: 0.12,
+        anchors: true,
+        prevent: (node) =>
+          node?.closest?.(
+            '[data-lenis-prevent], [data-radix-scroll-area-viewport], [data-scroll-locked]'
+          ),
+      });
 
-    lenisRef.current = lenis;
+      console.log('[v0] Lenis initialized:', !!lenis);
+      lenisRef.current = lenis;
 
-    return () => {
-      lenis.destroy();
-      lenisRef.current = null;
-    };
+      return () => {
+        lenis.destroy();
+        lenisRef.current = null;
+      };
+    } catch (error) {
+      console.error('[v0] Lenis error:', error);
+      return undefined;
+    }
   }, []);
 
   useEffect(() => {

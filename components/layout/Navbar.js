@@ -20,6 +20,8 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
+  console.log('[v0] Navbar rendering');
+
   const whatsappNumber = '919876543210';
   const whatsappMessage = encodeURIComponent('Hi, I would like to book an appointment at Aesthedent Dental Clinic.');
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;

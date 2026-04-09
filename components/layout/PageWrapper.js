@@ -29,6 +29,8 @@ const pageVariants = {
 };
 
 export default function PageWrapper({ children }) {
+  console.log('[v0] PageWrapper rendering with children:', !!children);
+  
   return (
     <>
       <Navbar />

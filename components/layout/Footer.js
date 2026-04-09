@@ -21,6 +21,8 @@ const footerLinks = {
 };
 
 export default function Footer() {
+  console.log('[v0] Footer rendering');
+  
   const whatsappNumber = '919876543210';
   const whatsappMessage = encodeURIComponent('Hi, I would like to book an appointment at Aesthedent Dental Clinic.');
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
