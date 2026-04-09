@@ -71,9 +71,9 @@ export default function LandingPage() {
   return (
     <PageWrapper>
       {/* Hero Section */}
-      <section ref={heroRef} className="relative h-screen min-h-[700px] overflow-hidden">
+      <section ref={heroRef} className="relative h-screen min-h-[700px] md:min-h-[800px] overflow-hidden">
         <motion.div className="absolute inset-0" style={{ scale: heroScale }}>
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 via-gray-900/50 to-transparent z-10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[hsl(var(--primary))]/90 via-[hsl(var(--primary))]/40 to-transparent z-10" />
           <img
             src={landingPageContent.hero.backgroundImage}
             alt="Premium Dental Care"
@@ -115,7 +115,7 @@ export default function LandingPage() {
               </motion.p>
 
               <motion.div
-                className="flex flex-col sm:flex-row gap-4"
+                className="flex flex-col sm:flex-row gap-4 md:gap-6"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
@@ -124,17 +124,17 @@ export default function LandingPage() {
                   href={createBookingLink('whatsapp')}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-[hsl(var(--accent))] hover:opacity-90 text-[hsl(var(--accent-foreground))] px-8 py-4 rounded-lg font-semibold transition-all"
+                  className="inline-flex items-center justify-center gap-2 bg-[hsl(var(--accent))] hover:bg-[hsl(var(--accent))]/90 text-[hsl(var(--accent-foreground))] px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1"
                 >
                   <MessageCircle size={20} />
-                  WhatsApp Consultation
+                  <span>WhatsApp Consultation</span>
                 </a>
                 <a
                   href={createBookingLink('phone')}
-                  className="inline-flex items-center justify-center gap-2 border-2 border-[hsl(var(--primary-foreground))] text-[hsl(var(--primary-foreground))] hover:bg-[hsl(var(--primary-foreground))] hover:text-[hsl(var(--primary))] px-8 py-4 rounded-lg font-semibold transition-all"
+                  className="inline-flex items-center justify-center gap-2 border-2 border-[hsl(var(--primary-foreground))] text-[hsl(var(--primary-foreground))] hover:bg-[hsl(var(--primary-foreground))/10] px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold transition-all duration-300 hover:-translate-y-1"
                 >
                   <Phone size={20} />
-                  Call Now
+                  <span>Call Now</span>
                 </a>
               </motion.div>
             </div>
@@ -143,62 +143,63 @@ export default function LandingPage() {
 
         <motion.div
           className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20"
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2.5, repeat: Infinity }}
         >
           <ChevronDown className="text-white" size={32} />
         </motion.div>
       </section>
 
       {/* Problem Awareness Section - Emotional Connection */}
-      <section className="py-16 md:py-24">
+      <section className="py-16 md:py-28 bg-gradient-to-b from-white to-[hsl(var(--bg-alt))]">
         <div className="main-container">
-          <AnimatedSection className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[hsl(var(--color-text))] mb-6">
+          <AnimatedSection className="text-center mb-12 md:mb-20">
+            <h2 className="text-3xl md:text-5xl font-bold text-[hsl(var(--color-text))] mb-4 leading-tight">
               {landingPageContent.problemStatement.title}
             </h2>
-            <p className="text-[hsl(var(--color-text-muted))] text-lg max-w-2xl mx-auto mb-12">
+            <p className="text-[hsl(var(--color-text-muted))] text-lg md:text-xl max-w-2xl mx-auto mb-8">
               {landingPageContent.problemStatement.subtitle}
             </p>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-12">
             {landingPageContent.problemStatement.problems.map((item, index) => (
               <AnimatedSection key={index} delay={index * 0.1}>
-                <div className="bg-gradient-to-br from-red-50 to-orange-50 p-6 rounded-xl border border-red-100/30">
-                  <h3 className="text-lg font-bold text-red-600 mb-2">{item.challenge}</h3>
-                  <p className="text-[hsl(var(--color-text-muted))]">{item.impact}</p>
+                <div className="card-elevated bg-gradient-to-br from-red-50 to-orange-50 p-6 md:p-8 border-l-4 border-red-500">
+                  <h3 className="text-lg md:text-xl font-bold text-red-600 mb-3">{item.challenge}</h3>
+                  <p className="text-[hsl(var(--color-text-muted))] leading-relaxed">{item.impact}</p>
                 </div>
               </AnimatedSection>
             ))}
           </div>
 
           <AnimatedSection className="text-center">
-            <p className="text-lg font-semibold text-[hsl(var(--color-primary))]">
-              ✓ {landingPageContent.problemStatement.solution}
+            <p className="text-lg md:text-xl font-semibold text-[hsl(var(--color-primary))] flex items-center justify-center gap-2">
+              <Check className="text-green-600" size={24} />
+              {landingPageContent.problemStatement.solution}
             </p>
           </AnimatedSection>
         </div>
       </section>
 
       {/* Consequences Section - What if untreated */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-red-50 to-orange-50">
+      <section className="py-16 md:py-28 bg-gradient-to-br from-red-50/50 via-white to-orange-50/50">
         <div className="main-container">
-          <AnimatedSection className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[hsl(var(--color-text))] mb-6">
+          <AnimatedSection className="text-center mb-12 md:mb-20">
+            <h2 className="text-3xl md:text-5xl font-bold text-[hsl(var(--color-text))] mb-4 leading-tight">
               {landingPageContent.consequences.title}
             </h2>
-            <p className="text-[hsl(var(--color-text-muted))] text-lg max-w-2xl mx-auto">
+            <p className="text-[hsl(var(--color-text-muted))] text-lg md:text-xl max-w-2xl mx-auto">
               {landingPageContent.consequences.subtitle}
             </p>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             {landingPageContent.consequences.items.map((item, index) => (
               <AnimatedSection key={index} delay={index * 0.1}>
-                <div className="bg-white p-6 rounded-xl border-l-4 border-red-500 shadow-md hover:shadow-lg transition-shadow">
-                  <h3 className="text-lg font-bold text-red-600 mb-2">{item.title}</h3>
-                  <p className="text-[hsl(var(--color-text-muted))]">{item.description}</p>
+                <div className="card-elevated bg-white p-6 md:p-8 border-l-4 border-red-500">
+                  <h3 className="text-lg md:text-xl font-bold text-red-600 mb-3">{item.title}</h3>
+                  <p className="text-[hsl(var(--color-text-muted))] leading-relaxed">{item.description}</p>
                 </div>
               </AnimatedSection>
             ))}
@@ -207,9 +208,24 @@ export default function LandingPage() {
       </section>
 
       {/* Trust Stats */}
-      <section className="py-16 md:py-24 bg-gradient-to-r from-[hsl(var(--color-bg-alt))] to-[hsl(var(--color-bg-alt))]">
+      <section className="py-16 md:py-28 bg-gradient-to-r from-[hsl(var(--primary))]/5 via-white to-[hsl(var(--accent))]/5">
         <div className="main-container">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            {landingPageContent.trustStats.map((stat, index) => (
+              <AnimatedSection key={index} delay={index * 0.1}>
+                <div className="card-elevated text-center p-8 md:p-10 bg-white">
+                  <div className="text-4xl md:text-5xl font-bold text-[hsl(var(--primary))] mb-3">
+                    {stat.label}
+                  </div>
+                  <p className="text-[hsl(var(--color-text-muted))] text-base md:text-lg font-medium">
+                    {stat.description}
+                  </p>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
             {landingPageContent.trustStats.map((stat, index) => (
               <AnimatedSection key={index} delay={index * 0.1}>
                 <div className="text-center">
@@ -259,31 +275,31 @@ export default function LandingPage() {
       </section>
 
       {/* Services Grid */}
-      <section className="py-16 md:py-24 bg-[hsl(var(--color-bg-alt))]">
+      <section className="py-16 md:py-28 bg-white">
         <div className="main-container">
-          <AnimatedSection className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[hsl(var(--color-text))] mb-6">
+          <AnimatedSection className="text-center mb-12 md:mb-20">
+            <h2 className="text-3xl md:text-5xl font-bold text-[hsl(var(--color-text))] mb-4 leading-tight">
               Our Prosthetic Services
             </h2>
-            <p className="text-[hsl(var(--color-text-muted))] text-lg max-w-2xl mx-auto">
+            <p className="text-[hsl(var(--color-text-muted))] text-lg md:text-xl max-w-2xl mx-auto">
               Comprehensive solutions for all your prosthetic and implant needs
             </p>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {landingPageContent.services.map((service, index) => (
               <AnimatedSection
                 key={index}
                 delay={index * 0.05}
-                className="bg-[hsl(var(--background))] p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow"
+                className="card-elevated bg-white p-7 md:p-8"
               >
-                <div className="text-[hsl(var(--color-primary))] mb-4">
-                  <Smile size={32} />
+                <div className="text-[hsl(var(--primary))] mb-4 bg-[hsl(var(--primary))]/10 w-fit p-3 rounded-lg">
+                  <Smile size={28} />
                 </div>
-                <h3 className="text-xl font-bold text-[hsl(var(--color-text))] mb-3">
+                <h3 className="text-lg md:text-xl font-bold text-[hsl(var(--color-text))] mb-3">
                   {service.title}
                 </h3>
-                <p className="text-[hsl(var(--color-text-muted))]">{service.description}</p>
+                <p className="text-[hsl(var(--color-text-muted))] leading-relaxed">{service.description}</p>
               </AnimatedSection>
             ))}
           </div>
@@ -426,25 +442,25 @@ export default function LandingPage() {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-16 md:py-24">
+      <section className="py-16 md:py-28 bg-white">
         <div className="main-container">
-          <AnimatedSection className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[hsl(var(--color-text))] mb-6">
+          <AnimatedSection className="text-center mb-12 md:mb-20">
+            <h2 className="text-3xl md:text-5xl font-bold text-[hsl(var(--color-text))] mb-4 leading-tight">
               {landingPageContent.benefits.title}
             </h2>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {landingPageContent.benefits.items.map((benefit, index) => (
               <AnimatedSection key={index} delay={index * 0.05}>
-                <div className="bg-gradient-to-br from-[hsl(var(--color-primary))]/10 to-[hsl(var(--color-primary))]/5 p-6 rounded-xl border border-[hsl(var(--color-primary))]/20 h-full">
-                  <div className="text-[hsl(var(--color-primary))] mb-4">
-                    <Award size={32} />
+                <div className="card-elevated bg-gradient-to-br from-[hsl(var(--primary))]/5 to-[hsl(var(--accent))]/5 p-7 md:p-8 h-full border-l-2 border-[hsl(var(--accent))]">
+                  <div className="text-[hsl(var(--primary))] mb-4 bg-white p-3 rounded-lg w-fit">
+                    <Award size={28} />
                   </div>
-                  <h3 className="text-lg font-bold text-[hsl(var(--color-text))] mb-2">
+                  <h3 className="text-lg md:text-xl font-bold text-[hsl(var(--color-text))] mb-3">
                     {benefit.title}
                   </h3>
-                  <p className="text-[hsl(var(--color-text-muted))]">{benefit.description}</p>
+                  <p className="text-[hsl(var(--color-text-muted))] leading-relaxed">{benefit.description}</p>
                 </div>
               </AnimatedSection>
             ))}
@@ -453,28 +469,28 @@ export default function LandingPage() {
       </section>
 
       {/* Results Section */}
-      <section className="py-16 md:py-24 bg-[hsl(var(--color-bg-alt))]">
+      <section className="py-16 md:py-28 bg-gradient-to-br from-white via-[hsl(var(--bg-alt))]/50 to-white">
         <div className="main-container">
-          <AnimatedSection className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[hsl(var(--color-text))] mb-4">
+          <AnimatedSection className="text-center mb-12 md:mb-20">
+            <h2 className="text-3xl md:text-5xl font-bold text-[hsl(var(--color-text))] mb-4 leading-tight">
               {landingPageContent.results.title}
             </h2>
-            <p className="text-[hsl(var(--color-text-muted))] text-lg max-w-2xl mx-auto">
+            <p className="text-[hsl(var(--color-text-muted))] text-lg md:text-xl max-w-2xl mx-auto">
               {landingPageContent.results.subtitle}
             </p>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {landingPageContent.results.outcomes.map((outcome, index) => (
               <AnimatedSection key={index} delay={index * 0.05}>
-                <div className="bg-[hsl(var(--background))] p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow border-t-4 border-[hsl(var(--color-primary))]">
-                  <div className="inline-block bg-[hsl(var(--color-primary))]/10 text-[hsl(var(--color-primary))] px-3 py-1 rounded-full text-xs font-semibold mb-3">
+                <div className="card-elevated bg-white p-7 md:p-8 border-t-4 border-[hsl(var(--primary))]">
+                  <div className="inline-block bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] px-3 py-1 rounded-full text-xs font-semibold mb-4">
                     {outcome.category}
                   </div>
-                  <h3 className="text-lg font-bold text-[hsl(var(--color-text))] mb-2">
+                  <h3 className="text-lg md:text-xl font-bold text-[hsl(var(--color-text))] mb-3">
                     {outcome.title}
                   </h3>
-                  <p className="text-[hsl(var(--color-text-muted))]">
+                  <p className="text-[hsl(var(--color-text-muted))] leading-relaxed">
                     {outcome.description}
                   </p>
                 </div>
@@ -535,61 +551,61 @@ export default function LandingPage() {
       </section>
 
       {/* Contact & Location Section */}
-      <section className="py-16 md:py-24">
+      <section className="py-16 md:py-28 bg-gradient-to-b from-white via-[hsl(var(--bg-alt))]/30 to-white">
         <div className="main-container">
-          <AnimatedSection className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[hsl(var(--color-text))] mb-4">
+          <AnimatedSection className="text-center mb-12 md:mb-20">
+            <h2 className="text-3xl md:text-5xl font-bold text-[hsl(var(--color-text))] mb-4 leading-tight">
               {landingPageContent.contactSection.title}
             </h2>
-            <p className="text-[hsl(var(--color-text-muted))] text-lg max-w-2xl mx-auto">
+            <p className="text-[hsl(var(--color-text-muted))] text-lg md:text-xl max-w-2xl mx-auto">
               {landingPageContent.contactSection.subtitle}
             </p>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
             {/* Contact Info */}
-            <AnimatedSection className="space-y-8">
-              <div className="bg-gradient-to-br from-[hsl(var(--color-primary))]/10 to-[hsl(var(--color-primary))]/5 p-8 rounded-xl border border-[hsl(var(--color-primary))]/20">
-                <h3 className="text-2xl font-bold text-[hsl(var(--color-text))] mb-4">Our Location</h3>
-                <div className="space-y-4">
+            <AnimatedSection className="space-y-6 md:space-y-8">
+              <div className="card-elevated bg-gradient-to-br from-[hsl(var(--primary))]/10 to-[hsl(var(--primary))]/5 p-7 md:p-8 border-l-4 border-[hsl(var(--primary))]">
+                <h3 className="text-2xl md:text-3xl font-bold text-[hsl(var(--color-text))] mb-6">Our Location</h3>
+                <div className="space-y-5">
                   <div>
-                    <p className="text-sm text-[hsl(var(--color-text-muted))] mb-1">Full Address:</p>
-                    <p className="text-lg font-semibold text-[hsl(var(--color-text))]">
+                    <p className="text-sm font-semibold text-[hsl(var(--color-text-muted))] mb-2 uppercase tracking-wide">Full Address</p>
+                    <p className="text-lg md:text-xl font-semibold text-[hsl(var(--color-text))] leading-relaxed">
                       {landingPageContent.contactSection.fullAddress}
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm text-[hsl(var(--color-text-muted))] mb-2">Service Areas:</p>
-                    <p className="text-[hsl(var(--color-text-muted))]">
+                    <p className="text-sm font-semibold text-[hsl(var(--color-text-muted))] mb-2 uppercase tracking-wide">Service Areas</p>
+                    <p className="text-[hsl(var(--color-text-muted))] leading-relaxed">
                       {landingPageContent.contactSection.serviceArea}
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <h3 className="text-xl font-bold text-[hsl(var(--color-text))]">Services We Provide in Pune</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="card-elevated bg-white p-7 md:p-8">
+                <h3 className="text-xl md:text-2xl font-bold text-[hsl(var(--color-text))] mb-6">Services We Provide in Pune</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {landingPageContent.contactSection.services.map((service, index) => (
-                    <div key={index} className="flex items-start gap-2">
-                      <Check size={20} className="text-[hsl(var(--color-primary))] flex-shrink-0 mt-0.5" />
-                      <span className="text-[hsl(var(--color-text-muted))]">{service}</span>
+                    <div key={index} className="flex items-start gap-3">
+                      <Check size={22} className="text-[hsl(var(--primary))] flex-shrink-0 mt-0.5" />
+                      <span className="text-[hsl(var(--color-text-muted))] font-medium">{service}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
                 <a
                   href={`tel:${phoneNumber}`}
-                  className="flex-1 bg-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary))]/90 text-[hsl(var(--color-primary-foreground))] px-6 py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors"
+                  className="flex-1 bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary-dark))] text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-1"
                 >
                   <Phone size={20} />
                   Call Us
                 </a>
                 <a
                   href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hi, I am interested in your prosthetic and implant services. Can you please provide more information?')}`}
-                  className="flex-1 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors"
+                  className="flex-1 bg-green-600 hover:bg-green-700 text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-1"
                 >
                   <MessageCircle size={20} />
                   WhatsApp
@@ -599,19 +615,19 @@ export default function LandingPage() {
 
             {/* Map Placeholder */}
             <AnimatedSection delay={0.1}>
-              <div className="bg-[hsl(var(--color-bg-alt))] rounded-xl overflow-hidden shadow-lg h-96 flex items-center justify-center">
+              <div className="card-elevated bg-gradient-to-br from-[hsl(var(--primary))]/10 to-[hsl(var(--accent))]/10 rounded-xl overflow-hidden shadow-xl h-96 md:h-full min-h-96 flex items-center justify-center">
                 <a
                   href={landingPageContent.contactSection.directionsURL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-col items-center justify-center gap-4 text-center"
+                  className="flex flex-col items-center justify-center gap-6 text-center p-8 hover:scale-105 transition-transform duration-300"
                 >
-                  <div className="bg-[hsl(var(--color-primary))] text-white p-4 rounded-full">
-                    <ArrowRight size={32} />
+                  <div className="bg-[hsl(var(--primary))] text-white p-5 rounded-full shadow-lg">
+                    <ArrowRight size={36} />
                   </div>
                   <div>
-                    <p className="font-bold text-[hsl(var(--color-text))] mb-2">Get Directions on Google Maps</p>
-                    <p className="text-sm text-[hsl(var(--color-text-muted))]">Click to open in Google Maps and navigate to us</p>
+                    <p className="font-bold text-[hsl(var(--color-text))] text-lg md:text-xl mb-2">Get Directions</p>
+                    <p className="text-[hsl(var(--color-text-muted))] text-sm md:text-base">Click to open in Google Maps</p>
                   </div>
                 </a>
               </div>
@@ -621,22 +637,28 @@ export default function LandingPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-16 md:py-24 bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--primary-dark))] text-[hsl(var(--primary-foreground))]">
-        <div className="main-container">
-          <AnimatedSection className="text-center max-w-2xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+      <section className="py-16 md:py-32 bg-gradient-to-br from-[hsl(var(--primary))] via-[hsl(var(--primary-dark))] to-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-[hsl(var(--accent))] blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-[hsl(var(--accent))] blur-3xl" />
+        </div>
+
+        <div className="main-container relative z-10">
+          <AnimatedSection className="text-center max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               {landingPageContent.finalCTA.headline}
             </h2>
-            <p className="text-lg text-[hsl(var(--primary-foreground)/0.8)] mb-10">
+            <p className="text-lg md:text-xl text-[hsl(var(--primary-foreground)/0.85)] mb-10 md:mb-12 leading-relaxed">
               {landingPageContent.finalCTA.description}
             </p>
             <a
               href={createBookingLink('whatsapp')}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-[hsl(var(--background))] text-[hsl(var(--color-primary))] px-8 py-4 rounded-lg font-semibold hover:bg-[hsl(var(--color-bg-alt))] transition-all"
+              className="inline-flex items-center justify-center gap-2 bg-[hsl(var(--accent))] text-[hsl(var(--accent-foreground))] px-8 md:px-10 py-4 md:py-5 rounded-lg font-bold text-lg shadow-2xl hover:shadow-3xl transition-all duration-300 hover:-translate-y-1"
             >
-              <MessageCircle size={20} />
+              <MessageCircle size={24} />
               {landingPageContent.finalCTA.buttonText}
             </a>
           </AnimatedSection>
@@ -651,18 +673,18 @@ function FAQItem({ question, answer }) {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
-    <div className="border border-[hsl(var(--border))] rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+    <div className="card-elevated border border-[hsl(var(--border))] rounded-xl overflow-hidden">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-6 bg-[hsl(var(--background))] hover:bg-[hsl(var(--color-bg-alt))] transition-colors"
+        className="w-full flex items-center justify-between p-6 md:p-7 bg-white hover:bg-[hsl(var(--bg-alt))] transition-colors duration-200"
       >
-        <h3 className="text-lg font-semibold text-[hsl(var(--color-text))] text-left">{question}</h3>
+        <h3 className="text-base md:text-lg font-bold text-[hsl(var(--color-text))] text-left">{question}</h3>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3 }}
           className="flex-shrink-0 ml-4"
         >
-          <ChevronDown className="text-[hsl(var(--color-primary))]" size={24} />
+          <ChevronDown className="text-[hsl(var(--primary))]" size={24} />
         </motion.div>
       </button>
       <motion.div
@@ -671,8 +693,8 @@ function FAQItem({ question, answer }) {
         transition={{ duration: 0.3 }}
         className="overflow-hidden"
       >
-        <div className="px-6 py-4 bg-[hsl(var(--color-bg-alt))] border-t border-[hsl(var(--border))]">
-          <p className="text-[hsl(var(--color-text-muted))] leading-relaxed">{answer}</p>
+        <div className="px-6 md:px-7 py-6 bg-gradient-to-br from-[hsl(var(--primary))]/5 to-transparent border-t border-[hsl(var(--border))]">
+          <p className="text-[hsl(var(--color-text-muted))] leading-relaxed text-base">{answer}</p>
         </div>
       </motion.div>
     </div>
