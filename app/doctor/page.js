@@ -179,7 +179,7 @@ export default function DoctorPage() {
               <h2 className="text-2xl lg:text-3xl font-semibold mb-4">
                 Ready to Meet Our Team?
               </h2>
-              <p className="text-[hsl(var(--primary-foreground))]/80 mb-8 max-w-xl mx-auto">
+              <p className="text-[hsl(var(--primary-foreground)/0.8)] mb-8 max-w-xl mx-auto">
                 Book your appointment today and experience the difference of compassionate, expert dental care.
               </p>
               <Button 

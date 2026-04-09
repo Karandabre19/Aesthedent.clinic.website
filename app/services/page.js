@@ -126,7 +126,7 @@ export default function ServicesPage() {
               <h2 className="text-2xl lg:text-3xl font-semibold mb-4">
                 Not Sure Which Service You Need?
               </h2>
-              <p className="text-[hsl(var(--primary-foreground))]/80 mb-8 max-w-xl mx-auto">
+              <p className="text-[hsl(var(--primary-foreground)/0.8)] mb-8 max-w-xl mx-auto">
                 Book a consultation and let our experts recommend the best treatment for you. No pressure, just honest advice.
               </p>
               <Button 

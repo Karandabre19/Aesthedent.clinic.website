@@ -310,7 +310,7 @@ export default function ContactPage() {
               <h2 className="text-2xl lg:text-3xl font-semibold mb-4">
                 Prefer Instant Booking?
               </h2>
-              <p className="text-[hsl(var(--primary-foreground))]/80 mb-8 max-w-xl mx-auto">
+              <p className="text-[hsl(var(--primary-foreground)/0.8)] mb-8 max-w-xl mx-auto">
                 Skip the form and book directly on WhatsApp. Our team will confirm your appointment within minutes.
               </p>
               <Button 

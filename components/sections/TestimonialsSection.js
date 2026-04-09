@@ -4,6 +4,97 @@ import { Star, ArrowRight } from 'lucide-react';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import { getTestimonials } from '@/lib/testimonials';
 
+function GoogleReviewBadge() {
+  return (
+    <div className="inline-flex items-center gap-2 rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--color-bg-alt))] px-3 py-1.5">
+      <div className="flex items-center gap-1">
+        <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--color-primary))]" />
+        <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--color-accent))]" />
+      </div>
+      <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[hsl(var(--color-text-muted))]">
+        Google Review
+      </span>
+    </div>
+  );
+}
+
+function ReviewerAvatar({ testimonial }) {
+  return (
+    <div className="relative h-14 w-14 overflow-hidden rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--color-bg-alt))]">
+      <img
+        src={testimonial.image}
+        alt={testimonial.name}
+        className="h-full w-full object-cover"
+      />
+    </div>
+  );
+}
+
+function ReviewStars({ rating }) {
+  return (
+    <div className="flex items-center gap-1">
+      {[...Array(rating)].map((_, i) => (
+        <Star
+          key={i}
+          size={14}
+          className="fill-[hsl(var(--color-accent))] text-[hsl(var(--color-accent))]"
+        />
+      ))}
+    </div>
+  );
+}
+
+function TestimonialCard({ testimonial, delay = 0 }) {
+  return (
+    <AnimatedSection
+      key={testimonial.id}
+      delay={delay}
+      className="overflow-hidden rounded-[1.6rem] border border-[hsl(var(--border))] bg-[hsl(var(--background))] p-6 shadow-[0_22px_50px_-32px_hsl(var(--color-primary)/0.16)] transition-all duration-300 hover:-translate-y-1 hover:border-[hsl(var(--color-primary))]/20 hover:shadow-[0_28px_60px_-34px_hsl(var(--color-primary)/0.2)]"
+    >
+      <div className="mb-5 flex items-start justify-between gap-4">
+        <div className="flex items-center gap-3 min-w-0">
+          <ReviewerAvatar testimonial={testimonial} />
+          <div className="min-w-0">
+            <h4 className="truncate text-base font-semibold text-[hsl(var(--color-text))]">
+              {testimonial.name}
+            </h4>
+            <p className="mt-1 text-sm text-[hsl(var(--color-text-muted))]">
+              Verified patient
+            </p>
+          </div>
+        </div>
+        <GoogleReviewBadge />
+      </div>
+
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <ReviewStars rating={testimonial.rating} />
+        <span className="rounded-full bg-[hsl(var(--color-bg-alt))] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[hsl(var(--color-primary))]">
+          {testimonial.service}
+        </span>
+      </div>
+
+      <p className="mb-6 text-[15px] leading-7 text-[hsl(var(--color-text))] line-clamp-4">
+        {testimonial.text}
+      </p>
+
+      <div className="flex items-center justify-between border-t border-[hsl(var(--border))] pt-4">
+        <div>
+          <p className="text-sm font-medium text-[hsl(var(--color-primary))]">
+            Shared on Google
+          </p>
+          <p className="text-xs text-[hsl(var(--color-text-muted))]">
+            Honest patient feedback
+          </p>
+        </div>
+        <div className="inline-flex items-center gap-2 text-sm font-medium text-[hsl(var(--color-primary))]">
+          <span>Read More</span>
+          <ArrowRight size={14} />
+        </div>
+      </div>
+    </AnimatedSection>
+  );
+}
+
 export default function TestimonialsSection({ 
   title = '#SmileStories',
   subtitle = 'Stories that drive us. Stories that give purpose. Stories that bring smiles.',
@@ -27,71 +118,11 @@ export default function TestimonialsSection({
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {testimonials.map((testimonial, index) => (
-              <AnimatedSection
+              <TestimonialCard
                 key={testimonial.id}
+                testimonial={testimonial}
                 delay={index * 0.1}
-                className="bg-[hsl(var(--background))] rounded-lg shadow-sm hover:shadow-md transition-all border border-[hsl(var(--border))] overflow-hidden"
-              >
-                {/* Patient Photo - Compact */}
-                <div className="relative h-40 overflow-hidden bg-[hsl(var(--color-bg-alt))]">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-
-                {/* Review Content */}
-                <div className="p-6">
-                  {/* Quotation Mark */}
-                  <div className="text-[hsl(var(--color-primary))]/30 mb-3">
-                    <svg
-                      className="w-6 h-6 opacity-60"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M3 21c3 0 7-1 7-8V5c0-1.25-4.716-5-7-5m14 0c-3 0-7 1-7 8v8c0 1.25 4.716 5 7 5" />
-                    </svg>
-                  </div>
-
-                  {/* Review Text */}
-                  <p className="text-[hsl(var(--color-text))] text-sm leading-relaxed mb-4 line-clamp-3">
-                    {testimonial.text}
-                  </p>
-
-                  {/* Divider */}
-                  <div className="border-t border-[hsl(var(--border))] pt-4 mb-4">
-                    {/* Patient Info & Rating */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-[hsl(var(--color-text))] text-sm">
-                          {testimonial.name}
-                        </h4>
-                        <p className="text-xs text-[hsl(var(--color-primary))] font-medium">
-                          {testimonial.service}
-                        </p>
-                      </div>
-                      {/* Rating Stars */}
-                      <div className="flex gap-0.5">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <Star
-                            key={i}
-                            size={14}
-                            className="fill-yellow-400 text-yellow-400"
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Read More Link */}
-                  <div className="flex items-center text-[hsl(var(--color-primary))] text-xs font-medium hover:text-[hsl(var(--color-primary-dark))] cursor-pointer">
-                    <span>Read More</span>
-                    <ArrowRight size={14} className="ml-1" />
-                  </div>
-                </div>
-              </AnimatedSection>
+              />
             ))}
           </div>
         </div>
@@ -114,63 +145,11 @@ export default function TestimonialsSection({
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((testimonial, index) => (
-            <AnimatedSection
+            <TestimonialCard
               key={testimonial.id}
+              testimonial={testimonial}
               delay={index * 0.1}
-              className="bg-[hsl(var(--background))] rounded-lg shadow-sm hover:shadow-md transition-all border border-[hsl(var(--border))] overflow-hidden"
-            >
-              <div className="relative h-40 overflow-hidden bg-[hsl(var(--color-bg-alt))]">
-                <img
-                  src={testimonial.image}
-                  alt={testimonial.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              <div className="p-6">
-                <div className="text-[hsl(var(--color-primary))]/30 mb-3">
-                  <svg
-                    className="w-6 h-6 opacity-60"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M3 21c3 0 7-1 7-8V5c0-1.25-4.716-5-7-5m14 0c-3 0-7 1-7 8v8c0 1.25 4.716 5 7 5" />
-                  </svg>
-                </div>
-
-                <p className="text-[hsl(var(--color-text))] text-sm leading-relaxed mb-4 line-clamp-3">
-                  {testimonial.text}
-                </p>
-
-                <div className="border-t border-[hsl(var(--border))] pt-4 mb-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-[hsl(var(--color-text))] text-sm">
-                        {testimonial.name}
-                      </h4>
-                      <p className="text-xs text-[hsl(var(--color-primary))] font-medium">
-                        {testimonial.service}
-                      </p>
-                    </div>
-                    <div className="flex gap-0.5">
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star
-                          key={i}
-                          size={14}
-                          className="fill-yellow-400 text-yellow-400"
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-center text-[hsl(var(--color-primary))] text-xs font-medium hover:text-[hsl(var(--color-primary-dark))] cursor-pointer">
-                  <span>Read More</span>
-                  <ArrowRight size={14} className="ml-1" />
-                </div>
-              </div>
-            </AnimatedSection>
+            />
           ))}
         </div>
       </div>

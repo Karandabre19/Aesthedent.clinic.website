@@ -106,7 +106,7 @@ export default function LandingPage() {
               </motion.h1>
 
               <motion.p
-                className="text-lg md:text-xl text-[hsl(var(--primary-foreground))]/70 max-w-xl mb-10 leading-relaxed"
+                className="text-lg md:text-xl text-[hsl(var(--primary-foreground)/0.7)] max-w-xl mb-10 leading-relaxed"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
@@ -267,26 +267,26 @@ export default function LandingPage() {
                   <h3 className={`text-2xl font-bold mb-2 ${!plan.popular && 'text-[hsl(var(--color-text))]'}`}>
                     {plan.tier}
                   </h3>
-                  <p className={`text-sm mb-6 ${plan.popular ? 'text-[hsl(var(--primary-foreground))]/80' : 'text-[hsl(var(--color-text-muted))]'}`}>
+                  <p className={`text-sm mb-6 ${plan.popular ? 'text-[hsl(var(--primary-foreground)/0.8)]' : 'text-[hsl(var(--color-text-muted))]'}`}>
                     {plan.description}
                   </p>
 
                   <p className="text-4xl font-bold mb-2">
                     {plan.price}
                   </p>
-                  <p className={`text-sm mb-8 ${plan.popular ? 'text-[hsl(var(--primary-foreground))]/80' : 'text-[hsl(var(--color-text-muted))]'}`}>
+                  <p className={`text-sm mb-8 ${plan.popular ? 'text-[hsl(var(--primary-foreground)/0.8)]' : 'text-[hsl(var(--color-text-muted))]'}`}>
                     {plan.details}
                   </p>
 
                   {/* Timeline */}
                   <div className={`mb-8 pb-8 border-b ${plan.popular ? 'border-[hsl(var(--primary-foreground))]/30' : 'border-[hsl(var(--border))]'}`}>
-                    <p className={`text-sm font-semibold mb-4 ${plan.popular ? 'text-[hsl(var(--primary-foreground))]/80' : 'text-[hsl(var(--color-text))]'}`}>
+                    <p className={`text-sm font-semibold mb-4 ${plan.popular ? 'text-[hsl(var(--primary-foreground)/0.8)]' : 'text-[hsl(var(--color-text))]'}`}>
                       <Clock size={16} className="inline mr-2" />
                       Timeline: {plan.timeline}
                     </p>
                     <div className="space-y-2 text-sm">
                       {plan.timelineBreakdown.map((phase, idx) => (
-                        <p key={idx} className={plan.popular ? 'text-[hsl(var(--primary-foreground))]/70' : 'text-[hsl(var(--color-text-muted))]'}>
+                        <p key={idx} className={plan.popular ? 'text-[hsl(var(--primary-foreground)/0.7)]' : 'text-[hsl(var(--color-text-muted))]'}>
                           • {phase.phase}: <strong>{phase.duration}</strong>
                         </p>
                       ))}
@@ -298,7 +298,7 @@ export default function LandingPage() {
                     {plan.features.map((feature, idx) => (
                       <div key={idx} className="flex items-start gap-3">
                         <Check size={20} className={plan.popular ? 'text-[hsl(var(--accent))]' : 'text-[hsl(var(--color-primary))]'} />
-                        <span className={`text-sm ${plan.popular ? 'text-[hsl(var(--primary-foreground))]/90' : 'text-[hsl(var(--color-text))]'}`}>
+                        <span className={`text-sm ${plan.popular ? 'text-[hsl(var(--primary-foreground)/0.9)]' : 'text-[hsl(var(--color-text))]'}`}>
                           {feature}
                         </span>
                       </div>
@@ -453,7 +453,7 @@ export default function LandingPage() {
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
               {landingPageContent.finalCTA.headline}
             </h2>
-            <p className="text-lg text-[hsl(var(--primary-foreground))]/80 mb-10">
+            <p className="text-lg text-[hsl(var(--primary-foreground)/0.8)] mb-10">
               {landingPageContent.finalCTA.description}
             </p>
             <a

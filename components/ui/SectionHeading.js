@@ -23,21 +23,21 @@ export default function SectionHeading({
           variant="secondary" 
           className={`mb-4 ${
             light 
-              ? 'bg-[hsl(var(--primary-foreground))]/10 text-[hsl(var(--primary-foreground))] hover:bg-[hsl(var(--primary-foreground))]/20' 
-              : 'bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/20'
+              ? 'border border-white/15 bg-white/10 text-white/80 hover:bg-white/15' 
+              : 'border border-[hsl(var(--border))] bg-[hsl(var(--secondary))] text-[hsl(var(--color-primary))] hover:bg-[hsl(var(--secondary))]'
           }`}
         >
           {badge}
         </Badge>
       )}
       <h2 className={`text-3xl lg:text-4xl font-semibold mb-4 leading-tight ${
-        light ? 'text-[hsl(var(--primary-foreground))]' : 'text-[hsl(var(--color-text))]'
+        light ? 'text-[hsl(var(--primary-foreground))]' : 'text-[hsl(var(--color-primary))]'
       }`}>
         {title}
       </h2>
       {subtitle && (
         <p className={`text-lg ${
-          light ? 'text-[hsl(var(--primary-foreground))]/70' : 'text-[hsl(var(--color-text-muted))]'
+          light ? 'text-[hsl(var(--primary-foreground)/0.7)]' : 'text-[hsl(var(--color-text-muted))]'
         }`}>
           {subtitle}
         </p>
