@@ -150,6 +150,37 @@ export default function LandingPage() {
         </motion.div>
       </section>
 
+      {/* Problem Awareness Section - Emotional Connection */}
+      <section className="py-16 md:py-24">
+        <div className="main-container">
+          <AnimatedSection className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[hsl(var(--color-text))] mb-6">
+              {landingPageContent.problemStatement.title}
+            </h2>
+            <p className="text-[hsl(var(--color-text-muted))] text-lg max-w-2xl mx-auto mb-12">
+              {landingPageContent.problemStatement.subtitle}
+            </p>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            {landingPageContent.problemStatement.problems.map((item, index) => (
+              <AnimatedSection key={index} delay={index * 0.1}>
+                <div className="bg-gradient-to-br from-red-50 to-orange-50 p-6 rounded-xl border border-red-100/30">
+                  <h3 className="text-lg font-bold text-red-600 mb-2">{item.challenge}</h3>
+                  <p className="text-[hsl(var(--color-text-muted))]">{item.impact}</p>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+
+          <AnimatedSection className="text-center">
+            <p className="text-lg font-semibold text-[hsl(var(--color-primary))]">
+              ✓ {landingPageContent.problemStatement.solution}
+            </p>
+          </AnimatedSection>
+        </div>
+      </section>
+
       {/* Trust Stats */}
       <section className="py-16 md:py-24 bg-gradient-to-r from-[hsl(var(--color-bg-alt))] to-[hsl(var(--color-bg-alt))]">
         <div className="main-container">
