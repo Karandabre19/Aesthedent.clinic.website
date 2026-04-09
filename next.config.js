@@ -17,6 +17,12 @@ const nextConfig = {
     pagesBufferLength: 2,
   },
 
+  // Allow dev resource access from preview origins
+  allowedDevOrigins: [
+    'localhost:3000',
+    '127.0.0.1:3000',
+  ],
+
   async headers() {
     return [
       {
