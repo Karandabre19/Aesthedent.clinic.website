@@ -70,7 +70,7 @@ export default function DoctorPage() {
                 <div className={`grid lg:grid-cols-2 gap-12 lg:gap-16 items-start ${i % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
                   <div className={i % 2 === 1 ? 'lg:order-2' : ''}>
                     <div className="relative">
-                      <div className="absolute inset-0 bg-gradient-to-br from-teal-100 to-teal-50 rounded-3xl transform rotate-3"></div>
+                      <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--color-primary))]/10 to-[hsl(var(--color-primary))]/5 rounded-3xl transform rotate-3"></div>
                       <img 
                         src={doctor.image} 
                         alt={doctor.name}

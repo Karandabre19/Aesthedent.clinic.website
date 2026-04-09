@@ -781,9 +781,7 @@ export default function HomePage() {
                   </div>
                   <div>
                     <p className="font-semibold text-white mb-1">Location</p>
-                    <p className="text-teal-100">
-                      Near Karve Statue, Kothrud, Pune 411038
-                    </p>
+                    <p className="text-[hsl(var(--primary-foreground))]/80">Near Karve Statue, Kothrud, Pune 411038</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -791,15 +789,9 @@ export default function HomePage() {
                     <Clock className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-semibold text-white mb-1">
-                      Opening Hours
-                    </p>
-                    <p className="text-teal-100">
-                      Monday - Saturday: 10:00 AM - 8:00 PM
-                    </p>
-                    <p className="text-teal-200 text-sm">
-                      Sunday: Closed (By appointment only)
-                    </p>
+                    <p className="font-semibold text-white mb-1">Opening Hours</p>
+                    <p className="text-[hsl(var(--primary-foreground))]/80">Monday - Saturday: 10:00 AM - 8:00 PM</p>
+                    <p className="text-[hsl(var(--primary-foreground))]/70 text-sm">Sunday: Closed (By appointment only)</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -807,13 +799,8 @@ export default function HomePage() {
                     <Phone className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-semibold text-white mb-1">
-                      For Appointments
-                    </p>
-                    <a
-                      href={`tel:${phoneNumber}`}
-                      className="text-teal-100 hover:text-white transition-colors"
-                    >
+                    <p className="font-semibold text-white mb-1">For Appointments</p>
+                    <a href={`tel:${phoneNumber}`} className="text-[hsl(var(--primary-foreground))]/80 hover:text-white transition-colors">
                       +91 98765 43210
                     </a>
                   </div>
@@ -825,7 +812,7 @@ export default function HomePage() {
                   href={whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-teal-600 font-medium rounded-full hover:bg-gray-100 transition-colors"
+                  className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-[hsl(var(--primary))] font-medium rounded-full hover:bg-gray-100 transition-colors"
                 >
                   <MessageCircle className="w-5 h-5" />
                   Book on WhatsApp
