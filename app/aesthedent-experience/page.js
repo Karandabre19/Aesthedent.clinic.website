@@ -18,6 +18,7 @@ import {
   Clock,
   Award,
   Smile,
+  Sparkles,
   Quote,
 } from 'lucide-react';
 
@@ -270,17 +271,6 @@ export default function LandingPage() {
                   {item.title}
                 </h3>
                 <p className="text-[hsl(var(--color-text-muted))] leading-relaxed text-base">{item.description}</p>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
-                  <Award size={40} />
-                </div>
-                <h3 className="text-xl font-bold text-[hsl(var(--color-text))] mb-3">
-                  {item.title}
-                </h3>
-                <p className="text-[hsl(var(--color-text-muted))]">{item.description}</p>
               </AnimatedSection>
             ))}
           </div>
