@@ -54,7 +54,11 @@ export default function SmoothScrollProvider({ children }) {
       lenisRef.current = lenis;
 
       return () => {
-        lenis.destroy();
+        try {
+          lenis.destroy();
+        } catch (e) {
+          console.error('[v0] Error destroying Lenis:', e);
+        }
         lenisRef.current = null;
       };
     } catch (error) {
@@ -64,11 +68,16 @@ export default function SmoothScrollProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    const frame = window.requestAnimationFrame(() => {
-      lenisRef.current?.resize();
-    });
+    try {
+      const frame = window.requestAnimationFrame(() => {
+        lenisRef.current?.resize?.();
+      });
 
-    return () => window.cancelAnimationFrame(frame);
+      return () => window.cancelAnimationFrame(frame);
+    } catch (error) {
+      console.error('[v0] Resize error:', error);
+      return undefined;
+    }
   }, [pathname]);
 
   return children;

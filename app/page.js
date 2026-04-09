@@ -22,8 +22,9 @@ import {
   Quote
 } from 'lucide-react';
 import TestimonialsSection from '@/components/sections/TestimonialsSection';
-import treatmentProcessImage from "@/public/clinic/treatment-process.jpeg";
-import treatMentChairImage from "@/public/clinic/dentist-chair-proper.jpeg";
+
+const treatmentProcessImageSrc = '/clinic/treatment-process.jpeg';
+const treatMentChairImageSrc = '/clinic/dentist-chair-proper.jpeg';
 
 gsap.registerPlugin(useGSAP);
 
@@ -606,12 +607,12 @@ export default function HomePage() {
             <AnimatedSection direction="right" className="relative">
               <div className="grid grid-cols-2 gap-4">
                 <img
-                  src={treatmentProcessImage.src}
+                  src={treatmentProcessImageSrc}
                   alt="Gentle dental care"
                   className="rounded-2xl shadow-lg w-full aspect-[3/4] object-cover"
                 />
                 <img
-                  src={treatMentChairImage.src}
+                  src={treatMentChairImageSrc}
                   alt="Modern equipment"
                   className="rounded-2xl shadow-lg w-full aspect-[3/4] object-cover mt-8"
                 />
