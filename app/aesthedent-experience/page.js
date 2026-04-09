@@ -226,21 +226,6 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-            {landingPageContent.trustStats.map((stat, index) => (
-              <AnimatedSection key={index} delay={index * 0.1}>
-                <div className="text-center">
-                  <p className="text-4xl md:text-5xl font-bold text-[hsl(var(--color-primary))] mb-2">
-                    {stat.label}
-                  </p>
-                  <p className="text-[hsl(var(--color-text-muted))] text-sm md:text-base">
-                    {stat.description}
-                  </p>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* USP Section */}
       <section className="py-16 md:py-24">
