@@ -181,6 +181,31 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Consequences Section - What if untreated */}
+      <section className="py-16 md:py-24 bg-gradient-to-br from-red-50 to-orange-50">
+        <div className="main-container">
+          <AnimatedSection className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[hsl(var(--color-text))] mb-6">
+              {landingPageContent.consequences.title}
+            </h2>
+            <p className="text-[hsl(var(--color-text-muted))] text-lg max-w-2xl mx-auto">
+              {landingPageContent.consequences.subtitle}
+            </p>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {landingPageContent.consequences.items.map((item, index) => (
+              <AnimatedSection key={index} delay={index * 0.1}>
+                <div className="bg-white p-6 rounded-xl border-l-4 border-red-500 shadow-md hover:shadow-lg transition-shadow">
+                  <h3 className="text-lg font-bold text-red-600 mb-2">{item.title}</h3>
+                  <p className="text-[hsl(var(--color-text-muted))]">{item.description}</p>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Trust Stats */}
       <section className="py-16 md:py-24 bg-gradient-to-r from-[hsl(var(--color-bg-alt))] to-[hsl(var(--color-bg-alt))]">
         <div className="main-container">
@@ -427,6 +452,38 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Results Section */}
+      <section className="py-16 md:py-24 bg-[hsl(var(--color-bg-alt))]">
+        <div className="main-container">
+          <AnimatedSection className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[hsl(var(--color-text))] mb-4">
+              {landingPageContent.results.title}
+            </h2>
+            <p className="text-[hsl(var(--color-text-muted))] text-lg max-w-2xl mx-auto">
+              {landingPageContent.results.subtitle}
+            </p>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {landingPageContent.results.outcomes.map((outcome, index) => (
+              <AnimatedSection key={index} delay={index * 0.05}>
+                <div className="bg-[hsl(var(--background))] p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow border-t-4 border-[hsl(var(--color-primary))]">
+                  <div className="inline-block bg-[hsl(var(--color-primary))]/10 text-[hsl(var(--color-primary))] px-3 py-1 rounded-full text-xs font-semibold mb-3">
+                    {outcome.category}
+                  </div>
+                  <h3 className="text-lg font-bold text-[hsl(var(--color-text))] mb-2">
+                    {outcome.title}
+                  </h3>
+                  <p className="text-[hsl(var(--color-text-muted))]">
+                    {outcome.description}
+                  </p>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Testimonials - #SmileStories - Dynamic */}
       <TestimonialsSection 
         title="#SmileStories"
@@ -473,6 +530,92 @@ export default function LandingPage() {
                 <p className="font-semibold text-[hsl(var(--color-text))] text-sm">{badge}</p>
               </AnimatedSection>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact & Location Section */}
+      <section className="py-16 md:py-24">
+        <div className="main-container">
+          <AnimatedSection className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[hsl(var(--color-text))] mb-4">
+              {landingPageContent.contactSection.title}
+            </h2>
+            <p className="text-[hsl(var(--color-text-muted))] text-lg max-w-2xl mx-auto">
+              {landingPageContent.contactSection.subtitle}
+            </p>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Contact Info */}
+            <AnimatedSection className="space-y-8">
+              <div className="bg-gradient-to-br from-[hsl(var(--color-primary))]/10 to-[hsl(var(--color-primary))]/5 p-8 rounded-xl border border-[hsl(var(--color-primary))]/20">
+                <h3 className="text-2xl font-bold text-[hsl(var(--color-text))] mb-4">Our Location</h3>
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-sm text-[hsl(var(--color-text-muted))] mb-1">Full Address:</p>
+                    <p className="text-lg font-semibold text-[hsl(var(--color-text))]">
+                      {landingPageContent.contactSection.fullAddress}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-[hsl(var(--color-text-muted))] mb-2">Service Areas:</p>
+                    <p className="text-[hsl(var(--color-text-muted))]">
+                      {landingPageContent.contactSection.serviceArea}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="text-xl font-bold text-[hsl(var(--color-text))]">Services We Provide in Pune</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {landingPageContent.contactSection.services.map((service, index) => (
+                    <div key={index} className="flex items-start gap-2">
+                      <Check size={20} className="text-[hsl(var(--color-primary))] flex-shrink-0 mt-0.5" />
+                      <span className="text-[hsl(var(--color-text-muted))]">{service}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex gap-3">
+                <a
+                  href={`tel:${phoneNumber}`}
+                  className="flex-1 bg-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary))]/90 text-[hsl(var(--color-primary-foreground))] px-6 py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors"
+                >
+                  <Phone size={20} />
+                  Call Us
+                </a>
+                <a
+                  href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hi, I am interested in your prosthetic and implant services. Can you please provide more information?')}`}
+                  className="flex-1 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors"
+                >
+                  <MessageCircle size={20} />
+                  WhatsApp
+                </a>
+              </div>
+            </AnimatedSection>
+
+            {/* Map Placeholder */}
+            <AnimatedSection delay={0.1}>
+              <div className="bg-[hsl(var(--color-bg-alt))] rounded-xl overflow-hidden shadow-lg h-96 flex items-center justify-center">
+                <a
+                  href={landingPageContent.contactSection.directionsURL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col items-center justify-center gap-4 text-center"
+                >
+                  <div className="bg-[hsl(var(--color-primary))] text-white p-4 rounded-full">
+                    <ArrowRight size={32} />
+                  </div>
+                  <div>
+                    <p className="font-bold text-[hsl(var(--color-text))] mb-2">Get Directions on Google Maps</p>
+                    <p className="text-sm text-[hsl(var(--color-text-muted))]">Click to open in Google Maps and navigate to us</p>
+                  </div>
+                </a>
+              </div>
+            </AnimatedSection>
           </div>
         </div>
       </section>
