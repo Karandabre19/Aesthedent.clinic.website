@@ -757,19 +757,24 @@ export default function HomePage() {
               </p>
 
               <div className="space-y-7 mb-12">
-                <div className="flex items-start gap-5">
-                  <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                <a 
+                  href="https://maps.google.com/?q=Dahanukar+Colony,+Kothrud,+Pune+411038"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-5 hover:opacity-80 transition-opacity cursor-pointer group"
+                >
+                  <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-white/30 transition-colors">
                     <MapPin className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-bold text-white mb-2 text-lg">Our Clinic</p>
-                    <p className="text-white/80 leading-relaxed">
+                    <p className="font-bold text-white mb-2 text-lg group-hover:text-[hsl(var(--accent))] transition-colors">Our Clinic</p>
+                    <p className="text-white/80 leading-relaxed group-hover:text-white transition-colors">
                       Dahanukar Colony, Kothrud, Pune 411038
                       <br/>
                       Near Karve Statue
                     </p>
                   </div>
-                </div>
+                </a>
                 <div className="flex items-start gap-5">
                   <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
                     <Clock className="w-6 h-6 text-white" />
@@ -801,7 +806,7 @@ export default function HomePage() {
                   href={whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white hover:bg-white/90 text-[hsl(var(--primary))] font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1"
+                  className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[hsl(var(--accent))] hover:bg-[hsl(var(--accent))]/90 text-[hsl(var(--accent-foreground))] font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1"
                 >
                   <MessageCircle className="w-5 h-5" />
                   Message on WhatsApp
