@@ -386,38 +386,41 @@ export default function HomePage() {
                 <div className="hero-divider mb-8 h-px w-24 origin-left scale-x-0 bg-gradient-to-r from-[hsl(var(--color-accent))] to-transparent opacity-0 transform-gpu" />
               </div>
 
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-white leading-[1.1] mb-8">
-                <span className="hero-line hero-line-1 block overflow-hidden pb-2">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-white leading-[1.1] mb-6 sm:mb-8">
+                <span className="hero-line hero-line-1 block overflow-hidden pb-1 sm:pb-2">
                   <HeroWord>Your smile</HeroWord>{' '}
                   <HeroWord className="font-semibold italic">deserves care.</HeroWord>
                 </span>
-                <span className="hero-line hero-line-2 block overflow-hidden pb-2">
+                <span className="hero-line hero-line-2 block overflow-hidden pb-1 sm:pb-2">
                   <HeroWord className="hero-accent-word text-[hsl(var(--color-accent))]">Not</HeroWord>{' '}
                   <HeroWord className="hero-accent-word text-[hsl(var(--color-accent))]">compromise.</HeroWord>
                 </span>
               </h1>
 
-              <p className="hero-copy mb-10 max-w-xl translate-y-6 text-lg leading-relaxed text-white/90 opacity-0 transform-gpu md:text-xl">
+              <p className="hero-copy mb-8 sm:mb-10 max-w-xl translate-y-6 text-base sm:text-lg leading-relaxed text-white/90 opacity-0 transform-gpu md:text-lg">
                 Expert dental implants and prosthetic care in Kothrud. We focus on your comfort and lasting results—not quick fixes.
               </p>
 
-              <div className="hero-actions flex flex-col sm:flex-row gap-4">
+              <div className="hero-actions flex flex-col gap-3 sm:flex-row sm:gap-4">
                 <a
                   href={whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hero-action-btn group inline-flex translate-y-6 scale-95 items-center gap-3 rounded-full bg-[hsl(var(--color-accent))] px-8 py-4 font-semibold text-[hsl(var(--accent-foreground))] opacity-0 transition-all duration-300 transform-gpu hover:shadow-lg hover:-translate-y-1"
+                  className="hero-action-btn group inline-flex translate-y-6 scale-95 items-center justify-center gap-2 sm:gap-3 rounded-full bg-[hsl(var(--color-accent))] px-6 sm:px-8 py-3 sm:py-4 font-semibold text-[hsl(var(--accent-foreground))] opacity-0 transition-all duration-300 transform-gpu hover:shadow-lg hover:-translate-y-1 text-sm sm:text-base"
                 >
-                  <MessageCircle className="w-5 h-5" />
+                  <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />
                   Chat on WhatsApp
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
                 <a
-                  href={`tel:${phoneNumber}`}
-                  className="hero-action-btn inline-flex translate-y-6 scale-95 items-center gap-3 rounded-full border border-white/60 bg-white/10 px-8 py-4 font-semibold text-white opacity-0 shadow-lg backdrop-blur-md transition-all duration-300 transform-gpu hover:border-white/80 hover:bg-white/20"
+                  href="https://maps.google.com/?q=Dahanukar+Colony,+Kothrud,+Pune+411038"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hero-action-btn group inline-flex translate-y-6 scale-95 items-center justify-center gap-2 sm:gap-3 rounded-full border border-white/60 bg-white/10 px-6 sm:px-8 py-3 sm:py-4 font-semibold text-white opacity-0 shadow-lg backdrop-blur-md transition-all duration-300 transform-gpu hover:border-white/80 hover:bg-white/20 text-sm sm:text-base"
                 >
-                  <Phone className="w-5 h-5" />
-                  Call Us
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <span className="hidden sm:inline">Visit Us</span>
+                  <span className="sm:hidden">Location</span>
                 </a>
               </div>
             </div>
@@ -473,9 +476,9 @@ export default function HomePage() {
       </section>
 
       {/* About Section - Story Style */}
-      <section className="py-20 md:py-32 bg-gradient-to-b from-white to-[hsl(var(--bg-alt))]">
+      <section className="py-12 sm:py-16 md:py-24 lg:py-32 bg-gradient-to-b from-white to-[hsl(var(--bg-alt))]">
         <div className="main-container">
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 md:gap-16 lg:gap-24 items-center">
             <AnimatedSection direction="left">
               <div className="relative">
                 <div className="absolute -inset-4 bg-[hsl(var(--primary))]/10 rounded-3xl transform -rotate-3" />
@@ -484,16 +487,16 @@ export default function HomePage() {
                   alt="Dr. Sahil at Aesthedent"
                   className="relative rounded-2xl shadow-xl w-full aspect-[4/5] object-cover"
                 />
-                <div className="premium-surface absolute -bottom-6 -right-6 hidden rounded-2xl p-6 md:block">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 bg-[hsl(var(--accent))]/20 rounded-full flex items-center justify-center">
-                      <Play className="w-6 h-6 text-[hsl(var(--primary))]" />
+                <div className="premium-surface absolute -bottom-6 -right-6 hidden rounded-2xl p-4 sm:p-6 md:block">
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 bg-[hsl(var(--accent))]/20 rounded-full flex items-center justify-center">
+                      <Play className="w-5 h-5 sm:w-6 sm:h-6 text-[hsl(var(--primary))]" />
                     </div>
                     <div>
-                      <p className="font-semibold text-[hsl(var(--color-text))]">
+                      <p className="font-semibold text-[hsl(var(--color-text))] text-sm sm:text-base mb-1">
                         Meet Dr. Sahil
                       </p>
-                      <p className="text-sm text-[hsl(var(--color-text-muted))]">2 min intro</p>
+                      <p className="text-xs sm:text-sm text-[hsl(var(--color-text-muted))]">2 min intro</p>
                     </div>
                   </div>
                 </div>
@@ -501,24 +504,24 @@ export default function HomePage() {
             </AnimatedSection>
 
             <AnimatedSection direction="right">
-              <div className="inline-block mb-4 px-4 py-2 bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] rounded-full text-sm font-semibold">
+              <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] rounded-full text-xs sm:text-sm font-semibold">
                 Who We Are
               </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[hsl(var(--color-text))] leading-tight mb-6">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[hsl(var(--color-text))] leading-tight mb-4 sm:mb-6">
                 Dentistry built on trust and honesty.
               </h2>
-              <p className="text-lg text-[hsl(var(--color-text-muted))] leading-relaxed mb-6">
+              <p className="text-base sm:text-lg text-[hsl(var(--color-text-muted))] leading-relaxed mb-4 sm:mb-6">
                 At Aesthedent in Kothrud, we believe dental care shouldn't feel like a medical procedure. It should feel like visiting someone who genuinely understands your needs—and cares about the results.
               </p>
-              <p className="text-base text-[hsl(var(--color-text-muted))] leading-relaxed mb-8">
+              <p className="text-sm sm:text-base text-[hsl(var(--color-text-muted))] leading-relaxed mb-6 sm:mb-8">
                 Dr. Sahil founded this clinic with one simple goal: bring expert prosthetic care and dental implants to Pune, without the unnecessary drama. We focus on explaining things clearly, addressing your fears honestly, and delivering results that actually last.
               </p>
               <Link
                 href="/about"
-                className="group inline-flex items-center gap-3 text-[hsl(var(--primary))] font-semibold hover:text-[hsl(var(--primary-dark))] transition-colors text-lg"
+                className="group inline-flex items-center gap-3 text-[hsl(var(--primary))] font-semibold hover:text-[hsl(var(--primary-dark))] transition-colors text-base sm:text-lg"
               >
                 Read our full story
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </AnimatedSection>
           </div>
@@ -549,47 +552,47 @@ export default function HomePage() {
 
       {/* Painless Dentistry Section */}
       {/* Treatment Experience Section */}
-      <section className="py-20 md:py-32 bg-gradient-to-br from-[hsl(var(--primary))]/5 via-white to-[hsl(var(--accent))]/5">
+      <section className="py-12 sm:py-16 md:py-24 lg:py-32 bg-gradient-to-br from-[hsl(var(--primary))]/5 via-white to-[hsl(var(--accent))]/5">
         <div className="main-container">
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 md:gap-16 lg:gap-24 items-center">
             <AnimatedSection direction="left">
-              <div className="inline-block mb-4 px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-semibold">
+              <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-green-100 text-green-700 rounded-full text-xs sm:text-sm font-semibold">
                 Your Comfort First
               </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[hsl(var(--color-text))] leading-tight mb-6">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[hsl(var(--color-text))] leading-tight mb-4 sm:mb-6">
                 Dental care shouldn't hurt. Not physically. Not emotionally.
               </h2>
-              <p className="text-lg text-[hsl(var(--color-text-muted))] leading-relaxed mb-8">
+              <p className="text-base sm:text-lg text-[hsl(var(--color-text-muted))] leading-relaxed mb-6 sm:mb-8">
                 Every patient who visits Aesthedent deserves to feel safe. We've designed our entire clinic—from the equipment to the conversations—around keeping you comfortable.
               </p>
 
-              <div className="space-y-5 mb-10">
+              <div className="space-y-3 sm:space-y-5 mb-8 sm:mb-10">
                 {[
                   "Advanced numbing—you literally won't feel a thing",
                   "Calm, spa-like environment to ease your mind",
                   "Clear explanations before we start anything",
                   "Gentle techniques with quiet, modern equipment",
                 ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-4">
-                    <div className="w-6 h-6 bg-[hsl(var(--primary))]/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                      <ChevronRight className="w-4 h-4 text-[hsl(var(--primary))]" />
+                  <div key={i} className="flex items-start gap-3 sm:gap-4">
+                    <div className="w-5 h-5 sm:w-6 sm:h-6 bg-[hsl(var(--primary))]/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 sm:mt-1">
+                      <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 text-[hsl(var(--primary))]" />
                     </div>
-                    <p className="text-base md:text-lg text-[hsl(var(--color-text))] font-medium">{item}</p>
+                    <p className="text-sm sm:text-base md:text-lg text-[hsl(var(--color-text))] font-medium">{item}</p>
                   </div>
                 ))}
               </div>
 
               <Link
                 href="/aesthedent-experience"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary-dark))] text-white font-semibold rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-1"
+                className="inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary-dark))] text-white font-semibold rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-1 text-sm sm:text-base"
               >
                 Learn about our process
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
               </Link>
             </AnimatedSection>
 
             <AnimatedSection direction="right" className="relative">
-              <div className="grid grid-cols-2 gap-5">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5">
                 <img
                   src={treatmentProcessImage.src}
                   alt="Gentle dental care at Aesthedent"
@@ -598,7 +601,7 @@ export default function HomePage() {
                 <img
                   src={treatMentChairImage.src}
                   alt="Modern dental equipment"
-                  className="rounded-2xl shadow-lg w-full aspect-[3/4] object-cover mt-8"
+                  className="rounded-2xl shadow-lg w-full aspect-[3/4] object-cover mt-4 sm:mt-6 md:mt-8"
                 />
               </div>
             </AnimatedSection>
@@ -607,25 +610,25 @@ export default function HomePage() {
       </section>
 
       {/* Services Section */}
-      <section className="py-20 md:py-32 bg-[hsl(var(--primary))]">
+      <section className="py-12 sm:py-16 md:py-24 lg:py-32 bg-[hsl(var(--primary))]">
         <div className="main-container">
-          <AnimatedSection className="text-center mb-16 md:mb-24">
-            <div className="inline-block mb-4 px-4 py-2 bg-white/20 text-white rounded-full text-sm font-semibold">
+          <AnimatedSection className="text-center mb-12 sm:mb-16 md:mb-24">
+            <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-white/20 text-white rounded-full text-xs sm:text-sm font-semibold">
               What We Offer
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-3 sm:mb-6">
               Expert services for every smile need
             </h2>
-            <p className="text-lg text-white/80 max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-white/80 max-w-2xl mx-auto">
               From dental implants to full mouth rehabilitation, we handle complex cases with precision—and care.
             </p>
           </AnimatedSection>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7 md:gap-9">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-7 lg:gap-9">
             {services.slice(0, 6).map((service, i) => (
               <AnimatedSection key={service.slug} delay={i * 0.08}>
                 <Link href={`/services/${service.slug}`}>
-                  <div className="card-elevated group relative overflow-hidden rounded-2xl bg-white border border-white/20 hover:-translate-y-2">
+                  <div className="card-elevated group relative overflow-hidden rounded-xl sm:rounded-2xl bg-white border border-white/20 hover:-translate-y-2 transition-transform">
                     <div className="aspect-[16/10] overflow-hidden bg-[hsl(var(--bg-alt))]">
                       <img
                         src={service.image}
@@ -634,21 +637,33 @@ export default function HomePage() {
                       />
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--primary))]/95 via-[hsl(var(--primary))]/55 to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <h3 className="text-xl font-semibold mb-2 text-white group-hover:text-[hsl(var(--accent))] transition-colors">
+                    <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+                      <h3 className="text-base sm:text-lg md:text-xl font-semibold mb-1 sm:mb-2 text-white group-hover:text-[hsl(var(--accent))] transition-colors">
                         {service.title}
                       </h3>
-                      <p className="text-[hsl(var(--color-text-light))] text-sm mb-4">
+                      <p className="text-white/80 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2">
                         {service.shortDesc}
                       </p>
-                      <span className="inline-flex items-center gap-2 text-[hsl(var(--color-accent))] text-sm font-medium">
-                        Learn more
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      <span className="inline-flex items-center gap-1 sm:gap-2 text-[hsl(var(--accent))] text-xs sm:text-sm font-medium">
+                        View details
+                        <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
                       </span>
                     </div>
                   </div>
                 </Link>
               </AnimatedSection>
+            ))}
+          </div>
+
+          <AnimatedSection className="text-center mt-10 sm:mt-12 md:mt-14 lg:mt-16">
+            <Link
+              href="/services"
+              className="inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-white hover:bg-white/90 text-[hsl(var(--primary))] font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 text-sm sm:text-base md:text-lg"
+            >
+              Explore all services
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+            </Link>
+          </AnimatedSection>
             ))}
           </div>
 
@@ -665,21 +680,21 @@ export default function HomePage() {
       </section>
 
       {/* Doctors Section */}
-      <section className="py-20 md:py-32 bg-gradient-to-b from-white to-[hsl(var(--bg-alt))]">
+      <section className="py-12 sm:py-16 md:py-24 lg:py-32 bg-gradient-to-b from-white to-[hsl(var(--bg-alt))]">
         <div className="main-container">
-          <AnimatedSection className="text-center mb-16 md:mb-24">
-            <div className="inline-block mb-4 px-4 py-2 bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] rounded-full text-sm font-semibold">
+          <AnimatedSection className="text-center mb-12 sm:mb-16 md:mb-24">
+            <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] rounded-full text-xs sm:text-sm font-semibold">
               Our Team
             </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[hsl(var(--color-text))] leading-tight mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[hsl(var(--color-text))] leading-tight mb-3 sm:mb-6">
               Dentistry by experienced experts
             </h2>
-            <p className="text-lg text-[hsl(var(--color-text-muted))] max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-[hsl(var(--color-text-muted))] max-w-2xl mx-auto">
               Each dentist at Aesthedent brings years of experience and a genuine care for patient comfort.
             </p>
           </AnimatedSection>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
             {[
               {
                 name: "Dr. Sahil Sharma",
@@ -695,7 +710,7 @@ export default function HomePage() {
               },
             ].map((doctor, i) => (
               <AnimatedSection key={i} delay={i * 0.15}>
-                <div className="card-elevated group relative overflow-hidden rounded-2xl bg-white">
+                <div className="card-elevated group relative overflow-hidden rounded-xl sm:rounded-2xl bg-white">
                   <div className="aspect-[4/5] overflow-hidden">
                     <img
                       src={doctor.image}
@@ -705,12 +720,12 @@ export default function HomePage() {
                   </div>
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/8 via-transparent to-[hsl(var(--primary))]/15" />
 
-                  <div className="absolute left-6 right-6 top-6 max-w-[85%]">
-                    <div className="rounded-xl border border-white/80 bg-white/90 px-6 py-4 shadow-lg backdrop-blur-md">
-                      <p className="mb-2 text-xs font-bold uppercase tracking-wider text-[hsl(var(--primary))]/70">
+                  <div className="absolute left-3 right-3 top-3 sm:left-6 sm:right-6 sm:top-6 max-w-[85%]">
+                    <div className="rounded-lg sm:rounded-xl border border-white/80 bg-white/90 px-4 sm:px-6 py-3 sm:py-4 shadow-lg backdrop-blur-md">
+                      <p className="mb-1 sm:mb-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[hsl(var(--primary))]/70">
                         Dentist
                       </p>
-                      <h3 className="text-xl font-bold leading-tight text-[hsl(var(--primary))]">
+                      <h3 className="text-lg sm:text-xl font-bold leading-tight text-[hsl(var(--primary))]">
                         {doctor.name}
                       </h3>
                     </div>
@@ -742,87 +757,87 @@ export default function HomePage() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 md:py-32 bg-[hsl(var(--primary))]">
+      <section className="py-12 sm:py-16 md:py-24 lg:py-32 bg-[hsl(var(--primary))]">
         <div className="main-container">
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 md:gap-16 lg:gap-20 items-center">
             <AnimatedSection>
-              <div className="inline-block mb-4 px-4 py-2 bg-white/20 text-white rounded-full text-sm font-semibold">
+              <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-white/20 text-white rounded-full text-xs sm:text-sm font-semibold">
                 Get in Touch
               </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-8">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4 sm:mb-6 md:mb-8">
                 Visit Aesthedent in Kothrud
               </h2>
-              <p className="text-lg text-white/85 leading-relaxed mb-10">
+              <p className="text-sm sm:text-base md:text-lg text-white/85 leading-relaxed mb-6 sm:mb-8 md:mb-10">
                 We're located in Kothrud, Pune. Come experience dentistry the way it should be—comfortable, honest, and results-driven.
               </p>
 
-              <div className="space-y-7 mb-12">
+              <div className="space-y-4 sm:space-y-5 md:space-y-7 mb-8 sm:mb-10 md:mb-12">
                 <a 
                   href="https://maps.google.com/?q=Dahanukar+Colony,+Kothrud,+Pune+411038"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-start gap-5 hover:opacity-80 transition-opacity cursor-pointer group"
+                  className="flex items-start gap-3 sm:gap-5 hover:opacity-80 transition-opacity cursor-pointer group"
                 >
-                  <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-white/30 transition-colors">
-                    <MapPin className="w-6 h-6 text-white" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-white/30 transition-colors">
+                    <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-bold text-white mb-2 text-lg group-hover:text-[hsl(var(--accent))] transition-colors">Our Clinic</p>
-                    <p className="text-white/80 leading-relaxed group-hover:text-white transition-colors">
+                    <p className="font-bold text-white mb-1 sm:mb-2 text-base sm:text-lg group-hover:text-[hsl(var(--accent))] transition-colors">Our Clinic</p>
+                    <p className="text-white/80 leading-relaxed text-xs sm:text-sm md:text-base group-hover:text-white transition-colors">
                       Dahanukar Colony, Kothrud, Pune 411038
                       <br/>
                       Near Karve Statue
                     </p>
                   </div>
                 </a>
-                <div className="flex items-start gap-5">
-                  <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-6 h-6 text-white" />
+                <div className="flex items-start gap-3 sm:gap-5">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-bold text-white mb-2 text-lg">Hours</p>
-                    <p className="text-white/80 leading-relaxed">
+                    <p className="font-bold text-white mb-1 sm:mb-2 text-base sm:text-lg">Hours</p>
+                    <p className="text-white/80 leading-relaxed text-xs sm:text-sm md:text-base">
                       Monday–Saturday: 10 AM–8 PM
                       <br/>
-                      <span className="text-sm">Sunday: By appointment only</span>
+                      <span className="text-xs">Sunday: By appointment only</span>
                     </p>
                   </div>
                 </div>
-                <div className="flex items-start gap-5">
-                  <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-6 h-6 text-white" />
+                <div className="flex items-start gap-3 sm:gap-5">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-bold text-white mb-2 text-lg">Reach Us</p>
-                    <a href={`tel:${phoneNumber}`} className="text-white hover:text-white/90 transition-colors font-semibold text-lg">
+                    <p className="font-bold text-white mb-1 sm:mb-2 text-base sm:text-lg">Reach Us</p>
+                    <a href={`tel:${phoneNumber}`} className="text-white hover:text-white/90 transition-colors font-semibold text-base sm:text-lg">
                       +91 98765 43210
                     </a>
                   </div>
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col gap-2 sm:gap-3 md:gap-4">
                 <a
                   href={whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[hsl(var(--accent))] hover:bg-[hsl(var(--accent))]/90 text-[hsl(var(--accent-foreground))] font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1"
+                  className="inline-flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-[hsl(var(--accent))] hover:bg-[hsl(var(--accent))]/90 text-[hsl(var(--accent-foreground))] font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 text-sm sm:text-base w-full sm:w-auto"
                 >
-                  <MessageCircle className="w-5 h-5" />
+                  <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />
                   Message on WhatsApp
                 </a>
                 <Link
                   href="/contact"
-                  className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white/15 text-white font-semibold rounded-lg border-2 border-white/40 hover:border-white/60 hover:bg-white/20 transition-all duration-300"
+                  className="inline-flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-white/15 text-white font-semibold rounded-lg border-2 border-white/40 hover:border-white/60 hover:bg-white/20 transition-all duration-300 text-sm sm:text-base w-full sm:w-auto"
                 >
                   <span>Contact Form</span>
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                 </Link>
               </div>
             </AnimatedSection>
 
             <AnimatedSection direction="right">
-              <div className="rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-300">
+              <div className="rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-300">
                 <img
                   src="https://images.pexels.com/photos/4269950/pexels-photo-4269950.jpeg?auto=compress&cs=tinysrgb&w=800"
                   alt="Aesthedent Dental Clinic in Kothrud"
