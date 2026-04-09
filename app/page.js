@@ -386,7 +386,7 @@ export default function HomePage() {
                 <div className="hero-divider mb-8 h-px w-24 origin-left scale-x-0 bg-gradient-to-r from-[hsl(var(--color-accent))] to-transparent opacity-0 transform-gpu" />
               </div>
 
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-white leading-[1.1] mb-6 sm:mb-8">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-[hsl(var(--color-primary))] leading-[1.1] mb-6 sm:mb-8">
                 <span className="hero-line hero-line-1 block overflow-hidden pb-1 sm:pb-2">
                   <HeroWord>Your smile</HeroWord>{' '}
                   <HeroWord className="font-semibold italic">deserves care.</HeroWord>
@@ -397,7 +397,7 @@ export default function HomePage() {
                 </span>
               </h1>
 
-              <p className="hero-copy mb-8 sm:mb-10 max-w-xl translate-y-6 text-base sm:text-lg leading-relaxed text-white/90 opacity-0 transform-gpu md:text-lg">
+              <p className="hero-copy mb-8 sm:mb-10 max-w-xl translate-y-6 text-base sm:text-lg leading-relaxed text-[hsl(var(--color-primary))]/85 opacity-0 transform-gpu md:text-lg">
                 Expert dental implants and prosthetic care in Kothrud. We focus on your comfort and lasting results—not quick fixes.
               </p>
 
