@@ -698,33 +698,51 @@ export default function HomePage() {
               },
             ].map((doctor, i) => (
               <AnimatedSection key={i} delay={i * 0.15}>
-                <div className="card-elevated group relative overflow-hidden rounded-xl sm:rounded-2xl bg-white">
-                  <div className="aspect-[4/5] overflow-hidden">
-                    <img
-                      src={doctor.image}
-                      alt={doctor.name}
-                      className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/8 via-transparent to-[hsl(var(--primary))]/15" />
+                <div className="card-elevated group rounded-xl sm:rounded-2xl bg-white overflow-hidden">
+                  {/* Image Container */}
+                  <div className="relative overflow-hidden">
+                    <div className="aspect-[4/5] overflow-hidden">
+                      <img
+                        src={doctor.image}
+                        alt={doctor.name}
+                        className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/8 via-transparent to-[hsl(var(--primary))]/15" />
 
-                  <div className="absolute left-3 right-3 top-3 sm:left-6 sm:right-6 sm:top-6 max-w-[85%]">
-                    <div className="rounded-lg sm:rounded-xl border border-white/80 bg-white/90 px-4 sm:px-6 py-3 sm:py-4 shadow-lg backdrop-blur-md">
-                      <p className="mb-1 sm:mb-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[hsl(var(--primary))]/70">
-                        Dentist
+                    {/* Name Card - Hidden on mobile, shown on sm+ */}
+                    <div className="hidden sm:block absolute left-6 right-6 top-6 max-w-[85%]">
+                      <div className="rounded-lg sm:rounded-xl border border-white/80 bg-white/90 px-4 sm:px-6 py-3 sm:py-4 shadow-lg backdrop-blur-md">
+                        <p className="mb-1 sm:mb-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[hsl(var(--primary))]/70">
+                          Dentist
+                        </p>
+                        <h3 className="text-lg sm:text-xl font-bold leading-tight text-[hsl(var(--primary))]">
+                          {doctor.name}
+                        </h3>
+                      </div>
+                    </div>
+
+                    {/* Description - Positioned at bottom */}
+                    <div className="absolute bottom-5 left-5 right-5 rounded-[1.6rem] border border-white/65 bg-[hsl(var(--background))]/84 p-5 shadow-[0_24px_54px_-30px_hsl(var(--color-primary)/0.38)] backdrop-blur-xl">
+                      <p className="mb-3 inline-flex rounded-full bg-[hsl(var(--color-primary))] px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.26em] text-[hsl(var(--color-accent))]">
+                        {doctor.role}
                       </p>
-                      <h3 className="text-lg sm:text-xl font-bold leading-tight text-[hsl(var(--primary))]">
-                        {doctor.name}
-                      </h3>
+                      <p className="text-sm leading-relaxed text-[hsl(var(--color-text-muted))]">
+                        {doctor.desc}
+                      </p>
                     </div>
                   </div>
 
-                  <div className="absolute bottom-5 left-5 right-5 rounded-[1.6rem] border border-white/65 bg-[hsl(var(--background))]/84 p-5 shadow-[0_24px_54px_-30px_hsl(var(--color-primary)/0.38)] backdrop-blur-xl">
-                    <p className="mb-3 inline-flex rounded-full bg-[hsl(var(--color-primary))] px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.26em] text-[hsl(var(--color-accent))]">
-                      {doctor.role}
+                  {/* Name Display - Visible on mobile only */}
+                  <div className="sm:hidden p-4 border-t border-[hsl(var(--color-border))]">
+                    <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[hsl(var(--primary))]/70">
+                      Dentist
                     </p>
-                    <p className="text-sm leading-relaxed text-[hsl(var(--color-text-muted))]">
-                      {doctor.desc}
+                    <h3 className="text-lg font-bold text-[hsl(var(--primary))]">
+                      {doctor.name}
+                    </h3>
+                    <p className="text-xs text-[hsl(var(--color-primary))] font-semibold mt-2 uppercase tracking-wider">
+                      {doctor.role}
                     </p>
                   </div>
                 </div>
