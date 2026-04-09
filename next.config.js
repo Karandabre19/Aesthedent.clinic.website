@@ -21,6 +21,7 @@ const nextConfig = {
   allowedDevOrigins: [
     'localhost:3000',
     '127.0.0.1:3000',
+    'vm-t8tk2xcdsu1up0p33cwpul.vusercontent.net',
   ],
 
   async headers() {
