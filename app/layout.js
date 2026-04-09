@@ -1,6 +1,7 @@
 import './globals.css';
 import { Poppins } from 'next/font/google';
 import SmoothScrollProvider from '@/components/layout/SmoothScrollProvider';
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const poppins = Poppins({ 
   subsets: ['latin'],
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={poppins.variable}>
       <body className={`${poppins.className} font-sans`}>
+        <GoogleAnalytics gaId="G-473559561" />
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
       </body>
     </html>
