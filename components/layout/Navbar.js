@@ -120,7 +120,7 @@ export default function Navbar() {
             </div>
 
             {/* Tablet & Mobile - CTA + Menu Button */}
-            <div className="flex xl:hidden items-center gap-2">
+            <div className="flex xl:hidden items-center gap-2 sm:gap-3">
               {/* Show Book button on tablet only */}
               <a 
                 href={whatsappLink}
@@ -132,18 +132,28 @@ export default function Navbar() {
                 <span>Book Now</span>
               </a>
               
-              {/* Menu Button */}
-              <button 
-                className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-[hsl(var(--color-bg-alt))] transition-colors"
+              {/* Menu Button - Always Visible */}
+              <motion.button 
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center justify-center w-12 h-12 rounded-xl hover:bg-[hsl(var(--accent))]/10 transition-all duration-200 active:scale-95"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 aria-label="Toggle menu"
+                aria-expanded={mobileMenuOpen}
+                role="button"
+                tabIndex="0"
               >
-                {mobileMenuOpen ? (
-                  <X className="w-5 h-5 text-[hsl(var(--color-text))]" />
-                ) : (
-                  <Menu className="w-5 h-5 text-[hsl(var(--color-text))]" />
-                )}
-              </button>
+                <motion.div
+                  animate={{ rotate: mobileMenuOpen ? 90 : 0 }}
+                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                >
+                  {mobileMenuOpen ? (
+                    <X className="w-6 h-6 sm:w-7 sm:h-7 text-[hsl(var(--accent))]" strokeWidth={2.5} />
+                  ) : (
+                    <Menu className="w-6 h-6 sm:w-7 sm:h-7 text-[hsl(var(--color-text))]" strokeWidth={2.5} />
+                  )}
+                </motion.div>
+              </motion.button>
             </div>
           </div>
         </div>
