@@ -56,7 +56,7 @@ export default function Navbar() {
         transition={{ duration: 0.5, ease: 'easeOut' }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled 
-            ? 'bg-[hsl(var(--background))] shadow-lg shadow-black/5' 
+            ? 'bg-[hsl(var(--background))] shadow-2xl shadow-black/10' 
             : 'bg-[hsl(var(--background))]'
         }`}
       >
@@ -120,7 +120,7 @@ export default function Navbar() {
             </div>
 
             {/* Tablet & Mobile - CTA + Menu Button */}
-            <div className="flex xl:hidden items-center gap-2">
+            <div className="flex xl:hidden items-center gap-2 sm:gap-3">
               {/* Show Book button on tablet only */}
               <a 
                 href={whatsappLink}
@@ -132,18 +132,28 @@ export default function Navbar() {
                 <span>Book Now</span>
               </a>
               
-              {/* Menu Button */}
-              <button 
-                className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-[hsl(var(--color-bg-alt))] transition-colors"
+              {/* Menu Button - Always Visible */}
+              <motion.button 
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center justify-center w-12 h-12 rounded-xl hover:bg-[hsl(var(--accent))]/10 transition-all duration-200 active:scale-95"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 aria-label="Toggle menu"
+                aria-expanded={mobileMenuOpen}
+                role="button"
+                tabIndex="0"
               >
-                {mobileMenuOpen ? (
-                  <X className="w-5 h-5 text-[hsl(var(--color-text))]" />
-                ) : (
-                  <Menu className="w-5 h-5 text-[hsl(var(--color-text))]" />
-                )}
-              </button>
+                <motion.div
+                  animate={{ rotate: mobileMenuOpen ? 90 : 0 }}
+                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                >
+                  {mobileMenuOpen ? (
+                    <X className="w-6 h-6 sm:w-7 sm:h-7 text-[hsl(var(--accent))]" strokeWidth={2.5} />
+                  ) : (
+                    <Menu className="w-6 h-6 sm:w-7 sm:h-7 text-[hsl(var(--color-text))]" strokeWidth={2.5} />
+                  )}
+                </motion.div>
+              </motion.button>
             </div>
           </div>
         </div>
@@ -170,16 +180,12 @@ export default function Navbar() {
             >
               {/* Mobile Header */}
               <div className="flex items-center justify-between h-[64px] px-5 border-b border-[hsl(var(--color-border))]">
-                <Link href="/" className="flex items-center gap-2.5" onClick={() => setMobileMenuOpen(false)}>
-                  <div className="w-9 h-9 rounded-lg bg-[hsl(var(--color-primary))] flex items-center justify-center">
-                    <svg className="w-5 h-5 text-[hsl(var(--primary-foreground))]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" />
-                      <path d="M8 14s1.5 2 4 2 4-2 4-2" />
-                      <circle cx="9" cy="9" r="1" fill="currentColor" />
-                      <circle cx="15" cy="9" r="1" fill="currentColor" />
-                    </svg>
-                  </div>
-                  <span className="text-lg font-bold text-[hsl(var(--color-text))]">Aesthedent</span>
+                <Link href="/" className="flex items-center" onClick={() => setMobileMenuOpen(false)}>
+                  <img 
+                    src="/aesthadent_logo.png" 
+                    alt="Aesthedent Logo"
+                    className="h-12 w-auto object-contain"
+                  />
                 </Link>
                 <button 
                   className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-[hsl(var(--color-bg-alt))]"

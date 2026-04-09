@@ -361,10 +361,10 @@ export default function HomePage() {
       >
         {/* Background Image with Parallax */}
         <motion.div className="absolute inset-0" style={{ scale: heroScale }}>
-          <div className="hero-overlay absolute inset-0 bg-gradient-to-r from-[hsl(var(--color-secondary))]/80 via-[hsl(var(--color-secondary))]/50 to-transparent z-10" />
+          <div className="hero-overlay absolute inset-0 bg-gradient-to-r from-[hsl(var(--color-secondary))]/60 via-[hsl(var(--color-secondary))]/30 to-transparent z-10" />
           <img
-            src="https://images.pexels.com/photos/3762441/pexels-photo-3762441.jpeg?auto=compress&cs=tinysrgb&w=1920"
-            alt="Beautiful Smile"
+            src="/homepage-banner.png"
+            alt="Premium Dental Care - Crystalline Tooth"
             className="hero-bg-image h-full w-full object-cover will-change-transform transform-gpu"
           />
         </motion.div>
@@ -386,18 +386,18 @@ export default function HomePage() {
                 <div className="hero-divider mb-8 h-px w-24 origin-left scale-x-0 bg-gradient-to-r from-[hsl(var(--color-accent))] to-transparent opacity-0 transform-gpu" />
               </div>
 
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-white leading-[1.1] mb-6 sm:mb-8">
-                <span className="hero-line hero-line-1 block overflow-hidden pb-1 sm:pb-2">
+              <h1 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-[hsl(var(--color-primary))] leading-[1.1] mb-6 sm:mb-8">
+                <span className="hero-line hero-line-1 relative block overflow-hidden pb-1 sm:pb-2">
                   <HeroWord>Your smile</HeroWord>{' '}
                   <HeroWord className="font-semibold italic">deserves care.</HeroWord>
                 </span>
-                <span className="hero-line hero-line-2 block overflow-hidden pb-1 sm:pb-2">
+                <span className="hero-line hero-line-2 relative block overflow-hidden pb-1 sm:pb-2">
                   <HeroWord className="hero-accent-word text-[hsl(var(--color-accent))]">Not</HeroWord>{' '}
                   <HeroWord className="hero-accent-word text-[hsl(var(--color-accent))]">compromise.</HeroWord>
                 </span>
               </h1>
 
-              <p className="hero-copy mb-8 sm:mb-10 max-w-xl translate-y-6 text-base sm:text-lg leading-relaxed text-white/90 opacity-0 transform-gpu md:text-lg">
+              <p className="hero-copy mb-8 sm:mb-10 max-w-xl translate-y-6 text-base sm:text-lg leading-relaxed text-[hsl(var(--color-primary))]/85 opacity-0 transform-gpu md:text-lg">
                 Expert dental implants and prosthetic care in Kothrud. We focus on your comfort and lasting results—not quick fixes.
               </p>
 
@@ -416,7 +416,7 @@ export default function HomePage() {
                   href="https://maps.google.com/?q=Dahanukar+Colony,+Kothrud,+Pune+411038"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hero-action-btn group inline-flex translate-y-6 scale-95 items-center justify-center gap-2 sm:gap-3 rounded-full border border-white/60 bg-white/10 px-6 sm:px-8 py-3 sm:py-4 font-semibold text-white opacity-0 shadow-lg backdrop-blur-md transition-all duration-300 transform-gpu hover:border-white/80 hover:bg-white/20 text-sm sm:text-base"
+                  className="hero-action-btn group inline-flex translate-y-6 scale-95 items-center justify-center gap-2 sm:gap-3 rounded-full border-2 border-[hsl(var(--color-primary))] bg-[hsl(var(--color-primary))]/10 px-6 sm:px-8 py-3 sm:py-4 font-semibold text-[hsl(var(--color-primary))] opacity-0 shadow-lg backdrop-blur-md transition-all duration-300 transform-gpu hover:border-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary))]/20 text-sm sm:text-base"
                 >
                   <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
                   <span className="hidden sm:inline">Visit Us</span>
@@ -698,32 +698,53 @@ export default function HomePage() {
               },
             ].map((doctor, i) => (
               <AnimatedSection key={i} delay={i * 0.15}>
-                <div className="card-elevated group relative overflow-hidden rounded-xl sm:rounded-2xl bg-white">
-                  <div className="aspect-[4/5] overflow-hidden">
-                    <img
-                      src={doctor.image}
-                      alt={doctor.name}
-                      className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/8 via-transparent to-[hsl(var(--primary))]/15" />
+                <div className="card-elevated group rounded-xl sm:rounded-2xl bg-white overflow-hidden">
+                  {/* Image Container */}
+                  <div className="relative overflow-hidden">
+                    <div className="aspect-[4/5] overflow-hidden">
+                      <img
+                        src={doctor.image}
+                        alt={doctor.name}
+                        className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/8 via-transparent to-[hsl(var(--primary))]/15" />
 
-                  <div className="absolute left-3 right-3 top-3 sm:left-6 sm:right-6 sm:top-6 max-w-[85%]">
-                    <div className="rounded-lg sm:rounded-xl border border-white/80 bg-white/90 px-4 sm:px-6 py-3 sm:py-4 shadow-lg backdrop-blur-md">
-                      <p className="mb-1 sm:mb-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[hsl(var(--primary))]/70">
-                        Dentist
+                    {/* Name Card - Hidden on mobile, shown on sm+ */}
+                    <div className="hidden sm:block absolute left-6 right-6 top-6 max-w-[85%]">
+                      <div className="rounded-lg sm:rounded-xl border border-white/80 bg-white/90 px-4 sm:px-6 py-3 sm:py-4 shadow-lg backdrop-blur-md">
+                        <p className="mb-1 sm:mb-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[hsl(var(--primary))]/70">
+                          Dentist
+                        </p>
+                        <h3 className="text-lg sm:text-xl font-bold leading-tight text-[hsl(var(--primary))]">
+                          {doctor.name}
+                        </h3>
+                      </div>
+                    </div>
+
+                    {/* Description - Positioned at bottom, hidden on mobile */}
+                    <div className="hidden sm:block absolute bottom-5 left-5 right-5 rounded-[1.6rem] border border-white/65 bg-[hsl(var(--background))]/84 p-5 shadow-[0_24px_54px_-30px_hsl(var(--color-primary)/0.38)] backdrop-blur-xl">
+                      <p className="mb-3 inline-flex rounded-full bg-[hsl(var(--color-primary))] px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.26em] text-[hsl(var(--color-accent))]">
+                        {doctor.role}
                       </p>
-                      <h3 className="text-lg sm:text-xl font-bold leading-tight text-[hsl(var(--primary))]">
-                        {doctor.name}
-                      </h3>
+                      <p className="text-sm leading-relaxed text-[hsl(var(--color-text-muted))]">
+                        {doctor.desc}
+                      </p>
                     </div>
                   </div>
 
-                  <div className="absolute bottom-5 left-5 right-5 rounded-[1.6rem] border border-white/65 bg-[hsl(var(--background))]/84 p-5 shadow-[0_24px_54px_-30px_hsl(var(--color-primary)/0.38)] backdrop-blur-xl">
-                    <p className="mb-3 inline-flex rounded-full bg-[hsl(var(--color-primary))] px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.26em] text-[hsl(var(--color-accent))]">
+                  {/* Name Display - Visible on mobile only */}
+                  <div className="sm:hidden p-4 border-t border-[hsl(var(--color-border))]">
+                    <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[hsl(var(--primary))]/70">
+                      Dentist
+                    </p>
+                    <h3 className="text-lg font-bold text-[hsl(var(--primary))] mb-2">
+                      {doctor.name}
+                    </h3>
+                    <p className="text-xs text-[hsl(var(--color-primary))] font-semibold mb-3 uppercase tracking-wider">
                       {doctor.role}
                     </p>
-                    <p className="text-sm leading-relaxed text-[hsl(var(--color-text-muted))]">
+                    <p className="text-xs leading-relaxed text-[hsl(var(--color-text-muted))]">
                       {doctor.desc}
                     </p>
                   </div>
