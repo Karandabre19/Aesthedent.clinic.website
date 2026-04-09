@@ -719,10 +719,6 @@ export default function HomePage() {
                       </h3>
                     </div>
                   </div>
-                        {String(i + 1).padStart(2, "0")}
-                      </p>
-                    </div>
-                  </div>
 
                   <div className="absolute bottom-5 left-5 right-5 rounded-[1.6rem] border border-white/65 bg-[hsl(var(--background))]/84 p-5 shadow-[0_24px_54px_-30px_hsl(var(--color-primary)/0.38)] backdrop-blur-xl">
                     <p className="mb-3 inline-flex rounded-full bg-[hsl(var(--color-primary))] px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.26em] text-[hsl(var(--color-accent))]">
@@ -818,7 +814,7 @@ export default function HomePage() {
                   href="/contact"
                   className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[hsl(var(--bg-alt))] text-[hsl(var(--color-text))] font-semibold rounded-lg border-2 border-[hsl(var(--primary))]/20 hover:border-[hsl(var(--primary))]/40 transition-all duration-300"
                 >
-                  Contact Form
+                  <span>Contact Form</span>
                   <ArrowRight className="w-5 h-5" />
                 </Link>
               </div>
