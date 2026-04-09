@@ -22,8 +22,8 @@ import {
   Quote
 } from 'lucide-react';
 import TestimonialsSection from '@/components/sections/TestimonialsSection';
-import treatmentProcessImage from "../public/clinic/treatment-process.jpeg";
-import treatMentChairImage from "../public/clinic/dentist-chair-proper.jpeg";
+import treatmentProcessImage from "@/public/clinic/treatment-process.jpeg";
+import treatMentChairImage from "@/public/clinic/dentist-chair-proper.jpeg";
 
 gsap.registerPlugin(useGSAP);
 
