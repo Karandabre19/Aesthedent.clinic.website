@@ -722,8 +722,8 @@ export default function HomePage() {
                       </div>
                     </div>
 
-                    {/* Description - Positioned at bottom */}
-                    <div className="absolute bottom-5 left-5 right-5 rounded-[1.6rem] border border-white/65 bg-[hsl(var(--background))]/84 p-5 shadow-[0_24px_54px_-30px_hsl(var(--color-primary)/0.38)] backdrop-blur-xl">
+                    {/* Description - Positioned at bottom, hidden on mobile */}
+                    <div className="hidden sm:block absolute bottom-5 left-5 right-5 rounded-[1.6rem] border border-white/65 bg-[hsl(var(--background))]/84 p-5 shadow-[0_24px_54px_-30px_hsl(var(--color-primary)/0.38)] backdrop-blur-xl">
                       <p className="mb-3 inline-flex rounded-full bg-[hsl(var(--color-primary))] px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.26em] text-[hsl(var(--color-accent))]">
                         {doctor.role}
                       </p>
@@ -738,11 +738,14 @@ export default function HomePage() {
                     <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[hsl(var(--primary))]/70">
                       Dentist
                     </p>
-                    <h3 className="text-lg font-bold text-[hsl(var(--primary))]">
+                    <h3 className="text-lg font-bold text-[hsl(var(--primary))] mb-2">
                       {doctor.name}
                     </h3>
-                    <p className="text-xs text-[hsl(var(--color-primary))] font-semibold mt-2 uppercase tracking-wider">
+                    <p className="text-xs text-[hsl(var(--color-primary))] font-semibold mb-3 uppercase tracking-wider">
                       {doctor.role}
+                    </p>
+                    <p className="text-xs leading-relaxed text-[hsl(var(--color-text-muted))]">
+                      {doctor.desc}
                     </p>
                   </div>
                 </div>
