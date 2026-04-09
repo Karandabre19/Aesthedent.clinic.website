@@ -17,7 +17,7 @@ export default function AnimatedSection({
 
   return (
     <motion.div
-      className={className}
+      className={`relative ${className}`}
       initial={{ 
         opacity: 0, 
         ...directions[direction]
