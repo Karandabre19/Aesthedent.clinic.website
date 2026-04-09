@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
-import Lenis from 'lenis';
 
 function shouldEnableSmoothScroll() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') {
@@ -31,30 +30,45 @@ export default function SmoothScrollProvider({ children }) {
       return undefined;
     }
 
-    const lenis = new Lenis({
-      autoRaf: true,
-      smoothWheel: true,
-      syncTouch: false,
-      wheelMultiplier: 0.9,
-      lerp: 0.12,
-      anchors: true,
-      prevent: (node) =>
-        node?.closest?.(
-          '[data-lenis-prevent], [data-radix-scroll-area-viewport], [data-scroll-locked]'
-        ),
-    });
+    let lenis;
+    try {
+      const Lenis = require('lenis').default;
+      lenis = new Lenis({
+        autoRaf: true,
+        smoothWheel: true,
+        syncTouch: false,
+        wheelMultiplier: 0.9,
+        lerp: 0.12,
+        anchors: true,
+        prevent: (node) =>
+          node?.closest?.(
+            '[data-lenis-prevent], [data-radix-scroll-area-viewport], [data-scroll-locked]'
+          ),
+      });
 
-    lenisRef.current = lenis;
+      lenisRef.current = lenis;
+    } catch (error) {
+      console.warn('[v0] Lenis failed to initialize:', error);
+      return undefined;
+    }
 
     return () => {
-      lenis.destroy();
-      lenisRef.current = null;
+      try {
+        lenis?.destroy?.();
+        lenisRef.current = null;
+      } catch (error) {
+        console.warn('[v0] Error destroying Lenis:', error);
+      }
     };
   }, []);
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
-      lenisRef.current?.resize();
+      try {
+        lenisRef.current?.resize?.();
+      } catch (error) {
+        console.warn('[v0] Error resizing Lenis:', error);
+      }
     });
 
     return () => window.cancelAnimationFrame(frame);
