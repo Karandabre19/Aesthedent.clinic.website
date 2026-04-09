@@ -548,10 +548,6 @@ export default function HomePage() {
       </section>
 
       {/* Painless Dentistry Section */}
-      <section className="py-24 lg:py-32">
-        <div className="main-container">
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-            <AnimatedSection>
       {/* Treatment Experience Section */}
       <section className="py-20 md:py-32 bg-gradient-to-br from-[hsl(var(--primary))]/5 via-white to-[hsl(var(--accent))]/5">
         <div className="main-container">
