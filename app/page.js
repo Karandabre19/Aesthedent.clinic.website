@@ -361,10 +361,10 @@ export default function HomePage() {
       >
         {/* Background Image with Parallax */}
         <motion.div className="absolute inset-0" style={{ scale: heroScale }}>
-          <div className="hero-overlay absolute inset-0 bg-gradient-to-r from-[hsl(var(--color-secondary))]/80 via-[hsl(var(--color-secondary))]/50 to-transparent z-10" />
+          <div className="hero-overlay absolute inset-0 bg-gradient-to-r from-[hsl(var(--color-secondary))]/60 via-[hsl(var(--color-secondary))]/30 to-transparent z-10" />
           <img
-            src="https://images.pexels.com/photos/3762441/pexels-photo-3762441.jpeg?auto=compress&cs=tinysrgb&w=1920"
-            alt="Beautiful Smile"
+            src="/homepage-banner.png"
+            alt="Premium Dental Care - Crystalline Tooth"
             className="hero-bg-image h-full w-full object-cover will-change-transform transform-gpu"
           />
         </motion.div>
