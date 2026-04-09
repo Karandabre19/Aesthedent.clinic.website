@@ -742,7 +742,7 @@ export default function HomePage() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 md:py-32 bg-[hsl(var(--secondary))]">
+      <section className="py-20 md:py-32 bg-[hsl(var(--primary))]">
         <div className="main-container">
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
             <AnimatedSection>
@@ -801,7 +801,7 @@ export default function HomePage() {
                   href={whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white hover:bg-white/90 text-[hsl(var(--secondary))] font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1"
+                  className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white hover:bg-white/90 text-[hsl(var(--primary))] font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1"
                 >
                   <MessageCircle className="w-5 h-5" />
                   Message on WhatsApp
