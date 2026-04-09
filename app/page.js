@@ -386,12 +386,12 @@ export default function HomePage() {
                 <div className="hero-divider mb-8 h-px w-24 origin-left scale-x-0 bg-gradient-to-r from-[hsl(var(--color-accent))] to-transparent opacity-0 transform-gpu" />
               </div>
 
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-[hsl(var(--color-primary))] leading-[1.1] mb-6 sm:mb-8">
-                <span className="hero-line hero-line-1 block overflow-hidden pb-1 sm:pb-2">
+              <h1 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-[hsl(var(--color-primary))] leading-[1.1] mb-6 sm:mb-8">
+                <span className="hero-line hero-line-1 relative block overflow-hidden pb-1 sm:pb-2">
                   <HeroWord>Your smile</HeroWord>{' '}
                   <HeroWord className="font-semibold italic">deserves care.</HeroWord>
                 </span>
-                <span className="hero-line hero-line-2 block overflow-hidden pb-1 sm:pb-2">
+                <span className="hero-line hero-line-2 relative block overflow-hidden pb-1 sm:pb-2">
                   <HeroWord className="hero-accent-word text-[hsl(var(--color-accent))]">Not</HeroWord>{' '}
                   <HeroWord className="hero-accent-word text-[hsl(var(--color-accent))]">compromise.</HeroWord>
                 </span>
