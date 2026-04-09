@@ -664,18 +664,6 @@ export default function HomePage() {
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </Link>
           </AnimatedSection>
-            ))}
-          </div>
-
-          <AnimatedSection className="text-center mt-12">
-            <Link
-              href="/services"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary-dark))] text-white font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 text-lg"
-            >
-              Explore all services
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-          </AnimatedSection>
         </div>
       </section>
 
