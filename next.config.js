@@ -17,6 +17,9 @@ const nextConfig = {
     pagesBufferLength: 2,
   },
 
+  // ✅ Allow HMR from all origins in development
+  allowedDevOrigins: ['*'],
+
   async headers() {
     return [
       {
