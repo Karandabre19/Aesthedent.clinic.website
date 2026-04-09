@@ -416,7 +416,7 @@ export default function HomePage() {
                   href="https://maps.google.com/?q=Dahanukar+Colony,+Kothrud,+Pune+411038"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hero-action-btn group inline-flex translate-y-6 scale-95 items-center justify-center gap-2 sm:gap-3 rounded-full border border-white/60 bg-white/10 px-6 sm:px-8 py-3 sm:py-4 font-semibold text-white opacity-0 shadow-lg backdrop-blur-md transition-all duration-300 transform-gpu hover:border-white/80 hover:bg-white/20 text-sm sm:text-base"
+                  className="hero-action-btn group inline-flex translate-y-6 scale-95 items-center justify-center gap-2 sm:gap-3 rounded-full border-2 border-[hsl(var(--color-primary))] bg-[hsl(var(--color-primary))]/10 px-6 sm:px-8 py-3 sm:py-4 font-semibold text-[hsl(var(--color-primary))] opacity-0 shadow-lg backdrop-blur-md transition-all duration-300 transform-gpu hover:border-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary))]/20 text-sm sm:text-base"
                 >
                   <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
                   <span className="hidden sm:inline">Visit Us</span>
