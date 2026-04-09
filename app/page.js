@@ -607,16 +607,16 @@ export default function HomePage() {
       </section>
 
       {/* Services Section */}
-      <section className="py-20 md:py-32 bg-white">
+      <section className="py-20 md:py-32 bg-[hsl(var(--primary))]">
         <div className="main-container">
           <AnimatedSection className="text-center mb-16 md:mb-24">
-            <div className="inline-block mb-4 px-4 py-2 bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] rounded-full text-sm font-semibold">
+            <div className="inline-block mb-4 px-4 py-2 bg-white/20 text-white rounded-full text-sm font-semibold">
               What We Offer
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-[hsl(var(--color-text))] leading-tight mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
               Expert services for every smile need
             </h2>
-            <p className="text-lg text-[hsl(var(--color-text-muted))] max-w-2xl mx-auto">
+            <p className="text-lg text-white/80 max-w-2xl mx-auto">
               From dental implants to full mouth rehabilitation, we handle complex cases with precision—and care.
             </p>
           </AnimatedSection>
@@ -625,7 +625,7 @@ export default function HomePage() {
             {services.slice(0, 6).map((service, i) => (
               <AnimatedSection key={service.slug} delay={i * 0.08}>
                 <Link href={`/services/${service.slug}`}>
-                  <div className="card-elevated group relative overflow-hidden rounded-2xl bg-white border border-[hsl(var(--border))] hover:-translate-y-2">
+                  <div className="card-elevated group relative overflow-hidden rounded-2xl bg-white border border-white/20 hover:-translate-y-2">
                     <div className="aspect-[16/10] overflow-hidden bg-[hsl(var(--bg-alt))]">
                       <img
                         src={service.image}
@@ -633,9 +633,9 @@ export default function HomePage() {
                         className="w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-500"
                       />
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--color-primary))]/95 via-[hsl(var(--color-primary))]/55 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--primary))]/95 via-[hsl(var(--primary))]/55 to-transparent" />
                     <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <h3 className="text-xl font-semibold mb-2 group-hover:text-[hsl(var(--color-accent))] transition-colors">
+                      <h3 className="text-xl font-semibold mb-2 text-white group-hover:text-[hsl(var(--accent))] transition-colors">
                         {service.title}
                       </h3>
                       <p className="text-[hsl(var(--color-text-light))] text-sm mb-4">
@@ -742,28 +742,28 @@ export default function HomePage() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 md:py-32 bg-white">
+      <section className="py-20 md:py-32 bg-[hsl(var(--secondary))]">
         <div className="main-container">
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
             <AnimatedSection>
-              <div className="inline-block mb-4 px-4 py-2 bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] rounded-full text-sm font-semibold">
+              <div className="inline-block mb-4 px-4 py-2 bg-white/20 text-white rounded-full text-sm font-semibold">
                 Get in Touch
               </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[hsl(var(--color-text))] leading-tight mb-8">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-8">
                 Visit Aesthedent in Kothrud
               </h2>
-              <p className="text-lg text-[hsl(var(--color-text-muted))] leading-relaxed mb-10">
+              <p className="text-lg text-white/85 leading-relaxed mb-10">
                 We're located in Kothrud, Pune. Come experience dentistry the way it should be—comfortable, honest, and results-driven.
               </p>
 
               <div className="space-y-7 mb-12">
                 <div className="flex items-start gap-5">
-                  <div className="w-12 h-12 bg-[hsl(var(--primary))]/15 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-6 h-6 text-[hsl(var(--primary))]" />
+                  <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-bold text-[hsl(var(--color-text))] mb-2 text-lg">Our Clinic</p>
-                    <p className="text-[hsl(var(--color-text-muted))] leading-relaxed">
+                    <p className="font-bold text-white mb-2 text-lg">Our Clinic</p>
+                    <p className="text-white/80 leading-relaxed">
                       Dahanukar Colony, Kothrud, Pune 411038
                       <br/>
                       Near Karve Statue
@@ -771,12 +771,12 @@ export default function HomePage() {
                   </div>
                 </div>
                 <div className="flex items-start gap-5">
-                  <div className="w-12 h-12 bg-[hsl(var(--primary))]/15 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-6 h-6 text-[hsl(var(--primary))]" />
+                  <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Clock className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-bold text-[hsl(var(--color-text))] mb-2 text-lg">Hours</p>
-                    <p className="text-[hsl(var(--color-text-muted))] leading-relaxed">
+                    <p className="font-bold text-white mb-2 text-lg">Hours</p>
+                    <p className="text-white/80 leading-relaxed">
                       Monday–Saturday: 10 AM–8 PM
                       <br/>
                       <span className="text-sm">Sunday: By appointment only</span>
@@ -784,12 +784,12 @@ export default function HomePage() {
                   </div>
                 </div>
                 <div className="flex items-start gap-5">
-                  <div className="w-12 h-12 bg-[hsl(var(--primary))]/15 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-6 h-6 text-[hsl(var(--primary))]" />
+                  <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-bold text-[hsl(var(--color-text))] mb-2 text-lg">Reach Us</p>
-                    <a href={`tel:${phoneNumber}`} className="text-[hsl(var(--primary))] hover:text-[hsl(var(--primary-dark))] transition-colors font-semibold text-lg">
+                    <p className="font-bold text-white mb-2 text-lg">Reach Us</p>
+                    <a href={`tel:${phoneNumber}`} className="text-white hover:text-white/90 transition-colors font-semibold text-lg">
                       +91 98765 43210
                     </a>
                   </div>
@@ -801,14 +801,14 @@ export default function HomePage() {
                   href={whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary-dark))] text-white font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1"
+                  className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white hover:bg-white/90 text-[hsl(var(--secondary))] font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1"
                 >
                   <MessageCircle className="w-5 h-5" />
                   Message on WhatsApp
                 </a>
                 <Link
                   href="/contact"
-                  className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[hsl(var(--bg-alt))] text-[hsl(var(--color-text))] font-semibold rounded-lg border-2 border-[hsl(var(--primary))]/20 hover:border-[hsl(var(--primary))]/40 transition-all duration-300"
+                  className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white/15 text-white font-semibold rounded-lg border-2 border-white/40 hover:border-white/60 hover:bg-white/20 transition-all duration-300"
                 >
                   <span>Contact Form</span>
                   <ArrowRight className="w-5 h-5" />
