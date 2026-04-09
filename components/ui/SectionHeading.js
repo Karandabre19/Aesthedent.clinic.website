@@ -12,7 +12,7 @@ export default function SectionHeading({
 }) {
   return (
     <motion.div 
-      className={`max-w-2xl ${centered ? 'mx-auto text-center' : ''} mb-12 lg:mb-16`}
+      className={`relative max-w-2xl ${centered ? 'mx-auto text-center' : ''} mb-12 lg:mb-16`}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-100px' }}
