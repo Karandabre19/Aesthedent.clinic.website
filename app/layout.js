@@ -19,7 +19,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={poppins.variable}>
-      <body className={`${poppins.className} font-sans`}>
+      <body className={`${poppins.className} font-sans relative`}>
         <GoogleAnalytics gaId="G-473559561" />
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
       </body>
