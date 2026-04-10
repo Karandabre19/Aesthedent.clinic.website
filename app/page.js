@@ -1,6 +1,6 @@
 'use client';
 
-import Page from '@/components/Page';
+import { pushToDataLayer } from '@/lib/gtm';
 import { animate, motion, useInView, useScroll, useTransform } from 'framer-motion';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
@@ -116,10 +116,22 @@ function HeroWord({ children, className = '' }) {
 
 export default function HomePage() {
   const heroRef = useRef(null);
+  const hasTrackedHomeView = useRef(false);
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"]
   });
+
+  useEffect(() => {
+    if (hasTrackedHomeView.current) {
+      return;
+    }
+
+    pushToDataLayer({
+      event: 'home_view',
+    });
+    hasTrackedHomeView.current = true;
+  }, []);
   
   const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
@@ -354,8 +366,7 @@ export default function HomePage() {
   }, { scope: heroRef });
 
   return (
-    <Page>
-      <PageWrapper>
+    <PageWrapper>
       {/* Hero Section - Full Screen Cinematic */}
       <section
         ref={heroRef}
@@ -899,7 +910,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      </PageWrapper>
-    </Page>
+    </PageWrapper>
   );
 }
