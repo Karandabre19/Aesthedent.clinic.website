@@ -1,5 +1,6 @@
 'use client';
 
+import Page from '@/components/Page';
 import { animate, motion, useInView, useScroll, useTransform } from 'framer-motion';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
@@ -25,6 +26,7 @@ import TestimonialsSection from '@/components/sections/TestimonialsSection';
 import InsightsSection from '@/components/sections/InsightsSection';
 import treatmentProcessImage from "../public/clinic/treatment-process.jpeg";
 import treatMentChairImage from "../public/clinic/dentist-chair-proper.jpeg";
+import sahilTreatmentImage from "../public/clinic/treatment-process.2jpeg.jpeg"
 
 gsap.registerPlugin(useGSAP);
 
@@ -352,7 +354,8 @@ export default function HomePage() {
   }, { scope: heroRef });
 
   return (
-    <PageWrapper>
+    <Page>
+      <PageWrapper>
       {/* Hero Section - Full Screen Cinematic */}
       <section
         ref={heroRef}
@@ -387,17 +390,24 @@ export default function HomePage() {
 
               <h1 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-[hsl(var(--color-primary))] leading-[1.1] mb-6 sm:mb-8">
                 <span className="hero-line hero-line-1 relative block overflow-hidden pb-1 sm:pb-2">
-                  <HeroWord>Your smile</HeroWord>{' '}
-                  <HeroWord className="font-semibold italic">deserves care.</HeroWord>
+                  <HeroWord>Your smile</HeroWord>{" "}
+                  <HeroWord className="font-semibold italic">
+                    deserves care.
+                  </HeroWord>
                 </span>
                 <span className="hero-line hero-line-2 relative block overflow-hidden pb-1 sm:pb-2">
-                  <HeroWord className="hero-accent-word text-[hsl(var(--color-accent))]">Not</HeroWord>{' '}
-                  <HeroWord className="hero-accent-word text-[hsl(var(--color-accent))]">compromise.</HeroWord>
+                  <HeroWord className="hero-accent-word text-[hsl(var(--color-accent))]">
+                    Not
+                  </HeroWord>{" "}
+                  <HeroWord className="hero-accent-word text-[hsl(var(--color-accent))]">
+                    compromise.
+                  </HeroWord>
                 </span>
               </h1>
 
               <p className="hero-copy mb-8 sm:mb-10 max-w-xl translate-y-6 text-base sm:text-lg leading-relaxed text-[hsl(var(--color-primary))]/85 opacity-0 transform-gpu md:text-lg">
-                Expert dental implants and prosthetic care in Kothrud. We focus on your comfort and lasting results—not quick fixes.
+                Expert dental implants and prosthetic care in Kothrud. We focus
+                on your comfort and lasting results—not quick fixes.
               </p>
 
               <div className="hero-actions flex flex-col gap-3 sm:flex-row sm:gap-4">
@@ -495,7 +505,9 @@ export default function HomePage() {
                       <p className="font-semibold text-[hsl(var(--color-text))] text-sm sm:text-base mb-1">
                         Meet Dr. Sahil
                       </p>
-                      <p className="text-xs sm:text-sm text-[hsl(var(--color-text-muted))]">2 min intro</p>
+                      <p className="text-xs sm:text-sm text-[hsl(var(--color-text-muted))]">
+                        2 min intro
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -510,10 +522,17 @@ export default function HomePage() {
                 Dentistry built on trust and honesty.
               </h2>
               <p className="text-base sm:text-lg text-[hsl(var(--color-text-muted))] leading-relaxed mb-4 sm:mb-6">
-                At Aesthedent in Kothrud, we believe dental care shouldn't feel like a medical procedure. It should feel like visiting someone who genuinely understands your needs—and cares about the results.
+                At Aesthedent in Kothrud, we believe dental care shouldn't feel
+                like a medical procedure. It should feel like visiting someone
+                who genuinely understands your needs—and cares about the
+                results.
               </p>
               <p className="text-sm sm:text-base text-[hsl(var(--color-text-muted))] leading-relaxed mb-6 sm:mb-8">
-                Dr. Sahil founded this clinic with one simple goal: bring expert prosthetic care and dental implants to Pune, without the unnecessary drama. We focus on explaining things clearly, addressing your fears honestly, and delivering results that actually last.
+                Dr. Sahil founded this clinic with one simple goal: bring expert
+                prosthetic care and dental implants to Pune, without the
+                unnecessary drama. We focus on explaining things clearly,
+                addressing your fears honestly, and delivering results that
+                actually last.
               </p>
               <Link
                 href="/about"
@@ -562,7 +581,9 @@ export default function HomePage() {
                 Dental care shouldn't hurt. Not physically. Not emotionally.
               </h2>
               <p className="text-base sm:text-lg text-[hsl(var(--color-text-muted))] leading-relaxed mb-6 sm:mb-8">
-                Every patient who visits Aesthedent deserves to feel safe. We've designed our entire clinic—from the equipment to the conversations—around keeping you comfortable.
+                Every patient who visits Aesthedent deserves to feel safe. We've
+                designed our entire clinic—from the equipment to the
+                conversations—around keeping you comfortable.
               </p>
 
               <div className="space-y-3 sm:space-y-5 mb-8 sm:mb-10">
@@ -576,7 +597,9 @@ export default function HomePage() {
                     <div className="w-5 h-5 sm:w-6 sm:h-6 bg-[hsl(var(--primary))]/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 sm:mt-1">
                       <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 text-[hsl(var(--primary))]" />
                     </div>
-                    <p className="text-sm sm:text-base md:text-lg text-[hsl(var(--color-text))] font-medium">{item}</p>
+                    <p className="text-sm sm:text-base md:text-lg text-[hsl(var(--color-text))] font-medium">
+                      {item}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -619,7 +642,8 @@ export default function HomePage() {
               Expert services for every smile need
             </h2>
             <p className="text-sm sm:text-base md:text-lg text-white/80 max-w-2xl mx-auto">
-              From dental implants to full mouth rehabilitation, we handle complex cases with precision—and care.
+              From dental implants to full mouth rehabilitation, we handle
+              complex cases with precision—and care.
             </p>
           </AnimatedSection>
 
@@ -667,7 +691,7 @@ export default function HomePage() {
       </section>
 
       {/* Insights Section - Premium Editorial */}
-      <InsightsSection 
+      <InsightsSection
         title="Insights"
         subtitle="Trusted knowledge from real experts—not generic content. Real answers to real patient questions."
       />
@@ -683,7 +707,8 @@ export default function HomePage() {
               Dentistry by experienced experts
             </h2>
             <p className="text-sm sm:text-base md:text-lg text-[hsl(var(--color-text-muted))] max-w-2xl mx-auto">
-              Each dentist at Aesthedent brings years of experience and a genuine care for patient comfort.
+              Each dentist at Aesthedent brings years of experience and a
+              genuine care for patient comfort.
             </p>
           </AnimatedSection>
 
@@ -782,11 +807,12 @@ export default function HomePage() {
                 Visit Aesthedent in Kothrud
               </h2>
               <p className="text-sm sm:text-base md:text-lg text-white/85 leading-relaxed mb-6 sm:mb-8 md:mb-10">
-                We're located in Kothrud, Pune. Come experience dentistry the way it should be—comfortable, honest, and results-driven.
+                We're located in Kothrud, Pune. Come experience dentistry the
+                way it should be—comfortable, honest, and results-driven.
               </p>
 
               <div className="space-y-4 sm:space-y-5 md:space-y-7 mb-8 sm:mb-10 md:mb-12">
-                <a 
+                <a
                   href="https://maps.app.goo.gl/BVb9iy5EQkmbYSVPA"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -796,10 +822,12 @@ export default function HomePage() {
                     <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-bold text-white mb-1 sm:mb-2 text-base sm:text-lg group-hover:text-[hsl(var(--accent))] transition-colors">Our Clinic</p>
+                    <p className="font-bold text-white mb-1 sm:mb-2 text-base sm:text-lg group-hover:text-[hsl(var(--accent))] transition-colors">
+                      Our Clinic
+                    </p>
                     <p className="text-white/80 leading-relaxed text-xs sm:text-sm md:text-base group-hover:text-white transition-colors">
                       Dahanukar Colony, Kothrud, Pune 411038
-                      <br/>
+                      <br />
                       Near Karve Statue
                     </p>
                   </div>
@@ -809,11 +837,15 @@ export default function HomePage() {
                     <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-bold text-white mb-1 sm:mb-2 text-base sm:text-lg">Hours</p>
+                    <p className="font-bold text-white mb-1 sm:mb-2 text-base sm:text-lg">
+                      Hours
+                    </p>
                     <p className="text-white/80 leading-relaxed text-xs sm:text-sm md:text-base">
                       Monday–Saturday: 10 AM–8 PM
-                      <br/>
-                      <span className="text-xs">Sunday: By appointment only</span>
+                      <br />
+                      <span className="text-xs">
+                        Sunday: By appointment only
+                      </span>
                     </p>
                   </div>
                 </div>
@@ -822,8 +854,13 @@ export default function HomePage() {
                     <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-bold text-white mb-1 sm:mb-2 text-base sm:text-lg">Reach Us</p>
-                    <a href={`tel:${phoneNumber}`} className="text-white hover:text-white/90 transition-colors font-semibold text-base sm:text-lg">
+                    <p className="font-bold text-white mb-1 sm:mb-2 text-base sm:text-lg">
+                      Reach Us
+                    </p>
+                    <a
+                      href={`tel:${phoneNumber}`}
+                      className="text-white hover:text-white/90 transition-colors font-semibold text-base sm:text-lg"
+                    >
                       +91 93098 16336
                     </a>
                   </div>
@@ -853,7 +890,7 @@ export default function HomePage() {
             <AnimatedSection direction="right">
               <div className="rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-300">
                 <img
-                  src="https://images.pexels.com/photos/4269950/pexels-photo-4269950.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  src={sahilTreatmentImage.src}
                   alt="Aesthedent Dental Clinic in Kothrud"
                   className="w-full aspect-[4/3] object-cover hover:scale-105 transition-transform duration-500"
                 />
@@ -862,6 +899,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-    </PageWrapper>
+      </PageWrapper>
+    </Page>
   );
 }
