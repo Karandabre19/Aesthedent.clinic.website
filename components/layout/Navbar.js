@@ -55,7 +55,7 @@ function MagneticButton({ children, className, ...props }) {
   );
 }
 
-// Navigation link with animated underline
+// Navigation link with stable active state (no layoutId to prevent scroll animation issues)
 function NavLink({ href, label, isActive }) {
   const [isHovered, setIsHovered] = useState(false);
   
@@ -66,30 +66,20 @@ function NavLink({ href, label, isActive }) {
       onMouseLeave={() => setIsHovered(false)}
       className="relative px-4 py-2.5 group"
     >
-      {/* Active pill background - using layoutId for smooth transition between tabs */}
-      {isActive && (
-        <motion.div
-          layoutId="navbar-active-pill"
-          className="absolute inset-0 rounded-full bg-[hsl(var(--color-primary))]/10 border border-[hsl(var(--color-primary))]/20"
-          style={{ borderRadius: 9999 }}
-          transition={{ 
-            type: 'spring', 
-            stiffness: 500, 
-            damping: 35,
-            mass: 1
-          }}
-        />
-      )}
+      {/* Active pill background - static, no layoutId */}
+      <div
+        className={`absolute inset-0 rounded-full transition-all duration-300 ease-out ${
+          isActive 
+            ? 'bg-[hsl(var(--color-primary))]/10 border border-[hsl(var(--color-primary))]/20 opacity-100 scale-100' 
+            : 'bg-transparent border border-transparent opacity-0 scale-95'
+        }`}
+      />
       
       {/* Hover background - only shows when not active */}
-      <motion.div
-        className="absolute inset-0 rounded-full bg-[hsl(var(--color-bg-alt))]"
-        initial={false}
-        animate={{ 
-          opacity: !isActive && isHovered ? 1 : 0,
-          scale: !isActive && isHovered ? 1 : 0.95
-        }}
-        transition={{ duration: 0.15 }}
+      <div
+        className={`absolute inset-0 rounded-full bg-[hsl(var(--color-bg-alt))] transition-all duration-200 ease-out ${
+          !isActive && isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+        }`}
       />
       
       {/* Text label */}
@@ -103,31 +93,18 @@ function NavLink({ href, label, isActive }) {
         {label}
       </span>
       
-      {/* Active underline indicator */}
-      {isActive && (
-        <motion.div
-          layoutId="navbar-active-underline"
-          className="absolute -bottom-0.5 left-1/2 w-5 h-[2px] bg-gradient-to-r from-[hsl(var(--color-primary))] to-[hsl(var(--accent))] rounded-full"
-          style={{ x: '-50%' }}
-          transition={{ 
-            type: 'spring', 
-            stiffness: 500, 
-            damping: 35,
-            mass: 1
-          }}
-        />
-      )}
+      {/* Active underline indicator - static position */}
+      <div
+        className={`absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-5 h-[2px] bg-gradient-to-r from-[hsl(var(--color-primary))] to-[hsl(var(--accent))] rounded-full transition-all duration-300 ease-out ${
+          isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
+        }`}
+      />
       
       {/* Hover underline - only shows when not active */}
-      <motion.div
-        className="absolute -bottom-0.5 left-1/2 h-[2px] bg-[hsl(var(--color-text-muted))]/40 rounded-full"
-        initial={false}
-        animate={{ 
-          width: !isActive && isHovered ? 20 : 0,
-          opacity: !isActive && isHovered ? 1 : 0
-        }}
-        style={{ x: '-50%' }}
-        transition={{ duration: 0.2 }}
+      <div
+        className={`absolute -bottom-0.5 left-1/2 -translate-x-1/2 h-[2px] bg-[hsl(var(--color-text-muted))]/40 rounded-full transition-all duration-200 ease-out ${
+          !isActive && isHovered ? 'w-5 opacity-100' : 'w-0 opacity-0'
+        }`}
       />
     </Link>
   );
