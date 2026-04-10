@@ -105,6 +105,7 @@
     font-feature-settings: "rlig" 1, "calt" 1;
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
+    position: relative;
   }
 
   ::selection {
