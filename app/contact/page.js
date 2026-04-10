@@ -21,10 +21,8 @@ import {
   CheckCircle2
 } from 'lucide-react';
 
-const whatsappNumber = '919876543210';
-const whatsappMessage = encodeURIComponent('Hi, I would like to book an appointment at Aesthedent Dental Clinic.');
-const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
-const phoneNumber = '+919876543210';
+const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
+const phoneNumber = '+919309816336';
 
 const contactInfo = [
   {
@@ -39,7 +37,7 @@ const contactInfo = [
   {
     icon: Phone,
     title: 'Call Us',
-    details: ['+91 98765 43210', '+91 20 1234 5678'],
+    details: ['+91 93098 16336'],
     action: {
       label: 'Call Now',
       href: `tel:${phoneNumber}`
@@ -138,7 +136,7 @@ export default function ContactPage() {
             >
               <a href={`tel:${phoneNumber}`}>
                 <Phone className="w-5 h-5 mr-2" />
-                Call: +91 98765 43210
+                Call: +91 93098 16336
               </a>
             </Button>
           </div>
@@ -253,7 +251,7 @@ export default function ContactPage() {
                             id="phone"
                             type="tel"
                             required
-                            placeholder="+91 98765 43210"
+                            placeholder="+91 93098 16336"
                             value={formData.phone}
                             onChange={(e) => setFormData({...formData, phone: e.target.value})}
                             className="h-12"

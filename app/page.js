@@ -27,10 +27,8 @@ import treatMentChairImage from "../public/clinic/dentist-chair-proper.jpeg";
 
 gsap.registerPlugin(useGSAP);
 
-const whatsappNumber = '919876543210';
-const whatsappMessage = encodeURIComponent('Hi, I would like to book an appointment at Aesthedent Dental Clinic.');
-const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
-const phoneNumber = '+919876543210';
+const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
+const phoneNumber = '+919309816336';
 
 const trustStats = [
   { value: 5, decimals: 1, suffix: '', label: 'Google Rating', sub: '263 Reviews' },
@@ -819,7 +817,7 @@ export default function HomePage() {
                   <div>
                     <p className="font-bold text-white mb-1 sm:mb-2 text-base sm:text-lg">Reach Us</p>
                     <a href={`tel:${phoneNumber}`} className="text-white hover:text-white/90 transition-colors font-semibold text-base sm:text-lg">
-                      +91 98765 43210
+                      +91 93098 16336
                     </a>
                   </div>
                 </div>

@@ -21,10 +21,8 @@ const footerLinks = {
 };
 
 export default function Footer() {
-  const whatsappNumber = '919876543210';
-  const whatsappMessage = encodeURIComponent('Hi, I would like to book an appointment at Aesthedent Dental Clinic.');
-  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
-  const phoneNumber = '+919876543210';
+  const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
+  const phoneNumber = '+919309816336';
 
   return (
     <footer className="bg-gradient-to-b from-[hsl(var(--color-primary))] via-[hsl(var(--color-primary))] to-[hsl(var(--color-primary-dark))]">
@@ -126,7 +124,7 @@ export default function Footer() {
               <li className="flex items-start gap-3.5 group">
                 <Phone className="w-4 h-4 text-[hsl(var(--color-accent))] flex-shrink-0 mt-1 group-hover:scale-110 transition-transform duration-300" />
                 <a href={`tel:${phoneNumber}`} className="text-white/90 text-sm hover:text-[hsl(var(--color-accent))] transition-colors duration-300 font-normal">
-                  +91 98765 43210
+                  +91 93098 16336
                 </a>
               </li>
               <li className="flex items-start gap-3.5 group">

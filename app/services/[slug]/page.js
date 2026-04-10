@@ -20,8 +20,8 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 
-const whatsappLink = 'https://wa.me/919876543210?text=' + encodeURIComponent('Hi, I would like to book an appointment at Aesthedent Dental Clinic.');
-const phoneNumber = '+919876543210';
+const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
+const phoneNumber = '+919309816336';
 
 export default function ServiceDetailPage({ params }) {
   const resolvedParams = use(params);
