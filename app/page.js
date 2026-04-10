@@ -413,7 +413,7 @@ export default function HomePage() {
                   <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
                 <a
-                  href="https://maps.google.com/?q=Dahanukar+Colony,+Kothrud,+Pune+411038"
+                  href="https://maps.app.goo.gl/BVb9iy5EQkmbYSVPA"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hero-action-btn group inline-flex translate-y-6 scale-95 items-center justify-center gap-2 sm:gap-3 rounded-full border-2 border-[hsl(var(--color-primary))] bg-[hsl(var(--color-primary))]/10 px-6 sm:px-8 py-3 sm:py-4 font-semibold text-[hsl(var(--color-primary))] opacity-0 shadow-lg backdrop-blur-md transition-all duration-300 transform-gpu hover:border-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary))]/20 text-sm sm:text-base"
@@ -782,7 +782,7 @@ export default function HomePage() {
 
               <div className="space-y-4 sm:space-y-5 md:space-y-7 mb-8 sm:mb-10 md:mb-12">
                 <a 
-                  href="https://maps.google.com/?q=Dahanukar+Colony,+Kothrud,+Pune+411038"
+                  href="https://maps.app.goo.gl/BVb9iy5EQkmbYSVPA"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-start gap-3 sm:gap-5 hover:opacity-80 transition-opacity cursor-pointer group"

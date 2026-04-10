@@ -110,7 +110,14 @@ export default function Footer() {
             <ul className="space-y-5">
               <li className="flex items-start gap-3.5 group">
                 <MapPin className="w-4 h-4 text-[hsl(var(--color-accent))] flex-shrink-0 mt-1 group-hover:scale-110 transition-transform duration-300" />
-                <span className="text-white/90 text-sm font-normal leading-relaxed">Near Karve Statue, Kothrud, Pune, Maharashtra 411038</span>
+                <a 
+                  href="https://maps.app.goo.gl/BVb9iy5EQkmbYSVPA" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-white/90 text-sm font-normal leading-relaxed hover:text-[hsl(var(--color-accent))] transition-colors duration-300"
+                >
+                  Near Karve Statue, Kothrud, Pune, Maharashtra 411038
+                </a>
               </li>
               <li className="flex items-start gap-3.5 group">
                 <Clock className="w-4 h-4 text-[hsl(var(--color-accent))] flex-shrink-0 mt-1 group-hover:scale-110 transition-transform duration-300" />
