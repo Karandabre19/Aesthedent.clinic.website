@@ -56,7 +56,7 @@ function MagneticButton({ children, className, ...props }) {
 }
 
 // Navigation link with animated underline
-function NavLink({ href, label, isActive, index }) {
+function NavLink({ href, label, isActive }) {
   const [isHovered, setIsHovered] = useState(false);
   
   return (
@@ -64,59 +64,69 @@ function NavLink({ href, label, isActive, index }) {
       href={href}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative px-4 py-2 group"
+      className="relative px-4 py-2.5 group"
     >
-      <motion.span 
-        className={`relative z-10 text-[15px] font-medium transition-colors duration-300 ${
+      {/* Active pill background - using layoutId for smooth transition between tabs */}
+      {isActive && (
+        <motion.div
+          layoutId="navbar-active-pill"
+          className="absolute inset-0 rounded-full bg-[hsl(var(--color-primary))]/10 border border-[hsl(var(--color-primary))]/20"
+          style={{ borderRadius: 9999 }}
+          transition={{ 
+            type: 'spring', 
+            stiffness: 500, 
+            damping: 35,
+            mass: 1
+          }}
+        />
+      )}
+      
+      {/* Hover background - only shows when not active */}
+      <motion.div
+        className="absolute inset-0 rounded-full bg-[hsl(var(--color-bg-alt))]"
+        initial={false}
+        animate={{ 
+          opacity: !isActive && isHovered ? 1 : 0,
+          scale: !isActive && isHovered ? 1 : 0.95
+        }}
+        transition={{ duration: 0.15 }}
+      />
+      
+      {/* Text label */}
+      <span 
+        className={`relative z-10 text-[15px] font-medium transition-colors duration-200 ${
           isActive 
             ? 'text-[hsl(var(--color-primary))]' 
             : 'text-[hsl(var(--color-text-muted))] group-hover:text-[hsl(var(--color-text))]'
         }`}
-        animate={{ 
-          y: isHovered && !isActive ? -1 : 0,
-        }}
-        transition={{ duration: 0.2 }}
       >
         {label}
-      </motion.span>
+      </span>
       
-      {/* Hover background glow */}
-      <motion.div
-        className="absolute inset-0 rounded-lg bg-[hsl(var(--color-primary))]/5"
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ 
-          opacity: isHovered && !isActive ? 1 : 0,
-          scale: isHovered && !isActive ? 1 : 0.8
-        }}
-        transition={{ duration: 0.2 }}
-      />
-      
-      {/* Active indicator - animated pill */}
+      {/* Active underline indicator */}
       {isActive && (
         <motion.div
-          layoutId="activeNavPill"
-          className="absolute inset-0 rounded-lg bg-[hsl(var(--color-primary-light))] border border-[hsl(var(--color-primary))]/20"
-          transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+          layoutId="navbar-active-underline"
+          className="absolute -bottom-0.5 left-1/2 w-5 h-[2px] bg-gradient-to-r from-[hsl(var(--color-primary))] to-[hsl(var(--accent))] rounded-full"
+          style={{ x: '-50%' }}
+          transition={{ 
+            type: 'spring', 
+            stiffness: 500, 
+            damping: 35,
+            mass: 1
+          }}
         />
       )}
       
-      {/* Active underline accent */}
-      {isActive && (
-        <motion.div
-          layoutId="activeNavUnderline"
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-gradient-to-r from-[hsl(var(--color-primary))] to-[hsl(var(--accent))] rounded-full"
-          transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-        />
-      )}
-      
-      {/* Hover underline */}
+      {/* Hover underline - only shows when not active */}
       <motion.div
-        className="absolute bottom-0 left-1/2 h-0.5 bg-[hsl(var(--color-text-muted))]/30 rounded-full"
-        initial={{ width: 0, x: '-50%' }}
+        className="absolute -bottom-0.5 left-1/2 h-[2px] bg-[hsl(var(--color-text-muted))]/40 rounded-full"
+        initial={false}
         animate={{ 
-          width: isHovered && !isActive ? '60%' : 0,
-          x: '-50%'
+          width: !isActive && isHovered ? 20 : 0,
+          opacity: !isActive && isHovered ? 1 : 0
         }}
+        style={{ x: '-50%' }}
         transition={{ duration: 0.2 }}
       />
     </Link>
@@ -226,13 +236,12 @@ export default function Navbar() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1, duration: 0.4 }}
               >
-                {navLinks.map((link, index) => (
+                {navLinks.map((link) => (
                   <NavLink 
                     key={link.href}
                     href={link.href}
                     label={link.label}
                     isActive={pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href))}
-                    index={index}
                   />
                 ))}
               </motion.div>
