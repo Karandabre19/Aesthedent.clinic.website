@@ -22,6 +22,7 @@ import {
   Quote
 } from 'lucide-react';
 import TestimonialsSection from '@/components/sections/TestimonialsSection';
+import InsightsSection from '@/components/sections/InsightsSection';
 import treatmentProcessImage from "../public/clinic/treatment-process.jpeg";
 import treatMentChairImage from "../public/clinic/dentist-chair-proper.jpeg";
 
@@ -664,6 +665,12 @@ export default function HomePage() {
           </AnimatedSection>
         </div>
       </section>
+
+      {/* Insights Section - Premium Editorial */}
+      <InsightsSection 
+        title="Insights"
+        subtitle="Trusted knowledge from real experts—not generic content. Real answers to real patient questions."
+      />
 
       {/* Doctors Section */}
       <section className="py-12 sm:py-16 md:py-24 lg:py-32 bg-gradient-to-b from-white to-[hsl(var(--bg-alt))]">
