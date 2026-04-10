@@ -22,8 +22,8 @@ import {
   Quote,
 } from 'lucide-react';
 
-const whatsappNumber = '919876543210';
-const phoneNumber = '+919876543210';
+const whatsappNumber = '919309816336';
+const phoneNumber = '+919309816336';
 
 // Utility function to get UTM parameters from URL
 function getUTMParams() {

@@ -37,7 +37,7 @@ export default function PageWrapper({ children }) {
         initial="initial"
         animate="animate"
         exit="exit"
-        className="min-h-screen"
+        className="relative min-h-screen"
       >
         {children}
       </motion.main>

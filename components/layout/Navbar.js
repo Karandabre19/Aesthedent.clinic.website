@@ -20,10 +20,8 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
-  const whatsappNumber = '919876543210';
-  const whatsappMessage = encodeURIComponent('Hi, I would like to book an appointment at Aesthedent Dental Clinic.');
-  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
-  const phoneNumber = '+919876543210';
+  const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
+  const phoneNumber = '+919309816336';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -239,7 +237,7 @@ export default function Navbar() {
                     className="flex items-center justify-center gap-2 w-full py-3.5 bg-[hsl(var(--background))] border border-[hsl(var(--color-border))] text-[hsl(var(--color-text))] hover:bg-[hsl(var(--color-bg-alt))] text-[15px] font-medium rounded-xl transition-colors"
                   >
                     <Phone className="w-4 h-4" />
-                    +91 98765 43210
+                    +91 93098 16336
                   </a>
                 </div>
               </div>

@@ -27,10 +27,8 @@ import treatMentChairImage from "../public/clinic/dentist-chair-proper.jpeg";
 
 gsap.registerPlugin(useGSAP);
 
-const whatsappNumber = '919876543210';
-const whatsappMessage = encodeURIComponent('Hi, I would like to book an appointment at Aesthedent Dental Clinic.');
-const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
-const phoneNumber = '+919876543210';
+const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
+const phoneNumber = '+919309816336';
 
 const trustStats = [
   { value: 5, decimals: 1, suffix: '', label: 'Google Rating', sub: '263 Reviews' },
@@ -413,7 +411,7 @@ export default function HomePage() {
                   <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
                 <a
-                  href="https://maps.google.com/?q=Dahanukar+Colony,+Kothrud,+Pune+411038"
+                  href="https://maps.app.goo.gl/BVb9iy5EQkmbYSVPA"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hero-action-btn group inline-flex translate-y-6 scale-95 items-center justify-center gap-2 sm:gap-3 rounded-full border-2 border-[hsl(var(--color-primary))] bg-[hsl(var(--color-primary))]/10 px-6 sm:px-8 py-3 sm:py-4 font-semibold text-[hsl(var(--color-primary))] opacity-0 shadow-lg backdrop-blur-md transition-all duration-300 transform-gpu hover:border-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary))]/20 text-sm sm:text-base"
@@ -782,7 +780,7 @@ export default function HomePage() {
 
               <div className="space-y-4 sm:space-y-5 md:space-y-7 mb-8 sm:mb-10 md:mb-12">
                 <a 
-                  href="https://maps.google.com/?q=Dahanukar+Colony,+Kothrud,+Pune+411038"
+                  href="https://maps.app.goo.gl/BVb9iy5EQkmbYSVPA"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-start gap-3 sm:gap-5 hover:opacity-80 transition-opacity cursor-pointer group"
@@ -819,7 +817,7 @@ export default function HomePage() {
                   <div>
                     <p className="font-bold text-white mb-1 sm:mb-2 text-base sm:text-lg">Reach Us</p>
                     <a href={`tel:${phoneNumber}`} className="text-white hover:text-white/90 transition-colors font-semibold text-base sm:text-lg">
-                      +91 98765 43210
+                      +91 93098 16336
                     </a>
                   </div>
                 </div>

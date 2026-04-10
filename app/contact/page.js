@@ -21,10 +21,8 @@ import {
   CheckCircle2
 } from 'lucide-react';
 
-const whatsappNumber = '919876543210';
-const whatsappMessage = encodeURIComponent('Hi, I would like to book an appointment at Aesthedent Dental Clinic.');
-const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
-const phoneNumber = '+919876543210';
+const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
+const phoneNumber = '+919309816336';
 
 const contactInfo = [
   {
@@ -33,13 +31,13 @@ const contactInfo = [
     details: ['Near Karve Statue, Kothrud', 'Pune, Maharashtra 411038'],
     action: {
       label: 'Get Directions',
-      href: 'https://maps.google.com/?q=Kothrud+Pune'
+      href: 'https://maps.app.goo.gl/BVb9iy5EQkmbYSVPA'
     }
   },
   {
     icon: Phone,
     title: 'Call Us',
-    details: ['+91 98765 43210', '+91 20 1234 5678'],
+    details: ['+91 93098 16336'],
     action: {
       label: 'Call Now',
       href: `tel:${phoneNumber}`
@@ -138,7 +136,7 @@ export default function ContactPage() {
             >
               <a href={`tel:${phoneNumber}`}>
                 <Phone className="w-5 h-5 mr-2" />
-                Call: +91 98765 43210
+                Call: +91 93098 16336
               </a>
             </Button>
           </div>
@@ -186,9 +184,9 @@ export default function ContactPage() {
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Map */}
             <AnimatedSection direction="left">
-              <div className="rounded-3xl overflow-hidden shadow-lg h-full min-h-[400px]">
+              <div className="rounded-3xl overflow-hidden shadow-lg h-full min-h-[400px] relative">
                 <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30261.54194085308!2d73.79731726459962!3d18.50499789999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf9e0e356f4d%3A0x448c1a79e9f20e13!2sKothrud%2C%20Pune%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1704067200000!5m2!1sen!2sin"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.3068455465394!2d73.8078!3d18.5048!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf9e0e356f4d%3A0x448c1a79e9f20e13!2sAesthedent%20Dental%20Clinic!5e0!3m2!1sen!2sin!4v1704067200000!5m2!1sen!2sin"
                   width="100%"
                   height="100%"
                   style={{ border: 0, minHeight: '400px' }}
@@ -197,6 +195,14 @@ export default function ContactPage() {
                   referrerPolicy="no-referrer-when-downgrade"
                   title="Aesthedent Location"
                 ></iframe>
+                <a 
+                  href="https://maps.app.goo.gl/BVb9iy5EQkmbYSVPA"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute bottom-4 right-4 bg-white px-4 py-2 rounded-full shadow-lg text-sm font-medium text-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary-light))] transition-colors"
+                >
+                  Open in Google Maps
+                </a>
               </div>
             </AnimatedSection>
 
@@ -245,7 +251,7 @@ export default function ContactPage() {
                             id="phone"
                             type="tel"
                             required
-                            placeholder="+91 98765 43210"
+                            placeholder="+91 93098 16336"
                             value={formData.phone}
                             onChange={(e) => setFormData({...formData, phone: e.target.value})}
                             className="h-12"

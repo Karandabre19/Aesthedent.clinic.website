@@ -4,9 +4,7 @@ import { MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function WhatsAppButton() {
-  const whatsappNumber = '919876543210';
-  const whatsappMessage = encodeURIComponent('Hi, I would like to book an appointment at Aesthedent Dental Clinic.');
-  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+  const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
 
   return (
     <motion.a
