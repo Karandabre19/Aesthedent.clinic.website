@@ -407,10 +407,10 @@ export default function HomePage() {
                   </HeroWord>
                 </span>
                 <span className="hero-line hero-line-2 relative block overflow-hidden pb-1 sm:pb-2">
-                  <HeroWord className="hero-accent-word text-[hsl(var(--color-accent))]">
+                  <HeroWord className="hero-accent-word font-semibold text-[hsl(var(--color-accent))]">
                     Not
                   </HeroWord>{" "}
-                  <HeroWord className="hero-accent-word text-[hsl(var(--color-accent))]">
+                  <HeroWord className="hero-accent-word font-semibold text-[hsl(var(--color-accent))]">
                     compromise.
                   </HeroWord>
                 </span>

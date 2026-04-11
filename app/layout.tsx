@@ -28,14 +28,19 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         {gtmId ? (
           <>
             {/* Google Tag Manager */}
-            <script
+            <Script
+              id="gtm-init"
+              strategy="beforeInteractive"
               dangerouslySetInnerHTML={{
                 __html: `
-                  window.dataLayer = window.dataLayer || [];
-                  window.dataLayer.push({
-                    'gtm.start': new Date().getTime(),
-                    event: 'gtm.js'
-                  });
+                  (function(w,d,s,l,i){w[l]=w[l]||[];
+                  w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
+                  var f=d.getElementsByTagName(s)[0],
+                  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+                  j.async=true;
+                  j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+                  f.parentNode.insertBefore(j,f);
+                  })(window,document,'script','dataLayer','${gtmId}');
                 `,
               }}
             />
@@ -44,13 +49,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         ) : null}
       </head>
       <body className={`${poppins.className} font-sans relative`}>
-        {gtmId ? (
-          <Script
-            id="gtm-script"
-            src={`https://www.googletagmanager.com/gtm.js?id=${gtmId}`}
-            strategy="afterInteractive"
-          />
-        ) : null}
         {gtmId ? (
           <>
             {/* Google Tag Manager (noscript) */}
