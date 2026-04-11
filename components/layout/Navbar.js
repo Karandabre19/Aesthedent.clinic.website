@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Phone, MessageCircle, Menu, X, ChevronRight, Sparkles } from 'lucide-react';
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useScroll } from 'framer-motion';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -130,6 +130,13 @@ export default function Navbar() {
 
   const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
   const phoneNumber = '+919309816336';
+
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -415,14 +422,9 @@ export default function Navbar() {
         <motion.div
           className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[hsl(var(--color-primary))] via-[hsl(var(--accent))] to-[hsl(var(--color-primary))]"
           style={{
-            scaleX: useTransform(
-              useMotionValue(0),
-              [0, 1],
-              [0, 1]
-            ),
+            scaleX,
             transformOrigin: 'left'
           }}
-          initial={{ scaleX: 0 }}
         />
       </motion.header>
 

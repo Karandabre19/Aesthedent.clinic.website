@@ -20,7 +20,11 @@ import {
   MapPin,
   Clock,
   ChevronRight,
-  Quote
+  Quote,
+  Monitor,
+  Info,
+  Hand,
+  Eye
 } from 'lucide-react';
 import TestimonialsSection from '@/components/sections/TestimonialsSection';
 import InsightsSection from '@/components/sections/InsightsSection';
@@ -95,31 +99,53 @@ function TrustStatCard({ stat, index }) {
   );
 }
 
-function InteractivePromiseCard({ num, title, desc }) {
+function AdvancedPromiseCard({ num, title, desc, icon: Icon, isLast }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      whileHover={{ y: -5, scale: 1.02 }}
-      transition={{ duration: 0.4 }}
-      className="group relative overflow-hidden rounded-[1.5rem] bg-white border border-[hsl(var(--color-primary))]/5 p-6 sm:p-8 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] flex flex-col items-start gap-3 sm:gap-4 z-10"
+      whileHover={{ y: -5, transition: { duration: 0.2 } }}
+      className={`group relative overflow-hidden rounded-[1.5rem] bg-white border-2 p-6 sm:p-7 shadow-sm hover:shadow-xl transition-all duration-300 z-10 ${
+        isLast 
+          ? 'border-orange-500/20 hover:border-orange-500/40' 
+          : 'border-[hsl(var(--color-primary))]/10 hover:border-[hsl(var(--color-primary))]/30'
+      }`}
     >
-      <div className="absolute -top-4 -right-2 p-6 opacity-[0.03] group-hover:opacity-10 transition-opacity duration-500 text-7xl font-black text-[hsl(var(--color-primary))] pointer-events-none">
-        {num}
+      {/* Background Decorative Icon (Smaller) */}
+      <div className="absolute top-0 right-0 p-6 opacity-[0.03] group-hover:opacity-[0.08] transition-all duration-500 pointer-events-none transform group-hover:scale-125 group-hover:-translate-x-2">
+        <Icon className="w-24 h-24" />
       </div>
-      <div className="relative z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[hsl(var(--color-accent))]/10 flex items-center justify-center text-[hsl(var(--color-accent))] font-bold group-hover:bg-[hsl(var(--color-accent))] group-hover:text-white transition-colors duration-500">
-        <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+
+      <div className="flex items-center justify-between w-full mb-4">
+        <div className={`relative w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 ${isLast ? 'bg-orange-500/10 text-orange-600 group-hover:bg-orange-500 group-hover:text-white' : 'bg-[hsl(var(--color-accent))]/10 text-[hsl(var(--color-accent))] group-hover:bg-[hsl(var(--color-accent))] group-hover:text-white'}`}>
+          <Icon className="w-6 h-6" />
+          {isLast && (
+            <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-orange-500"></span>
+            </span>
+          )}
+        </div>
+        <span className="text-3xl font-black text-[hsl(var(--color-primary))]/10 group-hover:text-[hsl(var(--color-primary))]/15 transition-colors duration-300">
+          {num}
+        </span>
       </div>
-      <div className="relative z-10 mt-2">
-        <h3 className="text-lg sm:text-xl font-bold text-[hsl(var(--color-primary))] mb-2 group-hover:text-[hsl(var(--color-accent))] transition-colors duration-500">
+
+      <div className="relative z-10">
+        <h3 className="text-lg sm:text-xl font-bold text-[hsl(var(--color-primary))] mb-2 group-hover:text-[hsl(var(--color-text))] transition-colors duration-300">
           {title}
         </h3>
-        <p className="text-sm sm:text-base text-[hsl(var(--color-text-muted))] leading-relaxed">
+        <p className="text-xs sm:text-sm text-[hsl(var(--color-text-muted))] leading-relaxed group-hover:text-[hsl(var(--color-text))] transition-colors duration-300">
           {desc}
         </p>
       </div>
-      <div className="absolute bottom-0 left-0 h-1 w-0 bg-[hsl(var(--color-accent))] group-hover:w-full transition-all duration-700 ease-out" />
+
+      {isLast && (
+        <div className="mt-4 flex items-center gap-2 px-2.5 py-1 bg-orange-50 rounded-lg border border-orange-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <span className="text-[9px] font-bold text-orange-600 uppercase tracking-wider">Control Signal active</span>
+        </div>
+      )}
     </motion.div>
   );
 }
@@ -539,25 +565,30 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 max-w-5xl mx-auto">
-            <InteractivePromiseCard
+            <AdvancedPromiseCard
               num="01"
-              title="You won't be rushed."
-              desc="We block out plenty of time for every patient. You dictate the pace, and we go as slow as you need."
+              icon={Clock}
+              title="Unhurried Clinical Excellence"
+              desc="I’ve designed my Kothrud practice specifically to avoid the 'conveyor-belt' dentistry common today. I schedule fewer patients to ensure I can dedicate my full focus to your care. Your procedure won't start until I’m certain you feel settled and in control."
             />
-            <InteractivePromiseCard
+            <AdvancedPromiseCard
               num="02"
-              title="You can ask questions."
-              desc="No question is silly. We want you to fully understand your options before moving forward."
+              icon={Eye}
+              title="Purposeful Communication"
+              desc="Clear vision leads to clear confidence. I prioritize eye-to-eye consultations, using advanced intraoral imaging not just to diagnose, but to educate. My goal is for you to leave with a complete understanding of your oral health, not just a prescription."
             />
-            <InteractivePromiseCard
+            <AdvancedPromiseCard
               num="03"
-              title="We explain before starting."
-              desc="No surprises. We show you exactly what we're going to do first and what you will feel."
+              icon={Info}
+              title="Sensory Transparency"
+              desc="The fear of dentistry is often a fear of the unexpected. I bridge that gap by narrating each step of your treatment in real-time—preparing you for every vibration, sound, or sensation. When you know exactly what’s coming, the anxiety fades."
             />
-            <InteractivePromiseCard
+            <AdvancedPromiseCard
               num="04"
-              title="We stop if you're uncomfortable."
-              desc="If you feel anxious, just raise a hand. We will stop immediately and pause for as long as you need."
+              icon={Hand}
+              isLast={true}
+              title="Your Safety, Your Signal"
+              desc="Ethical care means you are always the primary decision-maker. We implement a specific 'rest signal' before any treatment begins. If you raise your hand, my tools are down instantly. You have my word that we pause as often and for as long as you need."
             />
           </div>
         </div>
