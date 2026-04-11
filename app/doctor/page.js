@@ -22,19 +22,19 @@ const doctors = [
     name: 'Dr. Sahil Sharma',
     role: 'Lead Dentist & Founder',
     image: '/assets/doctor-male.jpeg',
-    bio: 'Dr. Sahil is the founder of Aesthedent Dental Clinic. With over 12 years of experience, he specializes in dental implants, cosmetic dentistry, and full-mouth rehabilitation. Known for his calm demeanor and thorough explanations, he ensures every patient feels comfortable and well-informed.',
+    bio: 'Dr. Sahil is the principal dentist at Aesthedent Dental Clinic in Kothrud, Pune. With 12+ years of clinical practice, he focuses extensively on precision dental implants, full-mouth reconstructions, and cosmetic dentistry. Ranked among the top implantologists in Pune, he combines advanced digital diagnostics with proven surgical techniques to deliver durable, aesthetically perfect, and functional tooth restorations.',
     qualifications: ['BDS - Government Dental College, Mumbai', 'MDS - Prosthodontics, Pune University', 'Fellowship in Implantology, Germany'],
     specializations: ['Dental Implants', 'Full Mouth Rehabilitation', 'Cosmetic Dentistry', 'Smile Design'],
-    philosophy: 'I believe in treating patients like family. Every treatment plan is crafted with honesty, transparency, and a focus on long-term oral health.'
+    philosophy: 'High-quality dental care requires precision, advanced technology, and complete transparency. My focus is always on delivering durable results that genuinely improve oral health.'
   },
   {
     name: 'Dr. Aishwarya Kulkarni',
     role: 'Dental Surgeon',
     image: '/assets/doctor-female.jpeg',
-    bio: 'Dr. Aishwarya is known for her gentle, reassuring approach, especially with anxious patients and children. She specializes in painless extractions, pediatric dentistry, and preventive care. Her patients often comment on how comfortable they feel during treatments.',
+    bio: 'An expert dental surgeon in Pune, Dr. Aishwarya specializes in pediatric dentistry, preventive oral care, and painless tooth extractions. Utilizing modern, minimally invasive techniques, she effectively treats complex dental issues while prioritizing efficient recovery, making her a highly recommended dentist for specialized and routine clinical treatments.',
     qualifications: ['BDS - Bharati Vidyapeeth, Pune', 'Certificate in Pediatric Dentistry', 'Advanced Training in Painless Dentistry'],
     specializations: ['Pediatric Dentistry', 'Painless Extractions', 'Root Canal Treatment', 'Preventive Care'],
-    philosophy: 'A visit to the dentist should never be scary. I work to create a warm, welcoming environment where patients of all ages feel safe and cared for.'
+    philosophy: 'Effective dental treatments should be precise, comfortable, and clinically sound. I emphasize clear communication and proactive preventive care to secure my patients’ long-term oral health.'
   }
 ];
 
@@ -52,7 +52,7 @@ export default function DoctorPage() {
           >
             <Badge className="mb-4 bg-[hsl(var(--color-primary-light))] text-[hsl(var(--color-primary))]">Our Team</Badge>
             <h1 className="text-4xl lg:text-[52px] font-semibold text-[hsl(var(--color-text))] mb-6 leading-tight">
-              Meet Your Dentists
+              Top Dentists in Kothrud, Pune – Our Team
             </h1>
             <p className="text-lg lg:text-xl text-[hsl(var(--color-text-muted))] leading-relaxed">
               Skilled, compassionate, and dedicated to your comfort. Our doctors bring years of experience with a patient-first approach.
@@ -141,18 +141,18 @@ export default function DoctorPage() {
             {[
               {
                 icon: Heart,
-                title: 'Patient Comfort First',
-                desc: 'We prioritize your comfort and peace of mind above all else. Every treatment is designed to be as gentle as possible.'
+                title: 'Clinical Excellence',
+                desc: 'We utilize state-of-the-art dental technology to ensure precision in diagnosis, treatment, and long-term oral health management.'
               },
               {
                 icon: Users,
-                title: 'Honest Communication',
-                desc: 'We believe in complete transparency. You will always know exactly what treatment you need and why.'
+                title: 'Transparent Pricing',
+                desc: 'Our patients receive highly transparent treatment roadmaps, detailed clinical explanations, and honest pricing with no hidden costs.'
               },
               {
                 icon: Award,
-                title: 'Continuous Learning',
-                desc: 'Our team regularly updates their skills with the latest techniques and technologies in dental care.'
+                title: 'Advanced Expertise',
+                desc: 'From routine scaling to complex dental implants in Pune, our specialized team is rigorously trained in modern, evidence-based dentistry.'
               }
             ].map((value, i) => (
               <AnimatedSection key={i} delay={i * 0.1}>

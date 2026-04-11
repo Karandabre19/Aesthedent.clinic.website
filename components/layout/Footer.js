@@ -39,7 +39,7 @@ export default function Footer() {
               />
             </Link>
             <p className="text-white/90 text-sm leading-relaxed font-light mb-10 tracking-wide">
-              Premium dental care in Kothrud, Pune. Experience painless treatments, honest advice, and a patient-first approach.
+              Honest, clear dental care in Kothrud, Pune. We focus on reliable treatments and ensuring you understand everything before we start.
             </p>
             <div className="flex gap-5">
               <a 

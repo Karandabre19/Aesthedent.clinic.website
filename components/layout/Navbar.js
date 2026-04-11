@@ -8,8 +8,19 @@ import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from
 
 const navLinks = [
   { href: '/', label: 'Home' },
-  { href: '/services', label: 'Services' },
-  { href: '/doctor', label: 'Doctors' },
+  { 
+    label: 'Treatments', 
+    subLinks: [
+      { href: '/services', label: 'View All Treatments' },
+      { href: '/services/dental-implants', label: 'Dental Implants' },
+      { href: '/services/tooth-extraction', label: 'Tooth Extraction' },
+      { href: '/services/cleaning-polishing', label: 'Cleaning & Polishing' },
+      { href: '/services/kids-dentistry', label: 'Kids Dentistry' },
+      { href: '/services/root-canal', label: 'Root Canal Treatment' },
+      { href: '/services/teeth-whitening', label: 'Teeth Whitening' },
+    ]
+  },
+  { href: '/doctor', label: 'Our Teams' },
   { href: '/insights', label: 'Insights' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
@@ -64,7 +75,7 @@ function NavLink({ href, label, isActive }) {
       href={href}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative px-4 py-2.5 group"
+      className="relative px-3 py-2 group"
     >
       {/* Active pill background - static, no layoutId */}
       <div
@@ -84,7 +95,7 @@ function NavLink({ href, label, isActive }) {
       
       {/* Text label */}
       <span 
-        className={`relative z-10 text-[15px] font-medium transition-colors duration-200 ${
+        className={`relative z-10 text-sm font-medium transition-colors duration-200 ${
           isActive 
             ? 'text-[hsl(var(--color-primary))]' 
             : 'text-[hsl(var(--color-text-muted))] group-hover:text-[hsl(var(--color-text))]'
@@ -213,14 +224,74 @@ export default function Navbar() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1, duration: 0.4 }}
               >
-                {navLinks.map((link) => (
-                  <NavLink 
-                    key={link.href}
-                    href={link.href}
-                    label={link.label}
-                    isActive={pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href))}
-                  />
-                ))}
+                {navLinks.map((link) => {
+                  if (link.subLinks) {
+                    const isActive = link.subLinks.some(sub => pathname === sub.href);
+                    return (
+                      <div key={link.label} className="relative group/dropdown">
+                        <div className="relative px-3 py-2 cursor-pointer flex items-center gap-1 group">
+                          {/* Active pill background */}
+                          <div className={`absolute inset-0 rounded-full transition-all duration-300 ease-out ${
+                            isActive 
+                              ? 'bg-[hsl(var(--color-primary))]/10 border border-[hsl(var(--color-primary))]/20 opacity-100 scale-100' 
+                              : 'bg-transparent border border-transparent opacity-0 scale-95'
+                          }`} />
+                          
+                          {/* Hover background */}
+                          <div className={`absolute inset-0 rounded-full bg-[hsl(var(--color-bg-alt))] transition-all duration-200 ease-out opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100`} />
+                          
+                          {/* Text label */}
+                          <span className={`relative z-10 text-sm font-medium transition-colors duration-200 ${
+                            isActive 
+                              ? 'text-[hsl(var(--color-primary))]' 
+                              : 'text-[hsl(var(--color-text-muted))] group-hover:text-[hsl(var(--color-text))]'
+                          }`}>
+                            {link.label}
+                          </span>
+                          <svg className="relative z-10 w-4 h-4 text-[hsl(var(--color-text-muted))] transition-transform duration-300 group-hover/dropdown:-rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                          
+                          {/* Active underline indicator */}
+                          <div className={`absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-5 h-[2px] bg-gradient-to-r from-[hsl(var(--color-primary))] to-[hsl(var(--accent))] rounded-full transition-all duration-300 ease-out ${
+                            isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
+                          }`} />
+                        </div>
+                        
+                        {/* Dropdown Menu */}
+                        <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 pointer-events-none transition-all duration-300 transform translate-y-2 group-hover/dropdown:opacity-100 group-hover/dropdown:pointer-events-auto group-hover/dropdown:translate-y-0 w-64 z-50">
+                          <div className="bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-2xl shadow-xl overflow-hidden py-2 backdrop-blur-md">
+                            {link.subLinks.map((subLink) => {
+                              const isSubActive = pathname === subLink.href;
+                              return (
+                                <Link
+                                  key={subLink.href}
+                                  href={subLink.href}
+                                  className={`block px-5 py-3 text-sm transition-colors ${
+                                    isSubActive 
+                                      ? 'bg-[hsl(var(--color-primary))]/10 text-[hsl(var(--color-primary))] font-semibold' 
+                                      : 'text-[hsl(var(--color-text-muted))] hover:bg-[hsl(var(--color-bg-alt))] hover:text-[hsl(var(--color-text))]'
+                                  }`}
+                                >
+                                  {subLink.label}
+                                </Link>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  }
+                  
+                  return (
+                    <NavLink 
+                      key={link.href}
+                      href={link.href}
+                      label={link.label}
+                      isActive={pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href) && (!link.href.startsWith('/services') || link.href === '/services'))}
+                    />
+                  );
+                })}
               </motion.div>
             </nav>
 
@@ -235,7 +306,7 @@ export default function Navbar() {
               <MagneticButton>
                 <a 
                   href={`tel:${phoneNumber}`}
-                  className="group flex items-center gap-2 px-4 py-2.5 text-[15px] font-medium text-[hsl(var(--color-text-muted))] hover:text-[hsl(var(--color-text))] rounded-full transition-all duration-300 hover:bg-[hsl(var(--color-bg-alt))] relative overflow-hidden"
+                  className="group flex items-center gap-2 px-3 py-2 text-sm font-medium text-[hsl(var(--color-text-muted))] hover:text-[hsl(var(--color-text))] rounded-full transition-all duration-300 hover:bg-[hsl(var(--color-bg-alt))] relative overflow-hidden"
                 >
                   <motion.div
                     className="relative"
@@ -260,7 +331,7 @@ export default function Navbar() {
                   href={whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-[hsl(var(--color-primary))] to-[hsl(var(--color-primary-dark))] hover:from-[hsl(var(--color-primary-dark))] hover:to-[hsl(var(--color-primary))] text-white text-[15px] font-semibold rounded-full transition-all duration-300 shadow-lg shadow-[hsl(var(--color-primary))]/25 hover:shadow-xl hover:shadow-[hsl(var(--color-primary))]/35 overflow-hidden"
+                  className="group relative flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[hsl(var(--color-primary))] to-[hsl(var(--color-primary-dark))] hover:from-[hsl(var(--color-primary-dark))] hover:to-[hsl(var(--color-primary))] text-white text-sm font-semibold rounded-full transition-all duration-300 shadow-lg shadow-[hsl(var(--color-primary))]/25 hover:shadow-xl hover:shadow-[hsl(var(--color-primary))]/35 overflow-hidden"
                 >
                   {/* Shine effect */}
                   <motion.div
@@ -400,7 +471,45 @@ export default function Navbar() {
               <nav className="p-5 overflow-y-auto max-h-[calc(100vh-64px-180px)]">
                 <ul className="space-y-2">
                   {navLinks.map((link, i) => {
-                    const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
+                    if (link.subLinks) {
+                      const isActive = link.subLinks.some(sub => pathname === sub.href);
+                      return (
+                        <motion.li
+                          key={link.label}
+                          initial={{ opacity: 0, x: 40 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: i * 0.05 + 0.1 }}
+                          className="py-2"
+                        >
+                          <div className={`px-4 py-3 rounded-2xl text-base font-semibold ${
+                            isActive ? 'text-[hsl(var(--color-primary))]' : 'text-[hsl(var(--color-text))]'
+                          }`}>
+                            {link.label}
+                          </div>
+                          <div className="pl-4 mt-1 border-l-2 border-[hsl(var(--color-border))] ml-6 space-y-1">
+                            {link.subLinks.map(subLink => {
+                              const isSubActive = pathname === subLink.href;
+                              return (
+                                <Link
+                                  key={subLink.href}
+                                  href={subLink.href}
+                                  onClick={() => setMobileMenuOpen(false)}
+                                  className={`block px-4 py-2.5 rounded-xl text-sm transition-all ${
+                                    isSubActive
+                                      ? 'bg-[hsl(var(--color-primary-light))]/50 text-[hsl(var(--color-primary))] font-semibold'
+                                      : 'text-[hsl(var(--color-text-muted))] hover:text-[hsl(var(--color-text))] hover:bg-[hsl(var(--color-bg-alt))]'
+                                  }`}
+                                >
+                                  {subLink.label}
+                                </Link>
+                              );
+                            })}
+                          </div>
+                        </motion.li>
+                      );
+                    }
+
+                    const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href) && (!link.href.startsWith('/services') || link.href === '/services'));
                     return (
                       <motion.li
                         key={link.href}

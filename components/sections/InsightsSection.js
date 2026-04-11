@@ -53,7 +53,7 @@ function FeaturedArticle({ article }) {
   return (
     <Link href={`/insights/${article.slug}`} className="group block">
       <motion.article 
-        className="relative overflow-hidden rounded-2xl bg-[hsl(var(--background))] h-full"
+        className="relative overflow-hidden rounded-2xl bg-[hsl(var(--background))] h-[62vh]"
         whileHover={{ y: -4 }}
         transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
       >

@@ -11,10 +11,10 @@ import { Card, CardContent } from '@/components/ui/card';
 import PageWrapper from '@/components/layout/PageWrapper';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import { services } from '@/lib/services';
-import { 
-  Phone, 
-  MessageCircle, 
-  Star, 
+import {
+  Phone,
+  MessageCircle,
+  Star,
   Play,
   ArrowRight,
   MapPin,
@@ -27,6 +27,7 @@ import InsightsSection from '@/components/sections/InsightsSection';
 import treatmentProcessImage from "../public/clinic/treatment-process.jpeg";
 import treatMentChairImage from "../public/clinic/dentist-chair-proper.jpeg";
 import sahilTreatmentImage from "../public/clinic/treatment-process.2jpeg.jpeg"
+import { toast } from 'sonner';
 
 gsap.registerPlugin(useGSAP);
 
@@ -94,11 +95,40 @@ function TrustStatCard({ stat, index }) {
   );
 }
 
+function InteractivePromiseCard({ num, title, desc }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      whileHover={{ y: -5, scale: 1.02 }}
+      transition={{ duration: 0.4 }}
+      className="group relative overflow-hidden rounded-[1.5rem] bg-white border border-[hsl(var(--color-primary))]/5 p-6 sm:p-8 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] flex flex-col items-start gap-3 sm:gap-4 z-10"
+    >
+      <div className="absolute -top-4 -right-2 p-6 opacity-[0.03] group-hover:opacity-10 transition-opacity duration-500 text-7xl font-black text-[hsl(var(--color-primary))] pointer-events-none">
+        {num}
+      </div>
+      <div className="relative z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[hsl(var(--color-accent))]/10 flex items-center justify-center text-[hsl(var(--color-accent))] font-bold group-hover:bg-[hsl(var(--color-accent))] group-hover:text-white transition-colors duration-500">
+        <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+      </div>
+      <div className="relative z-10 mt-2">
+        <h3 className="text-lg sm:text-xl font-bold text-[hsl(var(--color-primary))] mb-2 group-hover:text-[hsl(var(--color-accent))] transition-colors duration-500">
+          {title}
+        </h3>
+        <p className="text-sm sm:text-base text-[hsl(var(--color-text-muted))] leading-relaxed">
+          {desc}
+        </p>
+      </div>
+      <div className="absolute bottom-0 left-0 h-1 w-0 bg-[hsl(var(--color-accent))] group-hover:w-full transition-all duration-700 ease-out" />
+    </motion.div>
+  );
+}
+
 function HeroWord({ children, className = '' }) {
   const text = String(children);
 
   return (
-    <span className={`hero-word-shell inline-flex overflow-hidden align-top ${className}`} aria-label={text}>
+    <span className={`hero-word-shell inline-flex overflow-hidden align-top pb-[0.2em] -mb-[0.2em] ${className}`} aria-label={text}>
       <span className="sr-only">{text}</span>
       <span className="hero-word inline-flex will-change-transform" aria-hidden="true">
         {text.split('').map((char, index) => (
@@ -132,7 +162,7 @@ export default function HomePage() {
     });
     hasTrackedHomeView.current = true;
   }, []);
-  
+
   const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
 
@@ -401,24 +431,23 @@ export default function HomePage() {
 
               <h1 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-[hsl(var(--color-primary))] leading-[1.1] mb-6 sm:mb-8">
                 <span className="hero-line hero-line-1 relative block overflow-hidden pb-1 sm:pb-2">
-                  <HeroWord>Your smile</HeroWord>{" "}
+                  <HeroWord>We explain</HeroWord>{" "}
                   <HeroWord className="font-semibold italic">
-                    deserves care.
+                    everything
                   </HeroWord>
                 </span>
                 <span className="hero-line hero-line-2 relative block overflow-hidden pb-1 sm:pb-2">
                   <HeroWord className="hero-accent-word font-semibold text-[hsl(var(--color-accent))]">
-                    Not
+                    before we
                   </HeroWord>{" "}
                   <HeroWord className="hero-accent-word font-semibold text-[hsl(var(--color-accent))]">
-                    compromise.
+                    start.
                   </HeroWord>
                 </span>
               </h1>
-
+    
               <p className="hero-copy mb-8 sm:mb-10 max-w-xl translate-y-6 text-base sm:text-lg leading-relaxed text-[hsl(var(--color-primary))]/85 opacity-0 transform-gpu md:text-lg">
-                Expert dental implants and prosthetic care in Kothrud. We focus
-                on your comfort and lasting results—not quick fixes.
+                We provide clear dental care in Kothrud, Pune. No hiding costs, no skipping details, and no rushing you into treatment.
               </p>
 
               <div className="hero-actions flex flex-col gap-3 sm:flex-row sm:gap-4">
@@ -495,6 +524,45 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Nervous Interactive Section directly under Trust Stats */}
+      <section className="relative z-20 bg-gradient-to-b from-[hsl(var(--background))] to-white pt-16 pb-12 sm:pt-24 sm:pb-16 md:pt-32 md:pb-24">
+        <div className="main-container">
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
+            <AnimatedSection>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[hsl(var(--color-primary))] leading-tight mb-4">
+                If you're feeling nervous...
+              </h2>
+              <p className="text-base sm:text-lg text-[hsl(var(--color-text-muted))]">
+                You're not alone. We've built our entire Kothrud practice around making you feel in control. Here is our promise:
+              </p>
+            </AnimatedSection>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 max-w-5xl mx-auto">
+            <InteractivePromiseCard
+              num="01"
+              title="You won't be rushed."
+              desc="We block out plenty of time for every patient. You dictate the pace, and we go as slow as you need."
+            />
+            <InteractivePromiseCard
+              num="02"
+              title="You can ask questions."
+              desc="No question is silly. We want you to fully understand your options before moving forward."
+            />
+            <InteractivePromiseCard
+              num="03"
+              title="We explain before starting."
+              desc="No surprises. We show you exactly what we're going to do first and what you will feel."
+            />
+            <InteractivePromiseCard
+              num="04"
+              title="We stop if you're uncomfortable."
+              desc="If you feel anxious, just raise a hand. We will stop immediately and pause for as long as you need."
+            />
+          </div>
+        </div>
+      </section>
+
       {/* About Section - Story Style */}
       <section className="py-12 sm:py-16 md:py-24 lg:py-32 bg-gradient-to-b from-white to-[hsl(var(--bg-alt))]">
         <div className="main-container">
@@ -503,11 +571,17 @@ export default function HomePage() {
               <div className="relative">
                 <div className="absolute -inset-4 bg-[hsl(var(--primary))]/10 rounded-3xl transform -rotate-3" />
                 <img
-                  src="https://images.pexels.com/photos/6502635/pexels-photo-6502635.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  src={sahilTreatmentImage.src}
                   alt="Dr. Sahil at Aesthedent"
                   className="relative rounded-2xl shadow-xl w-full aspect-[4/5] object-cover"
                 />
-                <div className="premium-surface absolute -bottom-6 -right-6 hidden rounded-2xl p-4 sm:p-6 md:block">
+                <div
+                  onClick={() => toast.info("Video is not currently available", {
+                    description: "Our intro video is being updated. Please check back later.",
+                    duration: 4000,
+                  })}
+                  className="premium-surface absolute -bottom-6 -right-6 hidden rounded-2xl p-4 sm:p-6 md:block cursor-pointer active:scale-95 transition-all"
+                >
                   <div className="flex items-center gap-3 sm:gap-4">
                     <div className="w-12 h-12 sm:w-14 sm:h-14 bg-[hsl(var(--accent))]/20 rounded-full flex items-center justify-center">
                       <Play className="w-5 h-5 sm:w-6 sm:h-6 text-[hsl(var(--primary))]" />
@@ -527,23 +601,16 @@ export default function HomePage() {
 
             <AnimatedSection direction="right">
               <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] rounded-full text-xs sm:text-sm font-semibold">
-                Who We Are
+                Our Approach
               </div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[hsl(var(--color-text))] leading-tight mb-4 sm:mb-6">
-                Dentistry built on trust and honesty.
+                It's normal to feel nervous.
               </h2>
               <p className="text-base sm:text-lg text-[hsl(var(--color-text-muted))] leading-relaxed mb-4 sm:mb-6">
-                At Aesthedent in Kothrud, we believe dental care shouldn't feel
-                like a medical procedure. It should feel like visiting someone
-                who genuinely understands your needs—and cares about the
-                results.
+                Most people feel a little nervous or unsure about visiting the dentist. You might not know what to expect, or you might worry about unexpected costs.
               </p>
               <p className="text-sm sm:text-base text-[hsl(var(--color-text-muted))] leading-relaxed mb-6 sm:mb-8">
-                Dr. Sahil founded this clinic with one simple goal: bring expert
-                prosthetic care and dental implants to Pune, without the
-                unnecessary drama. We focus on explaining things clearly,
-                addressing your fears honestly, and delivering results that
-                actually last.
+                We handle things differently. We use digital tools to show you exactly what's happening inside your mouth. We explain what needs fixing and what can wait, in plain words. There's never any pressure to decide right away.
               </p>
               <Link
                 href="/about"
@@ -586,23 +653,23 @@ export default function HomePage() {
           <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 md:gap-16 lg:gap-24 items-center">
             <AnimatedSection direction="left">
               <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-green-100 text-green-700 rounded-full text-xs sm:text-sm font-semibold">
-                Your Comfort First
+                Your Visit
               </div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[hsl(var(--color-text))] leading-tight mb-4 sm:mb-6">
-                Dental care shouldn't hurt. Not physically. Not emotionally.
+                What happens when you visit.
               </h2>
               <p className="text-base sm:text-lg text-[hsl(var(--color-text-muted))] leading-relaxed mb-6 sm:mb-8">
-                Every patient who visits Aesthedent deserves to feel safe. We've
-                designed our entire clinic—from the equipment to the
-                conversations—around keeping you comfortable.
+                We follow a clear process so you always know what's coming next:
               </p>
 
               <div className="space-y-3 sm:space-y-5 mb-8 sm:mb-10">
                 {[
-                  "Advanced numbing—you literally won't feel a thing",
-                  "Calm, spa-like environment to ease your mind",
-                  "Clear explanations before we start anything",
-                  "Gentle techniques with quiet, modern equipment",
+                  "Checkup: We take a look and show you your teeth on a screen.",
+                  "Explanation: We explain the problem in simple words.",
+                  "Planning: We discuss what needs fixing now and what can wait.",
+                  "Cost: We tell you the exact price before we do anything.",
+                  "Treatment: We make sure you are fully numb and comfortable.",
+                  "Follow-up: We check in to see how you are healing."
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-3 sm:gap-4">
                     <div className="w-5 h-5 sm:w-6 sm:h-6 bg-[hsl(var(--primary))]/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 sm:mt-1">
@@ -647,14 +714,13 @@ export default function HomePage() {
         <div className="main-container">
           <AnimatedSection className="text-center mb-12 sm:mb-16 md:mb-24">
             <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-white/20 text-white rounded-full text-xs sm:text-sm font-semibold">
-              What We Offer
+              What We Do
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-3 sm:mb-6">
-              Expert services for every smile need
+              Practical solutions for your dental health.
             </h2>
             <p className="text-sm sm:text-base md:text-lg text-white/80 max-w-2xl mx-auto">
-              From dental implants to full mouth rehabilitation, we handle
-              complex cases with precision—and care.
+              We handle everything from immediate pain relief to complex restorative dentistry with a focus on doing the job right once.
             </p>
           </AnimatedSection>
 
@@ -715,11 +781,10 @@ export default function HomePage() {
               Our Team
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[hsl(var(--color-text))] leading-tight mb-3 sm:mb-6">
-              Dentistry by experienced experts
+              Top Dentists in Kothrud, Pune
             </h2>
             <p className="text-sm sm:text-base md:text-lg text-[hsl(var(--color-text-muted))] max-w-2xl mx-auto">
-              Each dentist at Aesthedent brings years of experience and a
-              genuine care for patient comfort.
+              Our dedicated team of skilled dental professionals at Aesthedent is committed to providing exceptional care, ensuring every treatment is as comfortable and precise as possible.
             </p>
           </AnimatedSection>
 
@@ -815,11 +880,10 @@ export default function HomePage() {
                 Get in Touch
               </div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4 sm:mb-6 md:mb-8">
-                Visit Aesthedent in Kothrud
+                Ready to talk?
               </h2>
               <p className="text-sm sm:text-base md:text-lg text-white/85 leading-relaxed mb-6 sm:mb-8 md:mb-10">
-                We're located in Kothrud, Pune. Come experience dentistry the
-                way it should be—comfortable, honest, and results-driven.
+                We're in Kothrud. You can visit or call. We'll explain everything before we start.
               </p>
 
               <div className="space-y-4 sm:space-y-5 md:space-y-7 mb-8 sm:mb-10 md:mb-12">
