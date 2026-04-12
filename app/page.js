@@ -974,6 +974,7 @@ export default function HomePage() {
 
               <div className="flex flex-col gap-2 sm:gap-3 md:gap-4">
                 <a
+                  id="home-final-whatsapp"
                   href={whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"

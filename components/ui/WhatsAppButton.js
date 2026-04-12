@@ -135,6 +135,7 @@ export default function WhatsAppButton() {
       </AnimatePresence>
 
       <motion.a
+        id="floating-whatsapp-btn"
         href={whatsappLink}
         target="_blank"
         rel="noopener noreferrer"

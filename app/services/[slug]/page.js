@@ -68,6 +68,7 @@ export default function ServiceDetailPage({ params }) {
                   asChild
                 >
                   <a
+                    id="service-detail-whatsapp"
                     href={whatsappLink}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -249,6 +250,7 @@ export default function ServiceDetailPage({ params }) {
                 asChild
               >
                 <a
+                  id="service-detail-whatsapp"
                   href={whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"

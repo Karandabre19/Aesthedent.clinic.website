@@ -495,7 +495,7 @@ export default function ExperiencePage() {
       </section>
 
       {/* Services Section (Ported from Home Page to anchor Dental identity) */}
-      <section className="py-20 md:py-28 bg-[hsl(var(--color-primary))]">
+      <section id="services-grid-section" className="py-20 md:py-28 bg-[hsl(var(--color-primary))]">
         <div className="main-container">
           <AnimatedSection className="text-center mb-12 sm:mb-16 md:mb-20">
             <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-white/20 text-white rounded-full text-xs sm:text-sm font-semibold uppercase tracking-widest">
@@ -626,6 +626,7 @@ export default function ExperiencePage() {
                   </div>
 
                   <a
+                    id={`pricing-select-${plan.tier.replace(/\s+/g, '-').toLowerCase()}`}
                     href={`https://wa.me/${whatsappNumber}?text=Hi, I'm interested in the ${plan.tier} Value Plan ($${plan.price}). Can we discuss the clinical steps?`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -729,6 +730,7 @@ export default function ExperiencePage() {
                
                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <a
+                    id="final-cta-whatsapp"
                     href={whatsappLink}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -737,6 +739,7 @@ export default function ExperiencePage() {
                     Start with WhatsApp
                   </a>
                   <a
+                    id="final-cta-call"
                     href={`tel:${phoneNumber}`}
                     className="w-full sm:w-auto px-8 py-4 border-2 border-[hsl(var(--color-primary))] text-[hsl(var(--color-primary))] rounded-2xl font-bold text-base hover:bg-[hsl(var(--color-primary))]/5 transition-all duration-300 text-center"
                   >

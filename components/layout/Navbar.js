@@ -312,6 +312,7 @@ export default function Navbar() {
               {/* Call Now - Subtle style */}
               <MagneticButton>
                 <a 
+                  id="nav-desktop-call"
                   href={`tel:${phoneNumber}`}
                   className="group flex items-center gap-2 px-3 py-2 text-sm font-medium text-[hsl(var(--color-text-muted))] hover:text-[hsl(var(--color-text))] rounded-full transition-all duration-300 hover:bg-[hsl(var(--color-bg-alt))] relative overflow-hidden"
                 >
@@ -335,6 +336,7 @@ export default function Navbar() {
               {/* Book Appointment - Premium CTA */}
               <MagneticButton>
                 <a 
+                  id="nav-desktop-whatsapp"
                   href={whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -368,6 +370,7 @@ export default function Navbar() {
             <div className="flex xl:hidden items-center gap-2 sm:gap-3">
               {/* Show Book button on tablet only */}
               <a 
+                id="nav-mobile-book"
                 href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -552,6 +555,7 @@ export default function Navbar() {
               >
                 <div className="space-y-3">
                   <a 
+                    id="mobile-sidebar-whatsapp"
                     href={whatsappLink}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -569,6 +573,7 @@ export default function Navbar() {
                   </a>
                   
                   <a 
+                    id="mobile-sidebar-call"
                     href={`tel:${phoneNumber}`}
                     className="flex items-center justify-center gap-3 w-full py-4 bg-[hsl(var(--background))] border-2 border-[hsl(var(--color-border))] hover:border-[hsl(var(--color-primary))] text-[hsl(var(--color-text))] hover:text-[hsl(var(--color-primary))] text-base font-medium rounded-2xl transition-all duration-300"
                   >

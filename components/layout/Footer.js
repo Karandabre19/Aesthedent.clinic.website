@@ -43,6 +43,7 @@ export default function Footer() {
             </p>
             <div className="flex gap-5">
               <a 
+                id="footer-social-whatsapp"
                 href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -52,6 +53,7 @@ export default function Footer() {
                 <MessageCircle className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
               </a>
               <a 
+                id="footer-social-call"
                 href={`tel:${phoneNumber}`}
                 className="group w-11 h-11 bg-white/15 rounded-full flex items-center justify-center hover:bg-[hsl(var(--color-accent))] transition-all duration-300 text-[hsl(var(--color-accent))] hover:text-[hsl(var(--color-primary-dark))] shadow-lg shadow-black/10"
                 aria-label="Call"
@@ -109,6 +111,7 @@ export default function Footer() {
               <li className="flex items-start gap-3.5 group">
                 <MapPin className="w-4 h-4 text-[hsl(var(--color-accent))] flex-shrink-0 mt-1 group-hover:scale-110 transition-transform duration-300" />
                 <a 
+                  id="footer-contact-address"
                   href="https://maps.app.goo.gl/BVb9iy5EQkmbYSVPA" 
                   target="_blank" 
                   rel="noopener noreferrer"
@@ -123,13 +126,13 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-3.5 group">
                 <Phone className="w-4 h-4 text-[hsl(var(--color-accent))] flex-shrink-0 mt-1 group-hover:scale-110 transition-transform duration-300" />
-                <a href={`tel:${phoneNumber}`} className="text-white/90 text-sm hover:text-[hsl(var(--color-accent))] transition-colors duration-300 font-normal">
+                <a id="footer-contact-call" href={`tel:${phoneNumber}`} className="text-white/90 text-sm hover:text-[hsl(var(--color-accent))] transition-colors duration-300 font-normal">
                   +91 93098 16336
                 </a>
               </li>
               <li className="flex items-start gap-3.5 group">
                 <Mail className="w-4 h-4 text-[hsl(var(--color-accent))] flex-shrink-0 mt-1 group-hover:scale-110 transition-transform duration-300" />
-                <a href="mailto:info@aesthedent.com" className="text-white/90 text-sm hover:text-[hsl(var(--color-accent))] transition-colors duration-300 font-normal break-all">
+                <a id="footer-contact-email" href="mailto:info@aesthedent.com" className="text-white/90 text-sm hover:text-[hsl(var(--color-accent))] transition-colors duration-300 font-normal break-all">
                   info@aesthedent.com
                 </a>
               </li>
