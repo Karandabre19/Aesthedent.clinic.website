@@ -404,7 +404,7 @@ export default function ExperiencePage() {
               num="01"
               icon={Clock}
               title="Unhurried Clinical Excellence"
-              desc="We refuse to practice 'conveyor-belt' dentistry. As a specialist practice, we schedule fewer patients to ensure complete focus on your complex care. We don't start until you feel completely settled."
+              desc="We refuse 'conveyor-belt' dentistry. Because we dedicate so much time to each individual, our weekly consultation slots are strictly limited. Book today to secure your time with Dr. Sahil."
             />
             <AdvancedPromiseCard
               num="02"
@@ -581,7 +581,7 @@ export default function ExperiencePage() {
           <div className="flex flex-col lg:flex-row gap-20 items-center mb-20">
              <div className="max-w-2xl">
                 <h2 className="text-3xl md:text-5xl font-black text-[hsl(var(--color-primary))] leading-[0.9] tracking-tighter mb-6">Transparent <br />Value Plans.</h2>
-                <p className="text-base text-[hsl(var(--color-text-muted))] font-light">We believe in complete financial transparency. Choose the plan that fits your life goals.</p>
+                <p className="text-base text-[hsl(var(--color-text-muted))] font-light">Get a fixed-price specialist roadmap on Day 1. No hidden fees. No pressure. Just absolute clarity on what it takes to reclaim your smile.</p>
              </div>
              <div className="flex-1 bg-[hsl(var(--color-accent))]/10 p-8 rounded-3xl border border-[hsl(var(--color-accent))]/20">
                 <div className="flex items-center gap-4 mb-4">
@@ -724,7 +724,7 @@ export default function ExperiencePage() {
                <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-[hsl(var(--color-accent))]/10 border border-[hsl(var(--color-accent))]/20 rounded-full text-[hsl(var(--color-accent))] font-bold text-xs uppercase tracking-widest mb-8">Take the First Step</div>
                <h2 className="text-4xl md:text-6xl font-black text-[hsl(var(--color-primary))] mb-8 leading-[0.9] tracking-tighter">Your Future <br />Smile Starts <br /> <span className="text-[hsl(var(--color-accent))]">Today.</span></h2>
                <p className="text-base md:text-lg text-[hsl(var(--color-text-muted))] max-w-2xl mx-auto mb-12 font-light leading-relaxed">
-                  Join 5,000+ patients who chose specialist excellence over standard care. Start your roadmap today with a clear, honest consultation.
+                  Stop letting dental anxiety and uncertainty delay your health. Secure your 1-on-1 specialist consultation today and get a clear, honest roadmap for your smile.
                </p>
                
                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

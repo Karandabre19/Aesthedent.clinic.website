@@ -27,6 +27,21 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={poppins.variable}>
       <body className={`${poppins.className} font-sans relative`}>
+        {/* Google Analytics 4 */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-9LPE5RCMQX"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){window.dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-9LPE5RCMQX');
+          `}
+        </Script>
+
         {gtmId ? (
           <>
             {/* Google Tag Manager */}
