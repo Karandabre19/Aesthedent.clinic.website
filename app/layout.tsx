@@ -26,7 +26,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={poppins.variable}>
-      <body className={`${poppins.className} font-sans relative`}>
+      <head>
         {/* Google Tag Manager */}
         <Script
           id="gtm-init"
@@ -45,7 +45,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           }}
         />
         {/* End Google Tag Manager */}
-        
+      </head>
+      <body className={`${poppins.className} font-sans relative`}>
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
