@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, Clock, ArrowLeft } from 'lucide-react';
 import PageWrapper from '@/components/layout/PageWrapper';
 import AnimatedSection from '@/components/ui/AnimatedSection';
@@ -81,10 +82,13 @@ function FeaturedArticle({ article }) {
         <div className="grid lg:grid-cols-2">
           {/* Image */}
           <div className="relative aspect-[16/10] lg:aspect-auto lg:min-h-[400px] overflow-hidden">
-            <img
+            <Image
               src={article.image}
               alt={article.title}
+              fill
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              priority
+              sizes="(max-width: 1024px) 100vw, 50vw"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[hsl(var(--background))] lg:block hidden" />
             <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--primary))]/80 to-transparent lg:hidden" />
@@ -138,10 +142,12 @@ function ArticleCard({ article, index }) {
       >
         {/* Image */}
         <div className="relative aspect-[16/10] overflow-hidden">
-          <img
+          <Image
             src={article.image}
             alt={article.title}
+            fill
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
         </div>

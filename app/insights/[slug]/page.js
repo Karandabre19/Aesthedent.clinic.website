@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Clock, Calendar, ArrowRight, MessageCircle } from 'lucide-react';
 import PageWrapper from '@/components/layout/PageWrapper';
+import Image from 'next/image';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import InsightsSection from '@/components/sections/InsightsSection';
 
@@ -278,10 +279,13 @@ export default function InsightArticlePage() {
         <div className="main-container">
           <AnimatedSection>
             <div className="relative aspect-[21/9] rounded-2xl overflow-hidden">
-              <img
+              <Image
                 src={article.image}
                 alt={article.title}
+                fill
                 className="w-full h-full object-cover"
+                priority
+                sizes="(max-width: 1200px) 100vw, 1200px"
               />
             </div>
           </AnimatedSection>

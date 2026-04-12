@@ -1,6 +1,7 @@
 'use client';
 
 import { Star, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import { getTestimonials } from '@/lib/testimonials';
 
@@ -21,9 +22,11 @@ function GoogleReviewBadge() {
 function ReviewerAvatar({ testimonial }) {
   return (
     <div className="relative h-14 w-14 overflow-hidden rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--color-bg-alt))]">
-      <img
+      <Image
         src={testimonial.image}
         alt={testimonial.name}
+        width={56}
+        height={56}
         className="h-full w-full object-cover"
       />
     </div>
@@ -55,9 +58,9 @@ function TestimonialCard({ testimonial, delay = 0 }) {
         <div className="flex items-center gap-3 min-w-0">
           <ReviewerAvatar testimonial={testimonial} />
           <div className="min-w-0">
-            <h4 className="truncate text-base font-semibold text-[hsl(var(--color-text))]">
+            <h3 className="truncate text-base font-semibold text-[hsl(var(--color-text))]">
               {testimonial.name}
-            </h4>
+            </h3>
             <p className="mt-1 text-sm text-[hsl(var(--color-text-muted))]">
               Verified patient
             </p>

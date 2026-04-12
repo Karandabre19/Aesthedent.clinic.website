@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
-import Lenis from 'lenis';
 
 function shouldEnableSmoothScroll() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') {
@@ -31,23 +30,34 @@ export default function SmoothScrollProvider({ children }) {
       return undefined;
     }
 
-    const lenis = new Lenis({
-      autoRaf: true,
-      smoothWheel: true,
-      syncTouch: false,
-      wheelMultiplier: 0.9,
-      lerp: 0.12,
-      anchors: true,
-      prevent: (node) =>
-        node?.closest?.(
-          '[data-lenis-prevent], [data-radix-scroll-area-viewport], [data-scroll-locked]'
-        ),
+    let lenis;
+    let cancelled = false;
+
+    // Dynamically import Lenis to avoid adding ~23KB to initial bundle
+    import('lenis').then(({ default: Lenis }) => {
+      if (cancelled) return;
+
+      lenis = new Lenis({
+        autoRaf: true,
+        smoothWheel: true,
+        syncTouch: false,
+        wheelMultiplier: 0.9,
+        lerp: 0.12,
+        anchors: true,
+        prevent: (node) =>
+          node?.closest?.(
+            '[data-lenis-prevent], [data-radix-scroll-area-viewport], [data-scroll-locked]'
+          ),
+      });
+
+      lenisRef.current = lenis;
     });
 
-    lenisRef.current = lenis;
-
     return () => {
-      lenis.destroy();
+      cancelled = true;
+      if (lenis) {
+        lenis.destroy();
+      }
       lenisRef.current = null;
     };
   }, []);
@@ -62,3 +72,4 @@ export default function SmoothScrollProvider({ children }) {
 
   return children;
 }
+

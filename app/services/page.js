@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -132,9 +133,11 @@ export default function ServicesPage() {
                                 </div>
                               </div>
                               <div className="hidden md:block">
-                                <img 
+                                <Image 
                                   src={service.image} 
                                   alt={service.title}
+                                  width={600}
+                                  height={340}
                                   className="rounded-2xl shadow-lg aspect-video object-cover"
                                 />
                               </div>

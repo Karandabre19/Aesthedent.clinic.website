@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Phone, MessageCircle, Menu, X, ChevronRight, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useScroll } from 'framer-motion';
@@ -204,10 +205,13 @@ export default function Navbar() {
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 17 }}
               >
-                <img 
+                <Image 
                   src="/aesthadent_logo.png" 
                   alt="Aesthedent Logo" 
+                  width={200}
+                  height={60}
                   className="h-12 lg:h-14 w-auto transition-all duration-300 group-hover:brightness-110"
+                  priority
                 />
               </motion.div>
               {/* Subtle glow on hover */}
@@ -456,9 +460,11 @@ export default function Navbar() {
               {/* Mobile Header */}
               <div className="flex items-center justify-between h-[64px] px-5 border-b border-[hsl(var(--color-border))]">
                 <Link href="/" className="flex items-center" onClick={() => setMobileMenuOpen(false)}>
-                  <img 
+                  <Image 
                     src="/aesthadent_logo.png" 
                     alt="Aesthedent Logo"
+                    width={140}
+                    height={48}
                     className="h-12 w-auto object-contain"
                   />
                 </Link>

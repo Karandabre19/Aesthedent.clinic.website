@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import PageWrapper from '@/components/layout/PageWrapper';
 import SectionHeading from '@/components/ui/SectionHeading';
 import AnimatedSection from '@/components/ui/AnimatedSection';
+import Image from 'next/image';
 import { 
   MessageCircle,
   Heart,
@@ -81,10 +82,13 @@ export default function AboutPage() {
               className="relative"
             >
               <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[hsl(var(--color-primary))]/14 via-[hsl(var(--color-accent))]/12 to-[hsl(var(--color-primary-light))] shadow-[0_28px_60px_-36px_hsl(var(--color-primary)/0.34)] transform -rotate-3"></div>
-              <img
+              <Image
                 src="https://images.pexels.com/photos/4269950/pexels-photo-4269950.jpeg?auto=compress&cs=tinysrgb&w=800"
                 alt="Aesthedent Clinic"
+                width={800}
+                height={500}
                 className="relative h-[400px] w-full rounded-3xl border border-white/70 object-cover object-center shadow-[0_28px_60px_-34px_hsl(var(--color-primary)/0.32)] lg:h-[450px]"
+                priority
               />
             </motion.div>
           </div>
@@ -260,10 +264,12 @@ export default function AboutPage() {
       <section className="section-spacing">
         <div className="main-container">
           <div className="relative rounded-3xl overflow-hidden">
-            <img
-              src={clinicWidePicture.src}
+            <Image
+              src={clinicWidePicture}
               alt="Aesthedent Clinic Interior"
+              fill
               className="h-[350px] w-full object-cover object-center lg:h-[500px]"
+              sizes="100vw"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-[hsl(var(--color-primary))/0.18] via-transparent to-transparent" />
             <div className="absolute inset-0 flex items-center p-6 lg:p-10">

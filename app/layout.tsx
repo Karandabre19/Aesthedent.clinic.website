@@ -5,6 +5,7 @@ import { Poppins } from 'next/font/google';
 import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import SmoothScrollProvider from '@/components/layout/SmoothScrollProvider';
+import MotionProvider from '@/components/layout/MotionProvider';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -12,8 +13,6 @@ const poppins = Poppins({
   variable: '--font-poppins',
   display: 'swap',
 });
-
-const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
 
 export const metadata = {
   title: 'Aesthedent Dental Clinic | Honest, Clear Dental Care in Kothrud, Pune',
@@ -27,20 +26,33 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={poppins.variable}>
       <head>
-        {/* Google Tag Manager */}
+        <link rel="preconnect" href="https://images.pexels.com" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://images.pexels.com" />
+        
+        {/* Google Tag Manager — deferred until after page is idle */}
         <Script
           id="gtm-init"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
-              (function(w,d,s,l,i){w[l]=w[l]||[];
-              w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
-              var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-              j.async=true;
-              j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-              f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','GTM-KJC8DRH9');
+              function loadGTM(){
+                (function(w,d,s,l,i){w[l]=w[l]||[];
+                w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
+                var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+                j.async=true;
+                j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+                f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','GTM-KJC8DRH9');
+              }
+              if('requestIdleCallback' in window){
+                requestIdleCallback(loadGTM,{timeout:3500});
+              } else {
+                setTimeout(loadGTM,3500);
+              }
             `,
           }}
         />
@@ -58,7 +70,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </noscript>
         {/* End Google Tag Manager (noscript) */}
         <TooltipProvider>
-          <SmoothScrollProvider>{children}</SmoothScrollProvider>
+          <MotionProvider>
+            <SmoothScrollProvider>{children}</SmoothScrollProvider>
+          </MotionProvider>
         </TooltipProvider>
         <Toaster />
       </body>

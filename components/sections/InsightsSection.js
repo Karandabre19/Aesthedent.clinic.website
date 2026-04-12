@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Clock } from 'lucide-react';
 import AnimatedSection from '@/components/ui/AnimatedSection';
@@ -59,10 +60,12 @@ function FeaturedArticle({ article }) {
       >
         {/* Image Container */}
         <div className="relative aspect-[16/10] lg:aspect-[16/12] overflow-hidden">
-          <img
+          <Image
             src={article.image}
             alt={article.title}
+            fill
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            sizes="(max-width: 1024px) 100vw, 60vw"
           />
           {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--primary))]/90 via-[hsl(var(--primary))]/40 to-transparent" />
@@ -115,10 +118,12 @@ function ArticleCard({ article, index }) {
       >
         {/* Image */}
         <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 rounded-lg overflow-hidden">
-          <img
+          <Image
             src={article.image}
             alt={article.title}
+            fill
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            sizes="100px"
           />
         </div>
         

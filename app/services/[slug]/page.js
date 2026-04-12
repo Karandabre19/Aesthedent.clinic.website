@@ -3,6 +3,7 @@
 import { use } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -96,10 +97,13 @@ export default function ServiceDetailPage({ params }) {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <img
+              <Image
                 src={service.image}
                 alt={service.title}
+                width={800}
+                height={450}
                 className="rounded-3xl shadow-xl object-cover w-full h-[400px] lg:h-[450px]"
+                priority
               />
             </motion.div>
           </div>
@@ -290,9 +294,11 @@ export default function ServiceDetailPage({ params }) {
                 <Link href={`/services/${s.slug}`}>
                   <Card className="group border-[hsl(var(--border))] hover:border-[hsl(var(--color-primary))] hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer">
                     <div className="aspect-[16/10] overflow-hidden">
-                      <img
+                      <Image
                         src={s.image}
                         alt={s.title}
+                        width={600}
+                        height={400}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                     </div>

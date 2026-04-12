@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Smile, MapPin, Clock, Phone, MessageCircle, Mail, ArrowRight } from 'lucide-react';
 
 const footerLinks = {
@@ -32,9 +33,11 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-1">
             <Link href="/" className="inline-block mb-10 group">
-              <img 
+              <Image 
                 src="/aesthadent_logo.png" 
                 alt="Aesthedent Logo" 
+                width={200}
+                height={60}
                 className="h-14 w-auto group-hover:opacity-85 transition-opacity duration-300"
               />
             </Link>
@@ -72,7 +75,7 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-[0.15em] text-[hsl(var(--color-accent))] mb-8 pb-4 border-b border-white/20">Services</h4>
+            <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-[hsl(var(--color-accent))] mb-8 pb-4 border-b border-white/20">Services</h2>
             <ul className="space-y-4">
               {footerLinks.services.map((link) => (
                 <li key={link.href}>
@@ -89,7 +92,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-[0.15em] text-[hsl(var(--color-accent))] mb-8 pb-4 border-b border-white/20">Quick Links</h4>
+            <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-[hsl(var(--color-accent))] mb-8 pb-4 border-b border-white/20">Quick Links</h2>
             <ul className="space-y-4">
               {footerLinks.quickLinks.map((link) => (
                 <li key={link.href}>
@@ -106,7 +109,7 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-[0.15em] text-[hsl(var(--color-accent))] mb-8 pb-4 border-b border-white/20">Contact</h4>
+            <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-[hsl(var(--color-accent))] mb-8 pb-4 border-b border-white/20">Contact</h2>
             <ul className="space-y-5">
               <li className="flex items-start gap-3.5 group">
                 <MapPin className="w-4 h-4 text-[hsl(var(--color-accent))] flex-shrink-0 mt-1 group-hover:scale-110 transition-transform duration-300" />

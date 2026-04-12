@@ -31,7 +31,7 @@ export default function WhatsAppButton() {
         dotColor: 'bg-red-500',
         pingColor: 'bg-red-400',
         header: 'WEEKLY HOLIDAY',
-        headerColor: 'text-red-600',
+        headerColor: 'text-red-800',
         main: "The clinic is away today",
         sub: "Available for emergencies only"
       };
@@ -42,7 +42,7 @@ export default function WhatsAppButton() {
         dotColor: 'bg-green-500',
         pingColor: 'bg-green-400',
         header: 'ONLINE NOW',
-        headerColor: 'text-green-600',
+        headerColor: 'text-green-800',
         main: "How can we help?",
         sub: "Typically replies in minutes"
       };
@@ -52,7 +52,7 @@ export default function WhatsAppButton() {
       dotColor: 'bg-orange-500',
       pingColor: 'bg-orange-400',
       header: 'CLOSED',
-      headerColor: 'text-orange-600',
+      headerColor: 'text-orange-800',
       main: "We'll be back at 10 AM",
       sub: "Message us, we'll reply first thing"
     };
@@ -109,6 +109,7 @@ export default function WhatsAppButton() {
                 setHasBeenDismissed(true);
               }}
               className="absolute -top-2 -right-2 z-10 p-1.5 bg-white border border-black/10 rounded-full shadow-md hover:bg-gray-50 transition-colors text-[hsl(var(--color-primary))]"
+              aria-label="Dismiss chat prompt"
             >
               <X className="w-3.5 h-3.5" />
             </button>

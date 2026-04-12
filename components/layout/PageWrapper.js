@@ -1,9 +1,16 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import dynamic from 'next/dynamic';
 import Navbar from './Navbar';
-import Footer from './Footer';
-import WhatsAppButton from '../ui/WhatsAppButton';
+
+// Lazy-load below-the-fold components to reduce initial JS bundle
+const Footer = dynamic(() => import('./Footer'), {
+  loading: () => <footer className="bg-[hsl(var(--color-primary))] h-64" />,
+});
+const WhatsAppButton = dynamic(() => import('../ui/WhatsAppButton'), {
+  ssr: false,
+});
 
 const pageVariants = {
   initial: {
@@ -46,3 +53,4 @@ export default function PageWrapper({ children, hideFooter = false }) {
     </>
   );
 }
+

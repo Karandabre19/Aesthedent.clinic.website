@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -57,7 +58,7 @@ const staff = [
   {
     name: 'Ms. Manasi',
     role: 'Chairside Dental Assistant & Front Desk Coordinator',
-    image: clinicAssistancePic.src, // Placeholder for the image shared
+    image: clinicAssistancePic, // Placeholder for the image shared
     bio: 'Ms. Manasi plays a vital role in ensuring that every patient’s experience at Aesthedent is smooth and well-coordinated. With over 4 years of clinical experience, she is highly skilled in assisting during diverse dental procedures and maintaining strict sterilization protocols. She also manages patient coordination, ensuring clear communication from appointment scheduling to treatment completion.',
     specialties: ['Clinical Assisting', 'Sterilization Protocols', 'Patient Coordination', 'Front Desk Management']
   }
@@ -96,10 +97,13 @@ export default function DoctorPage() {
                   <div className={i % 2 === 1 ? 'lg:order-2' : ''}>
                     <div className="relative">
                       <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--color-primary))]/10 to-[hsl(var(--color-primary))]/5 rounded-3xl transform rotate-3"></div>
-                      <img
+                      <Image
                         src={doctor.image}
                         alt={doctor.name}
+                        width={600}
+                        height={750}
                         className="relative rounded-3xl shadow-xl object-cover w-full h-[450px] lg:h-[550px]"
+                        priority={i === 0}
                       />
                     </div>
                   </div>
@@ -169,13 +173,12 @@ export default function DoctorPage() {
                   <div className="flex flex-col md:flex-row gap-8 items-center md:items-start text-center md:text-left">
                     <div className="w-32 h-32 lg:w-40 lg:h-40 relative flex-shrink-0">
                       <div className="absolute inset-0 bg-[hsl(var(--color-primary))]/10 rounded-2xl transform rotate-6"></div>
-                      <img
+                      <Image
                         src={member.image}
                         alt={member.name}
+                        width={160}
+                        height={160}
                         className="relative w-full h-full object-cover rounded-2xl shadow-md bg-gray-100"
-                        onError={(e) => {
-                          e.target.src = "https://ui-avatars.com/api/?name=Manasi&background=E5EFFF&color=0055D4&size=200";
-                        }}
                       />
                     </div>
                     <div>

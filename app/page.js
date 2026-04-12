@@ -6,6 +6,7 @@ import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import PageWrapper from '@/components/layout/PageWrapper';
@@ -47,7 +48,7 @@ const trustStats = [
 
 function AnimatedStatNumber({ value, decimals = 0, suffix = '', delay = 0 }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.8 });
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
   const [displayValue, setDisplayValue] = useState(0);
 
   useEffect(() => {
@@ -74,10 +75,10 @@ function AnimatedStatNumber({ value, decimals = 0, suffix = '', delay = 0 }) {
 function TrustStatCard({ stat, index }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 28 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.5 }}
-      transition={{ duration: 0.6, delay: index * 0.08 }}
+      initial={false}
+      animate={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 0.6, delay: index * 0.05 }}
       whileHover={{ y: -6, scale: 1.02 }}
       className="group relative overflow-hidden rounded-[1.75rem] bg-[hsl(var(--background))] px-5 py-6 text-center transition-all duration-300"
     >
@@ -430,10 +431,13 @@ export default function HomePage() {
         {/* Background Image with Parallax */}
         <motion.div className="absolute inset-0" style={{ scale: heroScale }}>
           <div className="hero-overlay absolute inset-0 bg-gradient-to-r from-[hsl(var(--color-secondary))]/60 via-[hsl(var(--color-secondary))]/30 to-transparent z-10" />
-          <img
+          <Image
             src="/homepage-banner.png"
             alt="Premium Dental Care - Crystalline Tooth"
             className="hero-bg-image h-full w-full object-cover will-change-transform transform-gpu"
+            fill
+            priority
+            sizes="100vw"
           />
         </motion.div>
 
@@ -524,9 +528,8 @@ export default function HomePage() {
         <div className="main-container">
           <motion.div
             className="relative overflow-hidden rounded-[2rem] bg-[hsl(var(--background))] p-4 md:p-5 lg:p-6"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            initial={false}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,hsl(var(--color-accent)/0.16),transparent_26%),radial-gradient(circle_at_bottom_left,hsl(var(--color-primary)/0.08),transparent_28%)]" />
@@ -600,8 +603,8 @@ export default function HomePage() {
             <AnimatedSection direction="left">
               <div className="relative">
                 <div className="absolute -inset-4 bg-[hsl(var(--primary))]/10 rounded-3xl transform -rotate-3" />
-                <img
-                  src={sahilTreatmentImage.src}
+                <Image
+                  src={sahilTreatmentImage}
                   alt="Dr. Sahil Wathodkar at Aesthedent Multispeciality Dental Clinic"
                   className="relative rounded-2xl shadow-xl w-full aspect-[4/5] object-cover"
                 />
@@ -723,13 +726,13 @@ export default function HomePage() {
 
             <AnimatedSection direction="right" className="relative">
               <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5">
-                <img
-                  src={treatmentProcessImage.src}
+                <Image
+                  src={treatmentProcessImage}
                   alt="Gentle dental care at Aesthedent"
                   className="rounded-2xl shadow-lg w-full aspect-[3/4] object-cover"
                 />
-                <img
-                  src={treatMentChairImage.src}
+                <Image
+                  src={treatMentChairImage}
                   alt="Modern dental equipment"
                   className="rounded-2xl shadow-lg w-full aspect-[3/4] object-cover mt-4 sm:mt-6 md:mt-8"
                 />
@@ -760,9 +763,11 @@ export default function HomePage() {
                 <Link href={`/services/${service.slug}`}>
                   <div className="card-elevated group relative overflow-hidden rounded-xl sm:rounded-2xl bg-white border border-white/20 hover:-translate-y-2 transition-transform">
                     <div className="aspect-[16/10] overflow-hidden bg-[hsl(var(--bg-alt))]">
-                      <img
+                      <Image
                         src={service.image}
                         alt={service.title}
+                        width={600}
+                        height={400}
                         className="w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-500"
                       />
                     </div>
@@ -838,9 +843,11 @@ export default function HomePage() {
                   {/* Image Container */}
                   <div className="relative overflow-hidden">
                     <div className="aspect-[4/5] overflow-hidden">
-                      <img
+                      <Image
                         src={doctor.image}
                         alt={doctor.name}
+                        width={600}
+                        height={750}
                         className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                       />
                     </div>
@@ -995,9 +1002,11 @@ export default function HomePage() {
 
             <AnimatedSection direction="right">
               <div className="rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-300">
-                <img
-                  src={sahilTreatmentImage.src}
+                <Image
+                  src={sahilTreatmentImage}
                   alt="Aesthedent Dental Clinic in Kothrud"
+                  width={800}
+                  height={600}
                   className="w-full aspect-[4/3] object-cover hover:scale-105 transition-transform duration-500"
                 />
               </div>

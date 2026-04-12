@@ -12,6 +12,7 @@ import TestimonialsSection from '@/components/sections/TestimonialsSection';
 import { landingPageContent } from '@/lib/landing-page-content';
 import { services } from '@/lib/services';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Phone,
   MessageCircle,
@@ -69,7 +70,7 @@ function HeroWord({ children, className = '' }) {
 
 function StatNumber({ value, decimals = 0, suffix = '', delay = 0 }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.8 });
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
   const [displayValue, setDisplayValue] = useState(0);
 
   useEffect(() => {
@@ -99,10 +100,10 @@ const trustStats = [
 function TrustStatCard({ stat, index }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 28 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.5 }}
-      transition={{ duration: 0.6, delay: index * 0.08 }}
+      initial={false}
+      animate={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 0.6, delay: index * 0.05 }}
       whileHover={{ y: -6, scale: 1.02 }}
       className="group relative overflow-hidden rounded-[1.75rem] bg-[hsl(var(--background))] px-5 py-6 text-center transition-all duration-300 shadow-md border border-[hsl(var(--border))]/50"
     >
@@ -275,10 +276,13 @@ export default function ExperiencePage() {
       <section ref={heroRef} className="relative h-screen min-h-[850px] flex items-center justify-center overflow-hidden bg-black" onMouseMove={handleMouseMove}>
         <motion.div className="absolute inset-0 hero-parallax-layer" style={{ scale: heroScale, opacity: heroOpacity }}>
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/90 z-10" />
-          <img
+          <Image
             src="/clinic/clinic-wide.jpeg"
             alt="Aesthedent Premium Clinic Portfolio"
+            fill
+            priority
             className="w-full h-full object-cover opacity-70"
+            sizes="100vw"
           />
         </motion.div>
 
@@ -359,9 +363,8 @@ export default function ExperiencePage() {
         <div className="main-container">
           <motion.div
             className="relative overflow-hidden rounded-[2rem] bg-white p-4 md:p-5 lg:p-6 shadow-2xl border border-[hsl(var(--color-primary))]/5"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            initial={false}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,hsl(var(--color-accent)/0.16),transparent_26%),radial-gradient(circle_at_bottom_left,hsl(var(--color-primary)/0.08),transparent_28%)]" />
@@ -440,9 +443,11 @@ export default function ExperiencePage() {
             <AnimatedSection>
               <div className="relative max-w-md mx-auto lg:mx-0">
                 <div className="absolute -inset-4 bg-[hsl(var(--color-primary))]/10 rounded-3xl transform -rotate-3" />
-                <img
+                <Image
                   src="/clinic/treatment-process.2jpeg.jpeg"
                   alt="Aesthedent Specialist Architecture"
+                  width={600}
+                  height={750}
                   className="relative rounded-2xl shadow-xl w-full aspect-[4/5] object-cover"
                 />
                 
@@ -515,9 +520,11 @@ export default function ExperiencePage() {
                 <Link href={`/services/${service.slug}`}>
                   <div className="card-elevated group relative overflow-hidden rounded-2xl bg-white border border-white/20 hover:-translate-y-2 transition-transform shadow-lg">
                     <div className="aspect-[16/10] overflow-hidden bg-[hsl(var(--bg-alt))]">
-                      <img
+                      <Image
                         src={service.image}
                         alt={service.title}
+                        width={600}
+                        height={400}
                         className="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
                       />
                     </div>
@@ -677,7 +684,13 @@ export default function ExperiencePage() {
               <div className="relative hidden lg:block">
                  <div className="absolute -inset-10 bg-gradient-to-br from-[hsl(var(--color-accent))]/20 via-transparent to-[hsl(var(--color-primary))]/10 blur-[100px] rounded-full" />
                  <div className="relative z-10 bg-white p-6 rounded-[5rem] shadow-4xl rotate-2 hover:rotate-0 transition-transform duration-500">
-                    <img src="/clinic/dentist-chair-proper.jpeg" className="w-full h-auto rounded-[4rem] aspect-[4/5] object-cover" />
+                    <Image 
+                       src="/clinic/dentist-chair-proper.jpeg" 
+                       width={600}
+                       height={750}
+                       alt="Modern Dental Chair at Aesthedent Clinic"
+                       className="w-full h-auto rounded-[4rem] aspect-[4/5] object-cover" 
+                    />
                  </div>
               </div>
            </div>
