@@ -35,11 +35,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={poppins.variable}>
       <head>
-        <link rel="preconnect" href="https://images.pexels.com" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-        <link rel="dns-prefetch" href="https://images.pexels.com" />
+
         
         {/* Google Tag Manager — deferred until after page is idle */}
         <Script

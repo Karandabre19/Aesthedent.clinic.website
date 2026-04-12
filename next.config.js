@@ -14,6 +14,10 @@ const nextConfig = {
   // ✅ Updated from experimental → stable
   serverExternalPackages: ['mongodb'],
 
+  experimental: {
+    optimizeCss: true, // Inlines critical CSS & defers the rest
+  },
+
   // ✅ Enable Turbopack explicitly (clean signal)
   turbopack: {},
 
