@@ -15,11 +15,20 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: 'Aesthedent Dental Clinic | Honest, Clear Dental Care in Kothrud, Pune',
+  metadataBase: new URL('https://www.aesthedentpune.com'),
+  title: 'Aesthedent Dental Clinic | Best Dentist in Kothrud, Pune',
   description:
-    'Experience calm, clear, and honest dental care at Aesthedent Clinic in Kothrud, Pune. We take the fear out of dentistry with transparent pricing and gentle treatments.',
+    'Looking for a dental clinic in Kothrud, Pune? Experience calm, clear, and honest dental care at Aesthedent Clinic. Painless dentistry, implants & transparent pricing.',
   keywords:
-    'dental clinic pune, dentist kothrud, painless dentistry, dental implants pune, teeth cleaning pune',
+    'dental clinic in pune, dental clinic in kothrud, best dentist kothrud, painless dentistry, dental implants pune, teeth cleaning pune, root canal kothrud',
+  openGraph: {
+    title: 'Aesthedent Dental Clinic | Honest, Clear Dental Care in Kothrud, Pune',
+    description: 'Experience calm, clear, and honest dental care at Aesthedent Clinic in Kothrud, Pune. Painless dentistry and transparent pricing.',
+    url: 'https://www.aesthedentpune.com',
+    siteName: 'Aesthedent Dental Clinic',
+    locale: 'en_IN',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -57,6 +66,51 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           }}
         />
         {/* End Google Tag Manager */}
+
+        {/* Local SEO / Dentist Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Dentist",
+              "name": "Aesthedent Dental Clinic",
+              "image": "https://www.aesthedentpune.com/aesthadent_logo.png",
+              "@id": "https://www.aesthedentpune.com",
+              "url": "https://www.aesthedentpune.com",
+              "telephone": "+919309816336",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Near Karve Statue, Kothrud",
+                "addressLocality": "Pune",
+                "addressRegion": "Maharashtra",
+                "postalCode": "411038",
+                "addressCountry": "IN"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 18.5018,
+                "longitude": 73.8166
+              },
+              "openingHoursSpecification": {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday",
+                  "Sunday"
+                ],
+                "opens": "10:00",
+                "closes": "20:00"
+              },
+              "sameAs": [
+                "https://maps.app.goo.gl/BVb9iy5EQkmbYSVPA"
+              ]
+            })
+          }}
+        />
       </head>
       <body className={`${poppins.className} font-sans relative`}>
         {/* Google Tag Manager (noscript) */}
