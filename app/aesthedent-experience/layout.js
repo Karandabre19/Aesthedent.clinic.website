@@ -1,10 +1,10 @@
 export const metadata = {
-  title: 'Dental Implants in Pune | Prosthodontist in Kothrud | Full Mouth Rehabilitation',
-  description: 'Leading prosthodontist in Pune specializing in dental implants, full mouth rehabilitation, and tooth replacement. 500+ successful implants. 98% success rate. Painless procedures. Lifetime warranty. Book free consultation today.',
-  keywords: 'dental implants in Pune, prosthodontist in Pune, full mouth rehabilitation Pune, tooth replacement Pune, dental clinic Kothrud, implant dentist, prosthetic dentistry, dental bridges, implant supported dentures, dental prosthetics',
+  title: 'The Aesthedent Experience | Premium Dental Care in Kothrud, Pune',
+  description: 'Experience clinical excellence at Aesthedent. Where prosthodontic precision meets human-centered care. Specialized in dental implants, full mouth rehabilitation, and aesthetic dentistry with transparent pricing.',
+  keywords: 'aesthedent experience, dental clinic pune, prosthodontist kothrud, advanced dentistry pune, dental implants kothrud, painless dental treatment',
   openGraph: {
-    title: 'Dental Implants & Full Mouth Rehabilitation in Pune | Aesthedent',
-    description: 'Premium prosthetic solutions and dental implants by expert prosthodontist. Restore your smile with advanced technology and lifelong care.',
+    title: 'The Aesthedent Experience | Clinical Precision in Kothrud, Pune',
+    description: 'A higher standard of dental care. Explore our specialist-led approach to implants, rehabilitation, and long-term oral health.',
     image: 'https://images.pexels.com/photos/3762441/pexels-photo-3762441.jpeg?auto=compress&cs=tinysrgb&w=1920',
     type: 'website',
     url: 'https://aesthedent.clinic/aesthedent-experience',

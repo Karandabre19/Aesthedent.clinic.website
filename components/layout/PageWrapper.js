@@ -28,7 +28,7 @@ const pageVariants = {
   },
 };
 
-export default function PageWrapper({ children }) {
+export default function PageWrapper({ children, hideFooter = false }) {
   return (
     <>
       <Navbar />
@@ -41,7 +41,7 @@ export default function PageWrapper({ children }) {
       >
         {children}
       </motion.main>
-      <Footer />
+      {!hideFooter && <Footer />}
       <WhatsAppButton />
     </>
   );

@@ -6,10 +6,10 @@ import { Smile, MapPin, Clock, Phone, MessageCircle, Mail, ArrowRight } from 'lu
 const footerLinks = {
   services: [
     { href: '/services/dental-implants', label: 'Dental Implants' },
-    { href: '/services/tooth-extraction', label: 'Tooth Extraction' },
-    { href: '/services/cleaning-polishing', label: 'Cleaning & Polishing' },
-    { href: '/services/kids-dentistry', label: 'Kids Dentistry' },
     { href: '/services/root-canal', label: 'Root Canal Treatment' },
+    { href: '/services/full-mouth-rehabilitation', label: 'Full Mouth Rehab' },
+    { href: '/services/orthodontic-treatment', label: 'Braces & Aligners' },
+    { href: '/services/wisdom-tooth-surgery', label: 'Wisdom Tooth Surgery' },
   ],
   quickLinks: [
     { href: '/', label: 'Home' },

@@ -16,8 +16,11 @@ import {
   Shield,
   Leaf,
   Baby,
-  Stethoscope
+  Stethoscope,
+  ChevronDown
 } from 'lucide-react';
+import { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 
 const iconMap = {
   Sparkles, Shield, Leaf, Baby, Stethoscope
@@ -47,40 +50,100 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Services Grid */}
+      {/* Services Accordion */}
       <section className="section-spacing">
         <div className="main-container">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="max-w-4xl mx-auto space-y-4">
             {services.map((service, i) => {
               const IconComponent = iconMap[service.icon] || Sparkles;
+              const [isExpanded, setIsExpanded] = useState(false);
+
               return (
-                <AnimatedSection key={service.slug} delay={i * 0.08}>
-                  <Link href={`/services/${service.slug}`} className="block h-full">
-                    <Card className="group border-[hsl(var(--color-border))] hover:border-[hsl(var(--color-primary))] hover:shadow-xl transition-all duration-300 overflow-hidden h-full cursor-pointer hover-lift">
-                      <div className="aspect-[16/10] overflow-hidden">
-                        <img 
-                          src={service.image} 
-                          alt={service.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                      </div>
-                      <CardContent className="p-6">
-                        <div className="flex items-center gap-3 mb-4">
-                          <div className="w-10 h-10 bg-[hsl(var(--color-primary-light))] rounded-xl flex items-center justify-center group-hover:bg-[hsl(var(--color-primary-light))]/80 transition-colors">
-                            <IconComponent className="w-5 h-5 text-[hsl(var(--color-primary))]" />
-                          </div>
-                          <h3 className="text-xl font-semibold text-[hsl(var(--color-text))] group-hover:text-[hsl(var(--color-primary-dark))] transition-colors">
+                <AnimatedSection key={service.slug} delay={i * 0.05}>
+                  <div 
+                    className={`group border rounded-3xl transition-all duration-300 overflow-hidden ${
+                      isExpanded 
+                        ? 'border-[hsl(var(--color-primary))] bg-white shadow-xl' 
+                        : 'border-[hsl(var(--color-border))] bg-white/50 hover:bg-white hover:border-[hsl(var(--color-primary))]/30'
+                    }`}
+                  >
+                    <button
+                      onClick={() => setIsExpanded(!isExpanded)}
+                      className="w-full flex items-center justify-between p-6 lg:p-8 text-left"
+                    >
+                      <div className="flex items-center gap-4 lg:gap-6">
+                        <div className={`w-12 h-12 lg:w-14 lg:h-14 rounded-2xl flex items-center justify-center transition-colors ${
+                          isExpanded ? 'bg-[hsl(var(--color-primary))] text-white' : 'bg-[hsl(var(--color-primary-light))] text-[hsl(var(--color-primary))]'
+                        }`}>
+                          <IconComponent className="w-6 h-6 lg:w-7 lg:h-7" />
+                        </div>
+                        <div>
+                          <h3 className={`text-xl lg:text-2xl font-semibold transition-colors ${
+                            isExpanded ? 'text-[hsl(var(--color-primary))]' : 'text-[hsl(var(--color-text))]'
+                          }`}>
                             {service.title}
                           </h3>
+                          {!isExpanded && (
+                            <p className="text-sm text-[hsl(var(--color-text-muted))] mt-1 line-clamp-1">
+                              {service.shortDesc}
+                            </p>
+                          )}
                         </div>
-                        <p className="text-[hsl(var(--color-text-muted))] text-sm mb-4">{service.shortDesc}</p>
-                        <div className="flex items-center text-[hsl(var(--color-primary))] font-medium text-sm">
-                          Learn More
-                          <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </Link>
+                      </div>
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
+                        isExpanded ? 'bg-[hsl(var(--color-primary))] text-white rotate-180' : 'bg-[hsl(var(--color-bg-alt))] text-[hsl(var(--color-text-muted))]'
+                      }`}>
+                        <ChevronDown className="w-5 h-5" />
+                      </div>
+                    </button>
+
+                    <AnimatePresence>
+                      {isExpanded && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3, ease: 'easeInOut' }}
+                        >
+                          <div className="px-6 lg:px-8 pb-8 pt-2">
+                            <div className="h-px bg-[hsl(var(--color-border))] mb-8" />
+                            <div className="grid md:grid-cols-2 gap-8 items-center">
+                              <div>
+                                <h4 className="text-[hsl(var(--color-primary))] font-semibold uppercase tracking-wider text-xs mb-3">
+                                  Why this treatment?
+                                </h4>
+                                <p className="text-[hsl(var(--color-text))] text-lg mb-6 leading-relaxed">
+                                  {service.problem}
+                                </p>
+                                <p className="text-[hsl(var(--color-text-muted))] mb-8">
+                                  {service.solution}
+                                </p>
+                                <div className="flex flex-wrap gap-4">
+                                  <Button className="bg-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary-dark))] px-6" asChild>
+                                    <Link href={`/services/${service.slug}`}>
+                                      Learn More Details <ArrowRight className="w-4 h-4 ml-2" />
+                                    </Link>
+                                  </Button>
+                                  <Button variant="outline" className="border-[hsl(var(--color-primary))] text-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary-light))]" asChild>
+                                    <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+                                      Book Consultation
+                                    </a>
+                                  </Button>
+                                </div>
+                              </div>
+                              <div className="hidden md:block">
+                                <img 
+                                  src={service.image} 
+                                  alt={service.title}
+                                  className="rounded-2xl shadow-lg aspect-video object-cover"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </AnimatedSection>
               );
             })}

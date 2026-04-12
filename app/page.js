@@ -106,11 +106,10 @@ function AdvancedPromiseCard({ num, title, desc, icon: Icon, isLast }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
-      className={`group relative overflow-hidden rounded-[1.5rem] bg-white border-2 p-6 sm:p-7 shadow-sm hover:shadow-xl transition-all duration-300 z-10 ${
-        isLast 
-          ? 'border-orange-500/20 hover:border-orange-500/40' 
+      className={`group relative overflow-hidden rounded-[1.5rem] bg-white border-2 p-6 sm:p-7 shadow-sm hover:shadow-xl transition-all duration-300 z-10 ${isLast
+          ? 'border-orange-500/20 hover:border-orange-500/40'
           : 'border-[hsl(var(--color-primary))]/10 hover:border-[hsl(var(--color-primary))]/30'
-      }`}
+        }`}
     >
       {/* Background Decorative Icon (Smaller) */}
       <div className="absolute top-0 right-0 p-6 opacity-[0.03] group-hover:opacity-[0.08] transition-all duration-500 pointer-events-none transform group-hover:scale-125 group-hover:-translate-x-2">
@@ -471,7 +470,7 @@ export default function HomePage() {
                   </HeroWord>
                 </span>
               </h1>
-    
+
               <p className="hero-copy mb-8 sm:mb-10 max-w-xl translate-y-6 text-base sm:text-lg leading-relaxed text-[hsl(var(--color-primary))]/85 opacity-0 transform-gpu md:text-lg">
                 We provide clear dental care in Kothrud, Pune. No hiding costs, no skipping details, and no rushing you into treatment.
               </p>
@@ -603,7 +602,7 @@ export default function HomePage() {
                 <div className="absolute -inset-4 bg-[hsl(var(--primary))]/10 rounded-3xl transform -rotate-3" />
                 <img
                   src={sahilTreatmentImage.src}
-                  alt="Dr. Sahil at Aesthedent"
+                  alt="Dr. Sahil Wathodkar at Aesthedent Multispeciality Dental Clinic"
                   className="relative rounded-2xl shadow-xl w-full aspect-[4/5] object-cover"
                 />
                 <div
@@ -619,7 +618,7 @@ export default function HomePage() {
                     </div>
                     <div>
                       <p className="font-semibold text-[hsl(var(--color-text))] text-sm sm:text-base mb-1">
-                        Meet Dr. Sahil
+                        Meet Dr. Sahil Wathodkar
                       </p>
                       <p className="text-xs sm:text-sm text-[hsl(var(--color-text-muted))]">
                         2 min intro
@@ -745,13 +744,13 @@ export default function HomePage() {
         <div className="main-container">
           <AnimatedSection className="text-center mb-12 sm:mb-16 md:mb-24">
             <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-white/20 text-white rounded-full text-xs sm:text-sm font-semibold">
-              What We Do
+              Specialized Care
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-3 sm:mb-6">
-              Practical solutions for your dental health.
+              Expert Solutions for Your Smile.
             </h2>
             <p className="text-sm sm:text-base md:text-lg text-white/80 max-w-2xl mx-auto">
-              We handle everything from immediate pain relief to complex restorative dentistry with a focus on doing the job right once.
+              From precision implants to expert root canals, we explain every clinical detail before we start.
             </p>
           </AnimatedSection>
 
@@ -767,16 +766,16 @@ export default function HomePage() {
                         className="w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-500"
                       />
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--primary))]/95 via-[hsl(var(--primary))]/55 to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
-                      <h3 className="text-base sm:text-lg md:text-xl font-semibold mb-1 sm:mb-2 text-white group-hover:text-[hsl(var(--accent))] transition-colors">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--color-primary))]/95 via-[hsl(var(--color-primary))]/60 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 pb-6">
+                      <h3 className="text-base sm:text-lg font-semibold mb-1 sm:mb-2 text-white group-hover:text-[hsl(var(--color-accent))] transition-colors">
                         {service.title}
                       </h3>
-                      <p className="text-white/80 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2">
+                      <p className="text-white/85 text-xs sm:text-sm mb-4 line-clamp-2">
                         {service.shortDesc}
                       </p>
-                      <span className="inline-flex items-center gap-1 sm:gap-2 text-[hsl(var(--accent))] text-xs sm:text-sm font-medium">
-                        View details
+                      <span className="inline-flex items-center gap-1 sm:gap-2 text-[hsl(var(--color-accent))] text-xs sm:text-sm font-medium">
+                        Explore details
                         <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
                       </span>
                     </div>
@@ -822,7 +821,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
             {[
               {
-                name: "Dr. Sahil Sharma",
+                name: "Dr. Sahil Wathodkar",
                 role: "Lead Dentist & Founder",
                 image: "/assets/doctor-male.jpeg",
                 desc: "Specializes in implants and restorative dentistry with a focus on patient education and comfort.",

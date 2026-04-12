@@ -106,7 +106,7 @@ export default function AboutPage() {
           <AnimatedSection delay={0.1}>
             <div className="prose prose-lg max-w-none text-[hsl(var(--color-text-muted))]">
               <p className="text-lg leading-relaxed mb-6">
-                Aesthedent was founded in 2015 by Dr. Sahil Sharma with a simple
+                Aesthedent Multispeciality Dental Clinic was founded by Dr. Sahil Wathodkar with a simple
                 vision: to create a dental clinic where patients actually want
                 to come. A place where fear is replaced with comfort, where
                 every treatment is explained clearly, and where honesty guides
@@ -114,9 +114,9 @@ export default function AboutPage() {
               </p>
               <p className="text-lg leading-relaxed mb-6">
                 After years of seeing patients avoid dental care due to fear or
-                past negative experiences, Dr. Sahil knew there had to be a
+                past negative experiences, Dr. Sahil Wathodkar knew there had to be a
                 better way. He invested in the latest painless dentistry
-                techniques, created a calm, spa-like environment, and built a
+                techniques, created a calm, modern environment, and built a
                 team that shares his patient-first philosophy.
               </p>
               <p className="text-lg leading-relaxed">

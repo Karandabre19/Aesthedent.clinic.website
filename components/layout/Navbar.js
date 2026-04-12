@@ -13,11 +13,11 @@ const navLinks = [
     subLinks: [
       { href: '/services', label: 'View All Treatments' },
       { href: '/services/dental-implants', label: 'Dental Implants' },
-      { href: '/services/tooth-extraction', label: 'Tooth Extraction' },
-      { href: '/services/cleaning-polishing', label: 'Cleaning & Polishing' },
-      { href: '/services/kids-dentistry', label: 'Kids Dentistry' },
       { href: '/services/root-canal', label: 'Root Canal Treatment' },
-      { href: '/services/teeth-whitening', label: 'Teeth Whitening' },
+      { href: '/services/full-mouth-rehabilitation', label: 'Full Mouth Rehab' },
+      { href: '/services/orthodontic-treatment', label: 'Braces & Aligners' },
+      { href: '/services/wisdom-tooth-surgery', label: 'Wisdom Tooth Surgery' },
+      { href: '/services/tooth-fillings', label: 'Tooth Colored Fillings' },
     ]
   },
   { href: '/doctor', label: 'Our Teams' },
