@@ -1,6 +1,6 @@
 'use client';
 
-import { Star, ArrowRight } from 'lucide-react';
+import { Star, ArrowRight, User } from 'lucide-react';
 import Image from 'next/image';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import { getTestimonials } from '@/lib/testimonials';
@@ -19,16 +19,10 @@ function GoogleReviewBadge() {
   );
 }
 
-function ReviewerAvatar({ testimonial }) {
+function ReviewerAvatar() {
   return (
-    <div className="relative h-14 w-14 overflow-hidden rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--color-bg-alt))]">
-      <Image
-        src={testimonial.image}
-        alt={testimonial.name}
-        width={56}
-        height={56}
-        className="h-full w-full object-cover"
-      />
+    <div className="relative h-14 w-14 overflow-hidden rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--color-bg-alt))] flex items-center justify-center">
+      <User className="w-7 h-7 text-[hsl(var(--color-primary))]/40" />
     </div>
   );
 }
@@ -89,10 +83,15 @@ function TestimonialCard({ testimonial, delay = 0 }) {
             Honest patient feedback
           </p>
         </div>
-        <div className="inline-flex items-center gap-2 text-sm font-medium text-[hsl(var(--color-primary))]">
+        <a 
+          href="https://www.google.com/maps/place/Aesthedent+Dental+Clinic,+Kothrud/@18.4972761,73.8108921,17z/data=!3m1!5s0x3bc2bfc407d2eb7d:0xeb43317068a295aa!4m8!3m7!1s0x3bc2bfa49403bd57:0xb59ec17e89bd289f!8m2!3d18.497271!4d73.813467!9m1!1b1!16s%2Fg%2F11j2v_ph1x?entry=ttu&g_ep=EgoyMDI2MDQwOC4wIKXMDSoASAFQAw%3D%3D"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-sm font-medium text-[hsl(var(--color-primary))] hover:text-[hsl(var(--color-accent))] transition-colors"
+        >
           <span>Read More</span>
           <ArrowRight size={14} />
-        </div>
+        </a>
       </div>
     </AnimatedSection>
   );

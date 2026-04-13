@@ -25,7 +25,7 @@ const doctors = [
     role: 'Founder & Co-Owner | Prosthodontist',
     image: '/assets/doctor-male.jpeg',
     bio: 'Dr. Sahil Wathodkar is a dedicated prosthodontist with focused expertise in the restoration and rehabilitation of missing or worn teeth. He focuses on designing long-lasting, functional, and aesthetic solutions for complex oral health issues. With a strong inclination towards digital dentistry, Dr. Wathodkar integrates modern technology into treatment planning to enhance accuracy, predictability, and patient outcomes.',
-    qualifications: ['BDS - Government Dental College', 'MDS - Prosthodontics, Pune', 'Advanced Training in Digital Dentistry'],
+    qualifications: ['BDS - Bharati Vidyapeeth, Pune', 'MDS - Bharati Vidyapeeth, Pune', 'Advanced Training in Digital Dentistry'],
     specializations: [
       'Dental Implants',
       'Full Mouth Rehabilitation',
@@ -42,9 +42,9 @@ const doctors = [
     role: 'Co-Owner | General & Family Dentist',
     image: '/assets/doctor-female.jpeg',
     bio: 'Guided by the belief that “A better life starts with a smile,” Dr. Aishwarya is committed to helping patients achieve and maintain healthy, confident teeth. Her approach is rooted in thorough diagnosis, gentle care, and meticulous attention to comfort at every step of the treatment journey.',
-    qualifications: ['BDS - Pune University', 'Pediatric Dentistry Specialist', 'Endodontics Training'],
+    qualifications: ['BDS - Bharati Vidyapeeth, Pune', 'Pregnancy Dentistry Specialist', 'Endodontics Training'],
     specializations: [
-      'Pediatric Dentistry',
+      'Pregnancy Dentistry Specialist',
       'Endodontics (Root Canal Treatment)',
       'Conservative (Restorative) Dentistry',
       'General Dental Care',
@@ -217,8 +217,8 @@ export default function DoctorPage() {
               },
               {
                 icon: Users,
-                title: 'Transparent Pricing',
-                desc: 'Our patients receive highly transparent treatment roadmaps, detailed clinical explanations, and honest pricing with no hidden costs.'
+                title: 'Specialist-Led Planning',
+                desc: 'Every patient receiving complex treatment benefits from a specialized clinical roadmap and detailed biomechanical planning.'
               },
               {
                 icon: Award,

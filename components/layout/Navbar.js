@@ -4,24 +4,30 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Phone, MessageCircle, Menu, X, ChevronRight, Sparkles } from 'lucide-react';
+import { Phone, MessageCircle, Menu, X, ChevronRight, Sparkles, Activity, ShieldCheck, HeartPulse, Stethoscope, Microscope, Zap } from 'lucide-react';
+import { services } from '@/lib/services';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useScroll } from 'framer-motion';
 
 const navLinks = [
   { href: '/', label: 'Home' },
   { 
     label: 'Treatments', 
+    isMega: true,
     subLinks: [
       { href: '/services', label: 'View All Treatments' },
-      { href: '/services/dental-implants', label: 'Dental Implants' },
-      { href: '/services/root-canal', label: 'Root Canal Treatment' },
-      { href: '/services/full-mouth-rehabilitation', label: 'Full Mouth Rehab' },
-      { href: '/services/orthodontic-treatment', label: 'Braces & Aligners' },
-      { href: '/services/wisdom-tooth-surgery', label: 'Wisdom Tooth Surgery' },
-      { href: '/services/tooth-fillings', label: 'Tooth Colored Fillings' },
+      ...services.map(s => ({
+        href: `/services/${s.slug}`,
+        label: s.title,
+        description: s.shortDesc,
+        icon: s.icon === 'Sparkles' ? Sparkles : 
+              s.icon === 'Stethoscope' ? Stethoscope : 
+              s.icon === 'Shield' ? ShieldCheck : 
+              s.icon === 'Heart' ? HeartPulse : 
+              s.icon === 'Zap' ? Zap : Activity
+      }))
     ]
   },
-  { href: '/doctor', label: 'Our Teams' },
+  { href: '/doctor', label: 'Our Team' },
   { href: '/insights', label: 'Insights' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
@@ -32,7 +38,7 @@ function MagneticButton({ children, className, ...props }) {
   const ref = useRef(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  
+
   const springConfig = { damping: 15, stiffness: 150 };
   const xSpring = useSpring(x, springConfig);
   const ySpring = useSpring(y, springConfig);
@@ -70,7 +76,7 @@ function MagneticButton({ children, className, ...props }) {
 // Navigation link with stable active state (no layoutId to prevent scroll animation issues)
 function NavLink({ href, label, isActive }) {
   const [isHovered, setIsHovered] = useState(false);
-  
+
   return (
     <Link
       href={href}
@@ -80,43 +86,38 @@ function NavLink({ href, label, isActive }) {
     >
       {/* Active pill background - static, no layoutId */}
       <div
-        className={`absolute inset-0 rounded-full transition-all duration-300 ease-out ${
-          isActive 
-            ? 'bg-[hsl(var(--color-primary))]/10 border border-[hsl(var(--color-primary))]/20 opacity-100 scale-100' 
+        className={`absolute inset-0 rounded-full transition-all duration-300 ease-out ${isActive
+            ? 'bg-[hsl(var(--color-primary))]/10 border border-[hsl(var(--color-primary))]/20 opacity-100 scale-100'
             : 'bg-transparent border border-transparent opacity-0 scale-95'
-        }`}
+          }`}
       />
-      
+
       {/* Hover background - only shows when not active */}
       <div
-        className={`absolute inset-0 rounded-full bg-[hsl(var(--color-bg-alt))] transition-all duration-200 ease-out ${
-          !isActive && isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-        }`}
+        className={`absolute inset-0 rounded-full bg-[hsl(var(--color-bg-alt))] transition-all duration-200 ease-out ${!isActive && isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+          }`}
       />
-      
+
       {/* Text label */}
-      <span 
-        className={`relative z-10 text-sm font-medium transition-colors duration-200 ${
-          isActive 
-            ? 'text-[hsl(var(--color-primary))]' 
+      <span
+        className={`relative z-10 text-sm font-medium transition-colors duration-200 ${isActive
+            ? 'text-[hsl(var(--color-primary))]'
             : 'text-[hsl(var(--color-text-muted))] group-hover:text-[hsl(var(--color-text))]'
-        }`}
+          }`}
       >
         {label}
       </span>
-      
+
       {/* Active underline indicator - static position */}
       <div
-        className={`absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-5 h-[2px] bg-gradient-to-r from-[hsl(var(--color-primary))] to-[hsl(var(--accent))] rounded-full transition-all duration-300 ease-out ${
-          isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
-        }`}
+        className={`absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-5 h-[2px] bg-gradient-to-r from-[hsl(var(--color-primary))] to-[hsl(var(--accent))] rounded-full transition-all duration-300 ease-out ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
+          }`}
       />
-      
+
       {/* Hover underline - only shows when not active */}
       <div
-        className={`absolute -bottom-0.5 left-1/2 -translate-x-1/2 h-[2px] bg-[hsl(var(--color-text-muted))]/40 rounded-full transition-all duration-200 ease-out ${
-          !isActive && isHovered ? 'w-5 opacity-100' : 'w-0 opacity-0'
-        }`}
+        className={`absolute -bottom-0.5 left-1/2 -translate-x-1/2 h-[2px] bg-[hsl(var(--color-text-muted))]/40 rounded-full transition-all duration-200 ease-out ${!isActive && isHovered ? 'w-5 opacity-100' : 'w-0 opacity-0'
+          }`}
       />
     </Link>
   );
@@ -143,7 +144,7 @@ export default function Navbar() {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       setIsScrolled(currentScrollY > 10);
-      
+
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
         setScrollDirection('down');
       } else {
@@ -151,7 +152,7 @@ export default function Navbar() {
       }
       setLastScrollY(currentScrollY);
     };
-    
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
@@ -175,27 +176,26 @@ export default function Navbar() {
     <>
       <motion.header
         initial={{ y: -100 }}
-        animate={{ 
-          y: scrollDirection === 'down' && isScrolled && !mobileMenuOpen ? -100 : 0 
+        animate={{
+          y: scrollDirection === 'down' && isScrolled && !mobileMenuOpen ? -100 : 0
         }}
         transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled 
-            ? 'bg-[hsl(var(--background))]/95 backdrop-blur-xl shadow-lg shadow-black/5 border-b border-[hsl(var(--border))]/50' 
+        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${isScrolled
+            ? 'bg-[hsl(var(--background))]/95 backdrop-blur-xl shadow-lg shadow-black/5 border-b border-[hsl(var(--border))]/50'
             : 'bg-[hsl(var(--background))]'
-        }`}
+          }`}
       >
         {/* Premium top accent line */}
-        <motion.div 
+        <motion.div
           className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[hsl(var(--color-primary))] to-transparent"
           initial={{ scaleX: 0, opacity: 0 }}
-          animate={{ 
-            scaleX: isScrolled ? 1 : 0, 
-            opacity: isScrolled ? 0.6 : 0 
+          animate={{
+            scaleX: isScrolled ? 1 : 0,
+            opacity: isScrolled ? 0.6 : 0
           }}
           transition={{ duration: 0.5 }}
         />
-        
+
         <div className="main-container">
           <div className="flex items-center justify-between h-[64px] lg:h-[72px]">
             {/* Logo with hover effect */}
@@ -205,9 +205,9 @@ export default function Navbar() {
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 17 }}
               >
-                <Image 
-                  src="/aesthadent_logo.png" 
-                  alt="Aesthedent Logo" 
+                <Image
+                  src="/aesthadent_logo.png"
+                  alt="Aesthedent Logo"
                   width={200}
                   height={60}
                   className="h-12 lg:h-14 w-auto transition-all duration-300 group-hover:brightness-110"
@@ -215,22 +215,21 @@ export default function Navbar() {
                 />
               </motion.div>
               {/* Subtle glow on hover */}
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 bg-[hsl(var(--color-primary))]/10 rounded-lg blur-xl"
                 initial={{ opacity: 0 }}
                 whileHover={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
               />
             </Link>
-            
+
             {/* Desktop Navigation - Premium Glass Container */}
             <nav className="hidden xl:flex items-center">
-              <motion.div 
-                className={`flex items-center gap-1 px-2 py-1.5 rounded-full transition-all duration-500 ${
-                  isScrolled 
-                    ? 'bg-[hsl(var(--color-bg-alt))]/80 backdrop-blur-sm border border-[hsl(var(--border))]/30' 
+              <motion.div
+                className={`flex items-center gap-1 px-2 py-1.5 rounded-full transition-all duration-500 ${isScrolled
+                    ? 'bg-[hsl(var(--color-bg-alt))]/80 backdrop-blur-sm border border-[hsl(var(--border))]/30'
                     : ''
-                }`}
+                  }`}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1, duration: 0.4 }}
@@ -242,60 +241,93 @@ export default function Navbar() {
                       <div key={link.label} className="relative group/dropdown">
                         <div className="relative px-3 py-2 cursor-pointer flex items-center gap-1 group">
                           {/* Active pill background */}
-                          <div className={`absolute inset-0 rounded-full transition-all duration-300 ease-out ${
-                            isActive 
-                              ? 'bg-[hsl(var(--color-primary))]/10 border border-[hsl(var(--color-primary))]/20 opacity-100 scale-100' 
+                          <div className={`absolute inset-0 rounded-full transition-all duration-300 ease-out ${isActive
+                              ? 'bg-[hsl(var(--color-primary))]/10 border border-[hsl(var(--color-primary))]/20 opacity-100 scale-100'
                               : 'bg-transparent border border-transparent opacity-0 scale-95'
-                          }`} />
-                          
+                            }`} />
+
                           {/* Hover background */}
                           <div className={`absolute inset-0 rounded-full bg-[hsl(var(--color-bg-alt))] transition-all duration-200 ease-out opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100`} />
-                          
+
                           {/* Text label */}
-                          <span className={`relative z-10 text-sm font-medium transition-colors duration-200 ${
-                            isActive 
-                              ? 'text-[hsl(var(--color-primary))]' 
+                          <span className={`relative z-10 text-sm font-medium transition-colors duration-200 ${isActive
+                              ? 'text-[hsl(var(--color-primary))]'
                               : 'text-[hsl(var(--color-text-muted))] group-hover:text-[hsl(var(--color-text))]'
-                          }`}>
+                            }`}>
                             {link.label}
                           </span>
                           <svg className="relative z-10 w-4 h-4 text-[hsl(var(--color-text-muted))] transition-transform duration-300 group-hover/dropdown:-rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                           </svg>
-                          
+
                           {/* Active underline indicator */}
-                          <div className={`absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-5 h-[2px] bg-gradient-to-r from-[hsl(var(--color-primary))] to-[hsl(var(--accent))] rounded-full transition-all duration-300 ease-out ${
-                            isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
-                          }`} />
+                          <div className={`absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-5 h-[2px] bg-gradient-to-r from-[hsl(var(--color-primary))] to-[hsl(var(--accent))] rounded-full transition-all duration-300 ease-out ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
+                            }`} />
                         </div>
-                        
-                        {/* Dropdown Menu */}
-                        <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 pointer-events-none transition-all duration-300 transform translate-y-2 group-hover/dropdown:opacity-100 group-hover/dropdown:pointer-events-auto group-hover/dropdown:translate-y-0 w-64 z-50">
-                          <div className="bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-2xl shadow-xl overflow-hidden py-2 backdrop-blur-md">
-                            {link.subLinks.map((subLink) => {
-                              const isSubActive = pathname === subLink.href;
-                              return (
-                                <Link
-                                  key={subLink.href}
-                                  href={subLink.href}
-                                  className={`block px-5 py-3 text-sm transition-colors ${
-                                    isSubActive 
-                                      ? 'bg-[hsl(var(--color-primary))]/10 text-[hsl(var(--color-primary))] font-semibold' 
-                                      : 'text-[hsl(var(--color-text-muted))] hover:bg-[hsl(var(--color-bg-alt))] hover:text-[hsl(var(--color-text))]'
-                                  }`}
-                                >
-                                  {subLink.label}
-                                </Link>
-                              );
-                            })}
+
+                        {/* Mega Dropdown Menu */}
+                        <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 pointer-events-none transition-all duration-300 transform translate-y-2 group-hover/dropdown:opacity-100 group-hover/dropdown:pointer-events-auto group-hover/dropdown:translate-y-0 w-[720px] z-50">
+                          <div className="bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-[2rem] shadow-2xl overflow-hidden backdrop-blur-md flex">
+                            {/* Main Services Grid */}
+                            <div className="flex-1 p-6 grid grid-cols-2 gap-2">
+                              {link.subLinks.slice(1).map((subLink) => {
+                                const isSubActive = pathname === subLink.href;
+                                const Icon = subLink.icon || Activity;
+                                return (
+                                  <Link
+                                    key={subLink.href}
+                                    href={subLink.href}
+                                    className={`group/item flex items-start gap-4 p-4 rounded-2xl transition-all duration-200 ${
+                                      isSubActive 
+                                        ? 'bg-[hsl(var(--color-primary))]/10' 
+                                        : 'hover:bg-[hsl(var(--color-bg-alt))]'
+                                    }`}
+                                  >
+                                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300 ${
+                                      isSubActive 
+                                        ? 'bg-[hsl(var(--color-primary))] text-white' 
+                                        : 'bg-[hsl(var(--color-primary-light))]/50 text-[hsl(var(--color-primary))] group-hover/item:bg-[hsl(var(--color-primary))] group-hover/item:text-white'
+                                    }`}>
+                                      <Icon className="w-5 h-5" />
+                                    </div>
+                                    <div>
+                                      <h4 className={`text-sm font-semibold mb-1 transition-colors ${
+                                        isSubActive ? 'text-[hsl(var(--color-primary))]' : 'text-[hsl(var(--color-text))]'
+                                      }`}>
+                                        {subLink.label}
+                                      </h4>
+                                      <p className="text-xs text-[hsl(var(--color-text-muted))] line-clamp-2 leading-relaxed">
+                                        {subLink.description}
+                                      </p>
+                                    </div>
+                                  </Link>
+                                );
+                              })}
+                            </div>
+
+                            {/* Sidebar CTA */}
+                            <div className="w-[240px] bg-[hsl(var(--color-bg-alt))]/50 border-l border-[hsl(var(--border))] p-8 flex flex-col justify-center">
+                              <div className="mb-6">
+                                <h3 className="text-lg font-bold text-[hsl(var(--color-primary))] mb-2">Our Promise</h3>
+                                <p className="text-xs text-[hsl(var(--color-text-muted))] leading-relaxed">
+                                  Expert clinical care with a focus on your comfort and long-term oral health.
+                                </p>
+                              </div>
+                              <Link 
+                                href="/services"
+                                className="inline-flex items-center gap-2 text-sm font-bold text-[hsl(var(--color-accent))] hover:gap-3 transition-all underline underline-offset-4"
+                              >
+                                View All Treatments <ChevronRight className="w-4 h-4" />
+                              </Link>
+                            </div>
                           </div>
                         </div>
                       </div>
                     );
                   }
-                  
+
                   return (
-                    <NavLink 
+                    <NavLink
                       key={link.href}
                       href={link.href}
                       label={link.label}
@@ -307,7 +339,7 @@ export default function Navbar() {
             </nav>
 
             {/* Desktop CTA Buttons */}
-            <motion.div 
+            <motion.div
               className="hidden xl:flex items-center gap-3"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -315,7 +347,7 @@ export default function Navbar() {
             >
               {/* Call Now - Subtle style */}
               <MagneticButton>
-                <a 
+                <a
                   id="nav-desktop-call"
                   href={`tel:${phoneNumber}`}
                   className="group flex items-center gap-2 px-3 py-2 text-sm font-medium text-[hsl(var(--color-text-muted))] hover:text-[hsl(var(--color-text))] rounded-full transition-all duration-300 hover:bg-[hsl(var(--color-bg-alt))] relative overflow-hidden"
@@ -328,7 +360,7 @@ export default function Navbar() {
                     <Phone className="w-4 h-4" />
                   </motion.div>
                   <span>Call Now</span>
-                  
+
                   {/* Subtle pulse indicator */}
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -336,10 +368,10 @@ export default function Navbar() {
                   </span>
                 </a>
               </MagneticButton>
-              
+
               {/* Book Appointment - Premium CTA */}
               <MagneticButton>
-                <a 
+                <a
                   id="nav-desktop-whatsapp"
                   href={whatsappLink}
                   target="_blank"
@@ -353,10 +385,10 @@ export default function Navbar() {
                     whileHover={{ x: '100%' }}
                     transition={{ duration: 0.6 }}
                   />
-                  
+
                   <MessageCircle className="w-4 h-4 relative z-10 transition-transform group-hover:scale-110" />
                   <span className="relative z-10">Book Appointment</span>
-                  
+
                   {/* Sparkle icon on hover */}
                   <motion.div
                     className="absolute right-2 top-1/2 -translate-y-1/2"
@@ -373,7 +405,7 @@ export default function Navbar() {
             {/* Tablet & Mobile - CTA + Menu Button */}
             <div className="flex xl:hidden items-center gap-2 sm:gap-3">
               {/* Show Book button on tablet only */}
-              <a 
+              <a
                 id="nav-mobile-book"
                 href={whatsappLink}
                 target="_blank"
@@ -383,16 +415,15 @@ export default function Navbar() {
                 <MessageCircle className="w-4 h-4" />
                 <span>Book Now</span>
               </a>
-              
+
               {/* Premium Menu Button */}
-              <motion.button 
+              <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className={`relative flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-300 ${
-                  mobileMenuOpen 
-                    ? 'bg-[hsl(var(--color-primary))] text-white' 
+                className={`relative flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-300 ${mobileMenuOpen
+                    ? 'bg-[hsl(var(--color-primary))] text-white'
                     : 'hover:bg-[hsl(var(--color-bg-alt))] text-[hsl(var(--color-text))]'
-                }`}
+                  }`}
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 aria-label="Toggle menu"
                 aria-expanded={mobileMenuOpen}
@@ -424,7 +455,7 @@ export default function Navbar() {
             </div>
           </div>
         </div>
-        
+
         {/* Scroll progress indicator */}
         <motion.div
           className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[hsl(var(--color-primary))] via-[hsl(var(--accent))] to-[hsl(var(--color-primary))]"
@@ -445,30 +476,30 @@ export default function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 xl:hidden"
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[110] xl:hidden"
               onClick={() => setMobileMenuOpen(false)}
             />
-            
+
             {/* Menu Panel */}
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 bottom-0 w-full sm:w-[360px] bg-[hsl(var(--background))] z-50 xl:hidden shadow-2xl"
+              className="fixed top-0 right-0 bottom-0 w-full sm:w-[360px] bg-[hsl(var(--background))] z-[120] xl:hidden shadow-2xl"
             >
               {/* Mobile Header */}
               <div className="flex items-center justify-between h-[64px] px-5 border-b border-[hsl(var(--color-border))]">
                 <Link href="/" className="flex items-center" onClick={() => setMobileMenuOpen(false)}>
-                  <Image 
-                    src="/aesthadent_logo.png" 
+                  <Image
+                    src="/aesthadent_logo.png"
                     alt="Aesthedent Logo"
                     width={140}
                     height={48}
                     className="h-12 w-auto object-contain"
                   />
                 </Link>
-                <motion.button 
+                <motion.button
                   whileHover={{ scale: 1.1, rotate: 90 }}
                   whileTap={{ scale: 0.9 }}
                   className="w-10 h-10 flex items-center justify-center rounded-full bg-[hsl(var(--color-bg-alt))] hover:bg-[hsl(var(--color-primary-light))] transition-colors"
@@ -492,9 +523,8 @@ export default function Navbar() {
                           transition={{ delay: i * 0.05 + 0.1 }}
                           className="py-2"
                         >
-                          <div className={`px-4 py-3 rounded-2xl text-base font-semibold ${
-                            isActive ? 'text-[hsl(var(--color-primary))]' : 'text-[hsl(var(--color-text))]'
-                          }`}>
+                          <div className={`px-4 py-3 rounded-2xl text-base font-semibold ${isActive ? 'text-[hsl(var(--color-primary))]' : 'text-[hsl(var(--color-text))]'
+                            }`}>
                             {link.label}
                           </div>
                           <div className="pl-4 mt-1 border-l-2 border-[hsl(var(--color-border))] ml-6 space-y-1">
@@ -505,13 +535,15 @@ export default function Navbar() {
                                   key={subLink.href}
                                   href={subLink.href}
                                   onClick={() => setMobileMenuOpen(false)}
-                                  className={`block px-4 py-2.5 rounded-xl text-sm transition-all ${
-                                    isSubActive
+                                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all ${isSubActive
                                       ? 'bg-[hsl(var(--color-primary-light))]/50 text-[hsl(var(--color-primary))] font-semibold'
                                       : 'text-[hsl(var(--color-text-muted))] hover:text-[hsl(var(--color-text))] hover:bg-[hsl(var(--color-bg-alt))]'
-                                  }`}
+                                    }`}
                                 >
-                                  {subLink.label}
+                                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${isSubActive ? 'bg-[hsl(var(--color-primary))] text-white' : 'bg-[hsl(var(--color-bg-alt))] text-[hsl(var(--color-text-muted))]'}`}>
+                                    {subLink.icon ? <subLink.icon className="w-4 h-4" /> : <Activity className="w-4 h-4" />}
+                                  </div>
+                                  <span>{subLink.label}</span>
                                 </Link>
                               );
                             })}
@@ -531,11 +563,10 @@ export default function Navbar() {
                         <Link
                           href={link.href}
                           onClick={() => setMobileMenuOpen(false)}
-                          className={`group flex items-center justify-between px-4 py-4 rounded-2xl text-base font-medium transition-all duration-300 ${
-                            isActive
+                          className={`group flex items-center justify-between px-4 py-4 rounded-2xl text-base font-medium transition-all duration-300 ${isActive
                               ? 'bg-gradient-to-r from-[hsl(var(--color-primary-light))] to-[hsl(var(--color-primary-light))]/50 text-[hsl(var(--color-primary))] border border-[hsl(var(--color-primary))]/20'
                               : 'text-[hsl(var(--color-text))] hover:bg-[hsl(var(--color-bg-alt))] hover:pl-6'
-                          }`}
+                            }`}
                         >
                           <span>{link.label}</span>
                           <motion.div
@@ -553,14 +584,14 @@ export default function Navbar() {
               </nav>
 
               {/* Mobile CTAs - Fixed at bottom */}
-              <motion.div 
+              <motion.div
                 className="absolute bottom-0 left-0 right-0 p-5 border-t border-[hsl(var(--color-border))] bg-gradient-to-t from-[hsl(var(--color-bg-alt))] to-[hsl(var(--background))]"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
               >
                 <div className="space-y-3">
-                  <a 
+                  <a
                     id="mobile-sidebar-whatsapp"
                     href={whatsappLink}
                     target="_blank"
@@ -577,8 +608,8 @@ export default function Navbar() {
                     <MessageCircle className="w-5 h-5 relative z-10" />
                     <span className="relative z-10">Book on WhatsApp</span>
                   </a>
-                  
-                  <a 
+
+                  <a
                     id="mobile-sidebar-call"
                     href={`tel:${phoneNumber}`}
                     className="flex items-center justify-center gap-3 w-full py-4 bg-[hsl(var(--background))] border-2 border-[hsl(var(--color-border))] hover:border-[hsl(var(--color-primary))] text-[hsl(var(--color-text))] hover:text-[hsl(var(--color-primary))] text-base font-medium rounded-2xl transition-all duration-300"

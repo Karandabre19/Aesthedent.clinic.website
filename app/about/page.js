@@ -42,7 +42,7 @@ export default function AboutPage() {
                 About Us
               </Badge>
               <h1 className="mb-6 text-4xl font-semibold leading-tight text-[hsl(var(--color-primary))] lg:text-[52px]">
-                Redefining <span className="text-[hsl(var(--color-accent))]">Dental Care</span> in Pune
+                We explain <span className="text-[hsl(var(--color-accent))]">everything</span> before we start.
               </h1>
               <p className="text-lg lg:text-xl text-[hsl(var(--color-text-muted))] leading-relaxed mb-8">
                 At Aesthedent, we believe dental care should be gentle, honest,

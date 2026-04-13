@@ -1,7 +1,7 @@
 export const metadata = {
   title: 'The Aesthedent Experience | Premium Dental Care in Kothrud, Pune',
-  description: 'Experience clinical excellence at Aesthedent. Where prosthodontic precision meets human-centered care. Specialized in dental implants, full mouth rehabilitation, and aesthetic dentistry with transparent pricing.',
-  keywords: 'aesthedent experience, dental clinic pune, prosthodontist kothrud, advanced dentistry pune, dental implants kothrud, painless dental treatment',
+  description: 'Experience clinical excellence at Aesthedent. Where prosthodontic precision meets human-centered care. Specialized in dental implants, full mouth rehabilitation, and specialist clinical excellence.',
+  keywords: 'aesthedent experience, dental clinic pune, prosthodontist kothrud, specialist dental clinic pune, MDS prosthodontist kothrud, advanced dentistry pune, dental implants kothrud, painless dental treatment',
   openGraph: {
     title: 'The Aesthedent Experience | Clinical Precision in Kothrud, Pune',
     description: 'A higher standard of dental care. Explore our specialist-led approach to implants, rehabilitation, and long-term oral health.',

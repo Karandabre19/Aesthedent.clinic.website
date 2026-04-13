@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import PageWrapper from '@/components/layout/PageWrapper';
 import SectionHeading from '@/components/ui/SectionHeading';
 import AnimatedSection from '@/components/ui/AnimatedSection';
+import { MagneticWrapper } from '@/components/ui/InteractiveHighTech';
 import { 
   MessageCircle,
   Phone,
@@ -18,9 +19,11 @@ import {
   MapPin,
   Clock,
   Send,
-  CheckCircle2
+  CheckCircle2,
+  Instagram
 } from 'lucide-react';
 
+const instagramLink = 'https://www.instagram.com/drwathodkar_aesthedent_clinic?igsh=azFlYTc2b25xaDFn';
 const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
 const phoneNumber = '+919309816336';
 
@@ -28,10 +31,19 @@ const contactInfo = [
   {
     icon: MapPin,
     title: 'Visit Us',
-    details: ['Near Karve Statue, Kothrud', 'Pune, Maharashtra 411038'],
+    details: ['No.5 First Floor, AJ Tower, above Irani Cafe', 'Dahanukar Colony, Kothrud, Pune 411038'],
     action: {
       label: 'Get Directions',
-      href: 'https://maps.app.goo.gl/BVb9iy5EQkmbYSVPA'
+      href: 'https://www.google.com/maps/place/Aesthedent+Dental+Clinic,+Kothrud/@18.4972761,73.8108921,17z/data=!3m2!4b1!5s0x3bc2bfc407d2eb7d:0xeb43317068a295aa!4m6!3m5!1s0x3bc2bfa49403bd57:0xb59ec17e89bd289f!8m2!3d18.497271!4d73.813467!16s%2Fg%2F11j2v_ph1x?entry=ttu&g_ep=EgoyMDI2MDQwOC4wIKXMDSoASAFQAw%3D%3D'
+    }
+  },
+  {
+    icon: Instagram,
+    title: 'Follow Us',
+    details: ['@drwathodkar_aesthedent_clinic', 'See transformations & clinical cases'],
+    action: {
+      label: 'View Instagram',
+      href: instagramLink
     }
   },
   {
@@ -44,18 +56,9 @@ const contactInfo = [
     }
   },
   {
-    icon: Mail,
-    title: 'Email Us',
-    details: ['info@aesthedent.com', 'appointments@aesthedent.com'],
-    action: {
-      label: 'Send Email',
-      href: 'mailto:info@aesthedent.com'
-    }
-  },
-  {
     icon: Clock,
     title: 'Working Hours',
-    details: ['Mon - Sat: 10:00 AM - 8:00 PM', 'Sunday: Closed'],
+    details: ['Mon - Sun: 10:00 AM - 8:00 PM', '(Wednesday Holiday)'],
     action: null
   }
 ];
@@ -117,28 +120,43 @@ export default function ContactPage() {
       {/* Quick Contact Buttons */}
       <section className="section-spacing-sm">
         <div className="main-container-narrow">
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
-              className="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-base font-medium animate-pulse-soft"
-              asChild
-            >
-              <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                <MessageCircle className="w-5 h-5 mr-2" />
-                Book on WhatsApp
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <MagneticWrapper>
+              <Button 
+                size="lg" 
+                className="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-base font-bold shadow-lg shadow-green-600/20"
+                asChild
+              >
+                <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+                  <MessageCircle className="w-5 h-5 mr-2" />
+                  Book on WhatsApp
+                </a>
+              </Button>
+            </MagneticWrapper>
+
+            <MagneticWrapper>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="border-[hsl(var(--color-primary))] text-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary-light))] px-8 py-6 text-base font-bold"
+                asChild
+              >
+                <a href={instagramLink} target="_blank" rel="noopener noreferrer">
+                  <Instagram className="w-5 h-5 mr-2" />
+                  Follow on Instagram
+                </a>
+              </Button>
+            </MagneticWrapper>
+
+            <MagneticWrapper offset={0.15}>
+              <a 
+                href={`tel:${phoneNumber}`}
+                className="flex items-center gap-2 text-[hsl(var(--color-text-muted))] hover:text-[hsl(var(--color-primary))] transition-all font-bold"
+              >
+                <Phone className="w-4 h-4" />
+                +91 93098 16336
               </a>
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-6 text-base font-medium"
-              asChild
-            >
-              <a href={`tel:${phoneNumber}`}>
-                <Phone className="w-5 h-5 mr-2" />
-                Call: +91 93098 16336
-              </a>
-            </Button>
+            </MagneticWrapper>
           </div>
         </div>
       </section>
@@ -186,7 +204,7 @@ export default function ContactPage() {
             <AnimatedSection direction="left">
               <div className="rounded-3xl overflow-hidden shadow-lg h-full min-h-[400px] relative">
                 <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.3068455465394!2d73.8078!3d18.5048!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf9e0e356f4d%3A0x448c1a79e9f20e13!2sAesthedent%20Dental%20Clinic!5e0!3m2!1sen!2sin!4v1704067200000!5m2!1sen!2sin"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.5683262145564!2d73.81084207595561!3d18.49727607062489!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bfa49403bd57%3A0xb59ec17e89bd289f!2sAesthedent%20Dental%20Clinic%2C%20Kothrud!5e0!3m2!1sen!2sin!4v1713000000000!5m2!1sen!2sin"
                   width="100%"
                   height="100%"
                   style={{ border: 0, minHeight: '400px' }}
@@ -319,16 +337,18 @@ export default function ContactPage() {
               <p className="text-[hsl(var(--primary-foreground)/0.8)] mb-8 max-w-xl mx-auto">
                 Skip the form and book directly on WhatsApp. Our team will confirm your appointment within minutes.
               </p>
-              <Button 
-                size="lg" 
-                className="bg-[hsl(var(--background))] text-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-bg-alt))] px-8 py-6 text-base font-medium"
-                asChild
-              >
-                <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                  <MessageCircle className="w-5 h-5 mr-2" />
-                  Book on WhatsApp
-                </a>
-              </Button>
+              <MagneticWrapper>
+                <Button 
+                  size="lg" 
+                  className="bg-[hsl(var(--background))] text-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-bg-alt))] px-10 py-7 text-lg font-bold shadow-xl"
+                  asChild
+                >
+                  <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+                    <MessageCircle className="w-6 h-6 mr-3" />
+                    Book on WhatsApp
+                  </a>
+                </Button>
+              </MagneticWrapper>
             </div>
           </AnimatedSection>
         </div>

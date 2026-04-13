@@ -166,7 +166,7 @@ export default function ServicesPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               { title: 'Painless Procedures', desc: 'Advanced anesthesia and gentle techniques for zero discomfort' },
-              { title: 'Transparent Pricing', desc: 'No hidden costs. Know what you pay before treatment' },
+              { title: 'Specialist-Led Planning', desc: 'Detailed clinical mapping and expert biomechanical roadmap' },
               { title: 'Modern Equipment', desc: 'State-of-the-art technology for precise, efficient care' },
               { title: 'Personalized Care', desc: 'Treatment plans tailored to your specific needs' }
             ].map((item, i) => (

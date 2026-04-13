@@ -1,8 +1,9 @@
 'use client';
 
-import { X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { X, Instagram, MessageCircle } from 'lucide-react';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useEffect, useState, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 
 const WhatsAppIcon = ({ className }) => (
   <svg 
@@ -15,12 +16,55 @@ const WhatsAppIcon = ({ className }) => (
   </svg>
 );
 
+function MagneticAction({ children, className, glowColor }) {
+  const ref = useRef(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const springConfig = { damping: 15, stiffness: 150 };
+  const xSpring = useSpring(x, springConfig);
+  const ySpring = useSpring(y, springConfig);
+
+  const handleMouseMove = (e) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    x.set((e.clientX - centerX) * 0.2);
+    y.set((e.clientY - centerY) * 0.2);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      style={{ x: xSpring, y: ySpring }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="relative"
+    >
+      <div className={`absolute inset-0 rounded-full blur-xl opacity-20 ${glowColor} animate-pulse-slow`} />
+      <div className={className}>
+        {children}
+      </div>
+    </motion.div>
+  );
+}
+
 export default function WhatsAppButton() {
+  const pathname = usePathname();
   const [showBubble, setShowBubble] = useState(false);
   const [hasBeenDismissed, setHasBeenDismissed] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
 
+  const isExperiencePage = pathname === '/aesthedent-experience';
+
   const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
+  const instagramLink = 'https://www.instagram.com/drwathodkar_aesthedent_clinic?igsh=azFlYTc2b25xaDFn';
 
   const getClinicStatus = () => {
     const day = currentTime.getDay();
@@ -32,8 +76,8 @@ export default function WhatsAppButton() {
         pingColor: 'bg-red-400',
         header: 'WEEKLY HOLIDAY',
         headerColor: 'text-red-800',
-        main: "The clinic is away today",
-        sub: "Available for emergencies only"
+        main: "Away today",
+        sub: "Emergency? Call us."
       };
     }
 
@@ -44,7 +88,7 @@ export default function WhatsAppButton() {
         header: 'ONLINE NOW',
         headerColor: 'text-green-800',
         main: "How can we help?",
-        sub: "Typically replies in minutes"
+        sub: "Replies in minutes"
       };
     }
 
@@ -53,103 +97,113 @@ export default function WhatsAppButton() {
       pingColor: 'bg-orange-400',
       header: 'CLOSED',
       headerColor: 'text-orange-800',
-      main: "We'll be back at 10 AM",
-      sub: "Message us, we'll reply first thing"
+      main: "Back at 10 AM",
+      sub: "Message us anytime"
     };
   };
 
   const status = getClinicStatus();
 
   useEffect(() => {
-    const statusInterval = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 2 * 60 * 1000);
-
     const showTimer = setTimeout(() => {
-      if (!hasBeenDismissed) {
-        setShowBubble(true);
-      }
-    }, 5000);
-
-    return () => {
-      clearInterval(statusInterval);
-      clearTimeout(showTimer);
-    };
-  }, [hasBeenDismissed]);
+      if (!hasBeenDismissed) setShowBubble(true);
+    }, isExperiencePage ? 8000 : 5000);
+    return () => clearTimeout(showTimer);
+  }, [hasBeenDismissed, isExperiencePage]);
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex items-center justify-end">
-      <AnimatePresence mode="wait">
-        {showBubble && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, x: 20 }}
-            animate={{ 
-              opacity: 1, 
-              scale: 1, 
-              x: 0,
-              y: [0, -10, 0],
-            }}
-            exit={{ opacity: 0, scale: 0.8, x: 20 }}
-            transition={{ 
-              type: "spring", 
-              stiffness: 300, 
-              damping: 20,
-              y: {
-                duration: 2,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "easeInOut"
-              }
-            }}
-            className="absolute right-16 mr-4 px-4 py-3 bg-white border border-black/15 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.2),0_20px_50px_-20px_rgba(0,0,0,0.1)] rounded-2xl min-w-[210px] sm:min-w-[240px]"
+    <div className={`fixed bottom-6 right-6 z-[90] flex flex-col items-end gap-4 sm:gap-5 ${isExperiencePage ? 'mb-4 sm:mb-0' : ''}`}>
+      
+      {/* Instagram Floating Action - Hidden on experience page */}
+      {!isExperiencePage && (
+        <motion.div
+          initial={{ opacity: 0, y: 20, scale: 0.8 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ delay: 1.2, duration: 0.5, type: 'spring' }}
+        >
+          <MagneticAction 
+            glowColor="bg-pink-500" 
+            className="group relative"
           >
-            <button 
-              onClick={() => {
-                setShowBubble(false);
-                setHasBeenDismissed(true);
-              }}
-              className="absolute -top-2 -right-2 z-10 p-1.5 bg-white border border-black/10 rounded-full shadow-md hover:bg-gray-50 transition-colors text-[hsl(var(--color-primary))]"
-              aria-label="Dismiss chat prompt"
-            >
-              <X className="w-3.5 h-3.5" />
-            </button>
-
-            <div className="flex flex-col gap-1.5">
-              <div className="flex items-center gap-2.5 mb-0.5">
-                <span className="relative flex h-2 w-2">
-                  <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${status.pingColor} opacity-75`}></span>
-                  <span className={`relative inline-flex rounded-full h-2 w-2 ${status.dotColor}`}></span>
-                </span>
-                <span className={`text-[10px] uppercase tracking-[0.15em] font-bold ${status.headerColor}`}>{status.header}</span>
-              </div>
-              <p className="text-base font-bold text-[hsl(var(--color-primary))] leading-tight">
-                {status.main}
-              </p>
-              <p className="text-xs text-[hsl(var(--color-text-muted))] leading-relaxed">
-                {status.sub}
-              </p>
+            {/* Tooltip Label */}
+            <div className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-[10px] font-bold text-white opacity-0 group-hover:opacity-100 transition-all translate-x-3 group-hover:translate-x-0 pointer-events-none whitespace-nowrap shadow-2xl">
+              Live Cases & Results
             </div>
+            
+            <a
+              href={instagramLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-2xl bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white shadow-xl transition-all duration-300 hover:scale-110 active:scale-95"
+              aria-label="Follow on Instagram"
+            >
+              <Instagram className="w-6 h-6 sm:w-7 sm:h-7" />
+            </a>
+          </MagneticAction>
+        </motion.div>
+      )}
 
-            <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-white border-r border-t border-black/15 rotate-45" />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* WhatsApp Section */}
+      <div className="relative flex items-center justify-end">
+        <AnimatePresence>
+          {showBubble && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, x: 20 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              exit={{ opacity: 0, scale: 0.8, x: 20 }}
+              className="absolute right-16 mr-4 p-4 bg-white/95 backdrop-blur-xl border border-black/10 shadow-2xl rounded-[2rem] min-w-[200px] sm:min-w-[220px]"
+            >
+              <button 
+                onClick={() => {
+                  setShowBubble(false);
+                  setHasBeenDismissed(true);
+                }}
+                className="absolute -top-2 -right-2 p-1.5 bg-white border border-black/5 rounded-full shadow-lg hover:bg-gray-50 transition-colors text-[hsl(var(--color-primary))]"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
 
-      <motion.a
-        id="floating-whatsapp-btn"
-        href={whatsappLink}
-        target="_blank"
-        rel="noopener noreferrer"
-        onMouseEnter={() => !hasBeenDismissed && setShowBubble(true)}
-        className="relative flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_8px_25px_-5px_rgba(37,211,102,0.4)] transition-all duration-300 hover:scale-110 hover:shadow-[0_12px_30px_-5px_rgba(37,211,102,0.6)] active:scale-95 group"
-        aria-label="Chat on WhatsApp"
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 1, type: 'spring', stiffness: 260, damping: 20 }}
-      >
-        <div className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-20 group-hover:opacity-30 transition-opacity" />
-        <WhatsAppIcon className="w-8 h-8 sm:w-9 sm:h-9 relative z-10 drop-shadow-sm" />
-      </motion.a>
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="relative flex h-2 w-2">
+                    <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${status.pingColor} opacity-75`}></span>
+                    <span className={`relative inline-flex rounded-full h-2 w-2 ${status.dotColor}`}></span>
+                  </span>
+                  <span className={`text-[9px] uppercase tracking-widest font-black ${status.headerColor}`}>{status.header}</span>
+                </div>
+                <p className="text-sm font-black text-[hsl(var(--color-primary))] leading-tight">
+                  {status.main}
+                </p>
+                <p className="text-[11px] text-[hsl(var(--color-text-muted))] font-medium">
+                  {status.sub}
+                </p>
+              </div>
+              <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-white/95 backdrop-blur-xl border-r border-t border-black/10 rotate-45" />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <MagneticAction 
+          glowColor="bg-green-500"
+          className="relative"
+        >
+          <motion.a
+            id="floating-whatsapp-btn"
+            href={whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            onMouseEnter={() => !hasBeenDismissed && setShowBubble(true)}
+            className="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_10px_30px_-5px_rgba(37,211,102,0.5)] transition-all duration-300 hover:scale-110 group"
+            aria-label="Chat on WhatsApp"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 1, type: 'spring' }}
+          >
+            <div className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-10 group-hover:opacity-25" />
+            <WhatsAppIcon className="w-8 h-8 sm:w-9 sm:h-9 relative z-10" />
+          </motion.a>
+        </MagneticAction>
+      </div>
     </div>
   );
 }

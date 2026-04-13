@@ -11,9 +11,9 @@ import AnimatedSection from '@/components/ui/AnimatedSection';
 const insights = [
   {
     id: 1,
-    slug: 'dental-implants-cost-pune',
-    title: 'How much do dental implants cost in Pune?',
-    excerpt: 'A transparent breakdown of implant pricing, what affects the cost, and why investing in quality matters for your long-term oral health.',
+    slug: 'dental-implants-pune-specialist',
+    title: 'Why choose a Prosthodontist for your Dental Implants?',
+    excerpt: 'Understanding the difference specialization makes in clinical outcomes, structural success, and why expert planning is the key to a lifetime smile.',
     category: 'Dental Implants',
     readTime: '5 min read',
     image: 'https://images.pexels.com/photos/6627566/pexels-photo-6627566.jpeg?auto=compress&cs=tinysrgb&w=800',

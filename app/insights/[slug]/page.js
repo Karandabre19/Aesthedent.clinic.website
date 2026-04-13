@@ -10,43 +10,37 @@ import InsightsSection from '@/components/sections/InsightsSection';
 
 // Insights data - can be moved to a separate file or fetched from CMS
 const insightsData = {
-  'dental-implants-cost-pune': {
-    title: 'How much do dental implants cost in Pune?',
+  'dental-implants-pune-specialist': {
+    title: 'Why choose a Prosthodontist for your Dental Implants?',
     category: 'Dental Implants',
     readTime: '5 min read',
     date: 'March 15, 2024',
     image: 'https://images.pexels.com/photos/6627566/pexels-photo-6627566.jpeg?auto=compress&cs=tinysrgb&w=1200',
     content: `
-      <p class="lead">Dental implants are one of the most effective solutions for missing teeth, but understanding the cost can be confusing. Here is a transparent breakdown of what you can expect in Pune.</p>
+      <p class="lead">Choosing the right professional for your dental implants is a decision that affects your health for decades. Here is why a Specialist Prosthodontist is the Gold Standard for implant care.</p>
       
-      <h2>What affects dental implant pricing?</h2>
-      <p>The cost of dental implants varies based on several factors:</p>
+      <h2>What is a Prosthodontist?</h2>
+      <p>A Prosthodontist is a dentist who has completed three additional years of advanced training and residency after dental school. They specialize in the restoration and replacement of teeth, making them the "architects" of dental treatment plans.</p>
+
+      <h2>The Specialist Advantage</h2>
       <ul>
-        <li><strong>Type of implant:</strong> Standard titanium implants vs. premium brands</li>
-        <li><strong>Number of implants needed:</strong> Single tooth vs. multiple teeth</li>
-        <li><strong>Bone grafting requirements:</strong> Additional procedures if bone density is low</li>
-        <li><strong>Crown material:</strong> Porcelain, zirconia, or metal-ceramic options</li>
-        <li><strong>Clinic expertise:</strong> Experience of the dental surgeon</li>
+        <li><strong>Architectural Planning:</strong> We don't just place an implant; we plan the entire biomechanical harmony of your mouth.</li>
+        <li><strong>Advanced Biomechanics:</strong> Ensuring your bite is healthy, comfortable, and natural-feeling.</li>
+        <li><strong>Complex Case Management:</strong> Expertise in handling bone loss, full-mouth rehabilitations, and aesthetic challenges.</li>
+        <li><strong>Material Expertise:</strong> Knowledge of the latest biocompatible materials for long-term success.</li>
       </ul>
 
-      <h2>Average cost range in Pune</h2>
-      <p>In Pune, dental implant costs typically range from Rs. 25,000 to Rs. 60,000 per implant, depending on the factors mentioned above. At Aesthedent, we provide transparent pricing with no hidden costs.</p>
+      <h2>Why Specialization Matters for Implants</h2>
+      <p>Dental implants are not just a surgical procedure; they are a restorative one. A Prosthodontist ensures that the final tooth (the crown) is perfectly aligned with the implant and your natural bite, preventing future complications like implant failure or jaw pain.</p>
 
-      <h2>Why quality matters</h2>
-      <p>While it might be tempting to choose the cheapest option, dental implants are a long-term investment in your oral health. Quality implants from reputable manufacturers, placed by experienced surgeons, can last a lifetime with proper care.</p>
-
-      <h2>What is included in the cost?</h2>
-      <p>At Aesthedent, our implant package includes:</p>
+      <h2>What to expect at Aesthedent</h2>
+      <p>At Aesthedent, every implant case is led by our specialist Prosthodontist, Dr. Sahil. Our process includes:</p>
       <ul>
-        <li>Initial consultation and 3D imaging</li>
-        <li>The implant fixture itself</li>
-        <li>Abutment and crown</li>
-        <li>Follow-up appointments</li>
-        <li>Post-procedure care guidance</li>
+        <li>Comprehensive 3D digital diagnostic mapping</li>
+        <li>Specialist-led surgical and restorative planning</li>
+        <li>Precision execution using world-class hardware</li>
+        <li>Ongoing monitoring for lifelong success</li>
       </ul>
-
-      <h2>Financing options</h2>
-      <p>We understand that dental implants are a significant investment. That is why we offer flexible payment plans and can help you explore financing options to make quality dental care accessible.</p>
     `,
   },
   'root-canal-pain-myths': {

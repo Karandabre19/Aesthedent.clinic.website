@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Smile, MapPin, Clock, Phone, MessageCircle, Mail, ArrowRight } from 'lucide-react';
+import { Smile, MapPin, Clock, Phone, MessageCircle, Mail, ArrowRight, Instagram } from 'lucide-react';
 
 const footerLinks = {
   services: [
@@ -42,7 +42,7 @@ export default function Footer() {
               />
             </Link>
             <p className="text-white/90 text-sm leading-relaxed font-light mb-10 tracking-wide">
-              Honest, clear dental care in Kothrud, Pune. We focus on reliable treatments and ensuring you understand everything before we start.
+              Aesthedent — Reclaim Your Smile. Honest, clear dental care in Kothrud, Pune. We focus on reliable treatments and ensuring you understand everything before we start.
             </p>
             <div className="flex gap-5">
               <a 
@@ -62,6 +62,15 @@ export default function Footer() {
                 aria-label="Call"
               >
                 <Phone className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+              </a>
+              <a 
+                href="https://www.instagram.com/drwathodkar_aesthedent_clinic?igsh=azFlYTc2b25xaDFn"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group w-11 h-11 bg-white/15 rounded-full flex items-center justify-center hover:bg-[hsl(var(--color-accent))] transition-all duration-300 text-[hsl(var(--color-accent))] hover:text-[hsl(var(--color-primary-dark))] shadow-lg shadow-black/10"
+                aria-label="Instagram"
+              >
+                <Instagram className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
               </a>
               <a 
                 href="mailto:info@aesthedent.com"
@@ -115,17 +124,17 @@ export default function Footer() {
                 <MapPin className="w-4 h-4 text-[hsl(var(--color-accent))] flex-shrink-0 mt-1 group-hover:scale-110 transition-transform duration-300" />
                 <a 
                   id="footer-contact-address"
-                  href="https://maps.app.goo.gl/BVb9iy5EQkmbYSVPA" 
+                  href="https://www.google.com/maps/place/Aesthedent+Dental+Clinic,+Kothrud/@18.4972761,73.8108921,17z/data=!3m2!4b1!5s0x3bc2bfc407d2eb7d:0xeb43317068a295aa!4m6!3m5!1s0x3bc2bfa49403bd57:0xb59ec17e89bd289f!8m2!3d18.497271!4d73.813467!16s%2Fg%2F11j2v_ph1x?entry=ttu&g_ep=EgoyMDI2MDQwOC4wIKXMDSoASAFQAw%3D%3D" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-white/90 text-sm font-normal leading-relaxed hover:text-[hsl(var(--color-accent))] transition-colors duration-300"
                 >
-                  Near Karve Statue, Kothrud, Pune, Maharashtra 411038
+                  No.5 First Floor, AJ Tower, above Irani Cafe, Dahanukar Colony, Kothrud, Pune, Maharashtra 411038
                 </a>
               </li>
               <li className="flex items-start gap-3.5 group">
                 <Clock className="w-4 h-4 text-[hsl(var(--color-accent))] flex-shrink-0 mt-1 group-hover:scale-110 transition-transform duration-300" />
-                <span className="text-white/90 text-sm font-normal leading-relaxed">Mon - Sat: 10:00 AM - 8:00 PM</span>
+                <span className="text-white/90 text-sm font-normal leading-relaxed">Mon - Sun: 10:00 AM - 8:00 PM (Wednesday Holiday)</span>
               </li>
               <li className="flex items-start gap-3.5 group">
                 <Phone className="w-4 h-4 text-[hsl(var(--color-accent))] flex-shrink-0 mt-1 group-hover:scale-110 transition-transform duration-300" />

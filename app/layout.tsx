@@ -16,14 +16,14 @@ const poppins = Poppins({
 
 export const metadata = {
   metadataBase: new URL('https://www.aesthedentpune.com'),
-  title: 'Aesthedent Dental Clinic | Best Dentist in Kothrud, Pune',
+  title: 'Aesthedent Dental Clinic — Reclaim Your Smile | Specialist Prosthodontist in Kothrud, Pune',
   description:
-    'Looking for a dental clinic in Kothrud, Pune? Experience calm, clear, and honest dental care at Aesthedent Clinic. Painless dentistry, implants & transparent pricing.',
+    'Aesthedent is a specialized Prosthodontist clinic in Kothrud, Pune. Experience expert dental implants, full mouth rehabilitation, and specialist-led clinical care. Reclaim your smile today.',
   keywords:
-    'dental clinic in pune, dental clinic in kothrud, best dentist kothrud, painless dentistry, dental implants pune, teeth cleaning pune, root canal kothrud',
+    'prosthodontist in pune, dental clinic in kothrud, specialist dentist pune, prosthodontics kothrud, dental implants pune, full mouth rehabilitation pune, dental clinic near me',
   openGraph: {
-    title: 'Aesthedent Dental Clinic | Honest, Clear Dental Care in Kothrud, Pune',
-    description: 'Experience calm, clear, and honest dental care at Aesthedent Clinic in Kothrud, Pune. Painless dentistry and transparent pricing.',
+    title: 'Aesthedent Dental Clinic — Reclaim Your Smile | Kothrud, Pune',
+    description: 'Specialist Prosthodontic care in Kothrud, Pune. Expert dental implants, full mouth rehabilitation, and specialized clinical excellence.',
     url: 'https://www.aesthedentpune.com',
     siteName: 'Aesthedent Dental Clinic',
     locale: 'en_IN',
@@ -78,7 +78,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               "telephone": "+919309816336",
               "address": {
                 "@type": "PostalAddress",
-                "streetAddress": "Near Karve Statue, Kothrud",
+                "streetAddress": "No.5 First Floor, AJ Tower, above Irani Cafe, Dahanukar Colony, Kothrud",
                 "addressLocality": "Pune",
                 "addressRegion": "Maharashtra",
                 "postalCode": "411038",
@@ -86,8 +86,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               },
               "geo": {
                 "@type": "GeoCoordinates",
-                "latitude": 18.5018,
-                "longitude": 73.8166
+                "latitude": 18.497271,
+                "longitude": 73.813467
               },
               "openingHoursSpecification": {
                 "@type": "OpeningHoursSpecification",

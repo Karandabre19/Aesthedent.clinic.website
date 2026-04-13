@@ -11,6 +11,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import PageWrapper from '@/components/layout/PageWrapper';
 import AnimatedSection from '@/components/ui/AnimatedSection';
+import InstagramShowcase from '@/components/sections/InstagramShowcase';
+import { MagneticWrapper, HeroParticles } from '@/components/ui/InteractiveHighTech';
 import { services } from '@/lib/services';
 import {
   Phone,
@@ -154,7 +156,7 @@ function HeroWord({ children, className = '' }) {
   const text = String(children);
 
   return (
-    <span className={`hero-word-shell inline-flex overflow-hidden align-top pb-[0.2em] -mb-[0.2em] ${className}`} aria-label={text}>
+    <span className={`hero-word-shell inline-flex overflow-hidden align-top pb-[0.4em] -mb-[0.4em] pl-[0.05em] pr-[0.4em] ${className}`} aria-label={text}>
       <span className="sr-only">{text}</span>
       <span className="hero-word inline-flex will-change-transform" aria-hidden="true">
         {text.split('').map((char, index) => (
@@ -434,7 +436,7 @@ export default function HomePage() {
           <Image
             src="/homepage-banner.png"
             alt="Premium Dental Care - Crystalline Tooth"
-            className="hero-bg-image h-full w-full object-cover will-change-transform transform-gpu"
+            className="h-full w-full object-cover will-change-transform transform-gpu"
             fill
             priority
             sizes="100vw"
@@ -453,24 +455,21 @@ export default function HomePage() {
 
               <div>
                 <p className="hero-eyebrow mb-6 translate-y-4 text-sm font-medium uppercase tracking-[0.3em] text-[hsl(var(--color-accent))] opacity-0 transform-gpu md:text-base">
-                  Aesthedent — Kothrud, Pune
+                  Aesthedent — Reclaim Your Smile
                 </p>
                 <div className="hero-divider mb-8 h-px w-24 origin-left scale-x-0 bg-gradient-to-r from-[hsl(var(--color-accent))] to-transparent opacity-0 transform-gpu" />
               </div>
 
-              <h1 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-[hsl(var(--color-primary))] leading-[1.1] mb-6 sm:mb-8">
-                <span className="hero-line hero-line-1 relative block overflow-hidden pb-1 sm:pb-2">
-                  <HeroWord>We explain</HeroWord>{" "}
-                  <HeroWord className="font-semibold italic">
-                    everything
-                  </HeroWord>
+              <h1 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-[hsl(var(--color-primary))] leading-[0.95] tracking-tighter mb-6 sm:mb-8 italic">
+                <span className="hero-line hero-line-1 relative block overflow-hidden pb-2 leading-tight">
+                  <HeroWord>Redefining</HeroWord>
                 </span>
-                <span className="hero-line hero-line-2 relative block overflow-hidden pb-1 sm:pb-2">
-                  <HeroWord className="hero-accent-word font-semibold text-[hsl(var(--color-accent))]">
-                    before we
-                  </HeroWord>{" "}
-                  <HeroWord className="hero-accent-word font-semibold text-[hsl(var(--color-accent))]">
-                    start.
+                <span className="hero-line hero-line-2 relative block overflow-hidden pb-2 leading-tight">
+                  <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--color-primary))] via-[hsl(var(--color-accent))] to-[hsl(var(--color-primary))] bg-[length:200%_auto] animate-shimmer italic">
+                    Dental Care
+                  </span>{" "}
+                  <HeroWord className="hero-accent-word font-black text-[hsl(var(--color-accent))]">
+                    in Pune.
                   </HeroWord>
                 </span>
               </h1>
@@ -479,27 +478,33 @@ export default function HomePage() {
                 We provide clear dental care in Kothrud, Pune. No hiding costs, no skipping details, and no rushing you into treatment.
               </p>
 
-              <div className="hero-actions flex flex-col gap-3 sm:flex-row sm:gap-4">
-                <a
-                  href={whatsappLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hero-action-btn group inline-flex translate-y-6 scale-95 items-center justify-center gap-2 sm:gap-3 rounded-full bg-[hsl(var(--color-accent))] px-6 sm:px-8 py-3 sm:py-4 font-semibold text-[hsl(var(--accent-foreground))] opacity-0 transition-all duration-300 transform-gpu hover:shadow-lg hover:-translate-y-1 text-sm sm:text-base"
-                >
-                  <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />
-                  Chat on WhatsApp
-                  <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
-                <a
-                  href="https://maps.app.goo.gl/BVb9iy5EQkmbYSVPA"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hero-action-btn group inline-flex translate-y-6 scale-95 items-center justify-center gap-2 sm:gap-3 rounded-full border-2 border-[hsl(var(--color-primary))] bg-[hsl(var(--color-primary))]/10 px-6 sm:px-8 py-3 sm:py-4 font-semibold text-[hsl(var(--color-primary))] opacity-0 shadow-lg backdrop-blur-md transition-all duration-300 transform-gpu hover:border-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary))]/20 text-sm sm:text-base"
-                >
-                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
-                  <span className="hidden sm:inline">Visit Us</span>
-                  <span className="sm:hidden">Location</span>
-                </a>
+              <div className="hero-actions flex flex-col gap-3 sm:flex-row sm:gap-6">
+                <MagneticWrapper>
+                  <a
+                    href={whatsappLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hero-action-btn group relative inline-flex translate-y-6 scale-95 items-center justify-center gap-2 sm:gap-3 rounded-2xl bg-[hsl(var(--color-primary))] px-8 sm:px-10 py-4 sm:py-5 font-black text-white opacity-0 transition-all duration-300 transform-gpu hover:shadow-2xl hover:shadow-[hsl(var(--color-primary))]/40 hover:-translate-y-1 text-base sm:text-lg overflow-hidden"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 translate-x-[-150%] group-hover:translate-x-[150%] transition-transform duration-1000" />
+                    <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 text-[hsl(var(--color-accent))]" />
+                    <span className="relative z-10">Chat on WhatsApp</span>
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform relative z-10" />
+                  </a>
+                </MagneticWrapper>
+
+                <MagneticWrapper>
+                  <a
+                    href="https://www.google.com/maps/place/Aesthedent+Dental+Clinic,+Kothrud/@18.4972761,73.8108921,17z/data=!3m2!4b1!5s0x3bc2bfc407d2eb7d:0xeb43317068a295aa!4m6!3m5!1s0x3bc2bfa49403bd57:0xb59ec17e89bd289f!8m2!3d18.497271!4d73.813467!16s%2Fg%2F11j2v_ph1x?entry=ttu&g_ep=EgoyMDI2MDQwOC4wIKXMDSoASAFQAw%3D%3D"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hero-action-btn group relative inline-flex translate-y-6 scale-95 items-center justify-center gap-2 sm:gap-4 rounded-2xl border-2 border-[hsl(var(--color-primary))]/20 bg-white/10 backdrop-blur-xl px-8 sm:px-10 py-4 sm:py-5 font-black text-[hsl(var(--color-primary))] opacity-0 transition-all duration-300 transform-gpu hover:border-[hsl(var(--color-primary))]/40 hover:bg-white/20 text-base sm:text-lg"
+                  >
+                    <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-[hsl(var(--color-accent))]" />
+                    <span className="hidden sm:inline">Visit Clinic</span>
+                    <span className="sm:hidden">Location</span>
+                  </a>
+                </MagneticWrapper>
               </div>
             </div>
           </div>
@@ -668,13 +673,15 @@ export default function HomePage() {
 
         <div className="main-container mt-12">
           <AnimatedSection className="text-center">
-            <Link
-              href="/testimonials"
+            <a
+              href="https://www.google.com/maps/place/Aesthedent+Dental+Clinic,+Kothrud/@18.4972761,73.8108921,17z/data=!3m1!5s0x3bc2bfc407d2eb7d:0xeb43317068a295aa!4m8!3m7!1s0x3bc2bfa49403bd57:0xb59ec17e89bd289f!8m2!3d18.497271!4d73.813467!9m1!1b1!16s%2Fg%2F11j2v_ph1x?entry=ttu&g_ep=EgoyMDI2MDQwOC4wIKXMDSoASAFQAw%3D%3D"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-3 text-[hsl(var(--primary))] font-semibold hover:text-[hsl(var(--primary-dark))] transition-colors text-lg"
             >
               View all patient stories
               <ArrowRight className="w-5 h-5" />
-            </Link>
+            </a>
           </AnimatedSection>
         </div>
       </section>
@@ -700,7 +707,7 @@ export default function HomePage() {
                   "Checkup: We take a look and show you your teeth on a screen.",
                   "Explanation: We explain the problem in simple words.",
                   "Planning: We discuss what needs fixing now and what can wait.",
-                  "Cost: We tell you the exact price before we do anything.",
+                  "Analysis: We explain the complete clinical diagnosis before we start.",
                   "Treatment: We make sure you are fully numb and comfortable.",
                   "Follow-up: We check in to see how you are healing."
                 ].map((item, i) => (
@@ -938,9 +945,9 @@ export default function HomePage() {
                       Our Clinic
                     </p>
                     <p className="text-white/80 leading-relaxed text-xs sm:text-sm md:text-base group-hover:text-white transition-colors">
-                      Dahanukar Colony, Kothrud, Pune 411038
+                      No.5 First Floor, AJ Tower, above Irani Cafe,
                       <br />
-                      Near Karve Statue
+                      Dahanukar Colony, Kothrud, Pune 411038
                     </p>
                   </div>
                 </a>
