@@ -460,12 +460,12 @@ export default function HomePage() {
                 <div className="hero-divider mb-8 h-px w-24 origin-left scale-x-0 bg-gradient-to-r from-[hsl(var(--color-accent))] to-transparent opacity-0 transform-gpu" />
               </div>
 
-              <h1 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-[hsl(var(--color-primary))] leading-[0.95] tracking-tighter mb-6 sm:mb-8 italic">
+              <h1 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-[hsl(var(--color-primary))] leading-[0.95] tracking-tighter mb-6 sm:mb-8">
                 <span className="hero-line hero-line-1 relative block overflow-hidden pb-2 leading-tight">
                   <HeroWord>Redefining</HeroWord>
                 </span>
                 <span className="hero-line hero-line-2 relative block overflow-hidden pb-2 leading-tight">
-                  <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--color-primary))] via-[hsl(var(--color-accent))] to-[hsl(var(--color-primary))] bg-[length:200%_auto] animate-shimmer italic">
+                  <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--color-primary))] via-[hsl(var(--color-accent))] to-[hsl(var(--color-primary))] bg-[length:200%_auto] animate-shimmer">
                     Dental Care
                   </span>{" "}
                   <HeroWord className="hero-accent-word font-black text-[hsl(var(--color-accent))]">

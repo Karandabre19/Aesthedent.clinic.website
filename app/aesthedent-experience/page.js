@@ -159,7 +159,7 @@ function AdvancedPromiseCard({ num, title, desc, icon: Icon, isLast }) {
       </div>
 
       <div className="relative z-10">
-        <h3 className="text-xl sm:text-2xl font-black text-white mb-3 group-hover:text-[hsl(var(--color-accent))] transition-colors duration-300 italic tracking-tight">
+        <h3 className="text-xl sm:text-2xl font-black text-white mb-3 group-hover:text-[hsl(var(--color-accent))] transition-colors duration-300 tracking-tight">
           {title}
         </h3>
         <p className="text-sm sm:text-base text-white/60 leading-relaxed font-light group-hover:text-white/90 transition-colors duration-300">
@@ -311,7 +311,7 @@ export default function ExperiencePage() {
           {/* Divider — mirrors Home page eyebrow divider */}
           <div className="hero-divider-exp mx-auto mb-8 h-px w-28 origin-center bg-gradient-to-r from-transparent via-[hsl(var(--color-accent))] to-transparent opacity-0 transform-gpu" />
 
-          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[1] mb-8 tracking-tighter italic">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[1] mb-8 tracking-tighter">
             <span className="inline-block pb-2">
               <HeroWord>RECLAIM</HeroWord>
             </span> <br />
@@ -442,7 +442,7 @@ export default function ExperiencePage() {
                     {/* Content Area - Compact Padding */}
                     <div className="p-5 sm:p-7 flex-1 flex flex-col justify-between">
                       <div>
-                        <h3 className="text-xl sm:text-2xl font-black mb-2 text-white group-hover:text-[hsl(var(--color-accent))] transition-colors tracking-tight italic">
+                        <h3 className="text-xl sm:text-2xl font-black mb-2 text-white group-hover:text-[hsl(var(--color-accent))] transition-colors tracking-tight">
                           {service.title}
                         </h3>
                         <p className="text-white/60 text-xs sm:text-sm mb-6 font-light leading-relaxed line-clamp-2">
@@ -490,7 +490,7 @@ export default function ExperiencePage() {
               <div className="inline-block px-5 py-2 bg-white/5 border border-white/10 rounded-full text-[hsl(var(--color-accent))] text-[10px] sm:text-xs font-black tracking-widest uppercase mb-8 shadow-xl">
                 The Elite Guarantee
               </div>
-              <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-white leading-[1.1] tracking-tighter mb-8 italic pt-4">
+              <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-white leading-[1.1] tracking-tighter mb-8 pt-4">
                 THE <span className="text-[hsl(var(--color-accent))] bg-clip-text text-transparent bg-gradient-to-r from-[hsl(var(--color-accent))] via-white to-[hsl(var(--color-accent))] bg-[length:200%_auto] animate-shimmer">SPECIALIST</span> <br />
                 PROMISE.
               </h2>
