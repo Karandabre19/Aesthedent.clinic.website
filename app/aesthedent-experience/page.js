@@ -216,7 +216,98 @@ export default function ExperiencePage() {
 
   return (
     <PageWrapper>
-      <section ref={heroRef} className="relative h-screen min-h-[850px] flex items-center justify-center overflow-hidden bg-black" onMouseMove={handleMouseMove}>
+
+      {/* SECTION 1: Treatment Portfolio — Immediate Visibility, All Services, No Carousel */}
+      <section id="services-grid-section" className="pt-28 pb-20 md:pt-36 md:pb-28 bg-[hsl(var(--color-primary))] relative overflow-hidden">
+        {/* Subtle high-tech background pulse */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05)_0%,transparent_70%)] animate-pulse-slow" />
+
+        <div className="main-container relative z-10">
+          <AnimatedSection className="text-center mb-12 sm:mb-16 md:mb-20">
+            <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-white/20 text-white rounded-full text-[10px] sm:text-xs font-black tracking-widest uppercase">
+              Prosthodontist Specialist Portfolio
+            </div>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-[0.9] tracking-tighter mb-4 sm:mb-6 italic">
+              Specialized <span className="text-[hsl(var(--color-accent))]">Unique</span> Treatments.
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto font-light leading-relaxed">
+              Precision-engineered solutions for complex clinical cases. Engineered for longevity and natural aesthetics.
+            </p>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 max-w-7xl mx-auto">
+            {services.filter(s => s.isFeatured).map((service, i) => (
+                <AnimatedSection key={service.slug} delay={i * 0.06}>
+                  <div className="group relative overflow-hidden rounded-[2rem] bg-[hsl(var(--color-primary-dark))] border border-white/10 transition-all duration-500 shadow-2xl hover:shadow-[hsl(var(--color-accent))]/10 flex flex-col h-full">
+                    {/* Image Area */}
+                    <div className="aspect-[4/3] overflow-hidden bg-[hsl(var(--bg-alt))] relative">
+                      <Image
+                        src={service.image}
+                        alt={service.title}
+                        width={400}
+                        height={300}
+                        loading={i < 4 ? 'eager' : 'lazy'}
+                        className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--color-primary-dark))] to-transparent opacity-60" />
+                      
+                      {/* Specialist Badge - Mini */}
+                      <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+                        <div className="px-2.5 py-1 bg-white/10 backdrop-blur-xl border border-white/20 rounded-md text-[8px] font-black text-white uppercase tracking-widest shadow-xl">
+                          Specialist Choice
+                        </div>
+                        {service.benefit && (
+                          <div className="px-2.5 py-1 bg-[hsl(var(--color-accent))]/90 backdrop-blur-xl rounded-md text-[8px] font-black text-[hsl(var(--color-primary-dark))] uppercase tracking-widest shadow-xl animate-pulse-slow">
+                            {service.benefit}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Content Area */}
+                    <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                      <div>
+                        <h3 className="text-base sm:text-lg font-black mb-1.5 text-white group-hover:text-[hsl(var(--color-accent))] transition-colors tracking-tight">
+                          {service.title}
+                        </h3>
+                        <p className="text-white/60 text-xs sm:text-sm mb-4 font-light leading-relaxed line-clamp-2">
+                          {service.shortDesc}
+                        </p>
+                      </div>
+
+                      <div className="flex flex-col gap-2.5 mt-auto">
+                        <MagneticWrapper offset={0.1} className="w-full">
+                          <a
+                            href={whatsappLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-[hsl(var(--color-accent))] text-[hsl(var(--color-primary-dark))] rounded-xl text-xs sm:text-sm font-black shadow-lg hover:shadow-[hsl(var(--color-accent))]/40 transition-all whitespace-nowrap"
+                          >
+                            <MessageCircle className="w-4 h-4 flex-shrink-0" />
+                            Inquire Now
+                          </a>
+                        </MagneticWrapper>
+
+                        <a
+                          href={`tel:${phoneNumber}`}
+                          className="w-full flex items-center justify-center gap-2 px-4 py-2.5 border border-white/20 text-white rounded-xl text-xs sm:text-sm font-bold hover:bg-white/5 transition-all whitespace-nowrap"
+                        >
+                          <Phone className="w-4 h-4 flex-shrink-0" />
+                          Call Specialist
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </AnimatedSection>
+              ))}
+          </div>
+        </div>
+      </section>
+
+
+
+      {/* SECTION 2: Welcome — Emotional Hook After Treatments */}
+      <section ref={heroRef} className="relative py-20 md:py-28 flex items-center justify-center overflow-hidden bg-black" onMouseMove={handleMouseMove}>
         <motion.div className="absolute inset-0 hero-parallax-layer" style={{ scale: heroScale, opacity: heroOpacity }}>
           <HeroParticles count={12} color="bg-white" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/95 z-10" />
@@ -224,7 +315,6 @@ export default function ExperiencePage() {
             src="/clinic/clinic-wide.jpeg"
             alt="Aesthedent Premium Clinic Portfolio"
             fill
-            priority
             className="w-full h-full object-cover opacity-70"
             sizes="100vw"
           />
@@ -256,7 +346,7 @@ export default function ExperiencePage() {
           {/* Divider — mirrors Home page eyebrow divider */}
           <div className="hero-divider-exp mx-auto mb-8 h-px w-28 origin-center bg-gradient-to-r from-transparent via-[hsl(var(--color-accent))] to-transparent opacity-0 transform-gpu" />
 
-          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[1] mb-8 tracking-tighter">
+          <h2 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[1] mb-8 tracking-tighter">
             <span className="inline-block pb-2">
               <HeroWord>RECLAIM</HeroWord>
             </span> <br />
@@ -266,7 +356,7 @@ export default function ExperiencePage() {
             <span className="inline-block pb-2">
               <HeroWord>SMILE</HeroWord>
             </span>
-          </h1>
+          </h2>
 
           <div className="hero-copy opacity-0 translate-y-8 max-w-2xl mx-auto">
             <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-10 font-light">
@@ -297,112 +387,9 @@ export default function ExperiencePage() {
           </div>
         </div>
 
-        {/* Scroll Indicator — Enhanced */}
-        <motion.div
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          <div className="w-7 h-12 border-2 border-white/30 rounded-full flex justify-center p-1.5 backdrop-blur-sm">
-            <motion.div
-              className="w-1.5 h-3 bg-[hsl(var(--color-accent))] rounded-full"
-              animate={{ y: [0, 18, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            />
-          </div>
-        </motion.div>
-
       </section>
 
 
-
-      {/* Specialized Treatments Section - AD MODE PRIMARY FOCUS */}
-      <section id="services-grid-section" className="py-20 md:py-28 bg-[hsl(var(--color-primary))] relative overflow-hidden">
-        {/* Subtle high-tech background pulse */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05)_0%,transparent_70%)] animate-pulse-slow" />
-
-        <div className="main-container relative z-10">
-          <AnimatedSection className="text-center mb-12 sm:mb-16 md:mb-20">
-            <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-white/20 text-white rounded-full text-[10px] sm:text-xs font-black tracking-widest uppercase">
-              Prosthodontist Specialist Portfolio
-            </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-[0.9] tracking-tighter mb-4 sm:mb-6 italic">
-              Specialized <span className="text-[hsl(var(--color-accent))]">Unique</span> Treatments.
-            </h2>
-            <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto font-light leading-relaxed">
-              Precision-engineered solutions for complex clinical cases. Engineered for longevity and natural aesthetics.
-            </p>
-          </AnimatedSection>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-10 sm:gap-12 max-w-7xl mx-auto">
-            {services
-              .filter(s => ['dental-implants', 'full-mouth-rehabilitation', 'dentures', 'digital-smile-design'].includes(s.slug))
-              .map((service, i) => (
-                <AnimatedSection key={service.slug} delay={i * 0.08}>
-                  <div className="group relative overflow-hidden rounded-[2.5rem] bg-[hsl(var(--color-primary-dark))] border border-white/10 transition-all duration-500 shadow-2xl hover:shadow-[hsl(var(--color-accent))]/10 flex flex-col h-full">
-                    {/* Image Area - More Compact */}
-                    <div className="aspect-[16/9] sm:aspect-[21/9] overflow-hidden bg-[hsl(var(--bg-alt))] relative">
-                      <Image
-                        src={service.image}
-                        alt={service.title}
-                        width={600}
-                        height={350}
-                        className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--color-primary-dark))] to-transparent opacity-60" />
-                      
-                      {/* Specialist Badge - Mini */}
-                      <div className="absolute top-4 left-4 flex flex-col gap-2">
-                        <div className="px-3 py-1 bg-white/10 backdrop-blur-xl border border-white/20 rounded-md text-[9px] font-black text-white uppercase tracking-widest shadow-xl">
-                          Specialist Choice
-                        </div>
-                        {service.benefit && (
-                          <div className="px-3 py-1 bg-[hsl(var(--color-accent))]/90 backdrop-blur-xl rounded-md text-[9px] font-black text-[hsl(var(--color-primary-dark))] uppercase tracking-widest shadow-xl animate-pulse-slow">
-                            {service.benefit}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Content Area - Compact Padding */}
-                    <div className="p-5 sm:p-7 flex-1 flex flex-col justify-between">
-                      <div>
-                        <h3 className="text-xl sm:text-2xl font-black mb-2 text-white group-hover:text-[hsl(var(--color-accent))] transition-colors tracking-tight">
-                          {service.title}
-                        </h3>
-                        <p className="text-white/60 text-xs sm:text-sm mb-6 font-light leading-relaxed line-clamp-2">
-                          {service.shortDesc}
-                        </p>
-                      </div>
-
-                      <div className="flex flex-col sm:flex-row gap-4 mt-auto">
-                        <MagneticWrapper offset={0.1} className="w-full sm:flex-1">
-                          <a
-                            href={whatsappLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-[hsl(var(--color-accent))] text-[hsl(var(--color-primary-dark))] rounded-xl text-sm font-black shadow-lg hover:shadow-[hsl(var(--color-accent))]/40 transition-all whitespace-nowrap"
-                          >
-                            <MessageCircle className="w-5 h-5 flex-shrink-0" />
-                            Inquire Now
-                          </a>
-                        </MagneticWrapper>
-
-                        <a
-                          href={`tel:${phoneNumber}`}
-                          className="w-full sm:flex-1 flex items-center justify-center gap-2 px-5 py-3 border border-white/20 text-white rounded-xl text-sm font-bold hover:bg-white/5 transition-all whitespace-nowrap"
-                        >
-                          <Phone className="w-5 h-5 flex-shrink-0" />
-                          Call Specialist
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </AnimatedSection>
-              ))}
-          </div>
-        </div>
-      </section>
 
       <section className="relative z-20 bg-[hsl(var(--color-primary-dark))] py-20 sm:py-28 md:py-36 overflow-hidden">
         {/* Architectural Grid Background */}
@@ -442,7 +429,7 @@ export default function ExperiencePage() {
               num="03"
               icon={Info}
               title="Sensory Transparency"
-              desc="We bridge the gap of clinical anxiety by narrating each step of your treatment in real-time—preparing you for every sensation. When you know exactly what’s coming, the fear of the unexpected fades."
+              desc="We bridge the gap of clinical anxiety by narrating each step of your treatment in real-time—preparing you for every sensation. When you know exactly what's coming, the fear of the unexpected fades."
             />
             <AdvancedPromiseCard
               num="04"

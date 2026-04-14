@@ -583,20 +583,20 @@ export default function HomePage() {
               num="02"
               icon={Eye}
               title="Purposeful Communication"
-              desc="Clear vision leads to clear confidence. I prioritize face-to-face consultations, using advanced intraoral imaging not just to diagnose, but to educate. My goal is for you to leave with a complete understanding of your oral health, not just a prescription."
+              desc="Clear vision leads to clear confidence. We prioritize face-to-face consultations, using advanced intraoral imaging not just to diagnose, but to educate. Our goal is for you to leave with a complete understanding of your oral health, not just a prescription."
             />
             <AdvancedPromiseCard
               num="03"
               icon={Info}
               title="Sensory Transparency"
-              desc="The fear of dentistry is often a fear of the unexpected. I bridge that gap by narrating each step of your treatment in real-time—preparing you for every vibration, sound, or sensation. When you know exactly what’s coming, the anxiety fades."
+              desc="The fear of dentistry is often a fear of the unexpected. We bridge that gap by narrating each step of your treatment in real-time—preparing you for every vibration, sound, or sensation. When you know exactly what’s coming, the anxiety fades."
             />
             <AdvancedPromiseCard
               num="04"
               icon={Hand}
               isLast={true}
               title="Your Safety, Your Signal"
-              desc="Ethical care means you are always the primary decision-maker. We implement a specific 'rest signal' before any treatment begins. If you raise your hand, my tools are down instantly. You have my word that we pause as often and for as long as you need."
+              desc="Ethical care means you are always the primary decision-maker. We implement a specific 'rest signal' before any treatment begins. If you raise your hand, our tools are down instantly. You have our word that we pause as often and for as long as you need."
             />
           </div>
         </div>
