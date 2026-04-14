@@ -66,62 +66,7 @@ function HeroWord({ children, className = '', stagger = 0.02 }) {
   );
 }
 
-function StatNumber({ value, decimals = 0, suffix = '', delay = 0 }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.1 });
-  const [displayValue, setDisplayValue] = useState(0);
 
-  useEffect(() => {
-    if (!isInView) return;
-    const controls = animate(0, value, {
-      duration: 2,
-      delay,
-      ease: [0.22, 1, 0.36, 1],
-      onUpdate(latest) {
-        setDisplayValue(latest);
-      },
-    });
-    return () => controls.stop();
-  }, [delay, isInView, value]);
-
-  const formattedValue = decimals > 0 ? displayValue.toFixed(decimals) : Math.round(displayValue).toString();
-  return <span ref={ref}>{formattedValue}{suffix}</span>;
-}
-
-const trustStats = [
-  { value: 5, decimals: 1, suffix: '', label: 'Google Rating', sub: '263 Reviews' },
-  { value: 10, decimals: 0, suffix: '+', label: 'Years', sub: 'Experience' },
-  { value: 5000, decimals: 0, suffix: '+', label: 'Happy', sub: 'Patients' },
-  { value: 100, decimals: 0, suffix: '%', label: 'Painless', sub: 'Treatments' },
-];
-
-function TrustStatCard({ stat, index }) {
-  return (
-    <motion.div
-      initial={false}
-      animate={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 0.6, delay: index * 0.05 }}
-      whileHover={{ y: -6, scale: 1.02 }}
-      className="group relative overflow-hidden rounded-[1.75rem] bg-[hsl(var(--background))] px-5 py-6 text-center transition-all duration-300 shadow-md border border-[hsl(var(--border))]/50"
-    >
-      <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[hsl(var(--color-accent))]/90 to-transparent opacity-80" />
-      <div className="absolute -right-10 -top-10 h-24 w-24 rounded-full bg-[hsl(var(--color-accent))]/12 blur-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-      <div className="absolute -left-12 bottom-0 h-20 w-20 rounded-full bg-[hsl(var(--color-primary))]/8 blur-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
-      <p className="mb-2 text-3xl font-bold tracking-tight text-[hsl(var(--color-primary))] md:text-4xl">
-        <StatNumber
-          value={stat.value}
-          decimals={stat.decimals}
-          suffix={stat.suffix}
-          delay={0.2 + index * 0.08}
-        />
-      </p>
-      <p className="text-sm font-semibold text-[hsl(var(--color-text))]">{stat.label}</p>
-      <p className="mt-1 text-xs text-[hsl(var(--color-text-muted))]">{stat.sub}</p>
-    </motion.div>
-  );
-}
 
 function AdvancedPromiseCard({ num, title, desc, icon: Icon, isLast }) {
   return (
@@ -305,7 +250,7 @@ export default function ExperiencePage() {
             className="inline-flex items-center gap-2 px-6 py-2 border border-[hsl(var(--color-accent))]/30 rounded-full bg-[hsl(var(--color-accent))]/5 backdrop-blur-xl mb-6"
           >
             <Shield size={16} className="text-[hsl(var(--color-accent))]" />
-            <span className="text-[10px] md:text-sm font-black tracking-[0.4em] uppercase text-white shadow-sm">Specialist-Led Clinical Portfolio</span>
+            <span className="text-[10px] md:text-sm font-black tracking-[0.4em] uppercase text-white shadow-sm">Specialized Unique Treatments</span>
           </motion.div>
 
           {/* Divider — mirrors Home page eyebrow divider */}
@@ -325,25 +270,25 @@ export default function ExperiencePage() {
 
           <div className="hero-copy opacity-0 translate-y-8 max-w-2xl mx-auto">
             <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-10 font-light">
-              Excellence is not an accident. At Aesthedent, every restoration is an <span className="text-[hsl(var(--color-accent))] font-bold">engineered outcome</span> led by a specialist prosthodontist. Precision, safety, and transparency redefined.
+              At Aesthedent, our <span className="text-[hsl(var(--color-accent))] font-bold">specialized unique treatments</span> are led by a master Prosthodontist—the architect of dentistry. We go beyond standard care to deliver precise, engineered outcomes that restore both your clinical health and your natural confidence permanently.
             </p>
 
             <div className="hero-action opacity-0 translate-y-8 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
-              <MagneticWrapper>
+              <MagneticWrapper className="w-full sm:w-auto">
                 <a
                   href={whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative w-full sm:w-auto px-7 py-4 sm:px-10 sm:py-5 bg-[hsl(var(--color-accent))] text-[hsl(var(--color-primary-dark))] rounded-2xl font-black text-base sm:text-lg shadow-2xl shadow-[hsl(var(--color-accent))]/30 transition-all duration-300 text-center"
+                  className="group relative w-full px-7 py-4 sm:px-10 sm:py-5 bg-[hsl(var(--color-accent))] text-[hsl(var(--color-primary-dark))] rounded-2xl font-black text-base sm:text-lg shadow-2xl shadow-[hsl(var(--color-accent))]/30 transition-all duration-300 text-center block"
                 >
                   Schedule Consultation
                 </a>
               </MagneticWrapper>
 
-              <MagneticWrapper>
+              <MagneticWrapper className="w-full sm:w-auto">
                 <a
                   href={`tel:${phoneNumber}`}
-                  className="w-full sm:w-auto px-7 py-4 sm:px-10 sm:py-5 bg-white/10 border-2 border-white/20 text-white rounded-2xl font-black text-base sm:text-lg backdrop-blur-xl hover:bg-white/20 hover:border-white/40 transition-all duration-300 text-center"
+                  className="w-full px-7 py-4 sm:px-10 sm:py-5 bg-white/10 border-2 border-white/20 text-white rounded-2xl font-black text-base sm:text-lg backdrop-blur-xl hover:bg-white/20 hover:border-white/40 transition-all duration-300 text-center block"
                 >
                   Direct Call Expert
                 </a>
@@ -369,34 +314,7 @@ export default function ExperiencePage() {
 
       </section>
 
-      {/* Trust Badges - Floating */}
-      <section className="relative z-30 -mt-16 sm:-mt-20">
-        <div className="main-container">
-          <motion.div
-            className="relative overflow-hidden rounded-[2rem] bg-white p-4 md:p-5 lg:p-6 shadow-2xl border border-[hsl(var(--color-primary))]/5"
-            initial={false}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,hsl(var(--color-accent)/0.16),transparent_26%),radial-gradient(circle_at_bottom_left,hsl(var(--color-primary)/0.08),transparent_28%)]" />
-            <motion.div
-              className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 bg-gradient-to-r from-transparent via-[hsl(var(--color-accent))]/10 to-transparent blur-2xl"
-              animate={{ x: ["0%", "230%"] }}
-              transition={{ duration: 7, repeat: Infinity, ease: "linear" }}
-            />
 
-            <div className="relative grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
-              {trustStats.map((stat, i) => (
-                <TrustStatCard
-                  key={`${stat.label}-${stat.sub}`}
-                  stat={stat}
-                  index={i}
-                />
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
 
       {/* Specialized Treatments Section - AD MODE PRIMARY FOCUS */}
       <section id="services-grid-section" className="py-20 md:py-28 bg-[hsl(var(--color-primary))] relative overflow-hidden">
@@ -416,7 +334,7 @@ export default function ExperiencePage() {
             </p>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-10 sm:gap-12 max-w-7xl mx-auto">
             {services
               .filter(s => ['dental-implants', 'full-mouth-rehabilitation', 'dentures', 'digital-smile-design'].includes(s.slug))
               .map((service, i) => (
@@ -434,8 +352,15 @@ export default function ExperiencePage() {
                       <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--color-primary-dark))] to-transparent opacity-60" />
                       
                       {/* Specialist Badge - Mini */}
-                      <div className="absolute top-4 left-4 px-2.5 py-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-md text-[9px] font-black text-white uppercase tracking-widest shadow-xl">
-                        Specialist Choice
+                      <div className="absolute top-4 left-4 flex flex-col gap-2">
+                        <div className="px-3 py-1 bg-white/10 backdrop-blur-xl border border-white/20 rounded-md text-[9px] font-black text-white uppercase tracking-widest shadow-xl">
+                          Specialist Choice
+                        </div>
+                        {service.benefit && (
+                          <div className="px-3 py-1 bg-[hsl(var(--color-accent))]/90 backdrop-blur-xl rounded-md text-[9px] font-black text-[hsl(var(--color-primary-dark))] uppercase tracking-widest shadow-xl animate-pulse-slow">
+                            {service.benefit}
+                          </div>
+                        )}
                       </div>
                     </div>
 
@@ -450,24 +375,24 @@ export default function ExperiencePage() {
                         </p>
                       </div>
 
-                      <div className="flex flex-col sm:flex-row gap-3 mt-auto">
-                        <MagneticWrapper offset={0.1}>
+                      <div className="flex flex-col sm:flex-row gap-4 mt-auto">
+                        <MagneticWrapper offset={0.1} className="w-full sm:flex-1">
                           <a
                             href={whatsappLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-[hsl(var(--color-accent))] text-[hsl(var(--color-primary-dark))] rounded-xl text-xs sm:text-sm font-black shadow-lg hover:shadow-[hsl(var(--color-accent))]/40 transition-all"
+                            className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-[hsl(var(--color-accent))] text-[hsl(var(--color-primary-dark))] rounded-xl text-sm font-black shadow-lg hover:shadow-[hsl(var(--color-accent))]/40 transition-all whitespace-nowrap"
                           >
-                            <MessageCircle className="w-4 h-4" />
+                            <MessageCircle className="w-5 h-5 flex-shrink-0" />
                             Inquire Now
                           </a>
                         </MagneticWrapper>
 
                         <a
                           href={`tel:${phoneNumber}`}
-                          className="flex items-center justify-center gap-2 w-full px-5 py-3 border border-white/20 text-white rounded-xl text-xs sm:text-sm font-bold hover:bg-white/5 transition-all"
+                          className="w-full sm:flex-1 flex items-center justify-center gap-2 px-5 py-3 border border-white/20 text-white rounded-xl text-sm font-bold hover:bg-white/5 transition-all whitespace-nowrap"
                         >
-                          <Phone className="w-4 h-4" />
+                          <Phone className="w-5 h-5 flex-shrink-0" />
                           Call Specialist
                         </a>
                       </div>
@@ -479,7 +404,7 @@ export default function ExperiencePage() {
         </div>
       </section>
 
-      <section className="relative z-20 bg-[hsl(var(--color-primary-dark))] pt-16 pb-12 sm:pt-24 sm:pb-32 md:pt-32 overflow-hidden">
+      <section className="relative z-20 bg-[hsl(var(--color-primary-dark))] py-20 sm:py-28 md:py-36 overflow-hidden">
         {/* Architectural Grid Background */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
              style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
@@ -826,22 +751,26 @@ export default function ExperiencePage() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a
-                id="final-cta-whatsapp"
-                href={whatsappLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto px-8 py-4 bg-[hsl(var(--color-primary))] text-white rounded-2xl font-bold text-base shadow-xl hover:bg-[hsl(var(--color-primary-dark))] transition-all duration-300 hover:scale-105"
-              >
-                Start with WhatsApp
-              </a>
-              <a
-                id="final-cta-call"
-                href={`tel:${phoneNumber}`}
-                className="w-full sm:w-auto px-8 py-4 border-2 border-[hsl(var(--color-primary))] text-[hsl(var(--color-primary))] rounded-2xl font-bold text-base hover:bg-[hsl(var(--color-primary))]/5 transition-all duration-300 text-center"
-              >
-                Direct Call Expert
-              </a>
+              <MagneticWrapper className="w-full sm:w-auto">
+                <a
+                  id="final-cta-whatsapp"
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full px-8 py-4 bg-[hsl(var(--color-primary))] text-white rounded-2xl font-bold text-base shadow-xl hover:bg-[hsl(var(--color-primary-dark))] transition-all duration-300 hover:scale-105 text-center"
+                >
+                  Start with WhatsApp
+                </a>
+              </MagneticWrapper>
+              <MagneticWrapper className="w-full sm:w-auto">
+                <a
+                  id="final-cta-call"
+                  href={`tel:${phoneNumber}`}
+                  className="block w-full px-8 py-4 border-2 border-[hsl(var(--color-primary))] text-[hsl(var(--color-primary))] rounded-2xl font-bold text-base hover:bg-[hsl(var(--color-primary))]/5 transition-all duration-300 text-center"
+                >
+                  Direct Call Expert
+                </a>
+              </MagneticWrapper>
             </div>
 
             <p className="mt-10 text-xs text-[hsl(var(--color-text-muted))] font-bold uppercase tracking-widest flex items-center justify-center gap-2">

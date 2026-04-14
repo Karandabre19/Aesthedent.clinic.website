@@ -27,7 +27,8 @@ import {
   Monitor,
   Info,
   Hand,
-  Eye
+  Eye,
+  Calendar
 } from 'lucide-react';
 import TestimonialsSection from '@/components/sections/TestimonialsSection';
 import InsightsSection from '@/components/sections/InsightsSection';
@@ -560,13 +561,13 @@ export default function HomePage() {
       {/* Nervous Interactive Section directly under Trust Stats */}
       <section className="relative z-20 bg-gradient-to-b from-[hsl(var(--background))] to-white pt-16 pb-12 sm:pt-24 sm:pb-16 md:pt-32 md:pb-24">
         <div className="main-container">
-          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
             <AnimatedSection>
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[hsl(var(--color-primary))] leading-tight mb-4">
-                If you're feeling nervous...
+                दातों के साथ भी, दातों के बाद भी
               </h2>
               <p className="text-base sm:text-lg text-[hsl(var(--color-text-muted))]">
-                You're not alone. We've built our entire Kothrud practice around making you feel in control. Here is our promise:
+                We create a holistic patient experience backed by our strong professional expertise, intensive experience and work ethic. Our aim is to create smiles that elevate the patients' confidence and improve lives.
               </p>
             </AnimatedSection>
           </div>
@@ -574,15 +575,15 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 max-w-5xl mx-auto">
             <AdvancedPromiseCard
               num="01"
-              icon={Clock}
-              title="Unhurried Clinical Excellence"
-              desc="I’ve designed my Kothrud practice specifically to avoid the 'conveyor-belt' dentistry common today. I schedule fewer patients to ensure I can dedicate my full focus to your care. Your procedure won't start until I’m certain you feel settled and in control."
+              icon={Calendar}
+              title="We Are Open On Weekends Also"
+              desc="We understand your busy schedule. That's why we offer weekend appointments, ensuring you can prioritize your dental health without compromising your weekday commitments."
             />
             <AdvancedPromiseCard
               num="02"
               icon={Eye}
               title="Purposeful Communication"
-              desc="Clear vision leads to clear confidence. I prioritize eye-to-eye consultations, using advanced intraoral imaging not just to diagnose, but to educate. My goal is for you to leave with a complete understanding of your oral health, not just a prescription."
+              desc="Clear vision leads to clear confidence. I prioritize face-to-face consultations, using advanced intraoral imaging not just to diagnose, but to educate. My goal is for you to leave with a complete understanding of your oral health, not just a prescription."
             />
             <AdvancedPromiseCard
               num="03"
@@ -601,66 +602,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* About Section - Story Style */}
-      <section className="py-12 sm:py-16 md:py-24 lg:py-32 bg-gradient-to-b from-white to-[hsl(var(--bg-alt))]">
-        <div className="main-container">
-          <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 md:gap-16 lg:gap-24 items-center">
-            <AnimatedSection direction="left">
-              <div className="relative">
-                <div className="absolute -inset-4 bg-[hsl(var(--primary))]/10 rounded-3xl transform -rotate-3" />
-                <Image
-                  src={sahilTreatmentImage}
-                  alt="Dr. Sahil Wathodkar at Aesthedent Multispeciality Dental Clinic"
-                  className="relative rounded-2xl shadow-xl w-full aspect-[4/5] object-cover"
-                />
-                <div
-                  onClick={() => toast.info("Video is not currently available", {
-                    description: "Our intro video is being updated. Please check back later.",
-                    duration: 4000,
-                  })}
-                  className="premium-surface absolute -bottom-6 -right-6 hidden rounded-2xl p-4 sm:p-6 md:block cursor-pointer active:scale-95 transition-all"
-                >
-                  <div className="flex items-center gap-3 sm:gap-4">
-                    <div className="w-12 h-12 sm:w-14 sm:h-14 bg-[hsl(var(--accent))]/20 rounded-full flex items-center justify-center">
-                      <Play className="w-5 h-5 sm:w-6 sm:h-6 text-[hsl(var(--primary))]" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-[hsl(var(--color-text))] text-sm sm:text-base mb-1">
-                        Meet Dr. Sahil Wathodkar
-                      </p>
-                      <p className="text-xs sm:text-sm text-[hsl(var(--color-text-muted))]">
-                        2 min intro
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </AnimatedSection>
 
-            <AnimatedSection direction="right">
-              <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] rounded-full text-xs sm:text-sm font-semibold">
-                Our Approach
-              </div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[hsl(var(--color-text))] leading-tight mb-4 sm:mb-6">
-                It's normal to feel nervous.
-              </h2>
-              <p className="text-base sm:text-lg text-[hsl(var(--color-text-muted))] leading-relaxed mb-4 sm:mb-6">
-                Most people feel a little nervous or unsure about visiting the dentist. You might not know what to expect, or you might worry about unexpected costs.
-              </p>
-              <p className="text-sm sm:text-base text-[hsl(var(--color-text-muted))] leading-relaxed mb-6 sm:mb-8">
-                We handle things differently. We use digital tools to show you exactly what's happening inside your mouth. We explain what needs fixing and what can wait, in plain words. There's never any pressure to decide right away.
-              </p>
-              <Link
-                href="/about"
-                className="group inline-flex items-center gap-3 text-[hsl(var(--primary))] font-semibold hover:text-[hsl(var(--primary-dark))] transition-colors text-base sm:text-lg"
-              >
-                Read our full story
-                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
 
       {/* Smile Stories Section - Dynamic */}
       <section className="py-20 md:py-32 bg-white">
