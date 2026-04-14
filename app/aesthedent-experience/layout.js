@@ -14,7 +14,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Dental Implants in Pune | Prosthodontist | Full Mouth Rehabilitation',
     description: 'Expert dental implants and prosthetic solutions by top prosthodontist in Kothrud, Pune. 500+ successful cases.',
-    image: 'https://images.pexels.com/photos/3762441/pexels-photo-3762441.jpeg?auto=compress&cs=tinysrgb&w=1920',
+    image: 'https://images.pexels.com/photos/6529323/pexels-photo-6529323.jpeg?auto=compress&cs=tinysrgb&w=1920',
   },
   canonical: 'https://aesthedent.clinic/aesthedent-experience',
 };

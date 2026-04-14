@@ -118,7 +118,7 @@ export default function ServiceDetailPage({ params }) {
               About This Treatment
             </h2>
             <div className="prose prose-lg text-[hsl(var(--color-text-muted))]">
-              {service.fullDescription.split("\n\n").map((paragraph, i) => (
+              {service.fullDescription?.split("\n\n").map((paragraph, i) => (
                 <p key={i} className="mb-4 leading-relaxed">
                   {paragraph}
                 </p>
@@ -141,7 +141,7 @@ export default function ServiceDetailPage({ params }) {
           </AnimatedSection>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {service.benefits.map((benefit, i) => (
+            {service.benefits?.map((benefit, i) => (
               <AnimatedSection key={i} delay={i * 0.1}>
                 <div className="flex items-start gap-4 p-6 bg-[hsl(var(--background))] rounded-2xl border border-[hsl(var(--border))] hover:border-[hsl(var(--color-primary))] hover:shadow-md transition-all">
                   <div className="w-8 h-8 bg-[hsl(var(--color-primary))]/10 rounded-full flex items-center justify-center flex-shrink-0">
@@ -168,7 +168,7 @@ export default function ServiceDetailPage({ params }) {
           </AnimatedSection>
 
           <div className="space-y-6">
-            {service.process.map((step, i) => (
+            {service.process?.map((step, i) => (
               <AnimatedSection key={i} delay={i * 0.15}>
                 <div className="flex gap-6 items-start">
                   <div className="w-12 h-12 bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] rounded-full flex items-center justify-center font-semibold text-lg flex-shrink-0">
@@ -202,7 +202,7 @@ export default function ServiceDetailPage({ params }) {
           </AnimatedSection>
 
           <div className="space-y-4">
-            {service.faqs.map((faq, i) => (
+            {service.faqs?.map((faq, i) => (
               <AnimatedSection key={i} delay={i * 0.1}>
                 <div className="bg-[hsl(var(--background))] rounded-2xl border border-[hsl(var(--border))] overflow-hidden hover:border-[hsl(var(--color-primary))] transition-colors">
                   <button
