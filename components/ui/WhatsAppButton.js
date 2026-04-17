@@ -1,6 +1,6 @@
 'use client';
 
-import { X, Instagram, MessageCircle } from 'lucide-react';
+import { X, Instagram, MessageCircle, Phone } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useEffect, useState, useRef } from 'react';
 import { usePathname } from 'next/navigation';
@@ -65,6 +65,7 @@ export default function WhatsAppButton() {
 
   const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
   const instagramLink = 'https://www.instagram.com/drwathodkar_aesthedent_clinic?igsh=azFlYTc2b25xaDFn';
+  const phoneNumber = '+919309816336';
 
   const getClinicStatus = () => {
     const day = currentTime.getDay();
@@ -114,6 +115,33 @@ export default function WhatsAppButton() {
   return (
     <div className={`fixed bottom-6 right-6 z-[90] flex flex-col items-end gap-4 sm:gap-5 ${isExperiencePage ? 'mb-4 sm:mb-0' : ''}`}>
       
+      {/* Call CTA - Shown on experience page */}
+      {isExperiencePage && (
+        <motion.div
+          initial={{ opacity: 0, y: 20, scale: 0.8 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ delay: 1.2, duration: 0.5, type: 'spring' }}
+        >
+          <MagneticAction 
+            glowColor="bg-blue-500" 
+            className="group relative"
+          >
+            {/* Tooltip Label */}
+            <div className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-[10px] font-bold text-white opacity-0 group-hover:opacity-100 transition-all translate-x-3 group-hover:translate-x-0 pointer-events-none whitespace-nowrap shadow-2xl">
+              Call Clinic Directly
+            </div>
+            
+            <a
+              href={`tel:${phoneNumber}`}
+              className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-xl transition-all duration-300 hover:scale-110 active:scale-95"
+              aria-label="Call Clinic"
+            >
+              <Phone className="w-6 h-6 sm:w-7 sm:h-7" />
+            </a>
+          </MagneticAction>
+        </motion.div>
+      )}
+
       {/* Instagram Floating Action - Hidden on experience page */}
       {!isExperiencePage && (
         <motion.div

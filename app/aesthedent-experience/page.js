@@ -38,7 +38,7 @@ import {
   Zap
 } from 'lucide-react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -120,7 +120,6 @@ function AdvancedPromiseCard({ num, title, desc, icon: Icon, isLast }) {
 
 export default function ExperiencePage() {
   const heroRef = useRef(null);
-  const router = useRouter();
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -216,9 +215,11 @@ export default function ExperiencePage() {
 
   return (
     <PageWrapper>
-
       {/* SECTION 1: Treatment Portfolio — Immediate Visibility, All Services, No Carousel */}
-      <section id="services-grid-section" className="pt-28 pb-20 md:pt-36 md:pb-28 bg-[hsl(var(--color-primary))] relative overflow-hidden">
+      <section
+        id="services-grid-section"
+        className="pt-28 pb-20 md:pt-36 md:pb-28 bg-[hsl(var(--color-primary))] relative overflow-hidden"
+      >
         {/* Subtle high-tech background pulse */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05)_0%,transparent_70%)] animate-pulse-slow" />
 
@@ -228,15 +229,20 @@ export default function ExperiencePage() {
               Prosthodontist Specialist Portfolio
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-[0.9] tracking-tighter mb-4 sm:mb-6 italic">
-              Specialized <span className="text-[hsl(var(--color-accent))]">Unique</span> Treatments.
+              Specialized{" "}
+              <span className="text-[hsl(var(--color-accent))]">Unique</span>{" "}
+              Treatments.
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto font-light leading-relaxed">
-              Precision-engineered solutions for complex clinical cases. Engineered for longevity and natural aesthetics.
+              Precision-engineered solutions for complex clinical cases.
+              Engineered for longevity and natural aesthetics.
             </p>
           </AnimatedSection>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 max-w-7xl mx-auto">
-            {services.filter(s => s.isFeatured).map((service, i) => (
+            {services
+              .filter((s) => s.isFeatured)
+              .map((service, i) => (
                 <AnimatedSection key={service.slug} delay={i * 0.06}>
                   <div className="group relative overflow-hidden rounded-[2rem] bg-[hsl(var(--color-primary-dark))] border border-white/10 transition-all duration-500 shadow-2xl hover:shadow-[hsl(var(--color-accent))]/10 flex flex-col h-full">
                     {/* Image Area */}
@@ -246,11 +252,11 @@ export default function ExperiencePage() {
                         alt={service.title}
                         width={400}
                         height={300}
-                        loading={i < 4 ? 'eager' : 'lazy'}
+                        loading={i < 4 ? "eager" : "lazy"}
                         className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--color-primary-dark))] to-transparent opacity-60" />
-                      
+
                       {/* Specialist Badge - Mini */}
                       <div className="absolute top-3 left-3 flex flex-col gap-1.5">
                         <div className="px-2.5 py-1 bg-white/10 backdrop-blur-xl border border-white/20 rounded-md text-[8px] font-black text-white uppercase tracking-widest shadow-xl">
@@ -276,18 +282,6 @@ export default function ExperiencePage() {
                       </div>
 
                       <div className="flex flex-col gap-2.5 mt-auto">
-                        <MagneticWrapper offset={0.1} className="w-full">
-                          <a
-                            href={whatsappLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-[hsl(var(--color-accent))] text-[hsl(var(--color-primary-dark))] rounded-xl text-xs sm:text-sm font-black shadow-lg hover:shadow-[hsl(var(--color-accent))]/40 transition-all whitespace-nowrap"
-                          >
-                            <MessageCircle className="w-4 h-4 flex-shrink-0" />
-                            Inquire Now
-                          </a>
-                        </MagneticWrapper>
-
                         <a
                           href={`tel:${phoneNumber}`}
                           className="w-full flex items-center justify-center gap-2 px-4 py-2.5 border border-white/20 text-white rounded-xl text-xs sm:text-sm font-bold hover:bg-white/5 transition-all whitespace-nowrap"
@@ -295,6 +289,16 @@ export default function ExperiencePage() {
                           <Phone className="w-4 h-4 flex-shrink-0" />
                           Call Specialist
                         </a>
+
+                        <MagneticWrapper offset={0.1} className="w-full">
+                          <Link
+                            href={`/services/${service.slug}`}
+                            className="flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-[hsl(var(--color-accent))] text-[hsl(var(--color-primary-dark))] rounded-xl text-xs sm:text-sm font-black shadow-lg hover:shadow-[hsl(var(--color-accent))]/40 transition-all whitespace-nowrap"
+                          >
+                            <ArrowRight className="w-4 h-4 flex-shrink-0" />
+                            Know More
+                          </Link>
+                        </MagneticWrapper>
                       </div>
                     </div>
                   </div>
@@ -304,11 +308,16 @@ export default function ExperiencePage() {
         </div>
       </section>
 
-
-
       {/* SECTION 2: Welcome — Emotional Hook After Treatments */}
-      <section ref={heroRef} className="relative py-20 md:py-28 flex items-center justify-center overflow-hidden bg-black" onMouseMove={handleMouseMove}>
-        <motion.div className="absolute inset-0 hero-parallax-layer" style={{ scale: heroScale, opacity: heroOpacity }}>
+      <section
+        ref={heroRef}
+        className="relative py-20 md:py-28 flex items-center justify-center overflow-hidden bg-black"
+        onMouseMove={handleMouseMove}
+      >
+        <motion.div
+          className="absolute inset-0 hero-parallax-layer"
+          style={{ scale: heroScale, opacity: heroOpacity }}
+        >
           <HeroParticles count={12} color="bg-white" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/95 z-10" />
           <Image
@@ -328,8 +337,13 @@ export default function ExperiencePage() {
         {/* Directional Light Flow — Guides Eye Across Canvas */}
         <motion.div
           className="pointer-events-none absolute inset-y-0 w-[500px] bg-gradient-to-r from-transparent via-[hsl(var(--color-accent))]/[0.03] to-transparent blur-2xl z-[11]"
-          animate={{ x: ['-500px', '110vw'] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'linear', repeatDelay: 3 }}
+          animate={{ x: ["-500px", "110vw"] }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "linear",
+            repeatDelay: 3,
+          }}
         />
 
         <div className="main-container relative z-20 text-center">
@@ -340,7 +354,9 @@ export default function ExperiencePage() {
             className="inline-flex items-center gap-2 px-6 py-2 border border-[hsl(var(--color-accent))]/30 rounded-full bg-[hsl(var(--color-accent))]/5 backdrop-blur-xl mb-6"
           >
             <Shield size={16} className="text-[hsl(var(--color-accent))]" />
-            <span className="text-[10px] md:text-sm font-black tracking-[0.4em] uppercase text-white shadow-sm">Specialized Unique Treatments</span>
+            <span className="text-[10px] md:text-sm font-black tracking-[0.4em] uppercase text-white shadow-sm">
+              Specialized Unique Treatments
+            </span>
           </motion.div>
 
           {/* Divider — mirrors Home page eyebrow divider */}
@@ -349,7 +365,8 @@ export default function ExperiencePage() {
           <h2 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[1] mb-8 tracking-tighter">
             <span className="inline-block pb-2">
               <HeroWord>RECLAIM</HeroWord>
-            </span> <br />
+            </span>{" "}
+            <br />
             <span className="inline-block pb-2 text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--color-accent))] via-white to-[hsl(var(--color-accent))] bg-[length:200%_auto] animate-shimmer">
               YOUR
             </span>{" "}
@@ -360,10 +377,26 @@ export default function ExperiencePage() {
 
           <div className="hero-copy opacity-0 translate-y-8 max-w-2xl mx-auto">
             <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-10 font-light">
-              At Aesthedent, our <span className="text-[hsl(var(--color-accent))] font-bold">specialized unique treatments</span> are led by a master Prosthodontist—the architect of dentistry. We go beyond standard care to deliver precise, engineered outcomes that restore both your clinical health and your natural confidence permanently.
+              At Aesthedent, our{" "}
+              <span className="text-[hsl(var(--color-accent))] font-bold">
+                specialized unique treatments
+              </span>{" "}
+              are led by a master Prosthodontist—the architect of dentistry. We
+              go beyond standard care to deliver precise, engineered outcomes
+              that restore both your clinical health and your natural confidence
+              permanently.
             </p>
 
             <div className="hero-action opacity-0 translate-y-8 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+              <MagneticWrapper className="w-full sm:w-auto">
+                <a
+                  href={`tel:${phoneNumber}`}
+                  className="w-full px-7 py-4 sm:px-10 sm:py-5 bg-white/10 border-2 border-white/20 text-white rounded-2xl font-black text-base sm:text-lg backdrop-blur-xl hover:bg-white/20 hover:border-white/40 transition-all duration-300 text-center block"
+                >
+                  Let&apos;s Talk
+                </a>
+              </MagneticWrapper>
+
               <MagneticWrapper className="w-full sm:w-auto">
                 <a
                   href={whatsappLink}
@@ -374,28 +407,22 @@ export default function ExperiencePage() {
                   Schedule Consultation
                 </a>
               </MagneticWrapper>
-
-              <MagneticWrapper className="w-full sm:w-auto">
-                <a
-                  href={`tel:${phoneNumber}`}
-                  className="w-full px-7 py-4 sm:px-10 sm:py-5 bg-white/10 border-2 border-white/20 text-white rounded-2xl font-black text-base sm:text-lg backdrop-blur-xl hover:bg-white/20 hover:border-white/40 transition-all duration-300 text-center block"
-                >
-                  Direct Call Expert
-                </a>
-              </MagneticWrapper>
             </div>
           </div>
         </div>
-
       </section>
-
-
 
       <section className="relative z-20 bg-[hsl(var(--color-primary-dark))] py-20 sm:py-28 md:py-36 overflow-hidden">
         {/* Architectural Grid Background */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-             style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-        
+        <div
+          className="absolute inset-0 opacity-[0.03] pointer-events-none"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 2px 2px, white 1px, transparent 0)",
+            backgroundSize: "40px 40px",
+          }}
+        />
+
         <div className="main-container relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-24">
             <AnimatedSection>
@@ -403,11 +430,17 @@ export default function ExperiencePage() {
                 The Elite Guarantee
               </div>
               <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-white leading-[1.1] tracking-tighter mb-8 pt-4">
-                THE <span className="text-[hsl(var(--color-accent))] bg-clip-text text-transparent bg-gradient-to-r from-[hsl(var(--color-accent))] via-white to-[hsl(var(--color-accent))] bg-[length:200%_auto] animate-shimmer">SPECIALIST</span> <br />
+                THE{" "}
+                <span className="text-[hsl(var(--color-accent))] bg-clip-text text-transparent bg-gradient-to-r from-[hsl(var(--color-accent))] via-white to-[hsl(var(--color-accent))] bg-[length:200%_auto] animate-shimmer">
+                  SPECIALIST
+                </span>{" "}
+                <br />
                 PROMISE.
               </h2>
               <p className="text-lg md:text-2xl text-white/60 leading-relaxed font-light max-w-2xl mx-auto">
-                Engineering trust through transparency. We've built our entire specialist architecture around single-patient focus and surgical precision.
+                Engineering trust through transparency. We've built our entire
+                specialist architecture around single-patient focus and surgical
+                precision.
               </p>
             </AnimatedSection>
           </div>
@@ -449,7 +482,6 @@ export default function ExperiencePage() {
       <section className="py-20 md:py-28 bg-[hsl(var(--color-bg-alt))]/40 relative overflow-hidden">
         <div className="main-container relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-24 items-center">
-
             <AnimatedSection>
               <div className="relative max-w-md mx-auto lg:mx-0">
                 <div className="absolute -inset-4 bg-[hsl(var(--color-primary))]/10 rounded-3xl transform -rotate-3" />
@@ -480,35 +512,59 @@ export default function ExperiencePage() {
             </AnimatedSection>
 
             <AnimatedSection delay={0.2}>
-              <div className="inline-block px-4 py-2 bg-[hsl(var(--color-primary))]/5 rounded-full text-[hsl(var(--color-primary))] text-[10px] sm:text-xs font-black tracking-widest uppercase mb-6">Specialist-Led Approach</div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[hsl(var(--color-primary))] mb-6 leading-tight tracking-tighter">Why the <span className="text-[hsl(var(--color-accent))]">Specialist</span> Matters.</h2>
+              <div className="inline-block px-4 py-2 bg-[hsl(var(--color-primary))]/5 rounded-full text-[hsl(var(--color-primary))] text-[10px] sm:text-xs font-black tracking-widest uppercase mb-6">
+                Specialist-Led Approach
+              </div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[hsl(var(--color-primary))] mb-6 leading-tight tracking-tighter">
+                Why the{" "}
+                <span className="text-[hsl(var(--color-accent))]">
+                  Specialist
+                </span>{" "}
+                Matters.
+              </h2>
               <p className="text-base sm:text-lg text-[hsl(var(--color-text-muted))] leading-relaxed mb-10 font-light">
-                A Prosthodontist is the "architect" of dentistry. At Aesthedent, we don't just fix a single tooth; we plan the entire biomechanical harmony of your mouth.
+                A Prosthodontist is the "architect" of dentistry. At Aesthedent,
+                we don't just fix a single tooth; we plan the entire
+                biomechanical harmony of your mouth.
               </p>
 
               <div className="space-y-8">
                 {[
-                  { title: "Architectural Planning", desc: "Long-term structural success for implants and full mouth rehab." },
-                  { title: "Advanced Biomechanics", desc: "Ensuring your bite is healthy, comfortable, and natural-feeling." },
-                  { title: "Complex Aesthetic Artistry", desc: "Crafting smiles that are indistinguishable from natural teeth." }
+                  {
+                    title: "Architectural Planning",
+                    desc: "Long-term structural success for implants and full mouth rehab.",
+                  },
+                  {
+                    title: "Advanced Biomechanics",
+                    desc: "Ensuring your bite is healthy, comfortable, and natural-feeling.",
+                  },
+                  {
+                    title: "Complex Aesthetic Artistry",
+                    desc: "Crafting smiles that are indistinguishable from natural teeth.",
+                  },
                 ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-4 sm:gap-6 group">
+                  <div
+                    key={i}
+                    className="flex items-start gap-4 sm:gap-6 group"
+                  >
                     <div className="w-10 h-10 rounded-xl bg-[hsl(var(--color-accent))]/10 flex items-center justify-center text-[hsl(var(--color-accent))] group-hover:bg-[hsl(var(--color-accent))] group-hover:text-white transition-colors flex-shrink-0">
                       <Target size={20} />
                     </div>
                     <div>
-                      <h4 className="font-bold text-base sm:text-lg text-[hsl(var(--color-primary))] leading-tight mb-1">{item.title}</h4>
-                      <p className="text-sm sm:text-base text-[hsl(var(--color-text-muted))] font-light leading-relaxed">{item.desc}</p>
+                      <h4 className="font-bold text-base sm:text-lg text-[hsl(var(--color-primary))] leading-tight mb-1">
+                        {item.title}
+                      </h4>
+                      <p className="text-sm sm:text-base text-[hsl(var(--color-text-muted))] font-light leading-relaxed">
+                        {item.desc}
+                      </p>
                     </div>
                   </div>
                 ))}
               </div>
             </AnimatedSection>
-
           </div>
         </div>
       </section>
-
 
       {/* 
         TECHNOLOGY PORTFOLIO: 
@@ -517,23 +573,50 @@ export default function ExperiencePage() {
       <section className="py-20 md:py-28 bg-[hsl(var(--color-bg-alt))]/50">
         <div className="main-container">
           <AnimatedSection className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-black mb-4 tracking-tight">Clinical Technology Portfolio</h2>
-            <p className="text-base text-[hsl(var(--color-text-muted))] max-w-2xl mx-auto font-light">The software and hardware that drive our 98% success rate.</p>
+            <h2 className="text-3xl md:text-5xl font-black mb-4 tracking-tight">
+              Clinical Technology Portfolio
+            </h2>
+            <p className="text-base text-[hsl(var(--color-text-muted))] max-w-2xl mx-auto font-light">
+              The software and hardware that drive our 98% success rate.
+            </p>
           </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { icon: Monitor, title: "Intraoral Scanners", desc: "No more messy clay impressions. Fast, accurate, 3D digital replicas." },
-              { icon: Cpu, title: "Guided Surgery", desc: "Pre-planned implant placement using advanced navigational software." },
-              { icon: Activity, title: "Modern Sedation", desc: "Painless protocols that ensure safety and zero procedure anxiety." },
-              { icon: GlassWater, title: "Biocompatible Materials", desc: "Using only premium, body-friendly materials for long-term health." }
+              {
+                icon: Monitor,
+                title: "Intraoral Scanners",
+                desc: "No more messy clay impressions. Fast, accurate, 3D digital replicas.",
+              },
+              {
+                icon: Cpu,
+                title: "Guided Surgery",
+                desc: "Pre-planned implant placement using advanced navigational software.",
+              },
+              {
+                icon: Activity,
+                title: "Modern Sedation",
+                desc: "Painless protocols that ensure safety and zero procedure anxiety.",
+              },
+              {
+                icon: GlassWater,
+                title: "Biocompatible Materials",
+                desc: "Using only premium, body-friendly materials for long-term health.",
+              },
             ].map((item, i) => (
-              <div key={i} className="bg-white p-10 rounded-[3rem] border border-[hsl(var(--border))] group hover:-translate-y-3 transition-all duration-500 hover:shadow-2xl">
+              <div
+                key={i}
+                className="bg-white p-10 rounded-[3rem] border border-[hsl(var(--border))] group hover:-translate-y-3 transition-all duration-500 hover:shadow-2xl"
+              >
                 <div className="w-14 h-14 rounded-2xl bg-[hsl(var(--color-primary))]/5 flex items-center justify-center text-[hsl(var(--color-primary))] mb-8 group-hover:bg-[hsl(var(--color-accent))] group-hover:text-white transition-colors">
                   <item.icon size={28} />
                 </div>
-                <h3 className="text-xl font-bold text-[hsl(var(--color-primary))] mb-4">{item.title}</h3>
-                <p className="text-sm text-[hsl(var(--color-text-muted))] leading-relaxed font-light">{item.desc}</p>
+                <h3 className="text-xl font-bold text-[hsl(var(--color-primary))] mb-4">
+                  {item.title}
+                </h3>
+                <p className="text-sm text-[hsl(var(--color-text-muted))] leading-relaxed font-light">
+                  {item.desc}
+                </p>
               </div>
             ))}
           </div>
@@ -554,20 +637,37 @@ export default function ExperiencePage() {
           <div className="flex flex-col lg:flex-row gap-16 items-center mb-24">
             <div className="max-w-2xl">
               <AnimatedSection>
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[hsl(var(--color-primary))]/5 border border-[hsl(var(--color-primary))]/10 rounded-full text-[hsl(var(--color-primary))] font-bold text-[10px] uppercase tracking-widest mb-6">Mastery & Specialization</div>
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[hsl(var(--color-primary))]/5 border border-[hsl(var(--color-primary))]/10 rounded-full text-[hsl(var(--color-primary))] font-bold text-[10px] uppercase tracking-widest mb-6">
+                  Mastery & Specialization
+                </div>
                 <h2 className="text-4xl md:text-6xl font-black text-[hsl(var(--color-primary))] leading-[0.9] tracking-tighter mb-8">
-                  The Specialist <br /><span className="text-[hsl(var(--color-accent))]">Clinical Standard.</span>
+                  The Specialist <br />
+                  <span className="text-[hsl(var(--color-accent))]">
+                    Clinical Standard.
+                  </span>
                 </h2>
                 <p className="text-lg md:text-xl text-[hsl(var(--color-text-muted))] font-light leading-relaxed mb-8">
-                  Aesthedent is not just a dental clinic; it is a dedicated <span className="text-[hsl(var(--color-primary))] font-bold">Prosthodontist Clinic</span>. In the world of dentistry, a Prosthodontist is the recognized specialist for the restoration and replacement of teeth.
+                  Aesthedent is not just a dental clinic; it is a dedicated{" "}
+                  <span className="text-[hsl(var(--color-primary))] font-bold">
+                    Prosthodontist Clinic
+                  </span>
+                  . In the world of dentistry, a Prosthodontist is the
+                  recognized specialist for the restoration and replacement of
+                  teeth.
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <div className="flex items-center gap-2 text-sm font-bold text-[hsl(var(--color-primary))] bg-[hsl(var(--color-accent))]/10 px-4 py-2 rounded-xl">
-                    <Award size={18} className="text-[hsl(var(--color-accent))]" />
+                    <Award
+                      size={18}
+                      className="text-[hsl(var(--color-accent))]"
+                    />
                     MDS in Prosthodontics
                   </div>
                   <div className="flex items-center gap-2 text-sm font-bold text-[hsl(var(--color-primary))] bg-[hsl(var(--color-primary))]/5 px-4 py-2 rounded-xl">
-                    <Shield size={18} className="text-[hsl(var(--color-primary))]" />
+                    <Shield
+                      size={18}
+                      className="text-[hsl(var(--color-primary))]"
+                    />
                     Implant Specialist
                   </div>
                 </div>
@@ -581,19 +681,31 @@ export default function ExperiencePage() {
                   <div className="absolute top-0 right-0 p-12 opacity-10 scale-150 rotate-12">
                     <Users size={120} />
                   </div>
-                  <h4 className="text-2xl font-bold mb-6 text-[hsl(var(--color-accent))]">The Specialist Advantage</h4>
+                  <h4 className="text-2xl font-bold mb-6 text-[hsl(var(--color-accent))]">
+                    The Specialist Advantage
+                  </h4>
                   <p className="text-white/80 leading-relaxed font-light mb-8">
-                    While general dentistry focuses on basic care and maintenance, a Prosthodontist undergoes three additional years of rigorous hospital-based residency. We are the architects who design your entire oral biomechanics from the ground up.
+                    While general dentistry focuses on basic care and
+                    maintenance, a Prosthodontist undergoes three additional
+                    years of rigorous hospital-based residency. We are the
+                    architects who design your entire oral biomechanics from the
+                    ground up.
                   </p>
                   <ul className="space-y-4">
                     {[
                       "Precision Dental Implants & Multi-Unit Bridges",
                       "Complex Full-Mouth Rehabilitation",
                       "Specialized Aesthetic Smile Design",
-                      "Advanced TMJ & Bite Corection"
+                      "Advanced TMJ & Bite Corection",
                     ].map((item, idx) => (
-                      <li key={idx} className="flex items-center gap-3 text-sm font-medium">
-                        <CheckCircle2 size={18} className="text-[hsl(var(--color-accent))]" />
+                      <li
+                        key={idx}
+                        className="flex items-center gap-3 text-sm font-medium"
+                      >
+                        <CheckCircle2
+                          size={18}
+                          className="text-[hsl(var(--color-accent))]"
+                        />
                         {item}
                       </li>
                     ))}
@@ -608,26 +720,30 @@ export default function ExperiencePage() {
               {
                 title: "Evidence-Based Planning",
                 desc: "We don't guess; we engineer. Every restorative case at Aesthedent begins with a comprehensive structural analysis using 3D digital mapping to ensure lifetime stability.",
-                icon: Target
+                icon: Target,
               },
               {
                 title: "Bio-Harmonious Aesthetics",
                 desc: "Our restorations are indistinguishable from natural teeth. We study your facial proportions and lip dynamics to craft prosthetics that look and feel naturally yours.",
-                icon: Smile
+                icon: Smile,
               },
               {
                 title: "Longevity Focused",
                 desc: "Our goal is a 'once-in-a-lifetime' outcome. By using premium biocompatible materials and specialist-only protocols, we maximize the success rate of every implant and crown.",
-                icon: Heart
-              }
+                icon: Heart,
+              },
             ].map((feature, i) => (
               <AnimatedSection key={i} delay={i * 0.1}>
                 <div className="h-full p-8 md:p-10 rounded-[2.5rem] bg-[hsl(var(--color-bg-alt))]/30 border border-[hsl(var(--border))] hover:border-[hsl(var(--color-accent))]/40 transition-all duration-500 group">
                   <div className="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center text-[hsl(var(--color-accent))] mb-8 group-hover:scale-110 group-hover:bg-[hsl(var(--color-accent))] group-hover:text-white transition-all duration-500">
                     <feature.icon size={28} />
                   </div>
-                  <h3 className="text-xl font-bold text-[hsl(var(--color-primary))] mb-4">{feature.title}</h3>
-                  <p className="text-sm text-[hsl(var(--color-text-muted))] leading-relaxed font-light">{feature.desc}</p>
+                  <h3 className="text-xl font-bold text-[hsl(var(--color-primary))] mb-4">
+                    {feature.title}
+                  </h3>
+                  <p className="text-sm text-[hsl(var(--color-text-muted))] leading-relaxed font-light">
+                    {feature.desc}
+                  </p>
                 </div>
               </AnimatedSection>
             ))}
@@ -643,21 +759,50 @@ export default function ExperiencePage() {
         <div className="main-container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div>
-              <h2 className="text-3xl md:text-5xl font-black mb-10 tracking-[0.02em] leading-[0.9] text-[hsl(var(--color-primary))]">The Clinical <br /><span className="text-[hsl(var(--color-accent))]">Journey.</span></h2>
+              <h2 className="text-3xl md:text-5xl font-black mb-10 tracking-[0.02em] leading-[0.9] text-[hsl(var(--color-primary))]">
+                The Clinical <br />
+                <span className="text-[hsl(var(--color-accent))]">
+                  Journey.
+                </span>
+              </h2>
               <div className="space-y-12">
                 {[
-                  { icon: Search, title: "Discovery & Mapping", desc: "A deep clinical dive including 3D imaging and structural analysis." },
-                  { icon: Target, title: "Strategic Roadmap", desc: "Presenting your comprehensive, specialist-designed clinical roadmap." },
-                  { icon: Zap, title: "Precise Execution", desc: "Expert intervention using world-class hardware and protocols." },
-                  { icon: Smile, title: "Outcome Monitoring", desc: "Ongoing specialized support to ensure lifetime success." }
+                  {
+                    icon: Search,
+                    title: "Discovery & Mapping",
+                    desc: "A deep clinical dive including 3D imaging and structural analysis.",
+                  },
+                  {
+                    icon: Target,
+                    title: "Strategic Roadmap",
+                    desc: "Presenting your comprehensive, specialist-designed clinical roadmap.",
+                  },
+                  {
+                    icon: Zap,
+                    title: "Precise Execution",
+                    desc: "Expert intervention using world-class hardware and protocols.",
+                  },
+                  {
+                    icon: Smile,
+                    title: "Outcome Monitoring",
+                    desc: "Ongoing specialized support to ensure lifetime success.",
+                  },
                 ].map((item, i) => (
-                  <AnimatedSection key={i} delay={i * 0.1} className="flex gap-8 group">
+                  <AnimatedSection
+                    key={i}
+                    delay={i * 0.1}
+                    className="flex gap-8 group"
+                  >
                     <div className="flex-shrink-0 w-16 h-16 rounded-3xl bg-white border border-[hsl(var(--border))] flex items-center justify-center text-[hsl(var(--color-accent))] group-hover:bg-[hsl(var(--color-accent))] group-hover:text-white transition-all shadow-sm">
                       <item.icon size={32} />
                     </div>
                     <div>
-                      <h4 className="text-lg font-bold text-[hsl(var(--color-primary))] mb-1">{item.title}</h4>
-                      <p className="text-[hsl(var(--color-text-muted))] font-light leading-relaxed">{item.desc}</p>
+                      <h4 className="text-lg font-bold text-[hsl(var(--color-primary))] mb-1">
+                        {item.title}
+                      </h4>
+                      <p className="text-[hsl(var(--color-text-muted))] font-light leading-relaxed">
+                        {item.desc}
+                      </p>
                     </div>
                   </AnimatedSection>
                 ))}
@@ -686,8 +831,12 @@ export default function ExperiencePage() {
       <section className="py-20 md:py-28 bg-white">
         <div className="main-container max-w-4xl">
           <AnimatedSection className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-black text-[hsl(var(--color-primary))] mb-4 tracking-tight">Clinical Q&A</h2>
-            <p className="text-base text-[hsl(var(--color-text-muted))] font-light">Honest answers to the most common patient concerns.</p>
+            <h2 className="text-3xl md:text-5xl font-black text-[hsl(var(--color-primary))] mb-4 tracking-tight">
+              Clinical Q&A
+            </h2>
+            <p className="text-base text-[hsl(var(--color-text-muted))] font-light">
+              Honest answers to the most common patient concerns.
+            </p>
           </AnimatedSection>
 
           <div className="space-y-6">
@@ -708,7 +857,7 @@ export default function ExperiencePage() {
           variant="light"
           limit={3}
         />
-        
+
         <div className="main-container mt-12 text-center">
           <AnimatedSection>
             <a
@@ -731,13 +880,30 @@ export default function ExperiencePage() {
       <section className="py-24 md:py-32 bg-white overflow-hidden relative">
         <div className="main-container relative z-10 text-center">
           <AnimatedSection>
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-[hsl(var(--color-accent))]/10 border border-[hsl(var(--color-accent))]/20 rounded-full text-[hsl(var(--color-accent))] font-bold text-xs uppercase tracking-widest mb-8">Take the First Step</div>
-            <h2 className="text-4xl md:text-6xl font-black text-[hsl(var(--color-primary))] mb-8 leading-[0.9] tracking-tighter">Your Future <br />Smile Starts <br /> <span className="text-[hsl(var(--color-accent))]">Today.</span></h2>
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-[hsl(var(--color-accent))]/10 border border-[hsl(var(--color-accent))]/20 rounded-full text-[hsl(var(--color-accent))] font-bold text-xs uppercase tracking-widest mb-8">
+              Take the First Step
+            </div>
+            <h2 className="text-4xl md:text-6xl font-black text-[hsl(var(--color-primary))] mb-8 leading-[0.9] tracking-tighter">
+              Your Future <br />
+              Smile Starts <br />{" "}
+              <span className="text-[hsl(var(--color-accent))]">Today.</span>
+            </h2>
             <p className="text-base md:text-lg text-[hsl(var(--color-text-muted))] max-w-2xl mx-auto mb-12 font-light leading-relaxed">
-              Stop letting dental anxiety and uncertainty delay your health. Secure your 1-on-1 specialist consultation today and get a clear, honest roadmap for your smile.
+              Stop letting dental anxiety and uncertainty delay your health.
+              Secure your 1-on-1 specialist consultation today and get a clear,
+              honest roadmap for your smile.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <MagneticWrapper className="w-full sm:w-auto">
+                <a
+                  id="final-cta-call"
+                  href={`tel:${phoneNumber}`}
+                  className="block w-full px-8 py-4 border-2 border-[hsl(var(--color-primary))] text-[hsl(var(--color-primary))] rounded-2xl font-bold text-base hover:bg-[hsl(var(--color-primary))]/5 transition-all duration-300 text-center"
+                >
+                  Let&apos;s Talk
+                </a>
+              </MagneticWrapper>
               <MagneticWrapper className="w-full sm:w-auto">
                 <a
                   id="final-cta-whatsapp"
@@ -749,15 +915,6 @@ export default function ExperiencePage() {
                   Start with WhatsApp
                 </a>
               </MagneticWrapper>
-              <MagneticWrapper className="w-full sm:w-auto">
-                <a
-                  id="final-cta-call"
-                  href={`tel:${phoneNumber}`}
-                  className="block w-full px-8 py-4 border-2 border-[hsl(var(--color-primary))] text-[hsl(var(--color-primary))] rounded-2xl font-bold text-base hover:bg-[hsl(var(--color-primary))]/5 transition-all duration-300 text-center"
-                >
-                  Direct Call Expert
-                </a>
-              </MagneticWrapper>
             </div>
 
             <p className="mt-10 text-xs text-[hsl(var(--color-text-muted))] font-bold uppercase tracking-widest flex items-center justify-center gap-2">
@@ -767,7 +924,6 @@ export default function ExperiencePage() {
           </AnimatedSection>
         </div>
       </section>
-
     </PageWrapper>
   );
 }

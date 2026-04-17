@@ -73,7 +73,7 @@ export default function Footer() {
                 <Instagram className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
               </a>
               <a 
-                href="mailto:info@aesthedent.com"
+                href="mailto:aesthedentpune@gmail.com"
                 className="group w-11 h-11 bg-white/15 rounded-full flex items-center justify-center hover:bg-[hsl(var(--color-accent))] transition-all duration-300 text-[hsl(var(--color-accent))] hover:text-[hsl(var(--color-primary-dark))] shadow-lg shadow-black/10"
                 aria-label="Email"
               >
@@ -134,7 +134,10 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-3.5 group">
                 <Clock className="w-4 h-4 text-[hsl(var(--color-accent))] flex-shrink-0 mt-1 group-hover:scale-110 transition-transform duration-300" />
-                <span className="text-white/90 text-sm font-normal leading-relaxed">Mon - Sun: 10:00 AM - 8:00 PM (Wednesday Holiday)</span>
+                <span className="text-white/90 text-sm font-normal leading-relaxed">
+                  Mon - Sun: 10:00 AM - 8:00 PM 
+                  <span className="ml-2 font-bold text-[hsl(var(--color-accent))]">(Wednesday Holiday)</span>
+                </span>
               </li>
               <li className="flex items-start gap-3.5 group">
                 <Phone className="w-4 h-4 text-[hsl(var(--color-accent))] flex-shrink-0 mt-1 group-hover:scale-110 transition-transform duration-300" />
@@ -144,8 +147,8 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-3.5 group">
                 <Mail className="w-4 h-4 text-[hsl(var(--color-accent))] flex-shrink-0 mt-1 group-hover:scale-110 transition-transform duration-300" />
-                <a id="footer-contact-email" href="mailto:info@aesthedent.com" className="text-white/90 text-sm hover:text-[hsl(var(--color-accent))] transition-colors duration-300 font-normal break-all">
-                  info@aesthedent.com
+                <a id="footer-contact-email" href="mailto:aesthedentpune@gmail.com" className="text-white/90 text-sm hover:text-[hsl(var(--color-accent))] transition-colors duration-300 font-normal break-all">
+                  aesthedentpune@gmail.com
                 </a>
               </li>
             </ul>

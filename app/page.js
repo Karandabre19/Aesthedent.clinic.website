@@ -902,10 +902,10 @@ export default function HomePage() {
                       Hours
                     </p>
                     <p className="text-white/80 leading-relaxed text-xs sm:text-sm md:text-base">
-                      Monday–Saturday: 10 AM–8 PM
+                      Mon - Sun: 10 AM - 8 PM
                       <br />
-                      <span className="text-xs">
-                        Sunday: By appointment only
+                      <span className="text-xs font-bold text-[hsl(var(--accent))]">
+                        (Wednesday Holiday)
                       </span>
                     </p>
                   </div>
