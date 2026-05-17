@@ -1,15 +1,24 @@
-'use client';
+"use client";
 
-import PageWrapper from '@/components/layout/PageWrapper';
-import TestimonialsSection from '@/components/sections/TestimonialsSection';
-import AnimatedSection from '@/components/ui/AnimatedSection';
-import { HeroParticles, MagneticWrapper } from '@/components/ui/InteractiveHighTech';
-import { landingPageContent } from '@/lib/landing-page-content';
-import { services } from '@/lib/services';
-import { useGSAP } from '@gsap/react';
-import { animate, motion, useInView, useScroll, useTransform } from 'framer-motion';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import PageWrapper from "@/components/layout/PageWrapper";
+import TestimonialsSection from "@/components/sections/TestimonialsSection";
+import AnimatedSection from "@/components/ui/AnimatedSection";
+import {
+  HeroParticles,
+  MagneticWrapper,
+} from "@/components/ui/InteractiveHighTech";
+import { landingPageContent } from "@/lib/landing-page-content";
+import { services } from "@/lib/services";
+import { useGSAP } from "@gsap/react";
+import {
+  animate,
+  motion,
+  useInView,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   Activity,
   ArrowRight,
@@ -25,6 +34,7 @@ import {
   Info,
   MessageCircle,
   Monitor,
+  Pause,
   Phone,
   Play,
   Search,
@@ -35,38 +45,44 @@ import {
   Trees,
   User,
   Users,
-  Zap
-} from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useCallback, useEffect, useRef, useState } from 'react';
+  Volume2,
+  VolumeX,
+  Zap,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-const whatsappNumber = '919309816336';
-const phoneNumber = '+919309816336';
+const whatsappNumber = "919309816336";
+const phoneNumber = "+919309816336";
 const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent("Hi, I'm interested in the Aesthedent experience. Can we schedule a consultation?")}`;
 
-function HeroWord({ children, className = '', stagger = 0.02 }) {
+function HeroWord({ children, className = "", stagger = 0.02 }) {
   const text = String(children);
   return (
-    <span className={`hero-word-shell inline-flex overflow-hidden align-top pb-[0.4em] -mb-[0.4em] pl-[0.05em] pr-[0.4em] ${className}`} aria-label={text}>
+    <span
+      className={`hero-word-shell inline-flex overflow-hidden align-top pb-[0.4em] -mb-[0.4em] pl-[0.05em] pr-[0.4em] ${className}`}
+      aria-label={text}
+    >
       <span className="sr-only">{text}</span>
-      <span className="hero-word inline-flex will-change-transform" aria-hidden="true">
-        {text.split('').map((char, index) => (
+      <span
+        className="hero-word inline-flex will-change-transform"
+        aria-hidden="true"
+      >
+        {text.split("").map((char, index) => (
           <span
             key={`${text}-${index}`}
             className="hero-char inline-block translate-y-[1.15em] opacity-0 will-change-transform transform-gpu"
           >
-            {char === ' ' ? '\u00A0' : char}
+            {char === " " ? "\u00A0" : char}
           </span>
         ))}
       </span>
     </span>
   );
 }
-
-
 
 function AdvancedPromiseCard({ num, title, desc, icon: Icon, isLast }) {
   return (
@@ -75,10 +91,11 @@ function AdvancedPromiseCard({ num, title, desc, icon: Icon, isLast }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
-      className={`group relative overflow-hidden rounded-[2rem] bg-white/5 backdrop-blur-xl border-2 p-6 sm:p-8 transition-all duration-300 z-10 ${isLast
-        ? 'border-[hsl(var(--color-accent))]/30 hover:border-[hsl(var(--color-accent))]/60 shadow-[0_20px_50px_rgba(255,184,0,0.1)]'
-        : 'border-white/10 hover:border-white/30 shadow-[0_20px_50px_rgba(0,0,0,0.3)]'
-        }`}
+      className={`group relative overflow-hidden rounded-[2rem] bg-white/5 backdrop-blur-xl border-2 p-6 sm:p-8 transition-all duration-300 z-10 ${
+        isLast
+          ? "border-[hsl(var(--color-accent))]/30 hover:border-[hsl(var(--color-accent))]/60 shadow-[0_20px_50px_rgba(255,184,0,0.1)]"
+          : "border-white/10 hover:border-white/30 shadow-[0_20px_50px_rgba(0,0,0,0.3)]"
+      }`}
     >
       {/* Background Decorative Icon (Smaller) */}
       <div className="absolute -right-6 -top-6 p-6 opacity-[0.05] group-hover:opacity-[0.1] transition-all duration-500 pointer-events-none transform group-hover:scale-125 group-hover:rotate-12">
@@ -86,7 +103,9 @@ function AdvancedPromiseCard({ num, title, desc, icon: Icon, isLast }) {
       </div>
 
       <div className="flex items-center justify-between w-full mb-6">
-        <div className={`relative w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 ${isLast ? 'bg-[hsl(var(--color-accent))] text-[hsl(var(--color-primary-dark))] shadow-[0_0_30px_rgba(255,184,0,0.3)]' : 'bg-white/10 text-white group-hover:bg-[hsl(var(--color-accent))] group-hover:text-[hsl(var(--color-primary-dark))]'}`}>
+        <div
+          className={`relative w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 ${isLast ? "bg-[hsl(var(--color-accent))] text-[hsl(var(--color-primary-dark))] shadow-[0_0_30px_rgba(255,184,0,0.3)]" : "bg-white/10 text-white group-hover:bg-[hsl(var(--color-accent))] group-hover:text-[hsl(var(--color-primary-dark))]"}`}
+        >
           <Icon className="w-7 h-7" />
           {isLast && (
             <span className="absolute -top-1 -right-1 flex h-3 w-3">
@@ -111,7 +130,7 @@ function AdvancedPromiseCard({ num, title, desc, icon: Icon, isLast }) {
           {desc}
         </p>
       </div>
-      
+
       {/* Interactive Bottom Glow */}
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[hsl(var(--color-accent))]/0 to-transparent group-hover:via-[hsl(var(--color-accent))]/50 transition-all duration-500" />
     </motion.div>
@@ -120,10 +139,17 @@ function AdvancedPromiseCard({ num, title, desc, icon: Icon, isLast }) {
 
 export default function ExperiencePage() {
   const heroRef = useRef(null);
+  const specialistVideoRef = useRef(null);
+  const [hasSpecialistVideoStarted, setHasSpecialistVideoStarted] =
+    useState(false);
+  const [isSpecialistVideoPlaying, setIsSpecialistVideoPlaying] =
+    useState(false);
+  const [isSpecialistVideoMuted, setIsSpecialistVideoMuted] = useState(true);
+  const [specialistVideoProgress, setSpecialistVideoProgress] = useState(0);
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
-    offset: ['start start', 'end start'],
+    offset: ["start start", "end start"],
   });
 
   const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
@@ -135,83 +161,202 @@ export default function ExperiencePage() {
     const rect = heroRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
-    gsap.to('.hero-parallax-layer', {
+    gsap.to(".hero-parallax-layer", {
       x: x * 15,
       y: y * 10,
       duration: 1.2,
-      ease: 'power2.out',
-      overwrite: 'auto',
+      ease: "power2.out",
+      overwrite: "auto",
     });
-    gsap.to('.hero-orb-exp', {
+    gsap.to(".hero-orb-exp", {
       x: x * 30,
       y: y * 20,
       duration: 1.8,
-      ease: 'power2.out',
-      overwrite: 'auto',
+      ease: "power2.out",
+      overwrite: "auto",
     });
   }, []);
 
   // Restore body opacity when returning to this page
   useEffect(() => {
-    gsap.set('body', { opacity: 1 });
+    gsap.set("body", { opacity: 1 });
   }, []);
 
-  useGSAP(() => {
-    const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+  useEffect(() => {
+    const video = specialistVideoRef.current;
+    if (!video) return;
 
-    // Animate ambient orbs into view
-    tl.fromTo('.hero-orb-exp', {
-      scale: 0.5,
-      opacity: 0,
-    }, {
-      scale: 1,
-      opacity: 1,
-      duration: 1.8,
-      stagger: 0.25,
-      ease: 'power2.out',
-    }, 0)
-      .to('.hero-char', {
-        y: 0,
-        opacity: 1,
-        duration: 1.2,
-        stagger: 0.02,
-        delay: 0.3,
-      }, 0.2)
-      .to('.hero-copy', {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-      }, '-=0.8')
-      .to('.hero-action', {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        stagger: 0.2,
-      }, '-=0.6')
-      .fromTo('.hero-divider-exp',
-        { scaleX: 0, autoAlpha: 0 },
-        { scaleX: 1, autoAlpha: 1, duration: 0.8 },
-        0.3
+    const syncPlayback = () => {
+      setIsSpecialistVideoPlaying(!video.paused && !video.ended);
+    };
+    const syncVolume = () => {
+      setIsSpecialistVideoMuted(video.muted || video.volume === 0);
+    };
+    const syncProgress = () => {
+      setSpecialistVideoProgress(
+        video.duration ? (video.currentTime / video.duration) * 100 : 0,
       );
+    };
 
-    // Continuous ambient orb floating animation
-    const ambient = gsap.timeline({
-      repeat: -1,
-      yoyo: true,
-      defaults: { ease: 'sine.inOut' },
-      delay: 1.5,
-    });
+    syncPlayback();
+    syncVolume();
+    syncProgress();
 
-    ambient
-      .to('.hero-orb-exp-1', { x: 25, y: -18, duration: 5.5 }, 0)
-      .to('.hero-orb-exp-2', { x: -30, y: 14, duration: 6.2 }, 0.3)
-      .to('.hero-orb-exp-3', { x: 18, y: -12, duration: 5.8 }, 0.6);
+    video.addEventListener("play", syncPlayback);
+    video.addEventListener("pause", syncPlayback);
+    video.addEventListener("volumechange", syncVolume);
+    video.addEventListener("timeupdate", syncProgress);
+    video.addEventListener("loadedmetadata", syncProgress);
 
     return () => {
-      tl.kill();
-      ambient.kill();
+      video.removeEventListener("play", syncPlayback);
+      video.removeEventListener("pause", syncPlayback);
+      video.removeEventListener("volumechange", syncVolume);
+      video.removeEventListener("timeupdate", syncProgress);
+      video.removeEventListener("loadedmetadata", syncProgress);
     };
-  }, { scope: heroRef });
+  }, []);
+
+  const handleSpecialistVideoPlayPause = useCallback(async () => {
+    const video = specialistVideoRef.current;
+    if (!video) return;
+
+    if (!hasSpecialistVideoStarted) {
+      video.currentTime = 0;
+      video.muted = false;
+      video.volume = 1;
+
+      try {
+        await video.play();
+        setHasSpecialistVideoStarted(true);
+      } catch {
+        video.muted = true;
+      }
+      return;
+    }
+
+    if (video.paused) {
+      try {
+        await video.play();
+      } catch {
+        // Browser may still block playback if the gesture is interrupted.
+      }
+      return;
+    }
+
+    video.pause();
+  }, [hasSpecialistVideoStarted]);
+
+  const handleSpecialistVideoMuteToggle = useCallback(async () => {
+    const video = specialistVideoRef.current;
+    if (!video) return;
+
+    if (video.muted || video.volume === 0) {
+      if (!hasSpecialistVideoStarted) {
+        video.currentTime = 0;
+      }
+      video.muted = false;
+      video.volume = 1;
+      setHasSpecialistVideoStarted(true);
+
+      if (video.paused) {
+        try {
+          await video.play();
+        } catch {
+          video.muted = true;
+        }
+      }
+      return;
+    }
+
+    video.muted = true;
+  }, [hasSpecialistVideoStarted]);
+
+  const specialistVideoStatus = !hasSpecialistVideoStarted
+    ? "Tap for audio"
+    : isSpecialistVideoPlaying
+      ? isSpecialistVideoMuted
+        ? "Muted"
+        : "Audio Playing"
+      : "Paused";
+
+  useGSAP(
+    () => {
+      const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+
+      // Animate ambient orbs into view
+      tl.fromTo(
+        ".hero-orb-exp",
+        {
+          scale: 0.5,
+          opacity: 0,
+        },
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 1.8,
+          stagger: 0.25,
+          ease: "power2.out",
+        },
+        0,
+      )
+        .to(
+          ".hero-char",
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1.2,
+            stagger: 0.02,
+            delay: 0.3,
+          },
+          0.2,
+        )
+        .to(
+          ".hero-copy",
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1,
+          },
+          "-=0.8",
+        )
+        .to(
+          ".hero-action",
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            stagger: 0.2,
+          },
+          "-=0.6",
+        )
+        .fromTo(
+          ".hero-divider-exp",
+          { scaleX: 0, autoAlpha: 0 },
+          { scaleX: 1, autoAlpha: 1, duration: 0.8 },
+          0.3,
+        );
+
+      // Continuous ambient orb floating animation
+      const ambient = gsap.timeline({
+        repeat: -1,
+        yoyo: true,
+        defaults: { ease: "sine.inOut" },
+        delay: 1.5,
+      });
+
+      ambient
+        .to(".hero-orb-exp-1", { x: 25, y: -18, duration: 5.5 }, 0)
+        .to(".hero-orb-exp-2", { x: -30, y: 14, duration: 6.2 }, 0.3)
+        .to(".hero-orb-exp-3", { x: 18, y: -12, duration: 5.8 }, 0.6);
+
+      return () => {
+        tl.kill();
+        ambient.kill();
+      };
+    },
+    { scope: heroRef },
+  );
 
   return (
     <PageWrapper>
@@ -483,29 +628,67 @@ export default function ExperiencePage() {
         <div className="main-container relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-24 items-center">
             <AnimatedSection>
-              <div className="relative max-w-md mx-auto lg:mx-0">
+              <div className="relative max-w-sm mx-auto lg:mx-0">
                 <div className="absolute -inset-4 bg-[hsl(var(--color-primary))]/10 rounded-3xl transform -rotate-3" />
-                <Image
-                  src="/clinic/treatment-process.2jpeg.jpeg"
-                  alt="Aesthedent Specialist Architecture"
-                  width={600}
-                  height={750}
-                  className="relative rounded-2xl shadow-xl w-full aspect-[4/5] object-cover"
+                <video
+                  ref={specialistVideoRef}
+                  src="/assets/Introduction-video.mp4"
+                  className="relative rounded-2xl shadow-xl w-full aspect-[9/16] bg-black object-contain"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
                 />
 
-                <div className="absolute -bottom-6 -right-6 hidden sm:block bg-white/95 backdrop-blur-xl rounded-2xl p-5 border border-white/20 shadow-2xl">
+                <div className="absolute -bottom-5 right-3 sm:-bottom-6 sm:-right-6 w-[min(19rem,calc(100%-1.5rem))] sm:w-auto overflow-hidden bg-white/95 backdrop-blur-xl rounded-2xl p-4 sm:p-5 border border-white/20 shadow-2xl">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-[hsl(var(--color-accent))]/20 rounded-full flex items-center justify-center">
-                      <Play className="w-5 h-5 text-[hsl(var(--color-primary))]" />
-                    </div>
-                    <div>
+                    <button
+                      type="button"
+                      onClick={handleSpecialistVideoPlayPause}
+                      className="w-12 h-12 bg-[hsl(var(--color-accent))]/20 rounded-full flex items-center justify-center transition-colors hover:bg-[hsl(var(--color-accent))]/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--color-primary))] focus-visible:ring-offset-2"
+                      aria-label={
+                        hasSpecialistVideoStarted && isSpecialistVideoPlaying
+                          ? "Pause introduction video"
+                          : "Play introduction video with audio"
+                      }
+                    >
+                      {hasSpecialistVideoStarted && isSpecialistVideoPlaying ? (
+                        <Pause className="w-5 h-5 text-[hsl(var(--color-primary))]" />
+                      ) : (
+                        <Play className="w-5 h-5 text-[hsl(var(--color-primary))]" />
+                      )}
+                    </button>
+                    <div className="min-w-0 flex-1">
                       <p className="font-bold text-[hsl(var(--color-primary))] text-sm mb-0.5">
                         The Blueprint
                       </p>
                       <p className="text-xs text-[hsl(var(--color-text-muted))]">
-                        Digital Mapping
+                        {specialistVideoStatus}
                       </p>
                     </div>
+                    <button
+                      type="button"
+                      onClick={handleSpecialistVideoMuteToggle}
+                      className="w-9 h-9 rounded-full bg-[hsl(var(--color-primary))]/5 text-[hsl(var(--color-primary))] flex items-center justify-center transition-colors hover:bg-[hsl(var(--color-primary))]/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--color-primary))] focus-visible:ring-offset-2"
+                      aria-label={
+                        isSpecialistVideoMuted
+                          ? "Unmute introduction video"
+                          : "Mute introduction video"
+                      }
+                    >
+                      {isSpecialistVideoMuted ? (
+                        <VolumeX className="w-4 h-4" />
+                      ) : (
+                        <Volume2 className="w-4 h-4" />
+                      )}
+                    </button>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-[hsl(var(--color-primary))]/10">
+                    <div
+                      className="h-full bg-[hsl(var(--color-accent))] transition-[width] duration-200"
+                      style={{ width: `${specialistVideoProgress}%` }}
+                    />
                   </div>
                 </div>
               </div>
@@ -933,21 +1116,30 @@ function FAQItem({ question, answer }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className={`group border-b border-[hsl(var(--border))] transition-all duration-500 ${isOpen ? 'bg-[hsl(var(--color-bg-alt))]/30 px-6 py-4 rounded-3xl mb-4' : 'py-8'}`}>
+    <div
+      className={`group border-b border-[hsl(var(--border))] transition-all duration-500 ${isOpen ? "bg-[hsl(var(--color-bg-alt))]/30 px-6 py-4 rounded-3xl mb-4" : "py-8"}`}
+    >
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between text-left gap-4"
       >
-        <span className={`text-base sm:text-lg lg:text-xl font-bold transition-colors ${isOpen ? 'text-[hsl(var(--color-primary))]' : 'text-[hsl(var(--color-text))] group-hover:text-[hsl(var(--color-primary))]'}`}>
+        <span
+          className={`text-base sm:text-lg lg:text-xl font-bold transition-colors ${isOpen ? "text-[hsl(var(--color-primary))]" : "text-[hsl(var(--color-text))] group-hover:text-[hsl(var(--color-primary))]"}`}
+        >
           {question}
         </span>
-        <div className={`flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-[hsl(var(--border))] flex items-center justify-center transition-all ${isOpen ? 'bg-[hsl(var(--color-primary))] text-white border-transparent' : 'text-[hsl(var(--color-text-muted))] group-hover:border-[hsl(var(--color-primary))] group-hover:text-[hsl(var(--color-primary))]'}`}>
-          <ChevronDown className={`transition-transform duration-500 ${isOpen ? 'rotate-180' : ''}`} size={20} />
+        <div
+          className={`flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-[hsl(var(--border))] flex items-center justify-center transition-all ${isOpen ? "bg-[hsl(var(--color-primary))] text-white border-transparent" : "text-[hsl(var(--color-text-muted))] group-hover:border-[hsl(var(--color-primary))] group-hover:text-[hsl(var(--color-primary))]"}`}
+        >
+          <ChevronDown
+            className={`transition-transform duration-500 ${isOpen ? "rotate-180" : ""}`}
+            size={20}
+          />
         </div>
       </button>
       <motion.div
         initial={false}
-        animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
+        animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
         transition={{ duration: 0.5, ease: [0.04, 0.62, 0.23, 0.98] }}
         className="overflow-hidden"
       >
