@@ -140,6 +140,10 @@ function AdvancedPromiseCard({ num, title, desc, icon: Icon, isLast }) {
 export default function ExperiencePage() {
   const heroRef = useRef(null);
   const specialistVideoRef = useRef(null);
+  const hasSpecialistVideoStartedRef = useRef(false);
+  const shouldResumeSpecialistVideoRef = useRef(false);
+  const specialistVideoResumeTimeRef = useRef(0);
+  const wasSpecialistVideoOutOfViewRef = useRef(false);
   const [hasSpecialistVideoStarted, setHasSpecialistVideoStarted] =
     useState(false);
   const [isSpecialistVideoPlaying, setIsSpecialistVideoPlaying] =
@@ -183,6 +187,10 @@ export default function ExperiencePage() {
   }, []);
 
   useEffect(() => {
+    hasSpecialistVideoStartedRef.current = hasSpecialistVideoStarted;
+  }, [hasSpecialistVideoStarted]);
+
+  useEffect(() => {
     const video = specialistVideoRef.current;
     if (!video) return;
 
@@ -214,6 +222,62 @@ export default function ExperiencePage() {
       video.removeEventListener("volumechange", syncVolume);
       video.removeEventListener("timeupdate", syncProgress);
       video.removeEventListener("loadedmetadata", syncProgress);
+    };
+  }, []);
+
+  useEffect(() => {
+    const video = specialistVideoRef.current;
+    if (!video || typeof IntersectionObserver === "undefined") return;
+
+    const playVideo = async () => {
+      try {
+        await video.play();
+      } catch {
+        // Autoplay can be blocked after tab switches or interrupted gestures.
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const isInView = entry.isIntersecting && entry.intersectionRatio >= 0.4;
+
+        if (!isInView) {
+          wasSpecialistVideoOutOfViewRef.current = true;
+
+          if (!video.paused) {
+            shouldResumeSpecialistVideoRef.current = true;
+            specialistVideoResumeTimeRef.current = video.currentTime;
+            video.pause();
+          }
+          return;
+        }
+
+        if (!wasSpecialistVideoOutOfViewRef.current) return;
+
+        wasSpecialistVideoOutOfViewRef.current = false;
+
+        if (!hasSpecialistVideoStartedRef.current) {
+          video.currentTime = 0;
+          video.muted = true;
+          playVideo();
+          return;
+        }
+
+        if (shouldResumeSpecialistVideoRef.current) {
+          shouldResumeSpecialistVideoRef.current = false;
+          if (specialistVideoResumeTimeRef.current > 0) {
+            video.currentTime = specialistVideoResumeTimeRef.current;
+          }
+          playVideo();
+        }
+      },
+      { threshold: [0, 0.4, 1] },
+    );
+
+    observer.observe(video);
+
+    return () => {
+      observer.disconnect();
     };
   }, []);
 
