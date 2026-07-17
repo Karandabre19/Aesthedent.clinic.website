@@ -1,0 +1,82 @@
+[
+  {
+    "name": "aesthedentpune.com (US)",
+    "url": "https://www.aesthedentpune.com/",
+    "strategy": "mobile",
+    "field": null,
+    "lab": null,
+    "error": "Quota exceeded for quota metric 'Queries' and limit 'Queries per day' of service 'pagespee"
+  },
+  {
+    "name": "soulfuldental.com",
+    "url": "https://www.soulfuldental.com/",
+    "strategy": "mobile",
+    "field": null,
+    "lab": null,
+    "error": "Quota exceeded for quota metric 'Queries' and limit 'Queries per day' of service 'pagespee"
+  },
+  {
+    "name": "silverpearlsdental.com",
+    "url": "https://www.silverpearlsdental.com/",
+    "strategy": "mobile",
+    "field": null,
+    "lab": null,
+    "error": "Quota exceeded for quota metric 'Queries' and limit 'Queries per day' of service 'pagespee"
+  },
+  {
+    "name": "smileinn.in",
+    "url": "https://smileinn.in/",
+    "strategy": "mobile",
+    "field": null,
+    "lab": null,
+    "error": "Quota exceeded for quota metric 'Queries' and limit 'Queries per day' of service 'pagespee"
+  },
+  {
+    "name": "oriondentalspecialities.com",
+    "url": "https://oriondentalspecialities.com/",
+    "strategy": "mobile",
+    "field": null,
+    "lab": null,
+    "error": "Quota exceeded for quota metric 'Queries' and limit 'Queries per day' of service 'pagespee"
+  },
+  {
+    "name": "thedentalstudio.co.in",
+    "url": "https://thedentalstudio.co.in/",
+    "strategy": "mobile",
+    "field": null,
+    "lab": null,
+    "error": "Quota exceeded for quota metric 'Queries' and limit 'Queries per day' of service 'pagespee"
+  },
+  {
+    "name": "microdentdentistry.com",
+    "url": "https://microdentdentistry.com/",
+    "strategy": "mobile",
+    "field": null,
+    "lab": null,
+    "error": "Quota exceeded for quota metric 'Queries' and limit 'Queries per day' of service 'pagespee"
+  },
+  {
+    "name": "toothandcodental.com",
+    "url": "https://www.toothandcodental.com/",
+    "strategy": "mobile",
+    "field": null,
+    "lab": null,
+    "error": "Quota exceeded for quota metric 'Queries' and limit 'Queries per day' of service 'pagespee"
+  },
+  {
+    "name": "sabkadentist.com (CHAIN)",
+    "url": "https://sabkadentist.com/dental-clinics-in-pune/kothrud/",
+    "strategy": "mobile",
+    "field": null,
+    "lab": null,
+    "error": "Quota exceeded for quota metric 'Queries' and limit 'Queries per day' of service 'pagespee"
+  },
+  {
+    "name": "clovedental.in (CHAIN)",
+    "url": "https://clovedental.in/dentist-near-me/pune/kothrud",
+    "strategy": "mobile",
+    "field": null,
+    "lab": null,
+    "error": "Quota exceeded for quota metric 'Queries' and limit 'Queries per day' of service 'pagespee"
+  }
+]

@@ -1,0 +1,49 @@
+{
+  "method": "Chrome DevTools Resource Timing + Navigation Timing, cold cache, desktop, same machine/network, 2026-07-17",
+  "caveats": [
+    "Lab data from one machine in one location — NOT CrUX field data from real Pune users.",
+    "PageSpeed Insights API (which the brief specified) returned 'Quota exceeded' for the anonymous tier on every request; a free PSI API key would allow proper field data. See audit/raw/3-cwv-mobile.json for the failed run.",
+    "Aesthedent measured cold via reload+ignoreCache (verified: 2 of 36 resources cached). Competitors measured on first navigation.",
+    "Single sample per site; load times can vary. The structural figures (request count, CSS weight, JS file count) are not transient."
+  ],
+  "sites": [
+    {
+      "name": "aesthedentpune.com",
+      "note": "US — Next.js + GSAP + Framer Motion + Lenis",
+      "organicRank_dentist_in_kothrud": null,
+      "js_decoded_KB": 1011,
+      "js_encoded_KB": 324,
+      "css_decoded_KB": 128,
+      "js_files": 20,
+      "total_requests": 36,
+      "domContentLoaded_ms": 464,
+      "load_ms": 1123,
+      "lighthouse_mobile": { "accessibility": 100, "bestPractices": 100, "seo": 92, "failing": "link-text — Google Maps links lack descriptive text" }
+    },
+    {
+      "name": "soulfuldental.com",
+      "note": "WordPress",
+      "organicRank_dentist_in_kothrud": 6,
+      "js_decoded_KB": 1410,
+      "js_encoded_KB": 408,
+      "css_decoded_KB": 2027,
+      "js_files": 66,
+      "total_requests": 159,
+      "domContentLoaded_ms": 5883,
+      "load_ms": 20510
+    },
+    {
+      "name": "smileinn.in",
+      "note": "WordPress",
+      "organicRank_dentist_in_kothrud": 3,
+      "js_decoded_KB": 824,
+      "js_encoded_KB": 255,
+      "css_decoded_KB": 1343,
+      "js_files": 46,
+      "total_requests": 144,
+      "domContentLoaded_ms": 14341,
+      "load_ms": 16408
+    }
+  ],
+  "finding": "The brief's hypothesis that the GSAP + Lenis + Framer Motion stack is a heavy cost is not supported. Aesthedent loads in 1.1s cold with 36 requests and 128 KB CSS. Smile Inn ranks #3 organically with a 16.4s load, 144 requests and 1343 KB CSS. Soulful ranks #6 with a 20.5s load, 159 requests and 2027 KB CSS. The two sites outranking us are 15-18x slower. Performance is not why Aesthedent is not ranking."
+}
