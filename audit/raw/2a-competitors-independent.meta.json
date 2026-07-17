@@ -1,0 +1,7 @@
+{
+  "actorId": "apify~website-content-crawler",
+  "runId": "OxrTmRiskiG2E0UP2",
+  "datasetId": "NFdpMOlcfWarDBsHx",
+  "note": "Aborted gracefully at 147+ pages to conserve the $5 free-plan credit. integritydentalcare.in returned 0 pages; toothandcodental.com also failed a direct fetch in 2D.",
+  "itemCount": 147
+}
