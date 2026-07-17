@@ -35,7 +35,8 @@ const read = (file) => {
 
 // ── BUG 1: headings must read cleanly, each word once ────────────────────
 const headingChecks = [
-  { file: 'index.html', tag: 'h1', route: '/', expect: 'Redefining Dental Care in Pune.' },
+  // Phase 4A: the H1 now carries both Tier-1 terms (dental care + Kothrud).
+  { file: 'index.html', tag: 'h1', route: '/', expect: 'Dental Care in Kothrud, Pune. Redefined.' },
   { file: 'aesthedent-experience.html', tag: 'h2', route: '/aesthedent-experience', contains: 'RECLAIM', notContains: 'RECLAIMRECLAIM' },
 ];
 
@@ -54,7 +55,7 @@ for (const hc of headingChecks) {
     // Belt and braces: catches a regression that still happened to produce the
     // right string by accident.
     const occurrences = (hay, needle) => hay.split(needle).length - 1;
-    for (const phrase of ['Redefining', 'Dental Care', 'in Pune.']) {
+    for (const phrase of ['Dental Care', 'in Kothrud, Pune.', 'Redefined.']) {
       const n = occurrences(text, phrase);
       check(`${hc.route} <h1> says "${phrase}" exactly once`, n === 1, `appears ${n}× in "${text}"`);
     }
@@ -104,7 +105,9 @@ for (const hc of headingChecks) {
       check(`/ stat not zeroed — ${z.label.split(' renders')[0]}`, !z.pat.test(text), z.pat.test(text) ? z.label : '');
     }
     check('/ ships "5000" (Happy Patients real value)', html.includes('5000'), 'absent from SSR HTML');
-    check('/ ships "263" (review count)', html.includes('263'), 'absent from SSR HTML');
+    // 277, not 263: verified against the live Google Business Profile on
+    // 2026-07-17 (audit/02-gbp-comparison.md). The site was 14 reviews behind.
+    check('/ ships "277 Reviews" (verified live count)', html.includes('277 Reviews'), 'absent from SSR HTML');
   }
 }
 
@@ -166,6 +169,16 @@ for (const [route, file] of routes) {
 
   const t = (html.match(/<title>(.*?)<\/title>/) || [])[1];
   if (t) titles.set(route, t);
+
+  // Meta descriptions truncate in SERPs past ~155 chars. I shipped a 156 by
+  // eye-counting, so this is now enforced.
+  const desc = html.match(/<meta name="description" content="([^"]*)"/)?.[1];
+  check(`${route} has meta description`, Boolean(desc), 'missing');
+  if (desc) {
+    // Decode entities so &amp; counts as one char, as the SERP renders it.
+    const len = desc.replace(/&amp;/g, '&').replace(/&#x27;/g, "'").replace(/&quot;/g, '"').length;
+    check(`${route} description <= 155 chars`, len <= 155, `${len} chars`);
+  }
 }
 
 // Every route must have a distinct title
@@ -179,6 +192,65 @@ for (const [route, file] of routes) {
       check(`${route} title is unique`, true, '');
     }
     check(`${route} title <= 60 chars`, t.length <= 60, `${t.length} chars: "${t}"`);
+  }
+}
+
+// ── Phase 4: structured data ─────────────────────────────────────────────
+const ldTypes = (html) => {
+  const types = new Set();
+  const walk = (n) => {
+    if (!n || typeof n !== 'object') return;
+    if (Array.isArray(n)) return n.forEach(walk);
+    if (n['@type']) [].concat(n['@type']).forEach((t) => types.add(t));
+    Object.values(n).forEach(walk);
+  };
+  for (const m of html.matchAll(/<script[^>]*application\/ld\+json[^>]*>([\s\S]*?)<\/script>/gi)) {
+    try { walk(JSON.parse(m[1])); } catch { types.add('__MALFORMED__'); }
+  }
+  return types;
+};
+
+{
+  const home = read('index.html');
+  if (home) {
+    const t = ldTypes(home);
+    check('/ JSON-LD parses', !t.has('__MALFORMED__'), 'a block failed JSON.parse');
+    for (const want of ['Dentist', 'LocalBusiness', 'Organization', 'WebSite']) {
+      check(`/ has ${want} schema`, t.has(want), 'missing');
+    }
+    // Held until the clinic confirms 277/5.0 — schema states facts to Google.
+    check('/ does NOT publish aggregateRating yet', !t.has('AggregateRating'), 'shipped without sign-off');
+    check('/ no stale 263 review count', !home.includes('263 Reviews'), 'stale count still rendered');
+  }
+
+  // Every service page: FAQPage (28 FAQs already written) + MedicalProcedure + breadcrumb
+  for (const slug of SERVICE_SLUGS) {
+    const html = read(`services/${slug}.html`);
+    if (!html) { check(`/services/${slug} prerendered`, false, 'missing'); continue; }
+    const t = ldTypes(html);
+    check(`/services/${slug} JSON-LD parses`, !t.has('__MALFORMED__'), 'a block failed JSON.parse');
+    check(`/services/${slug} FAQPage`, t.has('FAQPage'), 'missing');
+    check(`/services/${slug} MedicalProcedure`, t.has('MedicalProcedure'), 'missing');
+    check(`/services/${slug} BreadcrumbList`, t.has('BreadcrumbList'), 'missing');
+  }
+
+  // FAQPage must carry real questions — an empty one is invalid markup.
+  const di = read('services/dental-implants.html');
+  if (di) {
+    const m = [...di.matchAll(/<script[^>]*application\/ld\+json[^>]*>([\s\S]*?)<\/script>/gi)]
+      .map((x) => { try { return JSON.parse(x[1]); } catch { return null; } })
+      .find((j) => j?.['@type'] === 'FAQPage');
+    check('/services/dental-implants FAQPage has questions', (m?.mainEntity?.length ?? 0) >= 3, `got ${m?.mainEntity?.length ?? 0}`);
+  }
+}
+
+// ── Phase 4: no absolute medical claims ──────────────────────────────────
+for (const [route, file] of routes) {
+  const html = read(file);
+  if (!html) continue;
+  const text = crawlerText(html);
+  for (const claim of ['100% Painless', 'zero discomfort', 'zero procedure anxiety', 'Lifetime guarantee']) {
+    check(`${route} no absolute claim "${claim}"`, !new RegExp(claim, 'i').test(text), 'present on health content');
   }
 }
 

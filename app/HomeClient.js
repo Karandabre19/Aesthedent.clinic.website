@@ -44,13 +44,26 @@ const phoneNumber = '+919309816336';
 
 // Single source of truth for the <h1> accessible name. Must stay in sync with
 // the words composed in the heading below.
-const HERO_HEADING = 'Redefining Dental Care in Pune.';
+//
+// Phase 4A: was "Redefining Dental Care in Pune." — which contained neither
+// "dentist" nor "Kothrud", our two Tier-1 terms. Same voice, same two-line
+// shape, same shimmer-then-accent treatment; the keywords are now in it.
+const HERO_HEADING = 'Dental Care in Kothrud, Pune. Redefined.';
 
+// "100% Painless Treatments" was an absolute claim about a clinical OUTCOME on
+// health content — pain varies by patient and procedure, so it cannot be
+// promised. Reworded to a claim about our PROCESS, which the clinic does
+// control and applies to every treatment.
+//
+// Google rating and review count are verified against the live Business Profile
+// (277 @ 5.0 as of 2026-07-17, audit/02-gbp-comparison.md) — the review count
+// here was stale at 263. Years and patient numbers remain unsourced:
+// see audit/NEEDS-INPUT.md N3/N4.
 const trustStats = [
-  { value: 5, decimals: 1, suffix: '', label: 'Google Rating', sub: '263 Reviews' },
+  { value: 5, decimals: 1, suffix: '', label: 'Google Rating', sub: '277 Reviews' },
   { value: 10, decimals: 0, suffix: '+', label: 'Years', sub: 'Experience' },
   { value: 5000, decimals: 0, suffix: '+', label: 'Happy', sub: 'Patients' },
-  { value: 100, decimals: 0, suffix: '%', label: 'Painless', sub: 'Treatments' },
+  { value: 100, decimals: 0, suffix: '%', label: 'Comfort-First', sub: 'Every Treatment' },
 ];
 
 const prefersReducedMotion = () =>
@@ -489,19 +502,19 @@ export default function HomePage() {
                 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-[hsl(var(--color-primary))] leading-[0.95] tracking-tighter mb-6 sm:mb-8"
               >
                 <span className="hero-line hero-line-1 relative block overflow-hidden pb-2 leading-tight">
-                  <HeroWord>Redefining</HeroWord>
-                </span>
-                {/* Explicit space: these are block-level lines, so whitespace
-                    between them is dropped from layout but keeps the heading's
-                    text content readable as "Redefining Dental Care in Pune."
-                    rather than "RedefiningDental Care...". No visual effect. */}
-                {' '}
-                <span className="hero-line hero-line-2 relative block overflow-hidden pb-2 leading-tight">
                   <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--color-primary))] via-[hsl(var(--color-accent))] to-[hsl(var(--color-primary))] bg-[length:200%_auto] animate-shimmer">
                     Dental Care
                   </span>{" "}
+                  <HeroWord>in Kothrud, Pune.</HeroWord>
+                </span>
+                {/* Explicit space: these are block-level lines, so whitespace
+                    between them is dropped from layout but keeps the heading's
+                    text content readable as "…Kothrud, Pune. Redefined." rather
+                    than "…Kothrud, Pune.Redefined.". No visual effect. */}
+                {' '}
+                <span className="hero-line hero-line-2 relative block overflow-hidden pb-2 leading-tight">
                   <HeroWord className="hero-accent-word font-black text-[hsl(var(--color-accent))]">
-                    in Pune.
+                    Redefined.
                   </HeroWord>
                 </span>
               </h1>
@@ -530,6 +543,11 @@ export default function HomePage() {
                     href="https://www.google.com/maps/place/Aesthedent+Dental+Clinic,+Kothrud/@18.4972761,73.8108921,17z/data=!3m2!4b1!5s0x3bc2bfc407d2eb7d:0xeb43317068a295aa!4m6!3m5!1s0x3bc2bfa49403bd57:0xb59ec17e89bd289f!8m2!3d18.497271!4d73.813467!16s%2Fg%2F11j2v_ph1x?entry=ttu&g_ep=EgoyMDI2MDQwOC4wIKXMDSoASAFQAw%3D%3D"
                     target="_blank"
                     rel="noopener noreferrer"
+                    // The label swaps by breakpoint, so both strings sit in the
+                    // DOM and the link's text reads "Visit ClinicLocation" —
+                    // which is what Lighthouse's link-text audit failed on.
+                    // aria-label gives it one clean, descriptive name.
+                    aria-label="Visit Aesthedent Dental Clinic in Kothrud — open in Google Maps"
                     className="hero-action-btn group relative inline-flex translate-y-6 scale-95 items-center justify-center gap-2 sm:gap-4 rounded-2xl border-2 border-[hsl(var(--color-primary))]/20 bg-white/10 backdrop-blur-xl px-8 sm:px-10 py-4 sm:py-5 font-black text-[hsl(var(--color-primary))] opacity-0 transition-all duration-300 transform-gpu hover:border-[hsl(var(--color-primary))]/40 hover:bg-white/20 text-base sm:text-lg"
                   >
                     <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-[hsl(var(--color-accent))]" />
@@ -650,6 +668,7 @@ export default function HomePage() {
               href="https://www.google.com/maps/place/Aesthedent+Dental+Clinic,+Kothrud/@18.4972761,73.8108921,17z/data=!3m1!5s0x3bc2bfc407d2eb7d:0xeb43317068a295aa!4m8!3m7!1s0x3bc2bfa49403bd57:0xb59ec17e89bd289f!8m2!3d18.497271!4d73.813467!9m1!1b1!16s%2Fg%2F11j2v_ph1x?entry=ttu&g_ep=EgoyMDI2MDQwOC4wIKXMDSoASAFQAw%3D%3D"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Read all Aesthedent patient reviews on Google"
               className="inline-flex items-center gap-3 text-[hsl(var(--primary))] font-semibold hover:text-[hsl(var(--primary-dark))] transition-colors text-lg"
             >
               View all patient stories
@@ -896,6 +915,7 @@ export default function HomePage() {
                   href="https://maps.app.goo.gl/BVb9iy5EQkmbYSVPA"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Get directions to Aesthedent Dental Clinic, Dahanukar Colony, Kothrud — open in Google Maps"
                   className="flex items-start gap-3 sm:gap-5 hover:opacity-80 transition-opacity cursor-pointer group"
                 >
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-white/30 transition-colors">
