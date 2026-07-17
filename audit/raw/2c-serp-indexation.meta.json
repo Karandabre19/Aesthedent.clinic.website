@@ -1,0 +1,19 @@
+{
+  "actorId": "apify~google-search-scraper",
+  "runId": "zen8s3H9hVEstoFtp",
+  "datasetId": "JkJ8S2Kl5YNtK9lH0",
+  "status": "SUCCEEDED",
+  "startedAt": "2026-07-17T06:50:07.349Z",
+  "finishedAt": "2026-07-17T06:51:29.537Z",
+  "usageTotalUsd": 0.019,
+  "itemCount": 5,
+  "input": {
+    "queries": "site:aesthedentpune.com\nsite:www.aesthedentpune.com\naesthedent\naesthedent dental clinic kothrud\ndental implant kothrud",
+    "countryCode": "in",
+    "languageCode": "en",
+    "maxPagesPerQuery": 1,
+    "resultsPerPage": 30,
+    "saveHtml": false,
+    "mobileResults": false
+  }
+}

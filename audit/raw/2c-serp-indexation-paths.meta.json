@@ -1,0 +1,19 @@
+{
+  "actorId": "apify~google-search-scraper",
+  "runId": "FVVjdEVMdMR3OPFDI",
+  "datasetId": "dOo8JxHx1Cduenayj",
+  "status": "SUCCEEDED",
+  "startedAt": "2026-07-17T06:52:22.001Z",
+  "finishedAt": "2026-07-17T06:53:27.216Z",
+  "usageTotalUsd": 0.019,
+  "itemCount": 5,
+  "input": {
+    "queries": "site:aesthedentpune.com/services\nsite:aesthedentpune.com/insights\nsite:aesthedentpune.com/services/dental-implants\nsite:aesthedentpune.com/doctor\n\"Redefining Dental Care in Pune\"",
+    "countryCode": "in",
+    "languageCode": "en",
+    "maxPagesPerQuery": 1,
+    "resultsPerPage": 30,
+    "saveHtml": false,
+    "mobileResults": false
+  }
+}

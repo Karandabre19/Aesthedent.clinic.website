@@ -1,0 +1,148 @@
+[
+  {
+    "searchQuery": {
+      "term": "\"Redefining Dental Care in Pune\"",
+      "url": "http://www.google.co.in/search?q=%22Redefining+Dental+Care+in+Pune%22&hl=en",
+      "device": "DESKTOP",
+      "page": 1,
+      "type": "SEARCH",
+      "domain": "google.co.in",
+      "countryCode": "IN",
+      "languageCode": "en",
+      "locationUule": null,
+      "resultsPerPage": 10
+    },
+    "url": "http://www.google.co.in/search?q=%22Redefining+Dental+Care+in+Pune%22&hl=en",
+    "hasNextPage": false,
+    "serpProviderCode": "L",
+    "resultsTotal": null,
+    "relatedQueries": [],
+    "paidResults": [],
+    "paidProducts": [],
+    "organicResults": [],
+    "suggestedResults": [],
+    "peopleAlsoAsk": [],
+    "customData": null,
+    "htmlSnapshotUrl": "https://api.apify.com/v2/key-value-stores/clYldNd7pYOeXtWN6/records/qw1DwkBAb2ftDEL-0.html?signature=qjPraKQVFjKY1ZQgJstZ"
+  },
+  {
+    "searchQuery": {
+      "term": "site:aesthedentpune.com/doctor",
+      "url": "http://www.google.co.in/search?q=site%3Aaesthedentpune.com%2Fdoctor&hl=en",
+      "device": "DESKTOP",
+      "page": 1,
+      "type": "SEARCH",
+      "domain": "google.co.in",
+      "countryCode": "IN",
+      "languageCode": "en",
+      "locationUule": null,
+      "resultsPerPage": 10
+    },
+    "url": "http://www.google.co.in/search?q=site%3Aaesthedentpune.com%2Fdoctor&hl=en",
+    "hasNextPage": false,
+    "serpProviderCode": "L",
+    "resultsTotal": null,
+    "relatedQueries": [],
+    "paidResults": [],
+    "paidProducts": [],
+    "organicResults": [],
+    "suggestedResults": [],
+    "peopleAlsoAsk": [],
+    "customData": null,
+    "htmlSnapshotUrl": "https://api.apify.com/v2/key-value-stores/clYldNd7pYOeXtWN6/records/VDdc5aZW7Ux35EA-0.html?signature=fiBjUd77PcnFD48iOIi0"
+  },
+  {
+    "searchQuery": {
+      "term": "site:aesthedentpune.com/insights",
+      "url": "http://www.google.co.in/search?q=site%3Aaesthedentpune.com%2Finsights&hl=en",
+      "device": "DESKTOP",
+      "page": 1,
+      "type": "SEARCH",
+      "domain": "google.co.in",
+      "countryCode": "IN",
+      "languageCode": "en",
+      "locationUule": null,
+      "resultsPerPage": 10
+    },
+    "url": "http://www.google.co.in/search?q=site%3Aaesthedentpune.com%2Finsights&hl=en",
+    "hasNextPage": false,
+    "serpProviderCode": "L",
+    "resultsTotal": null,
+    "relatedQueries": [],
+    "paidResults": [],
+    "paidProducts": [],
+    "organicResults": [],
+    "suggestedResults": [],
+    "peopleAlsoAsk": [],
+    "customData": null,
+    "htmlSnapshotUrl": "https://api.apify.com/v2/key-value-stores/clYldNd7pYOeXtWN6/records/tCrF4krwSWSRrEZ-0.html?signature=10hlHsDU6mpstHsV89NdM"
+  },
+  {
+    "searchQuery": {
+      "term": "site:aesthedentpune.com/services/dental-implants",
+      "url": "http://www.google.co.in/search?q=site%3Aaesthedentpune.com%2Fservices%2Fdental-implants&hl=en",
+      "device": "DESKTOP",
+      "page": 1,
+      "type": "SEARCH",
+      "domain": "google.co.in",
+      "countryCode": "IN",
+      "languageCode": "en",
+      "locationUule": null,
+      "resultsPerPage": 10
+    },
+    "url": "http://www.google.co.in/search?q=site%3Aaesthedentpune.com%2Fservices%2Fdental-implants&hl=en",
+    "hasNextPage": false,
+    "serpProviderCode": "L",
+    "resultsTotal": null,
+    "relatedQueries": [],
+    "paidResults": [],
+    "paidProducts": [],
+    "organicResults": [],
+    "suggestedResults": [],
+    "peopleAlsoAsk": [],
+    "customData": null,
+    "htmlSnapshotUrl": "https://api.apify.com/v2/key-value-stores/clYldNd7pYOeXtWN6/records/WfasaFuDnq2HBwG-0.html?signature=1jmFL0WMviJsXkDlCuoE9"
+  },
+  {
+    "searchQuery": {
+      "term": "site:aesthedentpune.com/services",
+      "url": "http://www.google.co.in/search?q=site%3Aaesthedentpune.com%2Fservices&hl=en",
+      "device": "DESKTOP",
+      "page": 1,
+      "type": "SEARCH",
+      "domain": "google.co.in",
+      "countryCode": "IN",
+      "languageCode": "en",
+      "locationUule": null,
+      "resultsPerPage": 10
+    },
+    "url": "http://www.google.co.in/search?q=site%3Aaesthedentpune.com%2Fservices&hl=en",
+    "hasNextPage": false,
+    "serpProviderCode": "O",
+    "resultsTotal": null,
+    "relatedQueries": [],
+    "paidResults": [],
+    "paidProducts": [],
+    "organicResults": [
+      {
+        "title": "Reclaim Your Smile | Specialist Prosthodontist in Kothrud, Pune",
+        "websiteTitle": "aesthedentpune.com",
+        "url": "https://www.aesthedentpune.com/services/dentures",
+        "displayedUrl": "https://www.aesthedentpune.com › services › dentures",
+        "description": "Aesthedent is a specialized Prosthodontist clinic in Kothrud, Pune. Experience expert dental implants, full mouth rehabilitation, ...",
+        "date": "2026-06-26T12:00:00.000Z",
+        "emphasizedKeywords": [
+          "Prosthodontist clinic in Kothrud, Pune"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 1
+      }
+    ],
+    "suggestedResults": [],
+    "peopleAlsoAsk": [],
+    "customData": null,
+    "htmlSnapshotUrl": "https://api.apify.com/v2/key-value-stores/clYldNd7pYOeXtWN6/records/ELbZEXG4bQERgW5-0.html?signature=7Xem6r940Wp0aGnhCPtv"
+  }
+]
