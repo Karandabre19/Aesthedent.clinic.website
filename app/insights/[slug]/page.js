@@ -1,4 +1,6 @@
 import { insights } from '@/lib/insights';
+import JsonLd from '@/components/seo/JsonLd';
+import { buildBreadcrumbSchema } from '@/lib/schema';
 import InsightDetailClient from './InsightDetailClient';
 
 // HAZARD (not fixed here — Phase 4): article bodies live in an `insightsData`
@@ -33,5 +35,18 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
   const { slug } = await params;
-  return <InsightDetailClient slug={slug} />;
+  const insight = insights.find((i) => i.slug === slug);
+
+  return (
+    <>
+      <JsonLd
+        schema={buildBreadcrumbSchema([
+          { name: 'Home', path: '/' },
+          { name: 'Insights', path: '/insights' },
+          { name: insight?.title ?? slug, path: `/insights/${slug}` },
+        ])}
+      />
+      <InsightDetailClient slug={slug} />
+    </>
+  );
 }

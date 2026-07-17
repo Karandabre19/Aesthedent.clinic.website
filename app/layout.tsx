@@ -6,6 +6,8 @@ import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import SmoothScrollProvider from '@/components/layout/SmoothScrollProvider';
 import MotionProvider from '@/components/layout/MotionProvider';
+import JsonLd from '@/components/seo/JsonLd';
+import { buildClinicSchema, buildOrganizationSchema, buildWebSiteSchema } from '@/lib/schema';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -14,35 +16,43 @@ const poppins = Poppins({
   display: 'swap',
 });
 
-// NOTE: the title/description wording below is PROVISIONAL. Phase 1 fixes the
-// structure only (unique per route, canonical, correct card type). The keyword
-// positioning decision — whether "Prosthodontist" should lead — is deliberately
-// held until Phase 2 search-volume data lands, then rewritten in Phase 4A.
+// Phase 4A. The old title led with "Specialist Prosthodontist" and ran to 89
+// chars. Phase 2 settled the positioning question the brief flagged: of the
+// eight independents ranking #2-#8 for "dentist in kothrud", NOT ONE leads with
+// "prosthodontist", and every competitor uses [Service] in [Location] with the
+// location in 74-100% of titles (audit/02-competitor-content.md). Prosthodontics
+// is now the reason to choose us, carried in the description — not the label.
+//
+// Note what we did NOT copy: Silver Pearls' "Best Dentist in Kothrud | Best
+// Dental Clinic in Kothrud, Pune" repeats the term and ranks #8 — the LOWEST
+// independent in the top 8. The location token is what works; the stuffing isn't.
 export const metadata = {
   metadataBase: new URL('https://www.aesthedentpune.com'),
   title: {
-    default: 'Dental Clinic in Kothrud, Pune | Aesthedent',
+    default: 'Dentist in Kothrud, Pune | Aesthedent Dental Clinic',
     // Child routes supply just their own name; the brand is appended here so it
     // stays last, never first.
     template: '%s | Aesthedent',
   },
   description:
-    'Aesthedent is a dental clinic in Kothrud, Pune offering implants, root canals and full mouth rehabilitation. We explain everything before we start.',
+    'Aesthedent is a dental clinic in Kothrud, Pune. Implants, root canals and full mouth rehabilitation, led by a prosthodontist. Open weekends.',
   // Deliberately NO `alternates.canonical` here. Child routes inherit root
   // metadata, so a canonical set at this level points every page at "/" and
   // asks Google to de-index the site. Each route declares its own.
   openGraph: {
-    title: 'Dental Clinic in Kothrud, Pune | Aesthedent',
-    description: 'Dental implants, root canals and full mouth rehabilitation in Kothrud, Pune. We explain everything before we start.',
+    title: 'Dentist in Kothrud, Pune | Aesthedent Dental Clinic',
+    description: 'A dental clinic in Kothrud, Pune. Implants, root canals and full mouth rehabilitation. We explain everything before we start.',
     url: 'https://www.aesthedentpune.com',
     siteName: 'Aesthedent Dental Clinic',
     locale: 'en_IN',
     type: 'website',
+    images: [{ url: '/homepage-banner.png', width: 1200, height: 630, alt: 'Aesthedent Dental Clinic, Kothrud, Pune' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Dental Clinic in Kothrud, Pune | Aesthedent',
-    description: 'Dental implants, root canals and full mouth rehabilitation in Kothrud, Pune.',
+    title: 'Dentist in Kothrud, Pune | Aesthedent Dental Clinic',
+    description: 'A dental clinic in Kothrud, Pune. Implants, root canals and full mouth rehabilitation.',
+    images: ['/homepage-banner.png'],
   },
 };
 
@@ -79,49 +89,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
         {/* End Google Tag Manager */}
 
-        {/* Local SEO / Dentist Schema */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Dentist",
-              "name": "Aesthedent Dental Clinic",
-              "image": "https://www.aesthedentpune.com/aesthadent_logo.png",
-              "@id": "https://www.aesthedentpune.com",
-              "url": "https://www.aesthedentpune.com",
-              "telephone": "+919309816336",
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "No.5 First Floor, AJ Tower, above Irani Cafe, Dahanukar Colony, Kothrud",
-                "addressLocality": "Pune",
-                "addressRegion": "Maharashtra",
-                "postalCode": "411038",
-                "addressCountry": "IN"
-              },
-              "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": 18.497271,
-                "longitude": 73.813467
-              },
-              "openingHoursSpecification": {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": [
-                  "Monday",
-                  "Tuesday",
-                  "Thursday",
-                  "Friday",
-                  "Saturday",
-                  "Sunday"
-                ],
-                "opens": "10:00",
-                "closes": "20:00"
-              },
-              "sameAs": [
-                "https://maps.app.goo.gl/BVb9iy5EQkmbYSVPA"
-              ]
-            })
-          }}
+        {/* Local SEO — Dentist + LocalBusiness, Organization, WebSite.
+            Sitewide entities live here; page-specific blocks (FAQPage,
+            MedicalProcedure, BreadcrumbList) are emitted per route.
+            See lib/schema.js for what is included and what is deliberately not. */}
+        <JsonLd
+          schema={[buildClinicSchema(), buildOrganizationSchema(), buildWebSiteSchema()]}
         />
       </head>
       <body className={`${poppins.className} font-sans relative`}>

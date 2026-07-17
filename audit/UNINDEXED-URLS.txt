@@ -1,0 +1,39 @@
+# UNINDEXED URLs — Search Console > URL Inspection > Request Indexing
+#
+# Source: audit/raw/2c-serp-indexation.json + 2c-serp-indexation-paths.json
+#         (site: probes run 2026-07-17)
+#
+# Verified: all 21 return HTTP 200, all 21 are in sitemap.xml, robots.txt allows all,
+# and every service page is linked as a real <a href> from the homepage HTML.
+# Nothing is blocking crawl. These are reachable and simply not selected.
+#
+# INDEXED (3):  / , /aesthedent-experience , /services/dentures
+# NOT INDEXED (18):  listed below
+#
+# GSC allows ~10-12 manual submissions per day. Priority order below.
+# Submitting is a nudge, not a guarantee — do it AFTER the Phase 1 fix is deployed,
+# otherwise Google re-crawls the same duplicate titles and re-confirms its decision.
+
+## PRIORITY 1 — service money pages (7)  <- submit these first
+https://www.aesthedentpune.com/services/dental-implants
+https://www.aesthedentpune.com/services/root-canal
+https://www.aesthedentpune.com/services/full-mouth-rehabilitation
+https://www.aesthedentpune.com/services/tooth-fillings
+https://www.aesthedentpune.com/services/wisdom-tooth-surgery
+https://www.aesthedentpune.com/services/orthodontic-treatment
+https://www.aesthedentpune.com/services/digital-smile-design
+
+## PRIORITY 2 — hub + trust pages (4)
+https://www.aesthedentpune.com/about
+https://www.aesthedentpune.com/contact
+https://www.aesthedentpune.com/doctor
+https://www.aesthedentpune.com/services
+
+## PRIORITY 3 — insight articles (7)
+https://www.aesthedentpune.com/insights
+https://www.aesthedentpune.com/insights/dental-implants-pune-specialist
+https://www.aesthedentpune.com/insights/root-canal-pain-myths
+https://www.aesthedentpune.com/insights/best-dentist-kothrud-pune
+https://www.aesthedentpune.com/insights/teeth-whitening-safety
+https://www.aesthedentpune.com/insights/dental-anxiety-tips
+https://www.aesthedentpune.com/insights/when-to-get-braces

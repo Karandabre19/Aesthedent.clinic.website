@@ -22,14 +22,17 @@ Consolidated list of everything I cannot verify from the repo. Nothing on this l
 
 These are already published. I did not write them and will not carry them into schema or new copy until confirmed. `aggregateRating` in particular puts a number in front of Google as a factual claim.
 
-| # | Claim | Where | Problem |
+| # | Claim | Where | Status |
 |---|---|---|---|
-| N1 | **Google rating `5.0`** | `app/page.js:46` | Needs the true current rating. Goes into `aggregateRating` — must match the GBP exactly. Phase 2B will read the real value. |
-| N2 | **`263 Reviews`** | `app/page.js:46` | Brief says "verify actual current count". Phase 2B. |
-| N3 | **`10+ Years Experience`** | `app/page.js:47` | Whose? Dr. Sahil's, or the clinic's? Clinic can't be 10 years old if the domain is 4 months old — needs clarifying before it appears near a founding date. |
-| N4 | **`5000+ Happy Patients`** | `app/page.js:48` | No source. |
-| N5 | **`500+ successful cases`** | `app/aesthedent-experience/layout.js:16` | **Contradicts N4 by 10×.** Both are live right now. At least one is wrong. |
-| N6 | **`100% Painless Treatments`** | `app/page.js:49` | Absolute claim on health content. Needs Dr. Sahil's sign-off or rewording (e.g. "painless-first protocol"). Recommend rewording regardless. |
+| N1 | **Google rating `5.0`** | `app/HomeClient.js` | ✅ **VERIFIED 2026-07-17** — the live GBP really is 5.0 [`audit/02-gbp-comparison.md`]. Still **not** in `aggregateRating` — held per your instruction. |
+| N2 | ~~`263 Reviews`~~ → **`277 Reviews`** | `app/HomeClient.js` | ✅ **CORRECTED** — the live GBP shows **277**; the site was 14 behind. Updated. **This is hardcoded and will drift again** — see D5. |
+| N3 | **`10+ Years Experience`** | `app/HomeClient.js` | ❌ **STILL UNSOURCED.** Whose — Dr. Sahil's, or the clinic's? The clinic cannot be 10 years old if the domain is 4 months old. Shipping in SSR HTML today. |
+| N4 | **`5000+ Happy Patients`** | `app/HomeClient.js` | ❌ **STILL UNSOURCED.** Shipping in SSR HTML today. |
+| N5 | ~~`500+ successful cases`~~ | *was* `aesthedent-experience/layout.js:16` | ✅ **REMOVED in Phase 1** — contradicted N4 by 10×. Not replaced with another number. |
+| N6 | ~~`100% Painless Treatments`~~ → **`100% Comfort-First / Every Treatment`** | `app/HomeClient.js` | ✅ **REWORDED.** Was an absolute claim about a clinical *outcome* (pain varies by patient; it cannot be promised). Now a claim about our *process*, which the clinic controls. **Still needs Dr. Sahil's nod on the new wording.** |
+| N7 | ~~`zero discomfort`~~ → `keep discomfort to a minimum` | `app/services/ServicesClient.js` | ✅ **REWORDED** — same problem as N6, found while fixing it. |
+| N8 | ~~`ensure safety and zero procedure anxiety`~~ → `designed to keep you calm and settled` | `app/aesthedent-experience/page.js` | ✅ **REWORDED** — same problem as N6. |
+| N9 | **`Lifetime guarantee`** | `lib/landing-page-content.js:37` | ⚠️ **NOT LIVE, BUT ARMED.** The file is imported by the experience page, but only `.faqs` is consumed — so the string never renders. It is a serious clinical/legal claim sitting one line of code away from going live. **Recommend deleting it.** |
 
 ---
 
@@ -102,4 +105,7 @@ Phase 4C requires "real INR ranges" on eight service pages; the repo has **zero 
 | D1 | **Hero background animation has never run.** `.hero-bg-image` is referenced by GSAP 5× but the class was never on the element, so the hero's load zoom and ambient drift have been dead since launch. One-line fix, deliberately **not applied** — switching it on is a visible change to the hero. Want it enabled? |
 | D2 | **Stat count-up now flashes ~380ms.** Real values paint from SSR, then the count-up restarts from 0. Unavoidable if we want both real values in HTML and a count-from-zero animation. Alternative: animate only on scroll-in (no flash, less delight). Current behaviour acceptable? |
 | D3 | **Mobile doctor role badge restyled.** De-duplicating the doctor cards unified mobile's plain uppercase role text to desktop's pill badge. Improvement in my view — say if you want the old mobile styling. |
-| D4 | **Provisional titles are live on the branch.** Every route now has a unique title, but the wording is placeholder pending Phase 2. Phase 4A rewrites them. Don't read them as final. |
+| D4 | ~~Provisional titles~~ — ✅ **resolved.** Phase 4A shipped the final wording, now grounded in Phase 2: not one of the eight independents ranking #2–#8 leads with "prosthodontist", so the site no longer does either. Prosthodontics is the differentiator in the description, not the label. |
+| D5 | **The review count is hardcoded (`277`) and will drift.** It was already 14 behind when I found it. Options: (a) accept a manual update every few months, (b) wire it to a source. Which? |
+| D6 | **`aggregateRating` is built but NOT wired up**, per your instruction. `lib/schema.js` has `buildAggregateRating()` ready. Confirm **277 @ 5.0** and I'll enable it. One caveat you should have first: self-serving `AggregateRating` in `LocalBusiness`/`Dentist` markup is **outside Google's guidelines and ignored for rich results** — four competitors publish it anyway. It's a parity move, not a guaranteed star rating. |
+| D7 | **Hero H1 restructured** to `Dental Care in Kothrud, Pune. Redefined.` (was `Redefining Dental Care in Pune.` — contained neither Tier-1 term). Same voice, same shimmer-then-accent treatment; now renders as three visual lines rather than two. Verified in-browser; animation intact. Happy with it? |

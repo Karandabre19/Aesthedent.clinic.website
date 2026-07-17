@@ -1,14 +1,26 @@
 import InsightsClient from './InsightsClient';
+import JsonLd from '@/components/seo/JsonLd';
+import { buildBreadcrumbSchema } from '@/lib/schema';
 
 export const metadata = {
-  title: 'Dental Insights & Advice',
+  title: 'Dental Advice from Our Kothrud Dentists',
   description:
-    'Straight answers to the questions patients actually ask us — about root canals, implants, braces and dental anxiety. Written by the Aesthedent team.',
+    'Straight answers to what patients actually ask us about root canals, implants, braces and dental anxiety — from our dentists in Kothrud, Pune.',
   alternates: {
     canonical: '/insights',
   },
 };
 
 export default function Page() {
-  return <InsightsClient />;
+  return (
+    <>
+      <JsonLd
+        schema={buildBreadcrumbSchema([
+          { name: 'Home', path: '/' },
+          { name: 'Insights', path: '/insights' },
+        ])}
+      />
+      <InsightsClient />
+    </>
+  );
 }

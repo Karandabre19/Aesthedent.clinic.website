@@ -1,5 +1,7 @@
 import { notFound } from 'next/navigation';
 import { getServiceBySlug, getAllServiceSlugs } from '@/lib/services';
+import JsonLd from '@/components/seo/JsonLd';
+import { buildFaqSchema, buildProcedureSchema, buildBreadcrumbSchema } from '@/lib/schema';
 import ServiceDetailClient from './ServiceDetailClient';
 
 // Prerender all eight service pages at build time. Without this they were
@@ -36,10 +38,28 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
   const { slug } = await params;
+  const service = getServiceBySlug(slug);
 
-  if (!getServiceBySlug(slug)) {
+  if (!service) {
     notFound();
   }
 
-  return <ServiceDetailClient slug={slug} />;
+  return (
+    <>
+      {/* The FAQs were already written in lib/services.js and shipped unmarked.
+          Only 1 of 10 competitors has FAQPage — see audit/02-schema-matrix.md. */}
+      <JsonLd
+        schema={[
+          buildFaqSchema(service.faqs),
+          buildProcedureSchema(service),
+          buildBreadcrumbSchema([
+            { name: 'Home', path: '/' },
+            { name: 'Services', path: '/services' },
+            { name: service.title, path: `/services/${slug}` },
+          ]),
+        ]}
+      />
+      <ServiceDetailClient slug={slug} />
+    </>
+  );
 }

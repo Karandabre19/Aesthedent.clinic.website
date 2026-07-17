@@ -847,7 +847,9 @@ export default function ExperiencePage() {
               {
                 icon: Activity,
                 title: "Modern Sedation",
-                desc: "Painless protocols that ensure safety and zero procedure anxiety.",
+                // Was: "Painless protocols that ensure safety and zero procedure
+                // anxiety." Promised a guaranteed clinical and emotional outcome.
+                desc: "Comfort-first sedation protocols, designed to keep you calm and settled throughout.",
               },
               {
                 icon: GlassWater,
