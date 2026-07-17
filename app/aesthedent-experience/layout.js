@@ -1,22 +1,44 @@
+// Fixed in Phase 1:
+//  - URLs pointed at https://aesthedent.clinic (wrong domain — live site is
+//    www.aesthedentpune.com), so OG/canonical referenced a site we don't own.
+//  - `canonical` was a top-level key; the valid Next.js key is
+//    `alternates.canonical`, so no canonical tag was ever emitted.
+//  - `openGraph.image` / `twitter.image` are not valid keys (they are `images`,
+//    plural), so both social images were silently dropped.
+// Wording is provisional pending Phase 2 keyword data — see Phase 4A.
 export const metadata = {
-  title: 'The Aesthedent Experience | Premium Dental Care in Kothrud, Pune',
-  description: 'Experience clinical excellence at Aesthedent. Where prosthodontic precision meets human-centered care. Specialized in dental implants, full mouth rehabilitation, and specialist clinical excellence.',
-  keywords: 'aesthedent experience, dental clinic pune, prosthodontist kothrud, specialist dental clinic pune, MDS prosthodontist kothrud, advanced dentistry pune, dental implants kothrud, painless dental treatment',
+  // `absolute` bypasses the root "%s | Aesthedent" template — the brand is
+  // already in this page's name, and the template would double it.
+  title: { absolute: 'The Aesthedent Experience | Kothrud, Pune' },
+  description:
+    'How we work: specialist-led implants, full mouth rehabilitation and prosthodontic care in Kothrud, Pune. We explain every step before we start.',
+  alternates: {
+    canonical: '/aesthedent-experience',
+  },
   openGraph: {
-    title: 'The Aesthedent Experience | Clinical Precision in Kothrud, Pune',
-    description: 'A higher standard of dental care. Explore our specialist-led approach to implants, rehabilitation, and long-term oral health.',
-    image: 'https://images.pexels.com/photos/3762441/pexels-photo-3762441.jpeg?auto=compress&cs=tinysrgb&w=1920',
+    title: 'The Aesthedent Experience | Aesthedent',
+    description:
+      'A specialist-led approach to implants, rehabilitation and long-term oral health in Kothrud, Pune.',
+    url: 'https://www.aesthedentpune.com/aesthedent-experience',
+    siteName: 'Aesthedent Dental Clinic',
     type: 'website',
-    url: 'https://aesthedent.clinic/aesthedent-experience',
     locale: 'en_IN',
+    images: [
+      {
+        url: '/homepage-banner.png',
+        width: 1200,
+        height: 630,
+        alt: 'Aesthedent Dental Clinic, Kothrud, Pune',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Dental Implants in Pune | Prosthodontist | Full Mouth Rehabilitation',
-    description: 'Expert dental implants and prosthetic solutions by top prosthodontist in Kothrud, Pune. 500+ successful cases.',
-    image: 'https://images.pexels.com/photos/6529323/pexels-photo-6529323.jpeg?auto=compress&cs=tinysrgb&w=1920',
+    title: 'The Aesthedent Experience | Aesthedent',
+    description:
+      'Specialist-led implants, full mouth rehabilitation and prosthodontic care in Kothrud, Pune.',
+    images: ['/homepage-banner.png'],
   },
-  canonical: 'https://aesthedent.clinic/aesthedent-experience',
 };
 
 export default function LandingPageLayout({ children }) {

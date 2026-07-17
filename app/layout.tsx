@@ -14,20 +14,35 @@ const poppins = Poppins({
   display: 'swap',
 });
 
+// NOTE: the title/description wording below is PROVISIONAL. Phase 1 fixes the
+// structure only (unique per route, canonical, correct card type). The keyword
+// positioning decision — whether "Prosthodontist" should lead — is deliberately
+// held until Phase 2 search-volume data lands, then rewritten in Phase 4A.
 export const metadata = {
   metadataBase: new URL('https://www.aesthedentpune.com'),
-  title: 'Aesthedent Dental Clinic — Reclaim Your Smile | Specialist Prosthodontist in Kothrud, Pune',
+  title: {
+    default: 'Dental Clinic in Kothrud, Pune | Aesthedent',
+    // Child routes supply just their own name; the brand is appended here so it
+    // stays last, never first.
+    template: '%s | Aesthedent',
+  },
   description:
-    'Aesthedent is a specialized Prosthodontist clinic in Kothrud, Pune. Experience expert dental implants, full mouth rehabilitation, and specialist-led clinical care. Reclaim your smile today.',
-  keywords:
-    'prosthodontist in pune, dental clinic in kothrud, specialist dentist pune, prosthodontics kothrud, dental implants pune, full mouth rehabilitation pune, dental clinic near me',
+    'Aesthedent is a dental clinic in Kothrud, Pune offering implants, root canals and full mouth rehabilitation. We explain everything before we start.',
+  // Deliberately NO `alternates.canonical` here. Child routes inherit root
+  // metadata, so a canonical set at this level points every page at "/" and
+  // asks Google to de-index the site. Each route declares its own.
   openGraph: {
-    title: 'Aesthedent Dental Clinic — Reclaim Your Smile | Kothrud, Pune',
-    description: 'Specialist Prosthodontic care in Kothrud, Pune. Expert dental implants, full mouth rehabilitation, and specialized clinical excellence.',
+    title: 'Dental Clinic in Kothrud, Pune | Aesthedent',
+    description: 'Dental implants, root canals and full mouth rehabilitation in Kothrud, Pune. We explain everything before we start.',
     url: 'https://www.aesthedentpune.com',
     siteName: 'Aesthedent Dental Clinic',
     locale: 'en_IN',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Dental Clinic in Kothrud, Pune | Aesthedent',
+    description: 'Dental implants, root canals and full mouth rehabilitation in Kothrud, Pune.',
   },
 };
 
