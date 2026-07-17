@@ -1,0 +1,20 @@
+{
+  "actorId": "apify~google-search-scraper",
+  "runId": "5ykmPbCjRiPMWAt6u",
+  "datasetId": "02Rx7w5CzFdiPHx3V",
+  "status": "SUCCEEDED",
+  "startedAt": "2026-07-17T06:47:46.634Z",
+  "finishedAt": "2026-07-17T06:48:03.572Z",
+  "usageTotalUsd": 0.041499999999999995,
+  "itemCount": 10,
+  "input": {
+    "queries": "dentist in kothrud\ndental clinic in kothrud\nbest dentist in kothrud\ndentist near me kothrud\ndental implant kothrud\ndental implant cost pune\nroot canal kothrud\nprosthodontist in pune\nfull mouth rehabilitation pune\nbraces kothrud",
+    "countryCode": "in",
+    "languageCode": "en",
+    "maxPagesPerQuery": 1,
+    "resultsPerPage": 20,
+    "saveHtml": false,
+    "includeUnfilteredResults": false,
+    "mobileResults": false
+  }
+}

@@ -59,17 +59,18 @@ const whatsappNumber = "919309816336";
 const phoneNumber = "+919309816336";
 const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent("Hi, I'm interested in the Aesthedent experience. Can we schedule a consultation?")}`;
 
+// See the twin of this component in app/page.js: the per-character spans are
+// the only copy of the text. A second readable layer gets indexed as duplicate
+// words, because extractors ignore aria-hidden. The accessible name lives on
+// the heading that wraps this.
 function HeroWord({ children, className = "", stagger = 0.02 }) {
   const text = String(children);
   return (
     <span
       className={`hero-word-shell inline-flex overflow-hidden align-top pb-[0.4em] -mb-[0.4em] pl-[0.05em] pr-[0.4em] ${className}`}
-      aria-label={text}
     >
-      <span className="sr-only">{text}</span>
       <span
         className="hero-word inline-flex will-change-transform"
-        aria-hidden="true"
       >
         {text.split("").map((char, index) => (
           <span
@@ -571,7 +572,10 @@ export default function ExperiencePage() {
           {/* Divider — mirrors Home page eyebrow divider */}
           <div className="hero-divider-exp mx-auto mb-8 h-px w-28 origin-center bg-gradient-to-r from-transparent via-[hsl(var(--color-accent))] to-transparent opacity-0 transform-gpu" />
 
-          <h2 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[1] mb-8 tracking-tighter">
+          <h2
+            aria-label="Reclaim your smile"
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[1] mb-8 tracking-tighter"
+          >
             <span className="inline-block pb-2">
               <HeroWord>RECLAIM</HeroWord>
             </span>{" "}

@@ -161,7 +161,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-white/80 text-sm font-normal">
-            © 2025 Aesthedent Dental Clinic. All rights reserved.
+            © {new Date().getFullYear()} Aesthedent Dental Clinic. All rights reserved.
           </p>
           <div className="flex gap-8 text-sm">
             <Link href="/privacy" className="text-white/80 hover:text-[hsl(var(--color-accent))] transition-colors duration-300 font-normal">Privacy Policy</Link>

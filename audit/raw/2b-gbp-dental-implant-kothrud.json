@@ -1,0 +1,3090 @@
+[
+  {
+    "title": "Suyash Dental Clinic",
+    "subTitle": "सुयश डेंटल",
+    "description": null,
+    "price": null,
+    "categoryName": "Dental implants provider",
+    "address": "Suyash Hospital, Plot No 1, near Natraj gas Agency, Dahanukar A, Dahanukar Colony, Kothrud, Pune, Maharashtra 411038, India",
+    "neighborhood": "Dahanukar A, Dahanukar Colony, Kothrud",
+    "street": "Suyash Hospital, Plot No 1, near Natraj gas Agency",
+    "city": "Pune",
+    "postalCode": "411038",
+    "state": "Maharashtra",
+    "countryCode": "IN",
+    "website": "https://suyashdental.com/",
+    "phone": "+91 89285 84041",
+    "phoneUnformatted": "+918928584041",
+    "claimThisBusiness": false,
+    "location": {
+      "lat": 18.4987973,
+      "lng": 73.8121998
+    },
+    "locatedIn": null,
+    "floor": null,
+    "plusCode": null,
+    "menu": null,
+    "servicesLink": null,
+    "totalScore": 4.9,
+    "permanentlyClosed": false,
+    "temporarilyClosed": false,
+    "placeId": "ChIJrZy41ca_wjsR4v3HQvCV408",
+    "categories": [
+      "Dental implants provider",
+      "Dental clinic",
+      "Dentist",
+      "Endodontist",
+      "Orthodontist",
+      "Pediatric dentist",
+      "Periodontist"
+    ],
+    "fid": "0x3bc2bfc6d5b89cad:0x4fe395f042c7fde2",
+    "cid": "5756609607854718434",
+    "reviewsCount": 498,
+    "imagesCount": 100,
+    "imageCategories": [],
+    "scrapedAt": "2026-07-17T06:45:41.408Z",
+    "reserveTableUrl": null,
+    "googleFoodUrl": null,
+    "hotelStars": null,
+    "hotelDescription": null,
+    "checkInDate": null,
+    "checkOutDate": null,
+    "hotelAds": [],
+    "popularTimesLiveText": null,
+    "popularTimesLivePercent": null,
+    "popularTimesHistogram": {},
+    "openingHours": [
+      {
+        "day": "Monday",
+        "hours": "9:30 AM to 9 PM"
+      },
+      {
+        "day": "Tuesday",
+        "hours": "9:30 AM to 9 PM"
+      },
+      {
+        "day": "Wednesday",
+        "hours": "9:30 AM to 9 PM"
+      },
+      {
+        "day": "Thursday",
+        "hours": "9:30 AM to 9 PM"
+      },
+      {
+        "day": "Friday",
+        "hours": "9:30 AM to 9 PM"
+      },
+      {
+        "day": "Saturday",
+        "hours": "9:30 AM to 9 PM"
+      },
+      {
+        "day": "Sunday",
+        "hours": "10 AM to 12 PM"
+      }
+    ],
+    "peopleAlsoSearch": [],
+    "placesTags": [],
+    "reviewsTags": [],
+    "additionalInfo": {
+      "Accessibility": [
+        {
+          "Wheelchair accessible entrance": true
+        },
+        {
+          "Wheelchair accessible restroom": true
+        },
+        {
+          "Wheelchair accessible seating": true
+        }
+      ],
+      "Amenities": [
+        {
+          "Gender-neutral restroom": true
+        }
+      ],
+      "Crowd": [
+        {
+          "LGBTQ+ friendly": true
+        }
+      ],
+      "Payments": [
+        {
+          "Debit cards": true
+        },
+        {
+          "NFC mobile payments": true
+        }
+      ],
+      "Children": [
+        {
+          "Nursing room": true
+        }
+      ],
+      "Parking": [
+        {
+          "Free street parking": true
+        }
+      ]
+    },
+    "gasPrices": [],
+    "url": "https://www.google.com/maps/search/?api=1&query=Suyash%20Dental%20Clinic&query_place_id=ChIJrZy41ca_wjsR4v3HQvCV408",
+    "searchPageUrl": "https://www.google.com/maps/search/dental%20implant%20Kothrud/@18.49531983968784,73.81870083931133,17z?hl=en",
+    "searchString": "dental implant Kothrud",
+    "language": "en",
+    "rank": 1,
+    "isAdvertisement": false,
+    "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnbhjXDrdgcOaMiNCGWh9zAbj-1V6j2tjhNNrz8SlmNAMYg1irqvM-l-LyO6_O--sGZlMRkd_ThmCx-gfJBYohh-g7jhCfSrOAqtJxD_clqmpgGNGsaM0tljIz8czWJVoLuQIaL=w408-h272-k-no",
+    "kgmid": "/g/1tgfbtpd"
+  },
+  {
+    "title": "Aesthedent Dental Clinic, Kothrud",
+    "subTitle": "एस्थेडेंट",
+    "description": null,
+    "price": null,
+    "categoryName": "Dental clinic",
+    "address": "No.5 First Floor, AJ Tower, above Irani Cafe, Dahanukar Colony, Kothrud, Pune, Maharashtra 411038, India",
+    "neighborhood": "Dahanukar Colony, Kothrud",
+    "street": "No.5 First Floor, AJ Tower, above Irani Cafe",
+    "city": "Pune",
+    "postalCode": "411038",
+    "state": "Maharashtra",
+    "countryCode": "IN",
+    "website": "https://www.aesthedentpune.com/",
+    "phone": "+91 93098 16336",
+    "phoneUnformatted": "+919309816336",
+    "claimThisBusiness": false,
+    "location": {
+      "lat": 18.497271,
+      "lng": 73.813467
+    },
+    "locatedIn": null,
+    "floor": null,
+    "plusCode": null,
+    "menu": null,
+    "servicesLink": null,
+    "totalScore": 5,
+    "permanentlyClosed": false,
+    "temporarilyClosed": false,
+    "placeId": "ChIJV70DlKS_wjsRnyi9iX7BnrU",
+    "categories": [
+      "Dental clinic",
+      "Cosmetic dentist",
+      "Dental implants periodontist",
+      "Dentist",
+      "Denture care center",
+      "Endodontist",
+      "Oral surgeon",
+      "Orthodontist",
+      "Prosthodontist"
+    ],
+    "fid": "0x3bc2bfa49403bd57:0xb59ec17e89bd289f",
+    "cid": "13087110316406155423",
+    "reviewsCount": 277,
+    "imagesCount": 36,
+    "imageCategories": [],
+    "scrapedAt": "2026-07-17T06:45:41.409Z",
+    "reserveTableUrl": null,
+    "googleFoodUrl": null,
+    "hotelStars": null,
+    "hotelDescription": null,
+    "checkInDate": null,
+    "checkOutDate": null,
+    "hotelAds": [],
+    "popularTimesLiveText": null,
+    "popularTimesLivePercent": null,
+    "popularTimesHistogram": {},
+    "openingHours": [
+      {
+        "day": "Monday",
+        "hours": "10 AM to 8 PM"
+      },
+      {
+        "day": "Tuesday",
+        "hours": "10 AM to 8 PM"
+      },
+      {
+        "day": "Wednesday",
+        "hours": "Closed"
+      },
+      {
+        "day": "Thursday",
+        "hours": "10 AM to 8 PM"
+      },
+      {
+        "day": "Friday",
+        "hours": "10 AM to 8 PM"
+      },
+      {
+        "day": "Saturday",
+        "hours": "10 AM to 8 PM"
+      },
+      {
+        "day": "Sunday",
+        "hours": "10 AM to 8 PM"
+      }
+    ],
+    "peopleAlsoSearch": [],
+    "placesTags": [],
+    "reviewsTags": [],
+    "additionalInfo": {
+      "Service options": [
+        {
+          "Onsite services": true
+        }
+      ],
+      "Accessibility": [
+        {
+          "Wheelchair accessible restroom": true
+        }
+      ],
+      "Amenities": [
+        {
+          "Gender-neutral restroom": true
+        },
+        {
+          "Restroom": true
+        }
+      ],
+      "Crowd": [
+        {
+          "LGBTQ+ friendly": true
+        }
+      ],
+      "Planning": [
+        {
+          "Appointments recommended": true
+        }
+      ],
+      "Payments": [
+        {
+          "Credit cards": true
+        },
+        {
+          "Debit cards": true
+        },
+        {
+          "Google Pay": true
+        },
+        {
+          "NFC mobile payments": true
+        }
+      ]
+    },
+    "gasPrices": [],
+    "url": "https://www.google.com/maps/search/?api=1&query=Aesthedent%20Dental%20Clinic%2C%20Kothrud&query_place_id=ChIJV70DlKS_wjsRnyi9iX7BnrU",
+    "searchPageUrl": "https://www.google.com/maps/search/dental%20implant%20Kothrud/@18.49531983968784,73.81870083931133,17z?hl=en",
+    "searchString": "dental implant Kothrud",
+    "language": "en",
+    "rank": 2,
+    "isAdvertisement": false,
+    "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlT7pCNsALnkCIslSjLyRgp94a0n7U0Rn-Zt7x6oUpI1S-fn9CRZVynQ1bAU-PIo9V8YM8VA3R14QnvrJbQzNoiR9X7BzoSN5hHhD7JQl5roDr2UwJzxzilBirqPxAk6mYDDjrXtKOWtvog=w408-h544-k-no",
+    "kgmid": "/g/11j2v_ph1x"
+  },
+  {
+    "title": "Novacare Dental",
+    "subTitle": "नोवाकारे",
+    "description": null,
+    "price": null,
+    "categoryName": "Dental clinic",
+    "address": "Shop no A/04,Damodar Villa Apts, Karve Rd, opp. Kothrud Bus Stand Road, near वीनस ट्रेडर्स, Kothrud, Pune, Maharashtra 411038, India",
+    "neighborhood": "Rahul Nagar, Kothrud",
+    "street": "Shop no A/04,Damodar Villa Apts, Karve Rd, opp. Kothrud Bus Stand Road, near वीनस ट्रेडर्स",
+    "city": "Pune",
+    "postalCode": "411038",
+    "state": "Maharashtra",
+    "countryCode": "IN",
+    "website": "https://www.novacaredentalpune.com/",
+    "phone": "+91 86240 36966",
+    "phoneUnformatted": "+918624036966",
+    "claimThisBusiness": false,
+    "location": {
+      "lat": 18.5001391,
+      "lng": 73.814438
+    },
+    "locatedIn": null,
+    "floor": null,
+    "plusCode": null,
+    "menu": null,
+    "servicesLink": null,
+    "totalScore": 5,
+    "permanentlyClosed": false,
+    "temporarilyClosed": false,
+    "placeId": "ChIJPdHwNZG_wjsRS0CimpQRbtw",
+    "categories": [
+      "Dental clinic",
+      "Cosmetic dentist",
+      "Dental hygienist",
+      "Dental implants periodontist",
+      "Dentist",
+      "Denture care center",
+      "Endodontist",
+      "Medical clinic",
+      "Oral and maxillofacial surgeon",
+      "Pediatric dentist",
+      "Teeth whitening service"
+    ],
+    "fid": "0x3bc2bf9135f0d13d:0xdc6e11949aa2404b",
+    "cid": "15883652265729474635",
+    "reviewsCount": 324,
+    "imagesCount": 163,
+    "imageCategories": [],
+    "scrapedAt": "2026-07-17T06:45:41.409Z",
+    "reserveTableUrl": null,
+    "googleFoodUrl": null,
+    "hotelStars": null,
+    "hotelDescription": null,
+    "checkInDate": null,
+    "checkOutDate": null,
+    "hotelAds": [],
+    "popularTimesLiveText": null,
+    "popularTimesLivePercent": null,
+    "popularTimesHistogram": {},
+    "openingHours": [
+      {
+        "day": "Monday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Tuesday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Wednesday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Thursday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Friday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Saturday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Sunday",
+        "hours": "Closed"
+      }
+    ],
+    "peopleAlsoSearch": [],
+    "placesTags": [],
+    "reviewsTags": [],
+    "additionalInfo": {
+      "From the business": [
+        {
+          "Identifies as women-owned": true
+        }
+      ],
+      "Service options": [
+        {
+          "Onsite services": true
+        }
+      ],
+      "Accessibility": [
+        {
+          "Wheelchair accessible entrance": true
+        },
+        {
+          "Wheelchair accessible parking lot": true
+        },
+        {
+          "Wheelchair accessible restroom": true
+        },
+        {
+          "Wheelchair accessible seating": true
+        }
+      ],
+      "Offerings": [
+        {
+          "Pediatric care": true
+        }
+      ],
+      "Amenities": [
+        {
+          "Restroom": true
+        }
+      ],
+      "Crowd": [
+        {
+          "LGBTQ+ friendly": true
+        }
+      ],
+      "Planning": [
+        {
+          "Appointment required": true
+        },
+        {
+          "Appointments recommended": true
+        }
+      ],
+      "Payments": [
+        {
+          "Credit cards": true
+        },
+        {
+          "Debit cards": true
+        },
+        {
+          "Google Pay": true
+        },
+        {
+          "NFC mobile payments": true
+        },
+        {
+          "Credit cards": true
+        }
+      ],
+      "Children": [
+        {
+          "Nursing room": true
+        }
+      ],
+      "Parking": [
+        {
+          "Free parking lot": true
+        },
+        {
+          "On-site parking": true
+        }
+      ]
+    },
+    "gasPrices": [],
+    "url": "https://www.google.com/maps/search/?api=1&query=Novacare%20Dental&query_place_id=ChIJPdHwNZG_wjsRS0CimpQRbtw",
+    "searchPageUrl": "https://www.google.com/maps/search/dental%20implant%20Kothrud/@18.49531983968784,73.81870083931133,17z?hl=en",
+    "searchString": "dental implant Kothrud",
+    "language": "en",
+    "rank": 3,
+    "isAdvertisement": false,
+    "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnldMPwan_HqYLYYjgGFjdh8pzaU1jSYhNWdRRTKASyOdqd6DBwOSxPQbiQ8hySOlnCcxv5uw_jIcxq4f_KQF_ReVxmNhyKwSEfVbYDftno642IHDk54tRgf1gf-ePcc5nQKHcx=w408-h408-k-no",
+    "kgmid": "/g/11mw7qkpyb"
+  },
+  {
+    "title": "Bright Smile Dental Clinic",
+    "subTitle": "ब्राइट",
+    "description": null,
+    "price": null,
+    "categoryName": "Dentist",
+    "address": "Ecstasy, Karishma road, above IndusInd Bank, Kothrud, Pune, Maharashtra 411038, India",
+    "neighborhood": "Kothrud",
+    "street": "Ecstasy, Karishma road, above IndusInd Bank",
+    "city": "Pune",
+    "postalCode": "411038",
+    "state": "Maharashtra",
+    "countryCode": "IN",
+    "website": "https://brightsmileclinic.org/",
+    "phone": "+91 94204 81441",
+    "phoneUnformatted": "+919420481441",
+    "claimThisBusiness": false,
+    "location": {
+      "lat": 18.5003059,
+      "lng": 73.8225633
+    },
+    "locatedIn": null,
+    "floor": null,
+    "plusCode": null,
+    "menu": null,
+    "servicesLink": null,
+    "totalScore": 5,
+    "permanentlyClosed": false,
+    "temporarilyClosed": false,
+    "placeId": "ChIJIVqQGZy_wjsRdnb36krAP1E",
+    "categories": [
+      "Dentist",
+      "Dental clinic",
+      "Dental implants periodontist",
+      "Dental implants provider",
+      "Endodontist",
+      "Pediatric dentist"
+    ],
+    "fid": "0x3bc2bf9c19905a21:0x513fc04aeaf77676",
+    "cid": "5854609468607133302",
+    "reviewsCount": 174,
+    "imagesCount": 71,
+    "imageCategories": [],
+    "scrapedAt": "2026-07-17T06:45:41.409Z",
+    "reserveTableUrl": null,
+    "googleFoodUrl": null,
+    "hotelStars": null,
+    "hotelDescription": null,
+    "checkInDate": null,
+    "checkOutDate": null,
+    "hotelAds": [],
+    "popularTimesLiveText": null,
+    "popularTimesLivePercent": null,
+    "popularTimesHistogram": {},
+    "openingHours": [
+      {
+        "day": "Monday",
+        "hours": "10:30 AM to 2 PM, 4:30 to 8:30 PM"
+      },
+      {
+        "day": "Tuesday",
+        "hours": "10:30 AM to 2 PM, 4:30 to 8:30 PM"
+      },
+      {
+        "day": "Wednesday",
+        "hours": "10:30 AM to 2 PM, 4:30 to 8:30 PM"
+      },
+      {
+        "day": "Thursday",
+        "hours": "10:30 AM to 2 PM, 4:30 to 8:30 PM"
+      },
+      {
+        "day": "Friday",
+        "hours": "10:30 AM to 2 PM, 4:30 to 8:30 PM"
+      },
+      {
+        "day": "Saturday",
+        "hours": "10:30 AM to 2 PM, 4:30 to 8:30 PM"
+      },
+      {
+        "day": "Sunday",
+        "hours": "10 AM to 1:30 PM"
+      }
+    ],
+    "peopleAlsoSearch": [],
+    "placesTags": [],
+    "reviewsTags": [],
+    "additionalInfo": {
+      "Accessibility": [
+        {
+          "Wheelchair accessible entrance": true
+        }
+      ],
+      "Offerings": [
+        {
+          "Pediatric care": true
+        }
+      ],
+      "Amenities": [
+        {
+          "Restroom": true
+        }
+      ],
+      "Crowd": [
+        {
+          "LGBTQ+ friendly": true
+        }
+      ],
+      "Planning": [
+        {
+          "Appointment required": true
+        },
+        {
+          "Appointments recommended": true
+        }
+      ],
+      "Payments": [
+        {
+          "Credit cards": true
+        },
+        {
+          "Debit cards": true
+        },
+        {
+          "Google Pay": true
+        },
+        {
+          "NFC mobile payments": true
+        }
+      ]
+    },
+    "gasPrices": [],
+    "url": "https://www.google.com/maps/search/?api=1&query=Bright%20Smile%20Dental%20Clinic&query_place_id=ChIJIVqQGZy_wjsRdnb36krAP1E",
+    "searchPageUrl": "https://www.google.com/maps/search/dental%20implant%20Kothrud/@18.49531983968784,73.81870083931133,17z?hl=en",
+    "searchString": "dental implant Kothrud",
+    "language": "en",
+    "rank": 4,
+    "isAdvertisement": false,
+    "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkm_Sb63TtdRVNJl96ZNovOy8hHRFjPSlLRFSpLDf5Ev9u49Zi__KyiPmcpiiDa2Ov0MWJZyCL-BcJKtF-Eo8_hooEjE3Cuz3tE4HKhfwOrMOYoFMUJA7A527RCsgbTk1rqyJny=w427-h240-k-no",
+    "kgmid": "/g/1tvdh7b_"
+  },
+  {
+    "title": "Odontoville Dental Clinic",
+    "subTitle": "ओडोनटोविले",
+    "description": null,
+    "price": null,
+    "categoryName": "Prosthodontist",
+    "address": "Office No 401, Saarrthi Success Square, Karve Rd, near Karve Putala, Paschimanagri, Kothrud, Pune, Maharashtra 411038, India",
+    "neighborhood": "Paschimanagri, Kothrud",
+    "street": "Office No 401, Saarrthi Success Square, Karve Rd, near Karve Putala",
+    "city": "Pune",
+    "postalCode": "411038",
+    "state": "Maharashtra",
+    "countryCode": "IN",
+    "website": "https://odontovilledental.in/",
+    "phone": "+91 93073 25967",
+    "phoneUnformatted": "+919307325967",
+    "claimThisBusiness": false,
+    "location": {
+      "lat": 18.5019538,
+      "lng": 73.8166342
+    },
+    "locatedIn": null,
+    "floor": null,
+    "plusCode": null,
+    "menu": null,
+    "servicesLink": null,
+    "totalScore": 5,
+    "permanentlyClosed": false,
+    "temporarilyClosed": false,
+    "placeId": "ChIJlwA14R-_wjsRPSkmXSSPg8k",
+    "categories": [
+      "Prosthodontist",
+      "Cosmetic dentist",
+      "Dental clinic",
+      "Dental implants periodontist",
+      "Dental implants provider",
+      "Dentist",
+      "Endodontist",
+      "Oral surgeon",
+      "Orthodontist"
+    ],
+    "fid": "0x3bc2bf1fe1350097:0xc9838f245d26293d",
+    "cid": "14520607009916987709",
+    "reviewsCount": 337,
+    "imagesCount": 88,
+    "imageCategories": [],
+    "scrapedAt": "2026-07-17T06:45:41.410Z",
+    "reserveTableUrl": null,
+    "googleFoodUrl": null,
+    "hotelStars": null,
+    "hotelDescription": null,
+    "checkInDate": null,
+    "checkOutDate": null,
+    "hotelAds": [],
+    "popularTimesLiveText": null,
+    "popularTimesLivePercent": null,
+    "popularTimesHistogram": {},
+    "openingHours": [
+      {
+        "day": "Monday",
+        "hours": "9 AM to 9 PM"
+      },
+      {
+        "day": "Tuesday",
+        "hours": "9 AM to 9 PM"
+      },
+      {
+        "day": "Wednesday",
+        "hours": "9 AM to 9 PM"
+      },
+      {
+        "day": "Thursday",
+        "hours": "9 AM to 9 PM"
+      },
+      {
+        "day": "Friday",
+        "hours": "9 AM to 9 PM"
+      },
+      {
+        "day": "Saturday",
+        "hours": "9 AM to 9 PM"
+      },
+      {
+        "day": "Sunday",
+        "hours": "9 AM to 9 PM"
+      }
+    ],
+    "peopleAlsoSearch": [],
+    "placesTags": [],
+    "reviewsTags": [],
+    "additionalInfo": {
+      "From the business": [
+        {
+          "Identifies as women-owned": true
+        }
+      ],
+      "Service options": [
+        {
+          "Onsite services": true
+        }
+      ],
+      "Accessibility": [
+        {
+          "Wheelchair accessible entrance": true
+        },
+        {
+          "Wheelchair accessible parking lot": true
+        },
+        {
+          "Wheelchair accessible restroom": true
+        }
+      ],
+      "Amenities": [
+        {
+          "Restroom": true
+        }
+      ],
+      "Crowd": [
+        {
+          "LGBTQ+ friendly": true
+        }
+      ],
+      "Planning": [
+        {
+          "Appointment required": true
+        },
+        {
+          "Appointments recommended": true
+        }
+      ],
+      "Payments": [
+        {
+          "Credit cards": true
+        },
+        {
+          "Debit cards": true
+        },
+        {
+          "Google Pay": true
+        },
+        {
+          "NFC mobile payments": true
+        },
+        {
+          "Credit cards": true
+        }
+      ],
+      "Children": [
+        {
+          "Nursing room": true
+        }
+      ],
+      "Parking": [
+        {
+          "Free parking lot": true
+        }
+      ]
+    },
+    "gasPrices": [],
+    "url": "https://www.google.com/maps/search/?api=1&query=Odontoville%20Dental%20Clinic&query_place_id=ChIJlwA14R-_wjsRPSkmXSSPg8k",
+    "searchPageUrl": "https://www.google.com/maps/search/dental%20implant%20Kothrud/@18.49531983968784,73.81870083931133,17z?hl=en",
+    "searchString": "dental implant Kothrud",
+    "language": "en",
+    "rank": 5,
+    "isAdvertisement": false,
+    "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnRpchHuqucAB2SEoNkI-ypCcDKSPRpJsANwxNYSh6i5Mv2qB0sKO5Sbmg_2bN5rwo7wKb9wLJGO6o8XEkdbscxpunOp8jXKNxjB78JoLb_2Ms2eAQTV8dkjEfyztpfk4dsN83G99jVyPsf=w408-h544-k-no",
+    "kgmid": "/g/11qy7qnnlw"
+  },
+  {
+    "title": "Dr Mukesh Dental Solutions - Advanced Implant & CBCT Centre",
+    "subTitle": "डॉ मुकेशस डेंटल सोलुटिओंस",
+    "description": null,
+    "price": null,
+    "categoryName": "Dentist",
+    "address": "Saarrthi Success Square, 210, Karve Rd, nr. Karve putla, above Tanishq showroom, Paschimanagri, Kothrud, Pune, Maharashtra 411038, India",
+    "neighborhood": "Paschimanagri, Kothrud",
+    "street": "Saarrthi Success Square, 210, Karve Rd, nr. Karve putla, above Tanishq showroom",
+    "city": "Pune",
+    "postalCode": "411038",
+    "state": "Maharashtra",
+    "countryCode": "IN",
+    "website": "http://drmukeshdental.com/",
+    "phone": "+91 74472 86845",
+    "phoneUnformatted": "+917447286845",
+    "claimThisBusiness": false,
+    "location": {
+      "lat": 18.5019319,
+      "lng": 73.816568
+    },
+    "locatedIn": null,
+    "floor": null,
+    "plusCode": null,
+    "menu": null,
+    "servicesLink": null,
+    "totalScore": 4.9,
+    "permanentlyClosed": false,
+    "temporarilyClosed": false,
+    "placeId": "ChIJx6kxM76_wjsRVFD6J-jpeuI",
+    "categories": [
+      "Dentist",
+      "Cosmetic dentist",
+      "Dental clinic",
+      "Dental implants periodontist",
+      "Emergency dental service",
+      "Oral and maxillofacial surgeon",
+      "Orthodontist",
+      "Pediatric dentist",
+      "Prosthodontist",
+      "Teeth whitening service"
+    ],
+    "fid": "0x3bc2bfbe3331a9c7:0xe27ae9e827fa5054",
+    "cid": "16319613383042814036",
+    "reviewsCount": 203,
+    "imagesCount": 125,
+    "imageCategories": [],
+    "scrapedAt": "2026-07-17T06:45:41.410Z",
+    "reserveTableUrl": null,
+    "googleFoodUrl": null,
+    "hotelStars": null,
+    "hotelDescription": null,
+    "checkInDate": null,
+    "checkOutDate": null,
+    "hotelAds": [],
+    "popularTimesLiveText": null,
+    "popularTimesLivePercent": null,
+    "popularTimesHistogram": {},
+    "openingHours": [
+      {
+        "day": "Monday",
+        "hours": "10 AM to 2 PM, 4 to 9 PM"
+      },
+      {
+        "day": "Tuesday",
+        "hours": "10 AM to 2 PM, 4 to 9 PM"
+      },
+      {
+        "day": "Wednesday",
+        "hours": "10 AM to 2 PM, 4 to 9 PM"
+      },
+      {
+        "day": "Thursday",
+        "hours": "10 AM to 2 PM, 4 to 9 PM"
+      },
+      {
+        "day": "Friday",
+        "hours": "10 AM to 2 PM, 4 to 9 PM"
+      },
+      {
+        "day": "Saturday",
+        "hours": "10 AM to 2 PM, 4 to 9 PM"
+      },
+      {
+        "day": "Sunday",
+        "hours": "Closed"
+      }
+    ],
+    "peopleAlsoSearch": [],
+    "placesTags": [],
+    "reviewsTags": [],
+    "additionalInfo": {
+      "Service options": [
+        {
+          "Onsite services": true
+        }
+      ],
+      "Accessibility": [
+        {
+          "Wheelchair accessible entrance": false
+        }
+      ],
+      "Offerings": [
+        {
+          "Cosmetic dentistry": true
+        },
+        {
+          "Emergency services": true
+        },
+        {
+          "Pediatric care": true
+        },
+        {
+          "Sedation dentistry": true
+        }
+      ],
+      "Amenities": [
+        {
+          "Gender-neutral restroom": true
+        },
+        {
+          "Restroom": true
+        }
+      ],
+      "Crowd": [
+        {
+          "LGBTQ+ friendly": true
+        }
+      ],
+      "Planning": [
+        {
+          "Appointment required": true
+        },
+        {
+          "Appointments recommended": true
+        }
+      ],
+      "Payments": [
+        {
+          "Credit cards": true
+        },
+        {
+          "Debit cards": true
+        },
+        {
+          "Google Pay": true
+        },
+        {
+          "NFC mobile payments": true
+        }
+      ],
+      "Children": [
+        {
+          "Nursing room": true
+        }
+      ],
+      "Parking": [
+        {
+          "Free street parking": true
+        }
+      ]
+    },
+    "gasPrices": [],
+    "url": "https://www.google.com/maps/search/?api=1&query=Dr%20Mukesh%20Dental%20Solutions%20-%20Advanced%20Implant%20%26%20CBCT%20Centre&query_place_id=ChIJx6kxM76_wjsRVFD6J-jpeuI",
+    "searchPageUrl": "https://www.google.com/maps/search/dental%20implant%20Kothrud/@18.49531983968784,73.81870083931133,17z?hl=en",
+    "searchString": "dental implant Kothrud",
+    "language": "en",
+    "rank": 6,
+    "isAdvertisement": false,
+    "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlawNC9S2Mz9nsHn_7pqtyUILi9rtGGzXZ-IuA7oO2RLM-FeVQc7m1EAZFEBL0-GREMfaSDkQjlW_GFgX8pJnpfQl1ktsfQUIk58KeNSEP81Ja0qVXjgKzlw4179nxIfD400e42=w408-h306-k-no",
+    "kgmid": "/g/1pv5v55q2"
+  },
+  {
+    "title": "dentist",
+    "subTitle": "देन्तिस्त",
+    "description": null,
+    "price": null,
+    "categoryName": "Dental clinic",
+    "address": "3rd Floor Payko Tower, Karve Statue, Survey No. 147/8, above Dominos, Mayur Colony, Kothrud, Pune, Maharashtra 411038, India",
+    "neighborhood": "Mayur Colony, Kothrud",
+    "street": "3rd Floor Payko Tower, Karve Statue, Survey No. 147/8, above Dominos",
+    "city": "Pune",
+    "postalCode": "411038",
+    "state": "Maharashtra",
+    "countryCode": "IN",
+    "website": "https://www.sabkadentist.com/dental-clinics-in-pune/kothrud/",
+    "phone": "+91 82918 46989",
+    "phoneUnformatted": "+918291846989",
+    "claimThisBusiness": false,
+    "location": {
+      "lat": 18.5023479,
+      "lng": 73.8151801
+    },
+    "locatedIn": null,
+    "floor": null,
+    "plusCode": null,
+    "menu": null,
+    "servicesLink": null,
+    "totalScore": 4.6,
+    "permanentlyClosed": false,
+    "temporarilyClosed": false,
+    "placeId": "ChIJhXjcicC_wjsReXpv3MIQ9d8",
+    "categories": [
+      "Dental clinic",
+      "Cosmetic dentist",
+      "Dental implants periodontist",
+      "Dentist",
+      "Denture care center",
+      "Endodontist",
+      "Oral surgeon",
+      "Orthodontist",
+      "Periodontist",
+      "Teeth whitening service"
+    ],
+    "fid": "0x3bc2bfc089dc7885:0xdff510c2dc6f7a79",
+    "cid": "16137823268860033657",
+    "reviewsCount": 1924,
+    "imagesCount": 48,
+    "imageCategories": [],
+    "scrapedAt": "2026-07-17T06:45:41.410Z",
+    "reserveTableUrl": null,
+    "googleFoodUrl": null,
+    "hotelStars": null,
+    "hotelDescription": null,
+    "checkInDate": null,
+    "checkOutDate": null,
+    "hotelAds": [],
+    "popularTimesLiveText": null,
+    "popularTimesLivePercent": null,
+    "popularTimesHistogram": {},
+    "openingHours": [
+      {
+        "day": "Monday",
+        "hours": "11 AM to 8 PM"
+      },
+      {
+        "day": "Tuesday",
+        "hours": "11 AM to 8 PM"
+      },
+      {
+        "day": "Wednesday",
+        "hours": "11 AM to 8 PM"
+      },
+      {
+        "day": "Thursday",
+        "hours": "11 AM to 8 PM"
+      },
+      {
+        "day": "Friday",
+        "hours": "11 AM to 8 PM"
+      },
+      {
+        "day": "Saturday",
+        "hours": "11 AM to 8 PM"
+      },
+      {
+        "day": "Sunday",
+        "hours": "Closed"
+      }
+    ],
+    "peopleAlsoSearch": [],
+    "placesTags": [],
+    "reviewsTags": [],
+    "additionalInfo": {
+      "Service options": [
+        {
+          "Onsite services": true
+        }
+      ],
+      "Accessibility": [
+        {
+          "Wheelchair accessible seating": true
+        },
+        {
+          "Wheelchair accessible entrance": false
+        },
+        {
+          "Wheelchair accessible restroom": false
+        }
+      ],
+      "Amenities": [
+        {
+          "Gender-neutral restroom": true
+        },
+        {
+          "Restroom": true
+        }
+      ],
+      "Crowd": [
+        {
+          "LGBTQ+ friendly": true
+        }
+      ],
+      "Planning": [
+        {
+          "Appointment required": true
+        },
+        {
+          "Appointments recommended": true
+        }
+      ],
+      "Payments": [
+        {
+          "Credit cards": true
+        },
+        {
+          "Debit cards": true
+        },
+        {
+          "Google Pay": true
+        },
+        {
+          "NFC mobile payments": true
+        }
+      ]
+    },
+    "gasPrices": [],
+    "url": "https://www.google.com/maps/search/?api=1&query=dentist&query_place_id=ChIJhXjcicC_wjsReXpv3MIQ9d8",
+    "searchPageUrl": "https://www.google.com/maps/search/dental%20implant%20Kothrud/@18.49531983968784,73.81870083931133,17z?hl=en",
+    "searchString": "dental implant Kothrud",
+    "language": "en",
+    "rank": 7,
+    "isAdvertisement": false,
+    "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWllu_fE3mpEpEa7IRTsmHftlQIiN4LICxVNjgqjiLxqWkBzt-6IGU7w0RXpaKyXxF3suVCeYJ0e9uk419Fq4aq4hg7dwgO1vkulUhzW92cxaioFupwCvp7s2VgTpSrAPO72_dlXzqzM44I=w426-h240-k-no",
+    "kgmid": "/g/1ygbbfvt3"
+  },
+  {
+    "title": "The Dental House",
+    "subTitle": "द डेंटल हाउस",
+    "description": null,
+    "price": null,
+    "categoryName": "Dental clinic",
+    "address": "Fountain Head Apartment, Flat no.10, 2nd floor,, Opposite Karishma Housing Society, Kothrud, Pune, Maharashtra 411038, India",
+    "neighborhood": "Sangam Shree Society, Kothrud",
+    "street": "Fountain Head Apartment, Flat no.10, 2nd floor,, Opposite Karishma Housing Society, Kothrud",
+    "city": "Pune",
+    "postalCode": "411038",
+    "state": "Maharashtra",
+    "countryCode": "IN",
+    "website": "http://www.thedentalhousepune.com/",
+    "phone": "+91 93683 00300",
+    "phoneUnformatted": "+919368300300",
+    "claimThisBusiness": false,
+    "location": {
+      "lat": 18.5019966,
+      "lng": 73.8216654
+    },
+    "locatedIn": null,
+    "floor": null,
+    "plusCode": null,
+    "menu": null,
+    "servicesLink": null,
+    "totalScore": 4.9,
+    "permanentlyClosed": false,
+    "temporarilyClosed": false,
+    "placeId": "ChIJXd5MGeu_wjsRvv8_qEU4EiM",
+    "categories": [
+      "Dental clinic"
+    ],
+    "fid": "0x3bc2bfeb194cde5d:0x23123845a83fffbe",
+    "cid": "2527144212734934974",
+    "reviewsCount": 91,
+    "imagesCount": 34,
+    "imageCategories": [],
+    "scrapedAt": "2026-07-17T06:45:41.410Z",
+    "reserveTableUrl": null,
+    "googleFoodUrl": null,
+    "hotelStars": null,
+    "hotelDescription": null,
+    "checkInDate": null,
+    "checkOutDate": null,
+    "hotelAds": [],
+    "popularTimesLiveText": null,
+    "popularTimesLivePercent": null,
+    "popularTimesHistogram": {},
+    "openingHours": [
+      {
+        "day": "Monday",
+        "hours": "10 AM to 7 PM"
+      },
+      {
+        "day": "Tuesday",
+        "hours": "10 AM to 7 PM"
+      },
+      {
+        "day": "Wednesday",
+        "hours": "10 AM to 7 PM"
+      },
+      {
+        "day": "Thursday",
+        "hours": "10 AM to 7 PM"
+      },
+      {
+        "day": "Friday",
+        "hours": "10 AM to 7 PM"
+      },
+      {
+        "day": "Saturday",
+        "hours": "10 AM to 7 PM"
+      },
+      {
+        "day": "Sunday",
+        "hours": "Closed"
+      }
+    ],
+    "peopleAlsoSearch": [],
+    "placesTags": [],
+    "reviewsTags": [],
+    "additionalInfo": {
+      "From the business": [
+        {
+          "Identifies as women-owned": true
+        }
+      ],
+      "Accessibility": [
+        {
+          "Wheelchair accessible restroom": false
+        },
+        {
+          "Wheelchair accessible seating": false
+        }
+      ],
+      "Amenities": [
+        {
+          "Gender-neutral restroom": true
+        },
+        {
+          "Restroom": true
+        }
+      ],
+      "Crowd": [
+        {
+          "LGBTQ+ friendly": true
+        }
+      ],
+      "Planning": [
+        {
+          "Appointment required": true
+        },
+        {
+          "Appointments recommended": true
+        }
+      ],
+      "Payments": [
+        {
+          "Credit cards": true
+        },
+        {
+          "Debit cards": true
+        },
+        {
+          "Google Pay": true
+        },
+        {
+          "NFC mobile payments": true
+        }
+      ],
+      "Children": [
+        {
+          "Nursing room": true
+        }
+      ]
+    },
+    "gasPrices": [],
+    "url": "https://www.google.com/maps/search/?api=1&query=The%20Dental%20House&query_place_id=ChIJXd5MGeu_wjsRvv8_qEU4EiM",
+    "searchPageUrl": "https://www.google.com/maps/search/dental%20implant%20Kothrud/@18.49531983968784,73.81870083931133,17z?hl=en",
+    "searchString": "dental implant Kothrud",
+    "language": "en",
+    "rank": 8,
+    "isAdvertisement": false,
+    "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkgu4EGpslUEcYiVguww79Qe_tgd6TiMOeLHqYo8JvfBEeL-kAZktcUDY6CY74Xw9qPlhh72BJDz2VHLnDvyfWL3MCdm081ESthglw9IFgMttLwo4wXTAeDmxbjpjfHeyPuoFTexQ=w408-h408-k-no",
+    "kgmid": "/g/11gf5kszwk"
+  },
+  {
+    "title": "Mint Dentistry Pune",
+    "subTitle": "मिनट डेंटिस्ट्री पुणे",
+    "description": null,
+    "price": null,
+    "categoryName": "Dental clinic",
+    "address": "Shreedatta building, 202 B, Late GA Kulkarni Path, opp. karishma society, Sangam Shree Society, Kothrud, Pune, Maharashtra 411038, India",
+    "neighborhood": "Sangam Shree Society, Kothrud",
+    "street": "Shreedatta building, 202 B, Late GA Kulkarni Path, opp. karishma society",
+    "city": "Pune",
+    "postalCode": "411038",
+    "state": "Maharashtra",
+    "countryCode": "IN",
+    "website": "https://sites.google.com/view/mint-dentistry-pune/",
+    "phone": "+91 90051 68008",
+    "phoneUnformatted": "+919005168008",
+    "claimThisBusiness": false,
+    "location": {
+      "lat": 18.5024475,
+      "lng": 73.8215399
+    },
+    "locatedIn": null,
+    "floor": null,
+    "plusCode": null,
+    "menu": null,
+    "servicesLink": null,
+    "totalScore": 5,
+    "permanentlyClosed": false,
+    "temporarilyClosed": false,
+    "placeId": "ChIJr9shxqS_wjsRurOJHSEz4j8",
+    "categories": [
+      "Dental clinic"
+    ],
+    "fid": "0x3bc2bfa4c621dbaf:0x3fe233211d89b3ba",
+    "cid": "4603297986448569274",
+    "reviewsCount": 153,
+    "imagesCount": 63,
+    "imageCategories": [],
+    "scrapedAt": "2026-07-17T06:45:41.410Z",
+    "reserveTableUrl": null,
+    "googleFoodUrl": null,
+    "hotelStars": null,
+    "hotelDescription": null,
+    "checkInDate": null,
+    "checkOutDate": null,
+    "hotelAds": [],
+    "popularTimesLiveText": null,
+    "popularTimesLivePercent": null,
+    "popularTimesHistogram": {},
+    "openingHours": [
+      {
+        "day": "Monday",
+        "hours": "10 AM to 8 PM"
+      },
+      {
+        "day": "Tuesday",
+        "hours": "10 AM to 8 PM"
+      },
+      {
+        "day": "Wednesday",
+        "hours": "10 AM to 8 PM"
+      },
+      {
+        "day": "Thursday",
+        "hours": "10 AM to 8 PM"
+      },
+      {
+        "day": "Friday",
+        "hours": "10 AM to 8 PM"
+      },
+      {
+        "day": "Saturday",
+        "hours": "10 AM to 8 PM"
+      },
+      {
+        "day": "Sunday",
+        "hours": "Closed"
+      }
+    ],
+    "peopleAlsoSearch": [],
+    "placesTags": [],
+    "reviewsTags": [],
+    "additionalInfo": {
+      "From the business": [
+        {
+          "Identifies as women-owned": true
+        }
+      ],
+      "Service options": [
+        {
+          "Onsite services": false
+        }
+      ],
+      "Offerings": [
+        {
+          "Cosmetic dentistry": true
+        },
+        {
+          "Pediatric care": true
+        },
+        {
+          "Sedation dentistry": true
+        }
+      ],
+      "Amenities": [
+        {
+          "Restroom": true
+        }
+      ],
+      "Crowd": [
+        {
+          "LGBTQ+ friendly": true
+        }
+      ],
+      "Planning": [
+        {
+          "Appointments recommended": true
+        }
+      ],
+      "Payments": [
+        {
+          "Credit cards": true
+        },
+        {
+          "Debit cards": true
+        },
+        {
+          "Google Pay": true
+        },
+        {
+          "NFC mobile payments": true
+        }
+      ],
+      "Children": [
+        {
+          "Nursing room": true
+        }
+      ]
+    },
+    "gasPrices": [],
+    "url": "https://www.google.com/maps/search/?api=1&query=Mint%20Dentistry%20Pune&query_place_id=ChIJr9shxqS_wjsRurOJHSEz4j8",
+    "searchPageUrl": "https://www.google.com/maps/search/dental%20implant%20Kothrud/@18.49531983968784,73.81870083931133,17z?hl=en",
+    "searchString": "dental implant Kothrud",
+    "language": "en",
+    "rank": 9,
+    "isAdvertisement": false,
+    "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkx-xNP0cQo5Q0YLyB2ivpAguEQUnv0VJte7HM7I4dH_3VtoecAqS6eVClk-gXbpXHu_vnYVggXN0Ov3uHJYj9G3nqcaoWWGolK_7cfEwBd6BXrDyFZ3PLkpTv_jGoiofWWLz-7sj_wcbtk=w408-h725-k-no",
+    "kgmid": "/g/11k4tzsx9v"
+  },
+  {
+    "title": "Perfect Smile Dental Clinic® – Dental Clinic in Kothrud",
+    "subTitle": "परफेक्ट स्माइल",
+    "description": null,
+    "price": null,
+    "categoryName": "Dental clinic",
+    "address": "Office No.3,Suvidha Corner,Sheelavihar Colony,Karve Rd,Near Kimaya Hotel,Erandwane, Kothrud, Pune, Maharashtra 411038, India",
+    "neighborhood": "Kothrud",
+    "street": "Office No.3,Suvidha Corner,Sheelavihar Colony,Karve Rd,Near Kimaya Hotel,Erandwane",
+    "city": "Pune",
+    "postalCode": "411038",
+    "state": "Maharashtra",
+    "countryCode": "IN",
+    "website": "http://www.perfectsmiledentalclinic.in/",
+    "phone": "+91 96073 51425",
+    "phoneUnformatted": "+919607351425",
+    "claimThisBusiness": false,
+    "location": {
+      "lat": 18.5051741,
+      "lng": 73.8226295
+    },
+    "locatedIn": null,
+    "floor": null,
+    "plusCode": null,
+    "menu": null,
+    "servicesLink": null,
+    "totalScore": 4.9,
+    "permanentlyClosed": false,
+    "temporarilyClosed": false,
+    "placeId": "ChIJKZMhld--wjsRuvQ9g3f70aY",
+    "categories": [
+      "Dental clinic",
+      "Cosmetic dentist",
+      "Dental implants periodontist",
+      "Dental implants provider",
+      "Dentist",
+      "Emergency dental service",
+      "Endodontist",
+      "Pediatric dentist"
+    ],
+    "fid": "0x3bc2bedf95219329:0xa6d1fb77833df4ba",
+    "cid": "12020665371150120122",
+    "reviewsCount": 508,
+    "imagesCount": 156,
+    "imageCategories": [],
+    "scrapedAt": "2026-07-17T06:45:41.410Z",
+    "reserveTableUrl": null,
+    "googleFoodUrl": null,
+    "hotelStars": null,
+    "hotelDescription": null,
+    "checkInDate": null,
+    "checkOutDate": null,
+    "hotelAds": [],
+    "popularTimesLiveText": null,
+    "popularTimesLivePercent": null,
+    "popularTimesHistogram": {},
+    "openingHours": [
+      {
+        "day": "Monday",
+        "hours": "9:30 AM to 1:30 PM, 5 to 9 PM"
+      },
+      {
+        "day": "Tuesday",
+        "hours": "9:30 AM to 1:30 PM, 5 to 9 PM"
+      },
+      {
+        "day": "Wednesday",
+        "hours": "9:30 AM to 1:30 PM, 5 to 9 PM"
+      },
+      {
+        "day": "Thursday",
+        "hours": "9:30 AM to 1:30 PM, 5 to 9 PM"
+      },
+      {
+        "day": "Friday",
+        "hours": "9:30 AM to 1:30 PM, 5 to 9 PM"
+      },
+      {
+        "day": "Saturday",
+        "hours": "9:30 AM to 1:30 PM, 5 to 9 PM"
+      },
+      {
+        "day": "Sunday",
+        "hours": "Closed"
+      }
+    ],
+    "additionalOpeningHours": {
+      "Senior hours": [
+        {
+          "day": "Monday",
+          "hours": "10 AM–1:30 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "10 AM–1:30 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "10 AM–1:30 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "10 AM–1:30 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "10 AM–1:30 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "10 AM–1:30 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ]
+    },
+    "peopleAlsoSearch": [],
+    "placesTags": [],
+    "reviewsTags": [],
+    "additionalInfo": {
+      "Service options": [
+        {
+          "Onsite services": false
+        }
+      ],
+      "Accessibility": [
+        {
+          "Wheelchair accessible entrance": false
+        },
+        {
+          "Wheelchair accessible parking lot": false
+        },
+        {
+          "Wheelchair accessible restroom": false
+        },
+        {
+          "Wheelchair accessible seating": false
+        }
+      ],
+      "Offerings": [
+        {
+          "Cosmetic dentistry": true
+        },
+        {
+          "Emergency services": true
+        },
+        {
+          "Pediatric care": true
+        }
+      ],
+      "Amenities": [
+        {
+          "Gender-neutral restroom": true
+        },
+        {
+          "Restroom": true
+        }
+      ],
+      "Crowd": [
+        {
+          "LGBTQ+ friendly": true
+        }
+      ],
+      "Planning": [
+        {
+          "Appointment required": true
+        },
+        {
+          "Appointments recommended": true
+        }
+      ],
+      "Payments": [
+        {
+          "Credit cards": true
+        },
+        {
+          "Debit cards": true
+        },
+        {
+          "Google Pay": true
+        },
+        {
+          "NFC mobile payments": true
+        }
+      ],
+      "Parking": [
+        {
+          "Free street parking": true
+        },
+        {
+          "On-site parking": true
+        }
+      ]
+    },
+    "gasPrices": [],
+    "url": "https://www.google.com/maps/search/?api=1&query=Perfect%20Smile%20Dental%20Clinic%C2%AE%20%E2%80%93%20Dental%20Clinic%20in%20Kothrud&query_place_id=ChIJKZMhld--wjsRuvQ9g3f70aY",
+    "searchPageUrl": "https://www.google.com/maps/search/dental%20implant%20Kothrud/@18.49531983968784,73.81870083931133,17z?hl=en",
+    "searchString": "dental implant Kothrud",
+    "language": "en",
+    "rank": 11,
+    "isAdvertisement": false,
+    "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlUbSuGTm4eLfcb5fjwQBmImU3Kz5z88UTDYAC7PFBxZMSWhh9rK-2EhSQvXs8NqeMy-L8YLnjnrdaxE5c9XNOyVPQPLYxQ-2099HXqppUqX-rBs6Lgow00DTusnvHAe4016tLrJo40EG_C=w408-h302-k-no",
+    "kgmid": "/g/11ggr8t3x6"
+  },
+  {
+    "title": "Dr. Sneha Rachha | Dental Implant &Cosmetic Dentist in Kothrud Pune",
+    "subTitle": "डॉ. स्नेहा रचा | डेंटल इंप्लांट &कॉस्मेटिक डेंटिस्ट इन कोथरुड पुणे",
+    "description": null,
+    "price": null,
+    "categoryName": "Dental implants provider",
+    "address": "3rd Floor, Success Square, 307, Karve Rd, above Tanishq Showroom Karve Putala, Paschimanagri, Kothrud, Pune, Maharashtra 411038, India",
+    "neighborhood": "Paschimanagri, Kothrud",
+    "street": "3rd Floor, Success Square, 307, Karve Rd, above Tanishq Showroom Karve Putala",
+    "city": "Pune",
+    "postalCode": "411038",
+    "state": "Maharashtra",
+    "countryCode": "IN",
+    "website": "https://www.soulfuldental.com/about-dr-sneha-rachha/",
+    "phone": "+91 94050 45454",
+    "phoneUnformatted": "+919405045454",
+    "claimThisBusiness": false,
+    "location": {
+      "lat": 18.5019843,
+      "lng": 73.816468
+    },
+    "locatedIn": null,
+    "floor": null,
+    "plusCode": null,
+    "menu": null,
+    "servicesLink": null,
+    "totalScore": 5,
+    "permanentlyClosed": false,
+    "temporarilyClosed": false,
+    "placeId": "ChIJDTQH4rW_wjsROnm8ic5ds68",
+    "categories": [
+      "Dental implants provider",
+      "Cosmetic dentist",
+      "Dental clinic",
+      "Dentist"
+    ],
+    "fid": "0x3bc2bfb5e207340d:0xafb35dce89bc793a",
+    "cid": "12660566119124072762",
+    "reviewsCount": 22,
+    "imagesCount": 37,
+    "imageCategories": [],
+    "scrapedAt": "2026-07-17T06:45:41.411Z",
+    "reserveTableUrl": null,
+    "googleFoodUrl": null,
+    "hotelStars": null,
+    "hotelDescription": null,
+    "checkInDate": null,
+    "checkOutDate": null,
+    "hotelAds": [],
+    "popularTimesLiveText": null,
+    "popularTimesLivePercent": null,
+    "popularTimesHistogram": {},
+    "openingHours": [
+      {
+        "day": "Monday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Tuesday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Wednesday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Thursday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Friday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Saturday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Sunday",
+        "hours": "Closed"
+      }
+    ],
+    "peopleAlsoSearch": [],
+    "placesTags": [],
+    "reviewsTags": [],
+    "additionalInfo": {
+      "From the business": [
+        {
+          "Identifies as women-owned": true
+        }
+      ],
+      "Service options": [
+        {
+          "Onsite services": false
+        }
+      ],
+      "Accessibility": [
+        {
+          "Wheelchair accessible entrance": true
+        },
+        {
+          "Wheelchair accessible parking lot": true
+        },
+        {
+          "Wheelchair accessible restroom": true
+        },
+        {
+          "Wheelchair accessible seating": true
+        }
+      ],
+      "Amenities": [
+        {
+          "Gender-neutral restroom": true
+        }
+      ],
+      "Crowd": [
+        {
+          "LGBTQ+ friendly": true
+        }
+      ],
+      "Payments": [
+        {
+          "Credit cards": true
+        },
+        {
+          "Debit cards": true
+        },
+        {
+          "NFC mobile payments": true
+        },
+        {
+          "Credit cards": true
+        }
+      ],
+      "Children": [
+        {
+          "Nursing room": true
+        }
+      ],
+      "Parking": [
+        {
+          "Free parking garage": true
+        },
+        {
+          "Free parking lot": true
+        },
+        {
+          "Free street parking": true
+        },
+        {
+          "On-site parking": true
+        }
+      ]
+    },
+    "gasPrices": [],
+    "url": "https://www.google.com/maps/search/?api=1&query=Dr.%20Sneha%20Rachha%20%7C%20Dental%20Implant%20%26Cosmetic%20Dentist%20in%20Kothrud%20Pune&query_place_id=ChIJDTQH4rW_wjsROnm8ic5ds68",
+    "searchPageUrl": "https://www.google.com/maps/search/dental%20implant%20Kothrud/@18.49531983968784,73.81870083931133,17z?hl=en",
+    "searchString": "dental implant Kothrud",
+    "language": "en",
+    "rank": 12,
+    "isAdvertisement": false,
+    "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkjKXiP7xzJJSYMmUxG_NXXOKgYPcFvwO6wj3PKVznUG4ZF0w8ItFUKj_z-zp2w_aQenLpPh-favnDiTIEAT9O3fQoU5Czv-84Cziy_EBZ9EVhjAWD_MUV2nr4h0u2qXGuwPZPQZvWEaqZn=w426-h240-k-no",
+    "kgmid": "/g/11lf2m9jq9"
+  },
+  {
+    "title": "PAN DENTAL CLINIC",
+    "subTitle": "पैन डेंटल क्लिनिक",
+    "description": null,
+    "price": null,
+    "categoryName": "Dental clinic",
+    "address": "Phase 2, Building 'O, Shop no. 4, Pinnac Memories, near Kokan Express, Kothrud, Pune, Maharashtra 411052, India",
+    "neighborhood": "Paschimanagri, Kothrud",
+    "street": "Phase 2, Building 'O, Shop no. 4, Pinnac Memories, near Kokan Express",
+    "city": "Pune",
+    "postalCode": "411052",
+    "state": "Maharashtra",
+    "countryCode": "IN",
+    "website": "https://pandentalclinic.com/",
+    "phone": "+91 87673 96669",
+    "phoneUnformatted": "+918767396669",
+    "claimThisBusiness": false,
+    "location": {
+      "lat": 18.4974367,
+      "lng": 73.8168644
+    },
+    "locatedIn": null,
+    "floor": null,
+    "plusCode": null,
+    "menu": null,
+    "servicesLink": null,
+    "totalScore": 5,
+    "permanentlyClosed": false,
+    "temporarilyClosed": false,
+    "placeId": "ChIJIdQW5FG_wjsRplx9p5p4YCA",
+    "categories": [
+      "Dental clinic",
+      "Cosmetic dentist",
+      "Dental implants periodontist",
+      "Dental implants provider",
+      "Dentist",
+      "Denture care center",
+      "Emergency dental service",
+      "Endodontist",
+      "Prosthodontist",
+      "Teeth whitening service"
+    ],
+    "fid": "0x3bc2bf51e416d421:0x2060789aa77d5ca6",
+    "cid": "2332997212608224422",
+    "reviewsCount": 78,
+    "imagesCount": 16,
+    "imageCategories": [],
+    "scrapedAt": "2026-07-17T06:45:41.411Z",
+    "reserveTableUrl": null,
+    "googleFoodUrl": null,
+    "hotelStars": null,
+    "hotelDescription": null,
+    "checkInDate": null,
+    "checkOutDate": null,
+    "hotelAds": [],
+    "popularTimesLiveText": null,
+    "popularTimesLivePercent": null,
+    "popularTimesHistogram": {},
+    "openingHours": [
+      {
+        "day": "Monday",
+        "hours": "9:30 AM to 1 PM, 5 to 9 PM"
+      },
+      {
+        "day": "Tuesday",
+        "hours": "9:30 AM to 1 PM, 5 to 9 PM"
+      },
+      {
+        "day": "Wednesday",
+        "hours": "9:30 AM to 1 PM, 5 to 9 PM"
+      },
+      {
+        "day": "Thursday",
+        "hours": "9:30 AM to 1 PM, 5 to 9 PM"
+      },
+      {
+        "day": "Friday",
+        "hours": "9:30 AM to 1 PM, 5 to 9 PM"
+      },
+      {
+        "day": "Saturday",
+        "hours": "9:30 AM to 1 PM, 5 to 9 PM"
+      },
+      {
+        "day": "Sunday",
+        "hours": "Closed"
+      }
+    ],
+    "peopleAlsoSearch": [],
+    "placesTags": [],
+    "reviewsTags": [],
+    "additionalInfo": {
+      "Amenities": [
+        {
+          "Restroom": true
+        }
+      ],
+      "Planning": [
+        {
+          "Appointment required": true
+        },
+        {
+          "Appointments recommended": true
+        }
+      ],
+      "Payments": [
+        {
+          "NFC mobile payments": true
+        }
+      ],
+      "Parking": [
+        {
+          "Free street parking": true
+        }
+      ]
+    },
+    "gasPrices": [],
+    "url": "https://www.google.com/maps/search/?api=1&query=PAN%20DENTAL%20CLINIC&query_place_id=ChIJIdQW5FG_wjsRplx9p5p4YCA",
+    "searchPageUrl": "https://www.google.com/maps/search/dental%20implant%20Kothrud/@18.49531983968784,73.81870083931133,17z?hl=en",
+    "searchString": "dental implant Kothrud",
+    "language": "en",
+    "rank": 13,
+    "isAdvertisement": false,
+    "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWldgNbRdSPnq5I4TOqJYyqhMBYj9D3Gv0tfqaVr4nuH8LoV1nJUszooiObX1UMtVnHqSAJMnMDoHFJvscrbq5N3cTSsoOx6UsUWRbZJ15qOsBJZOLsjRvBp0Fb0rBtQVIiq2MUZrzX6XD_S=w408-h306-k-no",
+    "kgmid": "/g/11xkf50zz8"
+  },
+  {
+    "title": "Soulful Dental Care",
+    "subTitle": "सोलफुल डेंटल केयर",
+    "description": null,
+    "price": null,
+    "categoryName": "Pediatric dentist",
+    "address": "Office No.308, 3rd Floor, Karve Rd, above Tanishq Showroom Karve Putala, Paschimanagri, Kothrud, Pune, Maharashtra 411038, India",
+    "neighborhood": "Paschimanagri, Kothrud",
+    "street": "Office No.308, 3rd Floor, Karve Rd, above Tanishq Showroom Karve Putala",
+    "city": "Pune",
+    "postalCode": "411038",
+    "state": "Maharashtra",
+    "countryCode": "IN",
+    "website": "https://www.soulfuldental.com/",
+    "phone": "+91 94050 45454",
+    "phoneUnformatted": "+919405045454",
+    "claimThisBusiness": false,
+    "location": {
+      "lat": 18.502043,
+      "lng": 73.8165019
+    },
+    "locatedIn": null,
+    "floor": null,
+    "plusCode": null,
+    "menu": null,
+    "servicesLink": null,
+    "totalScore": 4.9,
+    "permanentlyClosed": false,
+    "temporarilyClosed": false,
+    "placeId": "ChIJtSSIG8O_wjsRYGkR1C2Qzek",
+    "categories": [
+      "Pediatric dentist",
+      "Cosmetic dentist",
+      "Dental clinic",
+      "Dental implants periodontist",
+      "Dentist",
+      "Endodontist",
+      "Orthodontist"
+    ],
+    "fid": "0x3bc2bfc31b8824b5:0xe9cd902dd4116960",
+    "cid": "16847280307568732512",
+    "reviewsCount": 722,
+    "imagesCount": 345,
+    "imageCategories": [],
+    "scrapedAt": "2026-07-17T06:45:41.411Z",
+    "reserveTableUrl": null,
+    "googleFoodUrl": null,
+    "hotelStars": null,
+    "hotelDescription": null,
+    "checkInDate": null,
+    "checkOutDate": null,
+    "hotelAds": [],
+    "popularTimesLiveText": null,
+    "popularTimesLivePercent": null,
+    "popularTimesHistogram": {},
+    "openingHours": [
+      {
+        "day": "Monday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Tuesday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Wednesday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Thursday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Friday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Saturday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Sunday",
+        "hours": "Closed"
+      }
+    ],
+    "additionalOpeningHours": {
+      "Senior hours": [
+        {
+          "day": "Monday",
+          "hours": "10 AM–8 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "10 AM–8 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "10 AM–8 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "10 AM–8 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "10 AM–8 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "10 AM–8 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "Online service hours": [
+        {
+          "day": "Monday",
+          "hours": "6–8 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "6–8 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "6–8 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "6–8 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "6–8 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "6–8 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ]
+    },
+    "peopleAlsoSearch": [],
+    "placesTags": [],
+    "reviewsTags": [],
+    "additionalInfo": {
+      "Service options": [
+        {
+          "Onsite services": true
+        }
+      ],
+      "Accessibility": [
+        {
+          "Wheelchair accessible entrance": true
+        },
+        {
+          "Wheelchair accessible parking lot": true
+        },
+        {
+          "Wheelchair accessible restroom": true
+        },
+        {
+          "Wheelchair accessible seating": true
+        }
+      ],
+      "Offerings": [
+        {
+          "Pediatric care": true
+        }
+      ],
+      "Amenities": [
+        {
+          "Gender-neutral restroom": true
+        },
+        {
+          "Restroom": true
+        }
+      ],
+      "Crowd": [
+        {
+          "LGBTQ+ friendly": true
+        }
+      ],
+      "Planning": [
+        {
+          "Appointment required": true
+        },
+        {
+          "Appointments recommended": true
+        }
+      ],
+      "Payments": [
+        {
+          "Credit cards": true
+        },
+        {
+          "Debit cards": true
+        },
+        {
+          "Google Pay": true
+        },
+        {
+          "NFC mobile payments": true
+        }
+      ],
+      "Children": [
+        {
+          "Nursing room": true
+        }
+      ],
+      "Parking": [
+        {
+          "Free parking lot": true
+        },
+        {
+          "On-site parking": true
+        }
+      ]
+    },
+    "gasPrices": [],
+    "url": "https://www.google.com/maps/search/?api=1&query=Soulful%20Dental%20Care&query_place_id=ChIJtSSIG8O_wjsRYGkR1C2Qzek",
+    "searchPageUrl": "https://www.google.com/maps/search/dental%20implant%20Kothrud/@18.49531983968784,73.81870083931133,17z?hl=en",
+    "searchString": "dental implant Kothrud",
+    "language": "en",
+    "rank": 15,
+    "isAdvertisement": false,
+    "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmUXAvAlftkcUpoFljzfBYxCF5kLSNmB0aqJtXOXlS1Z9r965FzOtEylTRxck1SsK3ZQlEsYLyk8WUKb1zoqbpm1NVeQ6gWOY_jMihhZdg7E0Nh5gYUsFfXLxIqvNZLlNENu4YX=w408-h408-k-no",
+    "kgmid": "/g/11c5svtkyk"
+  },
+  {
+    "title": "Orion Dental Specialities",
+    "subTitle": "ओरियन डेंटल",
+    "description": null,
+    "price": null,
+    "categoryName": "Orthodontist",
+    "address": "Suvidha Hariprasad, 103, Chatrapati Rajaram Maharaj Path, opp. P Jog High School, Mayur Colony, Kothrud, Pune, Maharashtra 411038, India",
+    "neighborhood": "Mayur Colony, Kothrud",
+    "street": "Suvidha Hariprasad, 103, Chatrapati Rajaram Maharaj Path, opp. P Jog High School",
+    "city": "Pune",
+    "postalCode": "411038",
+    "state": "Maharashtra",
+    "countryCode": "IN",
+    "website": "http://www.oriondentalspecialities.com/",
+    "phone": "+91 99758 96327",
+    "phoneUnformatted": "+919975896327",
+    "claimThisBusiness": false,
+    "location": {
+      "lat": 18.5054063,
+      "lng": 73.8176378
+    },
+    "locatedIn": null,
+    "floor": null,
+    "plusCode": null,
+    "menu": null,
+    "servicesLink": null,
+    "totalScore": 5,
+    "permanentlyClosed": false,
+    "temporarilyClosed": false,
+    "placeId": "ChIJ7UtCKci_wjsR8s_2jDYzU4w",
+    "categories": [
+      "Orthodontist",
+      "Cosmetic dentist",
+      "Dental clinic",
+      "Dental implants periodontist",
+      "Dental implants provider",
+      "Dentist",
+      "Pediatric dentist",
+      "Prosthodontist",
+      "Teeth whitening service"
+    ],
+    "fid": "0x3bc2bfc829424bed:0x8c5333368cf6cff2",
+    "cid": "10111481897763131378",
+    "reviewsCount": 247,
+    "imagesCount": 149,
+    "imageCategories": [],
+    "scrapedAt": "2026-07-17T06:45:41.411Z",
+    "reserveTableUrl": null,
+    "googleFoodUrl": null,
+    "hotelStars": null,
+    "hotelDescription": null,
+    "checkInDate": null,
+    "checkOutDate": null,
+    "hotelAds": [],
+    "popularTimesLiveText": null,
+    "popularTimesLivePercent": null,
+    "popularTimesHistogram": {},
+    "openingHours": [
+      {
+        "day": "Monday",
+        "hours": "9:30 AM to 8 PM"
+      },
+      {
+        "day": "Tuesday",
+        "hours": "9:30 AM to 8 PM"
+      },
+      {
+        "day": "Wednesday",
+        "hours": "9:30 AM to 8 PM"
+      },
+      {
+        "day": "Thursday",
+        "hours": "9:30 AM to 8 PM"
+      },
+      {
+        "day": "Friday",
+        "hours": "9:30 AM to 8 PM"
+      },
+      {
+        "day": "Saturday",
+        "hours": "9:30 AM to 8 PM"
+      },
+      {
+        "day": "Sunday",
+        "hours": "Closed"
+      }
+    ],
+    "peopleAlsoSearch": [],
+    "placesTags": [],
+    "reviewsTags": [],
+    "additionalInfo": {
+      "Service options": [
+        {
+          "Onsite services": true
+        }
+      ],
+      "Accessibility": [
+        {
+          "Assistive hearing loop": false
+        },
+        {
+          "Wheelchair accessible entrance": false
+        },
+        {
+          "Wheelchair accessible parking lot": false
+        },
+        {
+          "Wheelchair accessible restroom": false
+        },
+        {
+          "Wheelchair accessible seating": false
+        }
+      ],
+      "Offerings": [
+        {
+          "Pediatric care": true
+        }
+      ],
+      "Amenities": [
+        {
+          "Gender-neutral restroom": true
+        },
+        {
+          "Restroom": true
+        }
+      ],
+      "Crowd": [
+        {
+          "LGBTQ+ friendly": true
+        }
+      ],
+      "Planning": [
+        {
+          "Appointments recommended": true
+        }
+      ],
+      "Payments": [
+        {
+          "Credit cards": true
+        },
+        {
+          "Debit cards": true
+        },
+        {
+          "Google Pay": true
+        },
+        {
+          "NFC mobile payments": true
+        }
+      ]
+    },
+    "gasPrices": [],
+    "url": "https://www.google.com/maps/search/?api=1&query=Orion%20Dental%20Specialities&query_place_id=ChIJ7UtCKci_wjsR8s_2jDYzU4w",
+    "searchPageUrl": "https://www.google.com/maps/search/dental%20implant%20Kothrud/@18.49531983968784,73.81870083931133,17z?hl=en",
+    "searchString": "dental implant Kothrud",
+    "language": "en",
+    "rank": 16,
+    "isAdvertisement": false,
+    "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkBpmBLJt1pI8l_KS3z8mx7h_aHrQ7jRZaAPF8WH4wnMkyK0tP3pGO_XPGH3PcgiNckfkfh_v7a0KRl5x4FR4JaEZZ8VOu_eTNHaDxiqcUwpJ4e02VT8WqofN87lgNuHKprtg6yDSgbnmc=w408-h408-k-no",
+    "kgmid": "/g/11m0qjpj9k"
+  },
+  {
+    "title": "WhitePink Multispeciality Dental Clinic",
+    "subTitle": "व्हाईपिंक मल्टीस्पेश्यालिटी क्लिनिक",
+    "description": null,
+    "price": null,
+    "categoryName": "Dental clinic",
+    "address": "Shop no 3, near Karve Putala, Rahul Nagar, Kothrud, Pune, Maharashtra 411038, India",
+    "neighborhood": "Rahul Nagar, Kothrud",
+    "street": "Shop no 3, near Karve Putala",
+    "city": "Pune",
+    "postalCode": "411038",
+    "state": "Maharashtra",
+    "countryCode": "IN",
+    "website": "https://www.instagram.com/whitepink_drsayalisonawane/",
+    "phone": "+91 98349 57738",
+    "phoneUnformatted": "+919834957738",
+    "claimThisBusiness": false,
+    "location": {
+      "lat": 18.500439,
+      "lng": 73.8159691
+    },
+    "locatedIn": null,
+    "floor": null,
+    "plusCode": null,
+    "menu": null,
+    "servicesLink": null,
+    "totalScore": 4.9,
+    "permanentlyClosed": false,
+    "temporarilyClosed": false,
+    "placeId": "ChIJ4VPeM62_wjsRA_EZXT-WbSE",
+    "categories": [
+      "Dental clinic",
+      "Dental hygienist",
+      "Dental implants periodontist",
+      "Dental implants provider",
+      "Emergency dental service",
+      "Orthodontist",
+      "Teeth whitening service"
+    ],
+    "fid": "0x3bc2bfad33de53e1:0x216d963f5d19f103",
+    "cid": "2408746574602170627",
+    "reviewsCount": 52,
+    "imagesCount": 20,
+    "imageCategories": [],
+    "scrapedAt": "2026-07-17T06:45:41.412Z",
+    "reserveTableUrl": null,
+    "googleFoodUrl": null,
+    "hotelStars": null,
+    "hotelDescription": null,
+    "checkInDate": null,
+    "checkOutDate": null,
+    "hotelAds": [],
+    "popularTimesLiveText": null,
+    "popularTimesLivePercent": null,
+    "popularTimesHistogram": {},
+    "openingHours": [
+      {
+        "day": "Monday",
+        "hours": "10:30 AM to 9 PM"
+      },
+      {
+        "day": "Tuesday",
+        "hours": "10:30 AM to 9 PM"
+      },
+      {
+        "day": "Wednesday",
+        "hours": "10:30 AM to 9 PM"
+      },
+      {
+        "day": "Thursday",
+        "hours": "10:30 AM to 9 PM"
+      },
+      {
+        "day": "Friday",
+        "hours": "10:30 AM to 9 PM"
+      },
+      {
+        "day": "Saturday",
+        "hours": "10:30 AM to 9 PM"
+      },
+      {
+        "day": "Sunday",
+        "hours": "Closed"
+      }
+    ],
+    "peopleAlsoSearch": [],
+    "placesTags": [],
+    "reviewsTags": [],
+    "additionalInfo": {
+      "From the business": [
+        {
+          "Identifies as women-owned": true
+        }
+      ],
+      "Service options": [
+        {
+          "Onsite services": true
+        }
+      ],
+      "Accessibility": [
+        {
+          "Wheelchair accessible seating": true
+        }
+      ],
+      "Amenities": [
+        {
+          "Gender-neutral restroom": true
+        },
+        {
+          "Restroom": true
+        }
+      ],
+      "Crowd": [
+        {
+          "LGBTQ+ friendly": true
+        }
+      ],
+      "Planning": [
+        {
+          "Appointment required": true
+        },
+        {
+          "Appointments recommended": true
+        }
+      ],
+      "Payments": [
+        {
+          "Credit cards": true
+        },
+        {
+          "Debit cards": true
+        },
+        {
+          "Google Pay": true
+        },
+        {
+          "NFC mobile payments": true
+        }
+      ],
+      "Parking": [
+        {
+          "Free parking lot": true
+        }
+      ]
+    },
+    "gasPrices": [],
+    "url": "https://www.google.com/maps/search/?api=1&query=WhitePink%20Multispeciality%20Dental%20Clinic&query_place_id=ChIJ4VPeM62_wjsRA_EZXT-WbSE",
+    "searchPageUrl": "https://www.google.com/maps/search/dental%20implant%20Kothrud/@18.49531983968784,73.81870083931133,17z?hl=en",
+    "searchString": "dental implant Kothrud",
+    "language": "en",
+    "rank": 18,
+    "isAdvertisement": false,
+    "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWle1XKrl1KOpUdr8T2AsDIkKCJbOSIrlvvFIlKUnS3eZVLOKgdte8cT8h-hGpqZF13A-IMUaPVJKP3KYRWLb_a1eYv_tnLcO8WlUz8YVue-7agLhjgCfirdueynlKVfCSxFFj8Iyw=w408-h408-k-no",
+    "kgmid": "/g/11q22jyz59"
+  },
+  {
+    "title": "Dental One",
+    "subTitle": "डेंटल वन",
+    "description": null,
+    "price": null,
+    "categoryName": "Dental clinic",
+    "address": "Shop number 7, near Kothrud Bus Stand Road, Dahanukar A, Dahanukar Colony, Kothrud, Pune, Maharashtra 411038, India",
+    "neighborhood": "Dahanukar A, Dahanukar Colony, Kothrud",
+    "street": "Shop number 7, near Kothrud Bus Stand Road",
+    "city": "Pune",
+    "postalCode": "411038",
+    "state": "Maharashtra",
+    "countryCode": "IN",
+    "phone": "+91 91756 51129",
+    "phoneUnformatted": "+919175651129",
+    "claimThisBusiness": false,
+    "location": {
+      "lat": 18.4982944,
+      "lng": 73.8133715
+    },
+    "locatedIn": null,
+    "floor": null,
+    "plusCode": null,
+    "menu": null,
+    "servicesLink": null,
+    "totalScore": 4.9,
+    "permanentlyClosed": false,
+    "temporarilyClosed": false,
+    "placeId": "ChIJ4-qseja_wjsREp0tOeUkFyc",
+    "categories": [
+      "Dental clinic"
+    ],
+    "fid": "0x3bc2bf367aaceae3:0x271724e5392d9d12",
+    "cid": "2816760658868935954",
+    "reviewsCount": 33,
+    "imagesCount": 48,
+    "imageCategories": [],
+    "scrapedAt": "2026-07-17T06:45:41.412Z",
+    "reserveTableUrl": null,
+    "googleFoodUrl": null,
+    "hotelStars": null,
+    "hotelDescription": null,
+    "checkInDate": null,
+    "checkOutDate": null,
+    "hotelAds": [],
+    "popularTimesLiveText": null,
+    "popularTimesLivePercent": null,
+    "popularTimesHistogram": {},
+    "openingHours": [
+      {
+        "day": "Monday",
+        "hours": "10 AM to 2 PM, 5 to 8 PM"
+      },
+      {
+        "day": "Tuesday",
+        "hours": "10 AM to 2 PM, 5 to 8 PM"
+      },
+      {
+        "day": "Wednesday",
+        "hours": "10 AM to 2 PM, 5 to 8 PM"
+      },
+      {
+        "day": "Thursday",
+        "hours": "10 AM to 2 PM, 5 to 8 PM"
+      },
+      {
+        "day": "Friday",
+        "hours": "10 AM to 2 PM, 5 to 8 PM"
+      },
+      {
+        "day": "Saturday",
+        "hours": "10 AM to 2 PM, 5 to 8 PM"
+      },
+      {
+        "day": "Sunday",
+        "hours": "10 AM to 2 PM, 5 to 8 PM"
+      }
+    ],
+    "peopleAlsoSearch": [],
+    "placesTags": [],
+    "reviewsTags": [],
+    "additionalInfo": {
+      "Service options": [
+        {
+          "Onsite services": true
+        }
+      ],
+      "Accessibility": [
+        {
+          "Wheelchair accessible restroom": true
+        },
+        {
+          "Wheelchair accessible seating": true
+        }
+      ],
+      "Amenities": [
+        {
+          "Gender-neutral restroom": true
+        },
+        {
+          "Restroom": true
+        }
+      ],
+      "Crowd": [
+        {
+          "LGBTQ+ friendly": true
+        }
+      ],
+      "Planning": [
+        {
+          "Appointment required": true
+        },
+        {
+          "Appointments recommended": true
+        }
+      ],
+      "Payments": [
+        {
+          "Credit cards": true
+        },
+        {
+          "Debit cards": true
+        },
+        {
+          "Google Pay": true
+        },
+        {
+          "NFC mobile payments": true
+        },
+        {
+          "Payment plans": true
+        },
+        {
+          "Credit cards": true
+        }
+      ]
+    },
+    "gasPrices": [],
+    "url": "https://www.google.com/maps/search/?api=1&query=Dental%20One&query_place_id=ChIJ4-qseja_wjsREp0tOeUkFyc",
+    "searchPageUrl": "https://www.google.com/maps/search/dental%20implant%20Kothrud/@18.49531983968784,73.81870083931133,17z?hl=en",
+    "searchString": "dental implant Kothrud",
+    "language": "en",
+    "rank": 19,
+    "isAdvertisement": false,
+    "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkmy3cWyW74DxGC7kNB7n-QxpiLWdktGlceh6JmOHqsl3lKjMFoQr_8DvgjUbJgJhuwIWNyR1kahXrXMyFn1T0wg3dVtgRnxevdx62xqnSCTNxNE1-SBOSpM37LiStQkp3_9FjW=w408-h272-k-no",
+    "kgmid": "/g/11q3pptv8j"
+  },
+  {
+    "title": "Dr Dayama's Smile Solutions Dental Clinic",
+    "subTitle": "डॉ दयामा'स स्माइल सॉल्यूशंस डेंटल क्लिनिक",
+    "description": null,
+    "price": null,
+    "categoryName": "Dentist",
+    "address": "Cummins Circle, Virkar Complex, Lane Number 6, Dahanukar Colony, Kothrud, Pune, Maharashtra 411038, India",
+    "neighborhood": "Dahanukar Colony, Kothrud",
+    "street": "Cummins Circle, Virkar Complex, Lane Number 6",
+    "city": "Pune",
+    "postalCode": "411038",
+    "state": "Maharashtra",
+    "countryCode": "IN",
+    "website": "https://smilesolutionsdentalclinics.in/",
+    "phone": "+91 78229 20833",
+    "phoneUnformatted": "+917822920833",
+    "claimThisBusiness": false,
+    "location": {
+      "lat": 18.4957881,
+      "lng": 73.8117944
+    },
+    "locatedIn": null,
+    "floor": null,
+    "plusCode": null,
+    "menu": null,
+    "servicesLink": null,
+    "totalScore": 5,
+    "permanentlyClosed": false,
+    "temporarilyClosed": false,
+    "placeId": "ChIJt3-n3bW_wjsRQlVXNnJHsxA",
+    "categories": [
+      "Dentist",
+      "Dental clinic",
+      "Endodontist",
+      "Orthodontist",
+      "Teeth whitening service"
+    ],
+    "fid": "0x3bc2bfb5dda77fb7:0x10b3477236575542",
+    "cid": "1203384081301591362",
+    "reviewsCount": 37,
+    "imagesCount": 22,
+    "imageCategories": [],
+    "scrapedAt": "2026-07-17T06:45:41.412Z",
+    "reserveTableUrl": null,
+    "googleFoodUrl": null,
+    "hotelStars": null,
+    "hotelDescription": null,
+    "checkInDate": null,
+    "checkOutDate": null,
+    "hotelAds": [],
+    "popularTimesLiveText": null,
+    "popularTimesLivePercent": null,
+    "popularTimesHistogram": {},
+    "openingHours": [
+      {
+        "day": "Monday",
+        "hours": "10 AM to 1:30 PM, 5 to 8:30 PM"
+      },
+      {
+        "day": "Tuesday",
+        "hours": "10 AM to 1:30 PM, 5 to 8:30 PM"
+      },
+      {
+        "day": "Wednesday",
+        "hours": "10 AM to 1:30 PM, 5 to 8:30 PM"
+      },
+      {
+        "day": "Thursday",
+        "hours": "10 AM to 1:30 PM, 5 to 8:30 PM"
+      },
+      {
+        "day": "Friday",
+        "hours": "10 AM to 1:30 PM, 5 to 8:30 PM"
+      },
+      {
+        "day": "Saturday",
+        "hours": "10 AM to 1:30 PM, 5 to 8:30 PM"
+      },
+      {
+        "day": "Sunday",
+        "hours": "10 AM to 1:30 PM"
+      }
+    ],
+    "peopleAlsoSearch": [],
+    "placesTags": [],
+    "reviewsTags": [],
+    "additionalInfo": {
+      "From the business": [
+        {
+          "Identifies as women-owned": true
+        }
+      ],
+      "Service options": [
+        {
+          "Onsite services": true
+        }
+      ],
+      "Accessibility": [
+        {
+          "Wheelchair accessible restroom": true
+        },
+        {
+          "Wheelchair accessible seating": true
+        }
+      ],
+      "Amenities": [
+        {
+          "Gender-neutral restroom": true
+        },
+        {
+          "Restroom": true
+        }
+      ],
+      "Crowd": [
+        {
+          "LGBTQ+ friendly": true
+        }
+      ],
+      "Planning": [
+        {
+          "Appointments recommended": true
+        }
+      ],
+      "Payments": [
+        {
+          "Google Pay": true
+        },
+        {
+          "NFC mobile payments": true
+        }
+      ]
+    },
+    "gasPrices": [],
+    "url": "https://www.google.com/maps/search/?api=1&query=Dr%20Dayama's%20Smile%20Solutions%20Dental%20Clinic&query_place_id=ChIJt3-n3bW_wjsRQlVXNnJHsxA",
+    "searchPageUrl": "https://www.google.com/maps/search/dental%20implant%20Kothrud/@18.49531983968784,73.81870083931133,17z?hl=en",
+    "searchString": "dental implant Kothrud",
+    "language": "en",
+    "rank": 20,
+    "isAdvertisement": false,
+    "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlqWvhDh-tdvv0cGmTYQWPZAP63GuWV9zmIxv-rwa_u-esSE8c1KjzT3IzEKfQUgUBKWLx8aYYO_BPgjZzSqGAyRSGuEsBlGFu1lOPf8A_6kVH3DltUc2HQz3Dy_1IiNlHP39dGcrHgi8dz=w408-h611-k-no",
+    "kgmid": "/g/11cmmtjv68"
+  },
+  {
+    "title": "Solace Dental Care",
+    "subTitle": "सेल्स डेंटल केयर",
+    "description": null,
+    "price": null,
+    "categoryName": "Dentist",
+    "address": "Surve no 7, Avaneesh Apartment, Shop no D-1, near Rahul Nagar, Kothrud, Paschimanagari, Pune, Maharashtra 411052, India",
+    "neighborhood": "Paschimanagri, Kothrud",
+    "street": "Surve no 7, Avaneesh Apartment, Shop no D-1, near Rahul Nagar",
+    "city": "Paschimanagari, Pune",
+    "postalCode": "411052",
+    "state": "Maharashtra",
+    "countryCode": "IN",
+    "website": "http://www.solacedentals.com/",
+    "phone": "",
+    "phoneUnformatted": "",
+    "claimThisBusiness": false,
+    "location": {
+      "lat": 18.497178,
+      "lng": 73.8169849
+    },
+    "locatedIn": null,
+    "floor": null,
+    "plusCode": null,
+    "menu": null,
+    "servicesLink": null,
+    "totalScore": 5,
+    "permanentlyClosed": false,
+    "temporarilyClosed": false,
+    "placeId": "ChIJYb4uwH2_wjsRtzDQAMaKEPA",
+    "categories": [
+      "Dentist"
+    ],
+    "fid": "0x3bc2bf7dc02ebe61:0xf0108ac600d030b7",
+    "cid": "17298478751751876791",
+    "reviewsCount": 32,
+    "reviewsDistribution": {
+      "oneStar": 0,
+      "twoStar": 0,
+      "threeStar": 0,
+      "fourStar": 1,
+      "fiveStar": 31
+    },
+    "imagesCount": 7,
+    "imageCategories": [],
+    "scrapedAt": "2026-07-17T06:45:42.210Z",
+    "reserveTableUrl": null,
+    "googleFoodUrl": null,
+    "hotelStars": null,
+    "hotelDescription": null,
+    "checkInDate": null,
+    "checkOutDate": null,
+    "hotelAds": [],
+    "popularTimesLiveText": null,
+    "popularTimesLivePercent": null,
+    "popularTimesHistogram": {},
+    "openingHours": [
+      {
+        "day": "Monday",
+        "hours": "10:30 AM to 2 PM, 6:30 to 8:30 PM"
+      },
+      {
+        "day": "Tuesday",
+        "hours": "10:30 AM to 2 PM, 6:30 to 8 PM"
+      },
+      {
+        "day": "Wednesday",
+        "hours": "10 AM to 2 PM, 6:30 to 8:30 PM"
+      },
+      {
+        "day": "Thursday",
+        "hours": "10:30 AM to 2 PM, 6:30 to 8:30 PM"
+      },
+      {
+        "day": "Friday",
+        "hours": "10:30 AM to 2 PM, 6:30 to 8:30 PM"
+      },
+      {
+        "day": "Saturday",
+        "hours": "10:30 AM to 2 PM, 6:30 to 8:30 PM"
+      },
+      {
+        "day": "Sunday",
+        "hours": "Closed"
+      }
+    ],
+    "peopleAlsoSearch": [],
+    "placesTags": [],
+    "reviewsTags": [],
+    "additionalInfo": {
+      "Planning": [
+        {
+          "Appointments recommended": true
+        }
+      ],
+      "Payments": [
+        {
+          "NFC mobile payments": true
+        }
+      ]
+    },
+    "gasPrices": [],
+    "url": "https://www.google.com/maps/search/?api=1&query=Solace%20Dental%20Care&query_place_id=ChIJYb4uwH2_wjsRtzDQAMaKEPA",
+    "searchPageUrl": "https://www.google.com/maps/search/dental%20implant%20Kothrud/@18.49531983968784,73.81870083931133,17z?hl=en",
+    "searchString": "dental implant Kothrud",
+    "language": "en",
+    "rank": 26,
+    "isAdvertisement": false,
+    "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnhS85LUc9BpUHR4IYc6lY-wsFge2ZBLOxrvHvxDkk0ApkR1XCppjbmxcJT5E9bpzqqAmAcEF77nLsKKgEiFOho672-9Vt0Pj1S6tYX0vh5bH1Yb20e9cAbHNnd_KX2mV5gg4VN27QqDPTu=w408-h341-k-no",
+    "kgmid": "/g/11yq5_862v"
+  },
+  {
+    "title": "Dr. Priyanka Dayama",
+    "subTitle": "दर. प्रियंका दायमा",
+    "description": null,
+    "price": null,
+    "categoryName": "Dentist",
+    "address": "Virkar Complex, Dahanukar Colony, Kothrud, Pune, Maharashtra 411038, India",
+    "neighborhood": "Dahanukar Colony, Kothrud",
+    "street": "Virkar Complex",
+    "city": "Pune",
+    "postalCode": "411038",
+    "state": "Maharashtra",
+    "countryCode": "IN",
+    "phone": "+91 78229 20833",
+    "phoneUnformatted": "+917822920833",
+    "claimThisBusiness": false,
+    "location": {
+      "lat": 18.4958307,
+      "lng": 73.8116942
+    },
+    "locatedIn": null,
+    "floor": null,
+    "plusCode": null,
+    "menu": null,
+    "servicesLink": null,
+    "totalScore": 5,
+    "permanentlyClosed": false,
+    "temporarilyClosed": false,
+    "placeId": "ChIJTdzw8dK_wjsRh5YOSawjAUQ",
+    "categories": [
+      "Dentist",
+      "Dental clinic",
+      "Dental implants provider",
+      "Endodontist"
+    ],
+    "fid": "0x3bc2bfd2f1f0dc4d:0x440123ac490e9687",
+    "cid": "4900237092422850183",
+    "reviewsCount": 1,
+    "reviewsDistribution": {
+      "oneStar": 0,
+      "twoStar": 0,
+      "threeStar": 0,
+      "fourStar": 0,
+      "fiveStar": 1
+    },
+    "imagesCount": 8,
+    "imageCategories": [],
+    "scrapedAt": "2026-07-17T06:45:42.210Z",
+    "reserveTableUrl": null,
+    "googleFoodUrl": null,
+    "hotelStars": null,
+    "hotelDescription": null,
+    "checkInDate": null,
+    "checkOutDate": null,
+    "hotelAds": [],
+    "popularTimesLiveText": null,
+    "popularTimesLivePercent": null,
+    "popularTimesHistogram": {},
+    "openingHours": [
+      {
+        "day": "Monday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Tuesday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Wednesday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Thursday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Friday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Saturday",
+        "hours": "10 AM to 9 PM"
+      },
+      {
+        "day": "Sunday",
+        "hours": "Closed"
+      }
+    ],
+    "peopleAlsoSearch": [],
+    "placesTags": [],
+    "reviewsTags": [],
+    "additionalInfo": {
+      "From the business": [
+        {
+          "Identifies as women-owned": true
+        }
+      ],
+      "Accessibility": [
+        {
+          "Wheelchair accessible restroom": true
+        },
+        {
+          "Wheelchair accessible seating": true
+        }
+      ],
+      "Amenities": [
+        {
+          "Gender-neutral restroom": true
+        },
+        {
+          "Restroom": true
+        }
+      ],
+      "Crowd": [
+        {
+          "LGBTQ+ friendly": true
+        }
+      ],
+      "Planning": [
+        {
+          "Appointments recommended": true
+        }
+      ],
+      "Payments": [
+        {
+          "Google Pay": true
+        },
+        {
+          "NFC mobile payments": true
+        }
+      ]
+    },
+    "gasPrices": [],
+    "url": "https://www.google.com/maps/search/?api=1&query=Dr.%20Priyanka%20Dayama&query_place_id=ChIJTdzw8dK_wjsRh5YOSawjAUQ",
+    "searchPageUrl": "https://www.google.com/maps/search/dental%20implant%20Kothrud/@18.49531983968784,73.81870083931133,17z?hl=en",
+    "searchString": "dental implant Kothrud",
+    "language": "en",
+    "rank": 33,
+    "isAdvertisement": false,
+    "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnOTpNMtOPZJQB3d9NEZZTap3z-8kDUYLNLLeMjhhWLT8mqfdpxT6rhla0NyiUpjSs6w_H3nZqCzqj5mbq2MsLYIOhTMAMqDSxR94nOkpMiIi99MQ6UOURT4yfyHJwwbNfuyYNT=w506-h240-k-no",
+    "kgmid": "/g/11vs81ymgd"
+  },
+  {
+    "title": "Dr Ranjit phalke Dentist",
+    "subTitle": "डॉ रंजीत फालके डेंटिस्ट",
+    "description": null,
+    "price": null,
+    "categoryName": "Dental clinic",
+    "address": "Kothrud Bus Stand Rd, Dahanukar A, Dahanukar Colony, Kothrud, Pune, Maharashtra 411038, India",
+    "neighborhood": "Dahanukar A, Dahanukar Colony, Kothrud",
+    "street": "Kothrud Bus Stand Rd",
+    "city": "Pune",
+    "postalCode": "411038",
+    "state": "Maharashtra",
+    "countryCode": "IN",
+    "phone": "",
+    "phoneUnformatted": "",
+    "claimThisBusiness": false,
+    "location": {
+      "lat": 18.4982944,
+      "lng": 73.8133715
+    },
+    "locatedIn": null,
+    "floor": null,
+    "plusCode": null,
+    "menu": null,
+    "servicesLink": null,
+    "totalScore": 5,
+    "permanentlyClosed": false,
+    "temporarilyClosed": false,
+    "placeId": "ChIJgQd1OAC_wjsRjSRqPf7nTuk",
+    "categories": [
+      "Dental clinic"
+    ],
+    "fid": "0x3bc2bf0038750781:0xe94ee7fe3d6a248d",
+    "cid": "16811629538158716045",
+    "reviewsCount": 1,
+    "reviewsDistribution": {
+      "oneStar": 0,
+      "twoStar": 0,
+      "threeStar": 0,
+      "fourStar": 0,
+      "fiveStar": 1
+    },
+    "imagesCount": 1,
+    "imageCategories": [],
+    "scrapedAt": "2026-07-17T06:45:42.211Z",
+    "reserveTableUrl": null,
+    "googleFoodUrl": null,
+    "hotelStars": null,
+    "hotelDescription": null,
+    "checkInDate": null,
+    "checkOutDate": null,
+    "hotelAds": [],
+    "popularTimesLiveText": null,
+    "popularTimesLivePercent": null,
+    "popularTimesHistogram": {},
+    "openingHours": [
+      {
+        "day": "Monday",
+        "hours": "9 AM to 9 PM"
+      },
+      {
+        "day": "Tuesday",
+        "hours": "9 AM to 9 PM"
+      },
+      {
+        "day": "Wednesday",
+        "hours": "9 AM to 9 PM"
+      },
+      {
+        "day": "Thursday",
+        "hours": "9 AM to 9 PM"
+      },
+      {
+        "day": "Friday",
+        "hours": "9 AM to 9 PM"
+      },
+      {
+        "day": "Saturday",
+        "hours": "9 AM to 9 PM"
+      },
+      {
+        "day": "Sunday",
+        "hours": "Closed"
+      }
+    ],
+    "peopleAlsoSearch": [],
+    "placesTags": [],
+    "reviewsTags": [],
+    "additionalInfo": {
+      "Planning": [
+        {
+          "Appointments recommended": true
+        }
+      ]
+    },
+    "gasPrices": [],
+    "url": "https://www.google.com/maps/search/?api=1&query=Dr%20Ranjit%20phalke%20Dentist&query_place_id=ChIJgQd1OAC_wjsRjSRqPf7nTuk",
+    "searchPageUrl": "https://www.google.com/maps/search/dental%20implant%20Kothrud/@18.49531983968784,73.81870083931133,17z?hl=en",
+    "searchString": "dental implant Kothrud",
+    "language": "en",
+    "rank": 37,
+    "isAdvertisement": false,
+    "imageUrl": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=STb1H06MzmWPRLAFaxpeyw&cb_client=search.gws-prod.gps&w=408&h=240&yaw=262.3854&pitch=0&thumbfov=100",
+    "kgmid": "/g/11vx255qtl"
+  }
+]

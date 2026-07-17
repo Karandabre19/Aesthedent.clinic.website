@@ -1,0 +1,24 @@
+{
+  "actorId": "compass~crawler-google-places",
+  "runId": "cykKuPiafYdk3ZHK6",
+  "datasetId": "1gk7dVjTu06LdIIoS",
+  "status": "SUCCEEDED",
+  "startedAt": "2026-07-17T06:45:04.609Z",
+  "finishedAt": "2026-07-17T06:45:17.520Z",
+  "usageTotalUsd": 0.0002,
+  "itemCount": 20,
+  "input": {
+    "searchStringsArray": [
+      "dental clinic Kothrud"
+    ],
+    "locationQuery": "Kothrud, Pune, Maharashtra, India",
+    "maxCrawledPlacesPerSearch": 20,
+    "language": "en",
+    "countryCode": "in",
+    "maxReviews": 0,
+    "maxImages": 0,
+    "scrapeReviewsPersonalData": false,
+    "skipClosedPlaces": false,
+    "includeWebResults": false
+  }
+}

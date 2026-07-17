@@ -1,0 +1,24 @@
+{
+  "actorId": "compass~crawler-google-places",
+  "runId": "OT3jpWrtTVWZcGvHQ",
+  "datasetId": "OEsQcQr9IQF2cjzIE",
+  "status": "SUCCEEDED",
+  "startedAt": "2026-07-17T06:45:35.884Z",
+  "finishedAt": "2026-07-17T06:45:47.852Z",
+  "usageTotalUsd": 0.08020000000000001,
+  "itemCount": 20,
+  "input": {
+    "searchStringsArray": [
+      "dental implant Kothrud"
+    ],
+    "locationQuery": "Kothrud, Pune, Maharashtra, India",
+    "maxCrawledPlacesPerSearch": 20,
+    "language": "en",
+    "countryCode": "in",
+    "maxReviews": 0,
+    "maxImages": 0,
+    "scrapeReviewsPersonalData": false,
+    "skipClosedPlaces": false,
+    "includeWebResults": false
+  }
+}

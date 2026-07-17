@@ -1,0 +1,30 @@
+{
+  "actorId": "apify~website-content-crawler",
+  "runId": "bvfMBqY8byXkMCpWu",
+  "datasetId": "cOHEahSRo6wuLsLeh",
+  "status": "SUCCEEDED",
+  "startedAt": "2026-07-17T06:54:10.769Z",
+  "finishedAt": "2026-07-17T06:58:57.340Z",
+  "usageTotalUsd": 0.13002488396061956,
+  "itemCount": 17,
+  "input": {
+    "startUrls": [
+      {
+        "url": "https://www.soulfuldental.com/"
+      },
+      {
+        "url": "https://www.silverpearlsdental.com"
+      }
+    ],
+    "crawlerType": "playwright:chrome",
+    "maxCrawlPages": 12,
+    "maxCrawlDepth": 2,
+    "saveHtml": true,
+    "saveMarkdown": true,
+    "proxyConfiguration": {
+      "useApifyProxy": true
+    },
+    "respectRobotsTxtFile": true,
+    "removeCookieWarnings": true
+  }
+}

@@ -1,0 +1,781 @@
+[
+  {
+    "searchQuery": {
+      "term": "site:aesthedentpune.com",
+      "url": "http://www.google.co.in/search?q=site%3Aaesthedentpune.com&hl=en",
+      "device": "DESKTOP",
+      "page": 1,
+      "type": "SEARCH",
+      "domain": "google.co.in",
+      "countryCode": "IN",
+      "languageCode": "en",
+      "locationUule": null,
+      "resultsPerPage": 10
+    },
+    "url": "http://www.google.co.in/search?q=site%3Aaesthedentpune.com&hl=en",
+    "hasNextPage": false,
+    "serpProviderCode": "L",
+    "resultsTotal": null,
+    "relatedQueries": [],
+    "paidResults": [],
+    "paidProducts": [],
+    "organicResults": [
+      {
+        "title": "Reclaim Your Smile | Specialist Prosthodontist in Kothrud, Pune",
+        "websiteTitle": "aesthedentpune.com",
+        "url": "https://www.aesthedentpune.com/services/dentures",
+        "displayedUrl": "https://www.aesthedentpune.com › services › dentures",
+        "description": "Aesthedent is a specialized Prosthodontist clinic in Kothrud, Pune. Experience expert dental implants, full mouth rehabilitation, ...",
+        "date": "2026-06-26T12:00:00.000Z",
+        "emphasizedKeywords": [
+          "Prosthodontist clinic in Kothrud, Pune"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 1
+      },
+      {
+        "title": "Aesthedent Dental Clinic — Reclaim Your Smile | Specialist ...",
+        "websiteTitle": "aesthedentpune.com",
+        "url": "https://www.aesthedentpune.com/",
+        "displayedUrl": "https://www.aesthedentpune.com",
+        "description": "We provide clear dental care in Kothrud, Pune. No hiding costs, no skipping details, and no rushing you into treatment. Specializes in implants and restorative ...",
+        "emphasizedKeywords": [
+          "clear dental care in Kothrud, Pune"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 2
+      },
+      {
+        "title": "The Aesthedent Experience | Clinical Precision in Kothrud, Pune",
+        "websiteTitle": "aesthedentpune.com",
+        "url": "https://www.aesthedentpune.com/aesthedent-experience",
+        "displayedUrl": "https://www.aesthedentpune.com › aesthedent-experience",
+        "description": "Experience clinical excellence at Aesthedent. Where prosthodontic precision meets human-centered care. Specialized in dental implants, ...",
+        "emphasizedKeywords": [],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 3
+      }
+    ],
+    "suggestedResults": [],
+    "peopleAlsoAsk": [],
+    "customData": null,
+    "htmlSnapshotUrl": "https://api.apify.com/v2/key-value-stores/rHVhz3CInCYIfEuL1/records/RdYmaIkGFas3goJ-0.html?signature=1kChTv3ArTf7IEESBNsH"
+  },
+  {
+    "searchQuery": {
+      "term": "site:www.aesthedentpune.com",
+      "url": "http://www.google.co.in/search?q=site%3Awww.aesthedentpune.com&hl=en",
+      "device": "DESKTOP",
+      "page": 1,
+      "type": "SEARCH",
+      "domain": "google.co.in",
+      "countryCode": "IN",
+      "languageCode": "en",
+      "locationUule": null,
+      "resultsPerPage": 10
+    },
+    "url": "http://www.google.co.in/search?q=site%3Awww.aesthedentpune.com&hl=en",
+    "hasNextPage": false,
+    "serpProviderCode": "L",
+    "resultsTotal": null,
+    "relatedQueries": [],
+    "paidResults": [],
+    "paidProducts": [],
+    "organicResults": [
+      {
+        "title": "Reclaim Your Smile | Specialist Prosthodontist in Kothrud, Pune",
+        "websiteTitle": "aesthedentpune.com",
+        "url": "https://www.aesthedentpune.com/services/dentures",
+        "displayedUrl": "https://www.aesthedentpune.com › services › dentures",
+        "description": "Aesthedent is a specialized Prosthodontist clinic in Kothrud, Pune. Experience expert dental implants, full mouth rehabilitation, ...",
+        "date": "2026-06-26T12:00:00.000Z",
+        "emphasizedKeywords": [
+          "Prosthodontist clinic in Kothrud, Pune"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 1
+      },
+      {
+        "title": "Aesthedent Dental Clinic — Reclaim Your Smile | Specialist ...",
+        "websiteTitle": "aesthedentpune.com",
+        "url": "https://www.aesthedentpune.com/",
+        "displayedUrl": "https://www.aesthedentpune.com",
+        "description": "We provide clear dental care in Kothrud, Pune. No hiding costs, no skipping details, and no rushing you into treatment. Specializes in implants and restorative ...",
+        "emphasizedKeywords": [
+          "clear dental care in Kothrud, Pune"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 2
+      },
+      {
+        "title": "The Aesthedent Experience | Clinical Precision in Kothrud, Pune",
+        "websiteTitle": "aesthedentpune.com",
+        "url": "https://www.aesthedentpune.com/aesthedent-experience",
+        "displayedUrl": "https://www.aesthedentpune.com › aesthedent-experience",
+        "description": "Experience clinical excellence at Aesthedent. Where prosthodontic precision meets human-centered care. Specialized in dental implants, ...",
+        "emphasizedKeywords": [],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 3
+      }
+    ],
+    "suggestedResults": [],
+    "peopleAlsoAsk": [],
+    "customData": null,
+    "htmlSnapshotUrl": "https://api.apify.com/v2/key-value-stores/rHVhz3CInCYIfEuL1/records/R95vJTbUiephnN9-0.html?signature=1F8brqECJQ7cNid1QJISQ"
+  },
+  {
+    "searchQuery": {
+      "term": "aesthedent dental clinic kothrud",
+      "url": "http://www.google.co.in/search?q=aesthedent+dental+clinic+kothrud&hl=en",
+      "device": "DESKTOP",
+      "page": 1,
+      "type": "SEARCH",
+      "domain": "google.co.in",
+      "countryCode": "IN",
+      "languageCode": "en",
+      "locationUule": null,
+      "resultsPerPage": 10
+    },
+    "url": "http://www.google.co.in/search?q=aesthedent+dental+clinic+kothrud&hl=en",
+    "hasNextPage": true,
+    "serpProviderCode": "L",
+    "resultsTotal": null,
+    "relatedQueries": [],
+    "paidResults": [],
+    "paidProducts": [],
+    "organicResults": [
+      {
+        "title": "Aesthedent Dental Clinic — Reclaim Your Smile | Specialist ...",
+        "websiteTitle": "aesthedentpune.com",
+        "url": "https://www.aesthedentpune.com/",
+        "displayedUrl": "https://www.aesthedentpune.com",
+        "description": "Aesthedent is a specialized Prosthodontist clinic in Kothrud, Pune. Experience expert dental implants, full mouth rehabilitation, and specialist-led ...",
+        "emphasizedKeywords": [
+          "Aesthedent",
+          "clinic",
+          "Kothrud",
+          "dental"
+        ],
+        "siteLinks": [
+          {
+            "title": "Specialized Unique Treatments.",
+            "url": "https://www.aesthedentpune.com/aesthedent-experience",
+            "description": "Aesthedent — Reclaim Your Smile. Honest, clear dental care in ..."
+          },
+          {
+            "title": "Specialist Grade Dentures",
+            "url": "https://www.aesthedentpune.com/services/dentures",
+            "description": "Aesthedent is a specialized Prosthodontist clinic in Kothrud ..."
+          },
+          {
+            "title": "More results from aesthedentpune.com »",
+            "url": "https://www.google.co.in/search?q=aesthedent+dental+clinic+kothrud+site:aesthedentpune.com&sca_esv=cddd62cdcec56474&hl=en&sa=X&ved=2ahUKEwiJ2KfEj9mVAxXFnFYBHZrKKboQrAN6BAgkEAE",
+            "description": ""
+          }
+        ],
+        "productInfo": {},
+        "type": "organic",
+        "position": 1
+      },
+      {
+        "title": "Aesthedent Dental Clinic, Kothrud | Pune",
+        "websiteTitle": "Facebook · Aesthedent Dental Clinic, Kothrud",
+        "url": "https://www.facebook.com/p/Aesthedent-Dental-Clinic-Kothrud-100063903827787/",
+        "displayedUrl": "Facebook › Aesthedent Dental Clinic, Kothrud",
+        "description": "Aesthedent Dental Clinic, Kothrud, Pune. Welcome to our clinic! Dr. Sahil Wathodkar. Minimally Invasive Full Mouth Rehabilitation",
+        "emphasizedKeywords": [
+          "Aesthedent Dental Clinic, Kothrud, Pune"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "followersAmount": "540+ followers",
+        "type": "organic",
+        "position": 2
+      },
+      {
+        "title": "Aesthedent Dental Clinic Kothrud - Pune",
+        "websiteTitle": "Justdial",
+        "url": "https://www.justdial.com/Pune/Aesthedent-Dental-Clinic-Kothrud-Above-Irani-Cafe-Dahanukar-Colony-Kothrud/020PXX20-XX20-211118031742-X6C4_BZDET",
+        "displayedUrl": "https://www.justdial.com › ... › Clinics in Kothrud",
+        "description": "Aesthedent Dental Clinic Kothrud in Kothrud, Pune is easy to reach. It is located Above, Irani Cafe, Dahanukar Colony. it is recommended to book an appointment ...",
+        "emphasizedKeywords": [
+          "Above, Irani Cafe, Dahanukar Colony"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 3
+      },
+      {
+        "title": "Aesthedent Dental Clinic | Kothrud",
+        "websiteTitle": "Instagram · drwathodkar_aesthedent_clinic",
+        "url": "https://www.instagram.com/drwathodkar_aesthedent_clinic/",
+        "displayedUrl": "Instagram › drwathodkar_aesthedent_clinic",
+        "description": "🦷Dentists in Kothrud committed to Excellence 💫 Daily Digital Dentistry. Book your first appointment now. Aesthedent Dental Clinic, Kothrud – where smiles come",
+        "emphasizedKeywords": [
+          "Aesthedent Dental Clinic, Kothrud"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "followersAmount": "230+ followers",
+        "channelName": "drwathodkar_aesthedent_clinic",
+        "type": "organic",
+        "position": 4
+      },
+      {
+        "title": "Aesthedent Dental Clinic, Kothrud - Pune",
+        "websiteTitle": "Practo",
+        "url": "https://www.practo.com/pune/clinic/aesthedent-dental-clinic-kothrud/about",
+        "displayedUrl": "https://www.practo.com › pune › clinic › about",
+        "description": "Aesthedent Dental Clinic in Kothrud, Pune. Open Today: 10:00 AM - 1:45 PM All. Open Today - 10:00 AM - 1:45 PM, 2:00 PM - 8:00 PM MON - SAT 10:00 AM - 1:45",
+        "emphasizedKeywords": [
+          "Aesthedent Dental Clinic in Kothrud, Pune"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 5
+      },
+      {
+        "title": "Aesthedent Dental Clinic, Kothrud",
+        "websiteTitle": "KiViHealth",
+        "url": "https://kivihealth.com/clinic/aesthedent-dental-clinic,-kothrud",
+        "displayedUrl": "https://kivihealth.com › clinic › aesthedent-dental-clinic,-...",
+        "description": "No.5 First Floor, AJ Tower, above Irani Cafe, Timings 10:00 AM to 08:00 PM Our Doctors Dr. Sahil Wathodkar Dentist Fees : 500 INR Book Appointment",
+        "emphasizedKeywords": [
+          "No.5 First Floor, AJ Tower, above Irani Cafe"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 6
+      },
+      {
+        "title": "Aesthedent Dental Clinic, Kothrud (@100063903827787)",
+        "websiteTitle": "Facebook",
+        "url": "https://www.facebook.com/100063903827787/photos/",
+        "displayedUrl": "https://www.facebook.com › photos",
+        "description": "Aesthedent Dental Clinic, Kothrud, Pune. 540 likes · 10 were here. Welcome to our clinic! Dr. Sahil Wathodkar & Dr. Aishwarya Wathodkar. Transform your...",
+        "emphasizedKeywords": [
+          "Aesthedent Dental Clinic, Kothrud, Pune"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 7
+      },
+      {
+        "title": "Aesthedent Dental Clinic, Kothrud - Pune",
+        "websiteTitle": "Practo",
+        "url": "https://www.practo.com/pune/clinic/aesthedent-dental-clinic-kothrud",
+        "displayedUrl": "https://www.practo.com › pune › aesthedent-dental-clin...",
+        "description": "Open Today: 10:00 AM - 1:45 PM. Open Today - 10:00 AM - 1:45 PM, 2:00 PM - 8:00 PM MON - SAT 10:00 AM - 1:45 PM, 2:00 PM - 8:00 PM",
+        "emphasizedKeywords": [
+          "Open Today: 10:00 AM - 1:45 PM"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 8
+      },
+      {
+        "title": "Aesthedent Dental Clinic Kothrud - Pune",
+        "websiteTitle": "Justdial",
+        "url": "https://www.justdial.com/Pune/Aesthedent-Dental-Clinic-Kothrud-Above-Irani-Cafe-Dahanukar-Colony-Kothrud/020PXX20-XX20-211118031742-X6C4_BZDET/photos",
+        "displayedUrl": "https://www.justdial.com › Pune › photos",
+        "description": "Aesthedent Dental Clinic Kothrud in Kothrud, Pune is easy to reach. It is located Above, Irani Cafe, Dahanukar Colony. 3. Do I need an appointment before ...Read more",
+        "emphasizedKeywords": [
+          "Aesthedent Dental Clinic Kothrud in Kothrud, Pune"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 9
+      }
+    ],
+    "suggestedResults": [],
+    "peopleAlsoAsk": [],
+    "customData": null,
+    "htmlSnapshotUrl": "https://api.apify.com/v2/key-value-stores/rHVhz3CInCYIfEuL1/records/mIF3sglq08k6pJa-0.html?signature=KLYwfjs66eIDqVttfsC5"
+  },
+  {
+    "searchQuery": {
+      "term": "aesthedent",
+      "url": "http://www.google.co.in/search?q=aesthedent&hl=en",
+      "device": "DESKTOP",
+      "page": 1,
+      "type": "SEARCH",
+      "domain": "google.co.in",
+      "countryCode": "IN",
+      "languageCode": "en",
+      "locationUule": null,
+      "resultsPerPage": 10
+    },
+    "url": "http://www.google.co.in/search?q=aesthedent&hl=en",
+    "hasNextPage": true,
+    "serpProviderCode": "L",
+    "resultsTotal": null,
+    "relatedQueries": [
+      {
+        "title": "Aesthedent bhubaneswar",
+        "url": "https://www.google.co.in/search?sca_esv=cddd62cdcec56474&hl=en&q=Aesthedent+bhubaneswar&sa=X&ved=2ahUKEwjV-9PDj9mVAxV1l4kEHRFEL_8Q1QJ6BAhoEAE"
+      },
+      {
+        "title": "Aesthedent clinic bhubaneswar reviews",
+        "url": "https://www.google.co.in/search?sca_esv=cddd62cdcec56474&hl=en&q=Aesthedent+clinic+bhubaneswar+reviews&sa=X&ved=2ahUKEwjV-9PDj9mVAxV1l4kEHRFEL_8Q1QJ6BAhpEAE"
+      },
+      {
+        "title": "Aesthedent bhubaneswar",
+        "url": "https://www.google.co.in/search?sca_esv=cddd62cdcec56474&hl=en&q=Aesthedent+bhubaneswar&sa=X&ved=2ahUKEwjV-9PDj9mVAxV1l4kEHRFEL_8Q1QJ6BAhoEAE"
+      },
+      {
+        "title": "Aesthedent clinic bhubaneswar reviews",
+        "url": "https://www.google.co.in/search?sca_esv=cddd62cdcec56474&hl=en&q=Aesthedent+clinic+bhubaneswar+reviews&sa=X&ved=2ahUKEwjV-9PDj9mVAxV1l4kEHRFEL_8Q1QJ6BAhpEAE"
+      }
+    ],
+    "paidResults": [],
+    "paidProducts": [],
+    "organicResults": [
+      {
+        "title": "🦷 AESTHEDENT Advanced Dental Care Clinic ... - Instagram",
+        "websiteTitle": "Instagram · aesthedent12",
+        "url": "https://www.instagram.com/p/DUM_HAqEjsB/",
+        "displayedUrl": "Instagram › aesthedent12",
+        "description": "At Aesthedent, we provide all types of professional dental care under one roof, combining modern technology with gentle, expert hands. Call / ...",
+        "emphasizedKeywords": [
+          "all types of professional dental care under one roof"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "likes": "30+ likes",
+        "lastUpdated": "5 months ago",
+        "channelName": "p",
+        "type": "organic",
+        "position": 1
+      },
+      {
+        "title": "At Aesthedent beauty and confidence come together ...",
+        "websiteTitle": "Instagram · aesthedent12",
+        "url": "https://www.instagram.com/reel/DSXR8deklwS/",
+        "displayedUrl": "Instagram › aesthedent12",
+        "description": "Designed for elegance, comfort, and holistic beauty. Welcome to a destination where confidence truly shines ✨❣️ #clinic #bhubaneswar #aesthedent.Read more",
+        "emphasizedKeywords": [
+          "Designed for elegance, comfort, and holistic beauty"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "likes": "200+ likes",
+        "lastUpdated": "7 months ago",
+        "channelName": "reel",
+        "type": "organic",
+        "position": 2
+      },
+      {
+        "title": "AESTHEDENT LTD persons with significant control",
+        "websiteTitle": "GOV.UK",
+        "url": "https://find-and-update.company-information.service.gov.uk/company/14854817/persons-with-significant-control",
+        "displayedUrl": "https://find-and-update.company-information.service.gov.uk › ...",
+        "description": "AESTHEDENT LTD - Free company information from Companies House including registered office address, filing history, accounts, annual return, officers, ...",
+        "emphasizedKeywords": [
+          "AESTHEDENT"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 3
+      },
+      {
+        "title": "aesthedental Dental Clinic Reviews",
+        "websiteTitle": "Trustpilot",
+        "url": "https://uk.trustpilot.com/review/aesthedental.com",
+        "displayedUrl": "https://uk.trustpilot.com › ... › Dental clinic",
+        "description": "aesthedental Dental Clinic has 5 stars! 07130, Antalya, Turkey +90 544 839 58 11 support@aesthedental.com. Excellent TrustScore 5 out of 5 77 reviews 5-star 4- ...",
+        "emphasizedKeywords": [
+          "aesthedental Dental Clinic"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 4
+      },
+      {
+        "title": "Dr. Manuela Georgieva (@aesthedent) - Photos",
+        "websiteTitle": "Facebook",
+        "url": "https://www.facebook.com/aesthedent/photos/",
+        "displayedUrl": "https://www.facebook.com › ... › Dr. Manuela Georgieva",
+        "description": "Dr. Manuela Georgieva, Plovdiv. Dr. Manuela Georgieva (@aesthedent) - Photos. Prosthetic Dentistry",
+        "emphasizedKeywords": [
+          "Dr. Manuela Georgieva, Plovdiv"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 5
+      },
+      {
+        "title": "Aesthedent Dental Clinic — Reclaim Your Smile",
+        "websiteTitle": "aesthedentpune.com",
+        "url": "https://www.aesthedentpune.com/",
+        "displayedUrl": "https://www.aesthedentpune.com",
+        "description": "Aesthedent is a specialized Prosthodontist clinic in Kothrud, Pune. Experience expert dental implants, full mouth rehabilitation, and specialist-led ...",
+        "emphasizedKeywords": [
+          "Prosthodontist clinic in Kothrud, Pune"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 6
+      },
+      {
+        "title": "510(k) Premarket Notification - FDA",
+        "websiteTitle": "U.S. Food and Drug Administration (.gov)",
+        "url": "https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfpmn/pmn.cfm?ID=K242646",
+        "displayedUrl": "https://www.accessdata.fda.gov › cfdocs › cfpmn › pmn",
+        "description": "Guilin Aesthedent Medical Instruments Co., Ltd. 3rd Floor, Bldg. 12th, Guilin Creative Industry Park. # 70, Qilidian Rd., Qixing District.Read more",
+        "date": "2025-04-11T12:00:00.000Z",
+        "emphasizedKeywords": [
+          "Guilin Aesthedent Medical Instruments Co., Ltd"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 7
+      },
+      {
+        "title": "Aesthedent Dental Clinic Website Built for Conversion and ...",
+        "websiteTitle": "LinkedIn · Karan Dabre",
+        "url": "https://www.linkedin.com/posts/karan-dabre-897827167_webdevelopment-nextjs-freelance-activity-7449186924256227328-pcWq",
+        "displayedUrl": "LinkedIn › Karan Dabre",
+        "description": "Wrapped up a 19-page website for a dental clinic in just 5 days. But honestly, this wasn't about “finishing pages fast.",
+        "emphasizedKeywords": [],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 8
+      },
+      {
+        "title": "Aesthetic Dentistry of Manhattan",
+        "websiteTitle": "Aesthetic Dentistry of Manhattan",
+        "url": "https://aestheticdentistryofmanhattan.com/",
+        "displayedUrl": "https://aestheticdentistryofmanhattan.com",
+        "description": "We offer a comprehensive range of services, from porcelain veneers and Invisalign® to dental implants and teeth whitening, all delivered with unwavering ...Read more",
+        "emphasizedKeywords": [
+          "porcelain veneers and Invisalign®"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 9
+      }
+    ],
+    "suggestedResults": [],
+    "peopleAlsoAsk": [
+      {
+        "answer": null,
+        "question": "What is esthetics in dentistry?",
+        "title": null,
+        "url": null,
+        "date": null
+      },
+      {
+        "answer": null,
+        "question": "What do aesthetic dentists do?",
+        "title": null,
+        "url": null,
+        "date": null
+      },
+      {
+        "answer": null,
+        "question": "What is aesthetic dental treatment?",
+        "title": null,
+        "url": null,
+        "date": null
+      },
+      {
+        "answer": null,
+        "question": "What are the types of dental aesthetics?",
+        "title": null,
+        "url": null,
+        "date": null
+      }
+    ],
+    "aiOverview": {
+      "type": "live",
+      "content": "Aesthedent is a name commonly associated with modern dental and cosmetic clinics specializing in advanced smile design, implants, skin care, and facial aesthetics. Multiple prominent clinics and specialists operate under this name globally, offering services ranging from routine dentistry to aesthetic medicine.Because \"Aesthedent\" refers to several different independent practices, the location or clinic you are looking for likely falls into one of these highly-rated branches:📍 Key Locations & ClinicsIndia - Bhubaneswar, Odisha: A holistic destination for dental, skin, hair, and PMU (Permanent Makeup) treatments. You can view their services and updates on the Aesthedent Bhubaneswar Instagram.India - Pune, Maharashtra: Located in Kothrud, this clinic specializes in precision dental implants, root canals, and bio-harmonious aesthetics. Browse their specialist-only protocols on the Aesthedent Pune Website.Europe: There are also established clinics operating under the Aesthedent name in places like Hamburg, Germany and Plovdiv, Bulgaria.Could you clarify which city or specific treatment (such as dental implants, veneers, or aesthetic medicine) you are looking for? That way, I can give you the exact contact information and booking details you need.Could you clarify which city or specific treatment (such as dental implants, veneers, or aesthetic medicine) you are looking for? That way, I can give you the exact contact information and booking details you need.",
+      "sources": [
+        {
+          "url": "https://www.aesthedent.de/",
+          "title": "",
+          "description": ""
+        },
+        {
+          "url": "https://www.facebook.com/aesthedent/photos/",
+          "title": "",
+          "description": ""
+        },
+        {
+          "url": "https://www.instagram.com/aesthedent12/",
+          "title": "",
+          "description": ""
+        }
+      ]
+    },
+    "customData": null,
+    "htmlSnapshotUrl": "https://api.apify.com/v2/key-value-stores/rHVhz3CInCYIfEuL1/records/9FUxnWaycYALQW4-0.html?signature=1evTGSxriZT4xJP8o43O8"
+  },
+  {
+    "searchQuery": {
+      "term": "dental implant kothrud",
+      "url": "http://www.google.co.in/search?q=dental+implant+kothrud&hl=en",
+      "device": "DESKTOP",
+      "page": 1,
+      "type": "SEARCH",
+      "domain": "google.co.in",
+      "countryCode": "IN",
+      "languageCode": "en",
+      "locationUule": null,
+      "resultsPerPage": 10
+    },
+    "url": "http://www.google.co.in/search?q=dental+implant+kothrud&hl=en",
+    "hasNextPage": true,
+    "serpProviderCode": "O",
+    "resultsTotal": null,
+    "relatedQueries": [
+      {
+        "title": "Tooth implant cost in Pune",
+        "url": "https://www.google.co.in/search?sca_esv=cddd62cdcec56474&hl=en&gl=IN&q=Tooth+implant+cost+in+Pune&sa=X&ved=2ahUKEwjYhYThj9mVAxWua2wGHdRDIiwQ1QJ6BAhAEAE"
+      },
+      {
+        "title": "Dental treatment charges list",
+        "url": "https://www.google.co.in/search?sca_esv=cddd62cdcec56474&hl=en&gl=IN&q=Dental+treatment+charges+list&sa=X&ved=2ahUKEwjYhYThj9mVAxWua2wGHdRDIiwQ1QJ6BAhPEAE"
+      },
+      {
+        "title": "Dental treatment cost in pune",
+        "url": "https://www.google.co.in/search?sca_esv=cddd62cdcec56474&hl=en&gl=IN&q=Dental+treatment+cost+in+pune&sa=X&ved=2ahUKEwjYhYThj9mVAxWua2wGHdRDIiwQ1QJ6BAhNEAE"
+      },
+      {
+        "title": "Teeth cleaning Charges in Pune",
+        "url": "https://www.google.co.in/search?sca_esv=cddd62cdcec56474&hl=en&gl=IN&q=Teeth+cleaning+Charges+in+Pune&sa=X&ved=2ahUKEwjYhYThj9mVAxWua2wGHdRDIiwQ1QJ6BAhJEAE"
+      },
+      {
+        "title": "Teeth filling cost in Pune",
+        "url": "https://www.google.co.in/search?sca_esv=cddd62cdcec56474&hl=en&gl=IN&q=Teeth+filling+cost+in+Pune&sa=X&ved=2ahUKEwjYhYThj9mVAxWua2wGHdRDIiwQ1QJ6BAhFEAE"
+      },
+      {
+        "title": "Root canal treatment cost Pune",
+        "url": "https://www.google.co.in/search?sca_esv=cddd62cdcec56474&hl=en&gl=IN&q=Root+canal+treatment+cost+Pune&sa=X&ved=2ahUKEwjYhYThj9mVAxWua2wGHdRDIiwQ1QJ6BAhDEAE"
+      },
+      {
+        "title": "Tooth Extraction cost Pune",
+        "url": "https://www.google.co.in/search?sca_esv=cddd62cdcec56474&hl=en&gl=IN&q=Tooth+Extraction+cost+Pune&sa=X&ved=2ahUKEwjYhYThj9mVAxWua2wGHdRDIiwQ1QJ6BAhCEAE"
+      },
+      {
+        "title": "Tooth implant cost in Pune",
+        "url": "https://www.google.co.in/search?sca_esv=cddd62cdcec56474&hl=en&gl=IN&q=Tooth+implant+cost+in+Pune&sa=X&ved=2ahUKEwjYhYThj9mVAxWua2wGHdRDIiwQ1QJ6BAhAEAE"
+      },
+      {
+        "title": "Dental treatment charges list",
+        "url": "https://www.google.co.in/search?sca_esv=cddd62cdcec56474&hl=en&gl=IN&q=Dental+treatment+charges+list&sa=X&ved=2ahUKEwjYhYThj9mVAxWua2wGHdRDIiwQ1QJ6BAhPEAE"
+      },
+      {
+        "title": "Dental treatment cost in pune",
+        "url": "https://www.google.co.in/search?sca_esv=cddd62cdcec56474&hl=en&gl=IN&q=Dental+treatment+cost+in+pune&sa=X&ved=2ahUKEwjYhYThj9mVAxWua2wGHdRDIiwQ1QJ6BAhNEAE"
+      },
+      {
+        "title": "Teeth cleaning Charges in Pune",
+        "url": "https://www.google.co.in/search?sca_esv=cddd62cdcec56474&hl=en&gl=IN&q=Teeth+cleaning+Charges+in+Pune&sa=X&ved=2ahUKEwjYhYThj9mVAxWua2wGHdRDIiwQ1QJ6BAhJEAE"
+      },
+      {
+        "title": "Teeth filling cost in Pune",
+        "url": "https://www.google.co.in/search?sca_esv=cddd62cdcec56474&hl=en&gl=IN&q=Teeth+filling+cost+in+Pune&sa=X&ved=2ahUKEwjYhYThj9mVAxWua2wGHdRDIiwQ1QJ6BAhFEAE"
+      },
+      {
+        "title": "Root canal treatment cost Pune",
+        "url": "https://www.google.co.in/search?sca_esv=cddd62cdcec56474&hl=en&gl=IN&q=Root+canal+treatment+cost+Pune&sa=X&ved=2ahUKEwjYhYThj9mVAxWua2wGHdRDIiwQ1QJ6BAhDEAE"
+      },
+      {
+        "title": "Tooth Extraction cost Pune",
+        "url": "https://www.google.co.in/search?sca_esv=cddd62cdcec56474&hl=en&gl=IN&q=Tooth+Extraction+cost+Pune&sa=X&ved=2ahUKEwjYhYThj9mVAxWua2wGHdRDIiwQ1QJ6BAhCEAE"
+      }
+    ],
+    "paidResults": [],
+    "paidProducts": [],
+    "organicResults": [
+      {
+        "title": "54 Dental Implant Clinics in Kothrud, Pune",
+        "websiteTitle": "Practo",
+        "url": "https://www.practo.com/pune/clinics/dental-implant-clinics/kothrud",
+        "displayedUrl": "https://www.practo.com › pune › clinics › kothrud",
+        "description": "54 Dental Implant Clinics in Kothrud, Pune · SmyleXL Dental Clinic · Dr. Bhangale's Dental Clinic · The Dent Care · Novacare Dental · Oriease Dental Clinic.Read more",
+        "emphasizedKeywords": [
+          "54 Dental Implant Clinics in Kothrud, Pune"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 1
+      },
+      {
+        "title": "Dental Implants in Kothrud Pune - Smile-Inn Dental Clinic",
+        "websiteTitle": "smileinn.in",
+        "url": "https://smileinn.in/dental-implant/",
+        "displayedUrl": "https://smileinn.in › dental-implant",
+        "description": "Get Painless Dental Implants Treatment in Kothrud Pune. Avoid Major Surgeries and get instant results with Dental Implants in Pune ☏ 9420 065 036.",
+        "emphasizedKeywords": [
+          "Get Painless Dental Implants Treatment in Kothrud Pune"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 2
+      },
+      {
+        "title": "Best Dental Implants Clinic in Kothrud Pune",
+        "websiteTitle": "thedentalstudio.co.in",
+        "url": "https://thedentalstudio.co.in/services-dental-clinic-in-kothrud/dental-implants-in-kothrud-pune/",
+        "displayedUrl": "https://thedentalstudio.co.in › dental-implants-in-kothru...",
+        "description": "Kothrud Pune dental implants have emerged as the most dependable and durable choice. Call Now +91-9325548239",
+        "emphasizedKeywords": [
+          "Kothrud Pune dental implants"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 3
+      },
+      {
+        "title": "Dental Implants In Kothrud, Pune",
+        "websiteTitle": "Microdent Dentistry",
+        "url": "https://microdentdentistry.com/dental-implants-pune/",
+        "displayedUrl": "https://microdentdentistry.com › dental-implants-pune",
+        "description": "Looking for dental implants in Kothrud, Pune? Dr. Kashmira Joshi at Microdent Dentistry offers expert, affordable care. Call +91 7264008000 today!",
+        "emphasizedKeywords": [
+          "dental implants",
+          "Kothrud"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 4
+      },
+      {
+        "title": "Orion Dental Specialities: Orthodontic & Dental Clinic in ...",
+        "websiteTitle": "oriondentalspecialities.com",
+        "url": "https://oriondentalspecialities.com/",
+        "displayedUrl": "https://oriondentalspecialities.com",
+        "description": "Orion Dental Specialities, located in the heart of Kothrud, Pune, is a multi-speciality dental clinic offering Invisalign, braces, dental implants, and complete ...Read more",
+        "emphasizedKeywords": [
+          "Orion Dental Specialities, located in the heart of Kothrud"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 5
+      },
+      {
+        "title": "Best Dental Clinic in Kothrud, Pune | Open on Weekends",
+        "websiteTitle": "Clove Dental",
+        "url": "https://clovedental.in/dentist-near-me/pune/kothrud",
+        "displayedUrl": "https://clovedental.in › Clove Dental Clinics Near Me",
+        "description": "Clove Dental Pune - Kothrud is the most affordable clinic in Sai Sayaji located at opposite Shastrinagar. We offer painless treatments RCT's, Implants, Aligners ...Read more",
+        "emphasizedKeywords": [
+          "Clove Dental Pune - Kothrud"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 6
+      },
+      {
+        "title": "Dental Implants in Kothrud, Pune - Bright Smile Dental Clinic",
+        "websiteTitle": "brightsmileclinic.org",
+        "url": "https://www.brightsmileclinic.org/dental-implants-pune",
+        "displayedUrl": "https://www.brightsmileclinic.org › dental-implants-pune",
+        "description": "Bright Smile Dental Clinic offers the best Dental Implants Pune, India. If you want to get your missing teeth replace then just visit Bright Smile Dental ...Read more",
+        "emphasizedKeywords": [
+          "Bright Smile Dental Clinic offers the best Dental Implants Pune"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 7
+      },
+      {
+        "title": "Contact Us | Dentist Near Kothrud Pune",
+        "websiteTitle": "drmukeshdental.com",
+        "url": "https://drmukeshdental.com/contact",
+        "displayedUrl": "https://drmukeshdental.com › contact",
+        "description": "Kothrud, Pune. Phone: +91 7447286845. Open Mon–Sat, 10AM–9PM. Advanced Implant & CBCT. Mobile +91 74472 86845 Mon–Sat, 10 AM – 9 PM Call Now → ...",
+        "date": "2026-06-28T12:00:00.000Z",
+        "emphasizedKeywords": [
+          "Advanced Implant & CBCT"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "type": "organic",
+        "position": 8
+      },
+      {
+        "title": "Suyash Dental World (@suyashdental) · Pune",
+        "websiteTitle": "Instagram · suyashdental",
+        "url": "https://www.instagram.com/suyashdental/",
+        "displayedUrl": "Instagram › suyashdental",
+        "description": "Cosmetic & Family Dentistry Painless Root Canals & Implants ‍⚕️ Dentist in Warje, Pune Book Your Smile Makeover Now. Follow.Read more",
+        "emphasizedKeywords": [
+          "Painless Root Canals & Implants"
+        ],
+        "siteLinks": [],
+        "productInfo": {},
+        "followersAmount": "200+ followers",
+        "channelName": "suyashdental",
+        "type": "organic",
+        "position": 9
+      }
+    ],
+    "suggestedResults": [],
+    "peopleAlsoAsk": [
+      {
+        "answer": null,
+        "question": "How much does a tooth implant cost in Pune?",
+        "title": null,
+        "url": null,
+        "date": null
+      },
+      {
+        "answer": null,
+        "question": "What is the 3 2 rule for implants?",
+        "title": null,
+        "url": null,
+        "date": null
+      },
+      {
+        "answer": null,
+        "question": "What happens after 20 years of dental implants?",
+        "title": null,
+        "url": null,
+        "date": null
+      },
+      {
+        "answer": null,
+        "question": "Can you get 4 teeth on 2 implants?",
+        "title": null,
+        "url": null,
+        "date": null
+      }
+    ],
+    "customData": null,
+    "htmlSnapshotUrl": "https://api.apify.com/v2/key-value-stores/rHVhz3CInCYIfEuL1/records/T0nIqPTVp470S8Y-0.html?signature=1N1oHJqPDEOJ976oxKHIm"
+  }
+]

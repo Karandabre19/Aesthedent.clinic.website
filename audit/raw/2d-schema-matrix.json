@@ -1,0 +1,233 @@
+[
+  {
+    "name": "aesthedentpune.com (US)",
+    "url": "https://www.aesthedentpune.com/",
+    "types": [
+      "Dentist",
+      "GeoCoordinates",
+      "OpeningHoursSpecification",
+      "PostalAddress"
+    ],
+    "ldBlocks": 1,
+    "error": null,
+    "ratingValue": null,
+    "reviewCount": null
+  },
+  {
+    "name": "soulfuldental.com",
+    "url": "https://www.soulfuldental.com/",
+    "types": [
+      "BreadcrumbList",
+      "EntryPoint",
+      "ImageObject",
+      "ListItem",
+      "Organization",
+      "PropertyValueSpecification",
+      "ReadAction",
+      "SearchAction",
+      "WebPage",
+      "WebSite"
+    ],
+    "ldBlocks": 1,
+    "error": null,
+    "ratingValue": null,
+    "reviewCount": null
+  },
+  {
+    "name": "silverpearlsdental.com",
+    "url": "https://www.silverpearlsdental.com/",
+    "types": [
+      "AggregateRating",
+      "Answer",
+      "ContactPoint",
+      "Dentist",
+      "FAQPage",
+      "GeoCoordinates",
+      "LocalBusiness",
+      "OpeningHoursSpecification",
+      "Organization",
+      "PostalAddress",
+      "Question",
+      "SearchAction",
+      "WebSite",
+      "person"
+    ],
+    "ldBlocks": 6,
+    "error": null,
+    "ratingValue": "5.0",
+    "reviewCount": "202"
+  },
+  {
+    "name": "smileinn.in",
+    "url": "https://smileinn.in/",
+    "types": [
+      "BreadcrumbList",
+      "EntryPoint",
+      "ImageObject",
+      "ListItem",
+      "MedicalWebPage",
+      "Organization",
+      "PropertyValueSpecification",
+      "ReadAction",
+      "SearchAction",
+      "WebPage",
+      "WebSite"
+    ],
+    "ldBlocks": 2,
+    "error": null,
+    "ratingValue": null,
+    "reviewCount": null
+  },
+  {
+    "name": "oriondentalspecialities.com",
+    "url": "https://oriondentalspecialities.com/",
+    "types": [
+      "BreadcrumbList",
+      "EntryPoint",
+      "ImageObject",
+      "ListItem",
+      "Organization",
+      "PropertyValueSpecification",
+      "ReadAction",
+      "SearchAction",
+      "WebPage",
+      "WebSite"
+    ],
+    "ldBlocks": 1,
+    "error": null,
+    "ratingValue": null,
+    "reviewCount": null
+  },
+  {
+    "name": "thedentalstudio.co.in",
+    "url": "https://thedentalstudio.co.in/",
+    "types": [
+      "Article",
+      "Dentist",
+      "GeoCoordinates",
+      "ImageObject",
+      "Organization",
+      "Person",
+      "Place",
+      "PostalAddress",
+      "SearchAction",
+      "WebPage",
+      "WebSite"
+    ],
+    "ldBlocks": 1,
+    "error": null,
+    "ratingValue": null,
+    "reviewCount": null
+  },
+  {
+    "name": "microdentdentistry.com",
+    "url": "https://microdentdentistry.com/",
+    "types": [
+      "AggregateOffer",
+      "AggregateRating",
+      "Article",
+      "Brand",
+      "Dentist",
+      "ImageObject",
+      "MedicalOrganization",
+      "Organization",
+      "Person",
+      "PostalAddress",
+      "Product",
+      "SearchAction",
+      "WebPage",
+      "WebSite"
+    ],
+    "ldBlocks": 6,
+    "error": null,
+    "ratingValue": "4.9",
+    "reviewCount": "250"
+  },
+  {
+    "name": "toothandcodental.com",
+    "url": "https://www.toothandcodental.com/",
+    "types": [],
+    "ldBlocks": 0,
+    "error": "fetch failed",
+    "ratingValue": null,
+    "reviewCount": null
+  },
+  {
+    "name": "integritydentalcare.in",
+    "url": "https://www.integritydentalcare.in/integritydentalcare",
+    "types": [
+      "AggregateRating",
+      "ContactPoint",
+      "CreativeWork",
+      "GeoCoordinates",
+      "ImageObject",
+      "MedicalClinic",
+      "MedicalTherapy",
+      "Physician",
+      "PostalAddress",
+      "Review",
+      "Service",
+      "WebSite",
+      "map",
+      "person"
+    ],
+    "ldBlocks": 3,
+    "error": null,
+    "ratingValue": 5,
+    "reviewCount": 21
+  },
+  {
+    "name": "sabkadentist.com (CHAIN)",
+    "url": "https://sabkadentist.com/dental-clinics-in-pune/kothrud/",
+    "types": [
+      "BreadcrumbList",
+      "EntryPoint",
+      "GeoCoordinates",
+      "ImageObject",
+      "ListItem",
+      "LocalBusiness",
+      "OpeningHoursSpecification",
+      "Organization",
+      "PostalAddress",
+      "PropertyValueSpecification",
+      "ReadAction",
+      "SearchAction",
+      "WebPage",
+      "WebSite"
+    ],
+    "ldBlocks": 3,
+    "error": null,
+    "ratingValue": null,
+    "reviewCount": null
+  },
+  {
+    "name": "clovedental.in (CHAIN)",
+    "url": "https://clovedental.in/dentist-near-me/pune/kothrud",
+    "types": [
+      "AggregateRating",
+      "Brand",
+      "BreadcrumbList",
+      "ContactPoint",
+      "EntryPoint",
+      "GeoCoordinates",
+      "ImageObject",
+      "ListItem",
+      "LocalBusiness",
+      "MedicalOrganization",
+      "Organization",
+      "Person",
+      "PostalAddress",
+      "PropertyValueSpecification",
+      "Rating",
+      "Review",
+      "SearchAction",
+      "SiteNavigationElement",
+      "WebPage",
+      "WebSite"
+    ],
+    "ldBlocks": 10,
+    "error": null,
+    "ratingValue": "4.6",
+    "reviewCount": "312"
+  }
+]

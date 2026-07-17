@@ -1,0 +1,24 @@
+{
+  "actorId": "compass~crawler-google-places",
+  "runId": "hoHrAoAFnGxpq1DeL",
+  "datasetId": "dqN1QHS9fiGE8oxdO",
+  "status": "SUCCEEDED",
+  "startedAt": "2026-07-17T06:45:52.832Z",
+  "finishedAt": "2026-07-17T06:46:05.544Z",
+  "usageTotalUsd": 0.08020000000000001,
+  "itemCount": 20,
+  "input": {
+    "searchStringsArray": [
+      "best dentist in Kothrud"
+    ],
+    "locationQuery": "Kothrud, Pune, Maharashtra, India",
+    "maxCrawledPlacesPerSearch": 20,
+    "language": "en",
+    "countryCode": "in",
+    "maxReviews": 0,
+    "maxImages": 0,
+    "scrapeReviewsPersonalData": false,
+    "skipClosedPlaces": false,
+    "includeWebResults": false
+  }
+}
