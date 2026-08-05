@@ -3,7 +3,7 @@ import JsonLd from '@/components/seo/JsonLd';
 import { buildBreadcrumbSchema } from '@/lib/schema';
 import InsightDetailClient from './InsightDetailClient';
 
-// HAZARD (not fixed here — Phase 4): article bodies live in an `insightsData`
+// HAZARD (not fixed here - Phase 4): article bodies live in an `insightsData`
 // object inside InsightDetailClient.js, separate from lib/insights.js. The two
 // slug lists agree today, but adding an insight to the lib without adding the
 // body puts a URL in the sitemap that renders "not found". Worth consolidating

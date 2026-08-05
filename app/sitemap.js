@@ -8,6 +8,7 @@ export default function sitemap() {
   const staticRoutes = [
     '',
     '/aesthedent-experience',
+    '/dental-clinic-in-kothrud', // Phase 4F - net-new area page
     '/about',
     '/contact',
     '/doctor',

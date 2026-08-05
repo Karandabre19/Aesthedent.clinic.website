@@ -41,11 +41,17 @@ export default function ServicesPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
+            {/* COLLISION C5: "Our Dental Services" carried no keyword and no
+                location while the <title> carried both - H1 and title should
+                mirror (audit/03-gap-analysis.md §3.2). This page is the
+                catalogue hub; /aesthedent-experience owns "painless dental
+                treatment kothrud" (Part A) and /about owns "dental clinic in
+                kothrud". Three distinct terms, three pages. */}
             <h1 className="text-4xl lg:text-[52px] font-semibold text-[hsl(var(--color-text))] mb-6 leading-tight">
-              Our Dental Services
+              Dental treatments in Kothrud, Pune
             </h1>
             <p className="text-lg lg:text-xl text-[hsl(var(--color-text-muted))] leading-relaxed">
-              Comprehensive dental care with a focus on your comfort. Every treatment is performed with precision, care, and a gentle touch.
+              Eight treatments, each planned by a specialist prosthodontist and explained to you in plain words before anything starts.
             </p>
           </motion.div>
         </div>
@@ -122,7 +128,7 @@ export default function ServicesPage() {
                                 <div className="flex flex-wrap gap-4">
                                   <Button className="bg-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary-dark))] px-6" asChild>
                                     <Link href={`/services/${service.slug}`}>
-                                      Learn More Details <ArrowRight className="w-4 h-4 ml-2" />
+                                      {service.title} <ArrowRight className="w-4 h-4 ml-2" />
                                     </Link>
                                   </Button>
                                   <Button variant="outline" className="border-[hsl(var(--color-primary))] text-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary-light))]" asChild>

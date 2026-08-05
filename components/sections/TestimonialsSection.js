@@ -4,6 +4,7 @@ import { Star, ArrowRight, User } from 'lucide-react';
 import Image from 'next/image';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import { getTestimonials } from '@/lib/testimonials';
+import { REVIEWS } from '@/lib/clinic';
 
 function GoogleReviewBadge() {
   return (
@@ -19,10 +20,38 @@ function GoogleReviewBadge() {
   );
 }
 
-function ReviewerAvatar() {
+/**
+ * Initials, not a face.
+ *
+ * This was a generic grey silhouette. The brief asked for real Google reviewer
+ * photos instead - we do not have them, and the only face images in
+ * lib/testimonials.js are Pexels stock photos of unrelated people, which would
+ * be worse than the silhouette rather than better: a stranger's face captioned
+ * with a patient's name is a fabricated record.
+ *
+ * Initials are the same pattern Google itself falls back to, carry the
+ * reviewer's actual name, and claim nothing untrue. Swap to real photos once we
+ * have them WITH each reviewer's permission - reviewer profile images are their
+ * likeness, not the clinic's asset.
+ */
+function ReviewerAvatar({ testimonial }) {
+  const initials = (testimonial?.name ?? '')
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join('')
+    .toUpperCase();
+
   return (
     <div className="relative h-14 w-14 overflow-hidden rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--color-bg-alt))] flex items-center justify-center">
-      <User className="w-7 h-7 text-[hsl(var(--color-primary))]/40" />
+      {initials ? (
+        <span className="text-base font-semibold tracking-wide text-[hsl(var(--color-primary))]">
+          {initials}
+        </span>
+      ) : (
+        <User className="w-7 h-7 text-[hsl(var(--color-primary))]/40" />
+      )}
     </div>
   );
 }
@@ -42,6 +71,11 @@ function ReviewStars({ rating }) {
 }
 
 function TestimonialCard({ testimonial, delay = 0 }) {
+  // Provenance claims render only where we can back them. See the header comment
+  // in lib/testimonials.js - the card used to assert "Verified patient" and
+  // "Shared on Google" for every entry, including ones we cannot confirm.
+  const isVerified = testimonial.verifiedGoogleReview === true;
+
   return (
     <AnimatedSection
       key={testimonial.id}
@@ -56,11 +90,11 @@ function TestimonialCard({ testimonial, delay = 0 }) {
               {testimonial.name}
             </h3>
             <p className="mt-1 text-sm text-[hsl(var(--color-text-muted))]">
-              Verified patient
+              {isVerified ? 'Verified patient' : 'Patient feedback'}
             </p>
           </div>
         </div>
-        <GoogleReviewBadge />
+        {isVerified && <GoogleReviewBadge />}
       </div>
 
       <div className="mb-4 flex items-center justify-between gap-3">
@@ -77,10 +111,12 @@ function TestimonialCard({ testimonial, delay = 0 }) {
       <div className="flex items-center justify-between border-t border-[hsl(var(--border))] pt-4">
         <div>
           <p className="text-sm font-medium text-[hsl(var(--color-primary))]">
-            Shared on Google
+            {isVerified ? 'Shared on Google' : 'Patient feedback'}
           </p>
           <p className="text-xs text-[hsl(var(--color-text-muted))]">
-            Honest patient feedback
+            {isVerified
+              ? `One of ${REVIEWS.count} five-star reviews`
+              : 'Awaiting profile confirmation'}
           </p>
         </div>
         <a 
@@ -89,7 +125,7 @@ function TestimonialCard({ testimonial, delay = 0 }) {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 text-sm font-medium text-[hsl(var(--color-primary))] hover:text-[hsl(var(--color-accent))] transition-colors"
         >
-          <span>Read More</span>
+          <span>Read our Google reviews</span>
           <ArrowRight size={14} />
         </a>
       </div>

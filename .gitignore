@@ -33,6 +33,10 @@ dist
 # Environment files (comprehensive coverage)
 *token.json*
 *credentials.json*
+# OAuth client secrets (Google, GSC MCP, etc.)
+/secrets/
+client_secret_*.json
+*oauth-secrets*.json
 
 # Logs and debug files
 npm-debug.log*

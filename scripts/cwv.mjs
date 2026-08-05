@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /**
- * Phase 3.7 — Core Web Vitals for us + competitors.
+ * Phase 3.7 - Core Web Vitals for us + competitors.
  *
  * PageSpeed Insights API. Reports BOTH:
- *  - CrUX field data (real Chrome users, 28-day) — the truth, when it exists
- *  - Lighthouse lab data — a simulation, used only when field data is absent
+ *  - CrUX field data (real Chrome users, 28-day) - the truth, when it exists
+ *  - Lighthouse lab data - a simulation, used only when field data is absent
  * A new/low-traffic site has no CrUX sample, so "no field data" is itself a
  * finding, not a gap to paper over with lab numbers.
  */
@@ -60,7 +60,7 @@ for (const [name, url] of TARGETS) {
   console.log(`${row.error ? 'ERR ' : 'ok  '} ${name}`);
 }
 
-const n = (v, d = 0) => (v == null ? '—' : (v / (d || 1)).toFixed(d ? 1 : 0));
+const n = (v, d = 0) => (v == null ? '-' : (v / (d || 1)).toFixed(d ? 1 : 0));
 console.log(`\n=== CORE WEB VITALS (${STRATEGY}) ===\n`);
 console.log('site'.padEnd(30), 'perf'.padStart(5), 'LCPlab'.padStart(8), 'TBT'.padStart(7), 'CLS'.padStart(6), 'KB'.padStart(7), '  field(CrUX)');
 for (const r of out) {

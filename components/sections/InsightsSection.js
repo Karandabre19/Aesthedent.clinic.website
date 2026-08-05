@@ -93,8 +93,10 @@ function FeaturedArticle({ article }) {
                 <Clock className="w-4 h-4" />
                 {article.readTime}
               </span>
+              {/* Descriptive anchor - the article title tells Google what the
+                  target page is about; "Read more" tells it nothing. */}
               <span className="inline-flex items-center gap-2 text-[hsl(var(--accent))] font-semibold text-sm group-hover:gap-3 transition-all duration-300">
-                Read more
+                {article.title}
                 <ArrowRight className="w-4 h-4" />
               </span>
             </div>

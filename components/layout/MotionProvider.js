@@ -9,7 +9,7 @@ import { LazyMotion, domAnimation } from 'framer-motion';
  * and advanced features like AnimatePresence layout transitions.
  * 
  * Components should use `m` instead of `motion` for tree-shaking benefits,
- * but `motion` still works — it just won't benefit from reduced bundle size
+ * but `motion` still works - it just won't benefit from reduced bundle size
  * for that specific usage.
  */
 export default function MotionProvider({ children }) {

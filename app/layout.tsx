@@ -21,10 +21,10 @@ const poppins = Poppins({
 // eight independents ranking #2-#8 for "dentist in kothrud", NOT ONE leads with
 // "prosthodontist", and every competitor uses [Service] in [Location] with the
 // location in 74-100% of titles (audit/02-competitor-content.md). Prosthodontics
-// is now the reason to choose us, carried in the description — not the label.
+// is now the reason to choose us, carried in the description - not the label.
 //
 // Note what we did NOT copy: Silver Pearls' "Best Dentist in Kothrud | Best
-// Dental Clinic in Kothrud, Pune" repeats the term and ranks #8 — the LOWEST
+// Dental Clinic in Kothrud, Pune" repeats the term and ranks #8 - the LOWEST
 // independent in the top 8. The location token is what works; the stuffing isn't.
 export const metadata = {
   metadataBase: new URL('https://www.aesthedentpune.com'),
@@ -63,7 +63,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
 
         
-        {/* Google Tag Manager — deferred until after page is idle */}
+        {/* Google Tag Manager - deferred until after page is idle */}
         <Script
           id="gtm-init"
           strategy="lazyOnload"
@@ -89,7 +89,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
         {/* End Google Tag Manager */}
 
-        {/* Local SEO — Dentist + LocalBusiness, Organization, WebSite.
+        {/* Local SEO - Dentist + LocalBusiness, Organization, WebSite.
             Sitewide entities live here; page-specific blocks (FAQPage,
             MedicalProcedure, BreadcrumbList) are emitted per route.
             See lib/schema.js for what is included and what is deliberately not. */}

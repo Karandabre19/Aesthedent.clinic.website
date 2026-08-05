@@ -9,6 +9,7 @@ import PageWrapper from '@/components/layout/PageWrapper';
 import SectionHeading from '@/components/ui/SectionHeading';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import Image from 'next/image';
+import { REVIEWS, OPENING } from '@/lib/clinic';
 import { 
   MessageCircle,
   Heart,
@@ -41,13 +42,23 @@ export default function AboutPage() {
               <Badge className="mb-4 border border-[hsl(var(--color-primary))]/12 bg-[hsl(var(--background))] text-[hsl(var(--color-primary))] shadow-[0_18px_38px_-28px_hsl(var(--color-primary)/0.35)]">
                 About Us
               </Badge>
+              {/* COLLISION C5: the old H1 ("We explain everything before we
+                  start.") carried the positioning but neither Tier-1 term, and
+                  this page owns "dental clinic in kothrud". Accent-span
+                  treatment is unchanged; only the words moved. */}
               <h1 className="mb-6 text-4xl font-semibold leading-tight text-[hsl(var(--color-primary))] lg:text-[52px]">
-                We explain <span className="text-[hsl(var(--color-accent))]">everything</span> before we start.
+                A dental clinic in Kothrud for people who <span className="text-[hsl(var(--color-accent))]">dread the dentist</span>.
               </h1>
               <p className="text-lg lg:text-xl text-[hsl(var(--color-text-muted))] leading-relaxed mb-8">
-                At Aesthedent, we believe dental care should be gentle, honest,
-                and accessible to everyone. Founded with a mission to remove the
-                fear from dentistry.
+                We explain everything before we start. If you have been putting
+                a visit off &mdash; for a year, or for ten &mdash; that is the
+                most common way people arrive here, and nobody is going to make
+                you feel foolish about it. If you would rather see what a visit
+                actually looks like first, read{' '}
+                <Link href="/aesthedent-experience" className="font-semibold text-[hsl(var(--color-primary))] underline underline-offset-4 hover:text-[hsl(var(--color-accent))] transition-colors">
+                  what it is like to be treated here
+                </Link>
+                .
               </p>
               <div className="flex gap-4">
                 <Button
@@ -125,7 +136,7 @@ export default function AboutPage() {
               </p>
               <p className="text-lg leading-relaxed">
                 Today, Aesthedent has served over 5,000 patients in Kothrud and
-                beyond. Our 5-star rating isn't just a number—it's a reflection
+                beyond. Our 5-star rating isn't just a number-it's a reflection
                 of the trust our patients place in us every day.
               </p>
             </div>
@@ -137,11 +148,16 @@ export default function AboutPage() {
       <section className="section-spacing-sm bg-[hsl(var(--color-primary))]">
         <div className="main-container">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* Phase 4B: this block carried the site's worst numbers - "10+
+                Years" and "5,000+ Happy Patients" (both unsourced, N3/N4) and a
+                review count of 263 that was stale by 17 even before today. The
+                two survivors are the two anyone can check on Google, and they
+                now come from lib/clinic.ts so they cannot drift apart again. */}
             {[
-              { number: "10+", label: "Years of Experience" },
-              { number: "5,000+", label: "Happy Patients" },
-              { number: "5.0", label: "Google Rating" },
-              { number: "263", label: "Reviews" },
+              { number: REVIEWS.rating, label: "Google Rating" },
+              { number: REVIEWS.count, label: "Five-star Reviews" },
+              { number: "MDS", label: "Specialist Prosthodontist" },
+              { number: String(OPENING.daysOpenPerWeek), label: "Days a Week, Weekends Included" },
             ].map((stat, i) => (
               <AnimatedSection key={i} delay={i * 0.1}>
                 <div className="text-center text-[hsl(var(--primary-foreground))]">

@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /**
- * Phase 2D — JSON-LD coverage matrix.
+ * Phase 2D - JSON-LD coverage matrix.
  *
  * Fetches raw HTML directly. apify/website-content-crawler returns CLEANED html
- * with every <script> stripped, so JSON-LD is invisible to it — reading schema
+ * with every <script> stripped, so JSON-LD is invisible to it - reading schema
  * from that dataset reports "no competitor has schema", which is false.
  *
  * Free: plain fetch, no actor run.
@@ -60,7 +60,7 @@ for (const [name, url] of TARGETS) {
           Object.values(n).forEach(findRating);
         };
         findRating(parsed);
-      } catch { /* malformed block — counted, not typed */ }
+      } catch { /* malformed block - counted, not typed */ }
     }
     row.types = [...types].sort();
   } catch (e) {
