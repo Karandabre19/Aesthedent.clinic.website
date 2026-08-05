@@ -14,6 +14,7 @@ import AnimatedSection from '@/components/ui/AnimatedSection';
 import InstagramShowcase from '@/components/sections/InstagramShowcase';
 import { MagneticWrapper, HeroParticles } from '@/components/ui/InteractiveHighTech';
 import { services } from '@/lib/services';
+import { REVIEWS, REVIEWS_NUMERIC, OPENING, DOCTORS } from '@/lib/clinic';
 import {
   Phone,
   MessageCircle,
@@ -45,24 +46,52 @@ const phoneNumber = '+919309816336';
 // Single source of truth for the <h1> accessible name. Must stay in sync with
 // the words composed in the heading below.
 //
-// Phase 4A: was "Redefining Dental Care in Pune." — which contained neither
-// "dentist" nor "Kothrud", our two Tier-1 terms. Same voice, same two-line
-// shape, same shimmer-then-accent treatment; the keywords are now in it.
-const HERO_HEADING = 'Dental Care in Kothrud, Pune. Redefined.';
+// Phase 4B: the approved positioning line. Was "Dental Care in Kothrud, Pune.
+// Redefined." - which carried both Tier-1 terms.
+//
+// This one carries NEITHER, and that is a deliberate, accepted trade: no
+// competitor in the Kothrud top 8 competes on dental anxiety, so this is the one
+// line on the site that cannot be mistaken for theirs. The Tier-1 terms move one
+// element down into the sub-line and into the trust bar's H2 - the <title> was
+// already keyword-first and is untouched.
+// See audit/01-content-spine.md §0.1.
+const HERO_HEADING = 'The dentist that takes the fear away.';
 
 // "100% Painless Treatments" was an absolute claim about a clinical OUTCOME on
-// health content — pain varies by patient and procedure, so it cannot be
+// health content - pain varies by patient and procedure, so it cannot be
 // promised. Reworded to a claim about our PROCESS, which the clinic does
 // control and applies to every treatment.
 //
-// Google rating and review count are verified against the live Business Profile
-// (277 @ 5.0 as of 2026-07-17, audit/02-gbp-comparison.md) — the review count
-// here was stale at 263. Years and patient numbers remain unsourced:
-// see audit/NEEDS-INPUT.md N3/N4.
+// Phase 4B: every number in this bar is now externally checkable, and the review
+// count comes from lib/clinic.ts rather than being typed here.
+//
+// REMOVED: "10+ Years Experience" (N3) and "5000+ Happy Patients" (N4). Neither
+// had a source, and both had been shipping in SSR HTML since launch. A patient
+// count nobody can verify is worth less than a review count anybody can - so the
+// trust number is now the Google one, which a visitor can check in one click.
+//
+// Replacements are facts: the MDS qualification that makes "specialist" true,
+// and the six-day week that competitors mostly don't offer.
 const trustStats = [
-  { value: 5, decimals: 1, suffix: '', label: 'Google Rating', sub: '277 Reviews' },
-  { value: 10, decimals: 0, suffix: '+', label: 'Years', sub: 'Experience' },
-  { value: 5000, decimals: 0, suffix: '+', label: 'Happy', sub: 'Patients' },
+  {
+    value: REVIEWS_NUMERIC.rating,
+    decimals: 1,
+    suffix: '',
+    label: 'Google Rating',
+    sub: `${REVIEWS.count} Reviews`,
+  },
+  {
+    display: 'MDS',
+    label: 'Prosthodontist',
+    sub: 'Bharati Vidyapeeth, Pune',
+  },
+  {
+    value: OPENING.daysOpenPerWeek,
+    decimals: 0,
+    suffix: '',
+    label: 'Days a Week',
+    sub: `Weekends open, closed ${OPENING.closedDay}`,
+  },
   { value: 100, decimals: 0, suffix: '%', label: 'Comfort-First', sub: 'Every Treatment' },
 ];
 
@@ -84,7 +113,7 @@ function AnimatedStatNumber({ value, decimals = 0, suffix = '', delay = 0 }) {
   const [displayValue, setDisplayValue] = useState(value);
 
   useEffect(() => {
-    // Reduced motion: never touch the value — it's already correct.
+    // Reduced motion: never touch the value - it's already correct.
     if (!isInView || prefersReducedMotion()) return;
 
     setDisplayValue(0);
@@ -121,13 +150,20 @@ function TrustStatCard({ stat, index }) {
       <div className="absolute -right-10 -top-10 h-24 w-24 rounded-full bg-[hsl(var(--color-accent))]/12 blur-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
       <div className="absolute -left-12 bottom-0 h-20 w-20 rounded-full bg-[hsl(var(--color-primary))]/8 blur-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
+      {/* `display` renders a literal string instead of a count-up. Needed for
+          "MDS" - a qualification is not a number, and the strongest proof on this
+          bar happens not to be countable. Same element, same classes. */}
       <p className="mb-2 text-3xl font-bold tracking-tight text-[hsl(var(--color-primary))] md:text-4xl">
-        <AnimatedStatNumber
-          value={stat.value}
-          decimals={stat.decimals}
-          suffix={stat.suffix}
-          delay={0.2 + index * 0.08}
-        />
+        {stat.display ? (
+          stat.display
+        ) : (
+          <AnimatedStatNumber
+            value={stat.value}
+            decimals={stat.decimals}
+            suffix={stat.suffix}
+            delay={0.2 + index * 0.08}
+          />
+        )}
       </p>
       <p className="text-sm font-semibold text-[hsl(var(--color-text))]">{stat.label}</p>
       <p className="mt-1 text-xs text-[hsl(var(--color-text-muted))]">{stat.sub}</p>
@@ -492,7 +528,7 @@ export default function HomePage() {
 
               <div>
                 <p className="hero-eyebrow mb-6 translate-y-4 text-sm font-medium uppercase tracking-[0.3em] text-[hsl(var(--color-accent))] opacity-0 transform-gpu md:text-base">
-                  Aesthedent — Reclaim Your Smile
+                  Aesthedent - Reclaim Your Smile
                 </p>
                 <div className="hero-divider mb-8 h-px w-24 origin-left scale-x-0 bg-gradient-to-r from-[hsl(var(--color-accent))] to-transparent opacity-0 transform-gpu" />
               </div>
@@ -503,24 +539,26 @@ export default function HomePage() {
               >
                 <span className="hero-line hero-line-1 relative block overflow-hidden pb-2 leading-tight">
                   <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--color-primary))] via-[hsl(var(--color-accent))] to-[hsl(var(--color-primary))] bg-[length:200%_auto] animate-shimmer">
-                    Dental Care
+                    The dentist
                   </span>{" "}
-                  <HeroWord>in Kothrud, Pune.</HeroWord>
+                  <HeroWord>that takes</HeroWord>
                 </span>
                 {/* Explicit space: these are block-level lines, so whitespace
                     between them is dropped from layout but keeps the heading's
-                    text content readable as "…Kothrud, Pune. Redefined." rather
-                    than "…Kothrud, Pune.Redefined.". No visual effect. */}
+                    text content readable as "…that takes the fear away." rather
+                    than "…that takesthe fear away.". No visual effect. */}
                 {' '}
                 <span className="hero-line hero-line-2 relative block overflow-hidden pb-2 leading-tight">
                   <HeroWord className="hero-accent-word font-black text-[hsl(var(--color-accent))]">
-                    Redefined.
+                    the fear away.
                   </HeroWord>
                 </span>
               </h1>
 
+              {/* Sub-line carries the Tier-1 terms the H1 gave up, plus the
+                  specialism as proof rather than headline. */}
               <p className="hero-copy mb-8 sm:mb-10 max-w-xl translate-y-6 text-base sm:text-lg leading-relaxed text-[hsl(var(--color-primary))]/85 opacity-0 transform-gpu md:text-lg">
-                We provide clear dental care in Kothrud, Pune. No hiding costs, no skipping details, and no rushing you into treatment.
+                Kothrud&rsquo;s specialist prosthodontist-led clinic. We explain every step before we start &mdash; so nothing catches you by surprise.
               </p>
 
               <div className="hero-actions flex flex-col gap-3 sm:flex-row sm:gap-6">
@@ -544,10 +582,10 @@ export default function HomePage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     // The label swaps by breakpoint, so both strings sit in the
-                    // DOM and the link's text reads "Visit ClinicLocation" —
+                    // DOM and the link's text reads "Visit ClinicLocation" -
                     // which is what Lighthouse's link-text audit failed on.
                     // aria-label gives it one clean, descriptive name.
-                    aria-label="Visit Aesthedent Dental Clinic in Kothrud — open in Google Maps"
+                    aria-label="Visit Aesthedent Dental Clinic in Kothrud - open in Google Maps"
                     className="hero-action-btn group relative inline-flex translate-y-6 scale-95 items-center justify-center gap-2 sm:gap-4 rounded-2xl border-2 border-[hsl(var(--color-primary))]/20 bg-white/10 backdrop-blur-xl px-8 sm:px-10 py-4 sm:py-5 font-black text-[hsl(var(--color-primary))] opacity-0 transition-all duration-300 transform-gpu hover:border-[hsl(var(--color-primary))]/40 hover:bg-white/20 text-base sm:text-lg"
                   >
                     <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-[hsl(var(--color-accent))]" />
@@ -615,8 +653,27 @@ export default function HomePage() {
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[hsl(var(--color-primary))] leading-tight mb-4">
                 दातों के साथ भी, दातों के बाद भी
               </h2>
+              {/* Carries the positioning, and holds the two links the spine
+                  ranks highest for it (§6.1): /about and the dental-anxiety
+                  article - the least-linked page on the site and the one that
+                  holds our entire wedge. */}
               <p className="text-base sm:text-lg text-[hsl(var(--color-text-muted))]">
-                We create a holistic patient experience backed by our strong professional expertise, intensive experience and work ethic. Our aim is to create smiles that elevate the patients' confidence and improve lives.
+                Plenty of people arrive here having avoided a dentist for years,
+                and nobody is going to make you feel foolish about that. If that
+                is you, read{' '}
+                <Link href="/insights/dental-anxiety-tips" className="font-semibold text-[hsl(var(--color-primary))] underline underline-offset-4 hover:text-[hsl(var(--color-accent))] transition-colors">
+                  what we do for patients who are frightened of the dentist
+                </Link>{' '}
+                before you book, or how we work with{' '}
+                <Link href="/about" className="font-semibold text-[hsl(var(--color-primary))] underline underline-offset-4 hover:text-[hsl(var(--color-accent))] transition-colors">
+                  nervous patients
+                </Link>
+                . You set the pace; raise a hand and everything stops. If you are
+                just trying to work out where we are and when we are open, our{' '}
+                <Link href="/dental-clinic-in-kothrud" className="font-semibold text-[hsl(var(--color-primary))] underline underline-offset-4 hover:text-[hsl(var(--color-accent))] transition-colors">
+                  dental clinic in Kothrud
+                </Link>{' '}
+                page has the practical detail.
               </p>
             </AnimatedSection>
           </div>
@@ -638,7 +695,7 @@ export default function HomePage() {
               num="03"
               icon={Info}
               title="Sensory Transparency"
-              desc="The fear of dentistry is often a fear of the unexpected. We bridge that gap by narrating each step of your treatment in real-time—preparing you for every vibration, sound, or sensation. When you know exactly what’s coming, the anxiety fades."
+              desc="The fear of dentistry is often a fear of the unexpected. We bridge that gap by narrating each step of your treatment in real-time-preparing you for every vibration, sound, or sensation. When you know exactly what’s coming, the anxiety fades."
             />
             <AdvancedPromiseCard
               num="04"
@@ -657,7 +714,7 @@ export default function HomePage() {
       <section className="py-20 md:py-32 bg-white">
         <TestimonialsSection
           title="Real Stories From Real Patients"
-          subtitle="These transformations inspire us every day—and we love sharing them."
+          subtitle="These transformations inspire us every day-and we love sharing them."
           limit={3}
           variant="compact"
         />
@@ -748,16 +805,23 @@ export default function HomePage() {
             <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-white/20 text-white rounded-full text-xs sm:text-sm font-semibold">
               Specialized Care
             </div>
+            {/* H2 carries "dental treatments in Kothrud" - one of the Tier-1
+                terms the hero H1 gave up. */}
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-3 sm:mb-6">
-              Expert Solutions for Your Smile.
+              Dental treatments in Kothrud, Pune.
             </h2>
             <p className="text-sm sm:text-base md:text-lg text-white/80 max-w-2xl mx-auto">
-              From precision implants to expert root canals, we explain every clinical detail before we start.
+              Everything below is planned by a specialist prosthodontist and explained to you in plain words first. Nothing starts until you have said yes.
             </p>
           </AnimatedSection>
 
+          {/* Phase 4B: was services.slice(0, 6) - which silently dropped the
+              7th and 8th entries, dentures and digital-smile-design. Dentures is
+              one of only THREE pages Google has indexed on this site
+              (audit/02-serp-positions.md), and the homepage was not linking to
+              it at all. All 8 now render. */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-7 lg:gap-9">
-            {services.slice(0, 6).map((service, i) => (
+            {services.map((service, i) => (
               <AnimatedSection key={service.slug} delay={i * 0.08}>
                 <Link href={`/services/${service.slug}`}>
                   <div className="card-elevated group relative overflow-hidden rounded-xl sm:rounded-2xl bg-white border border-white/20 hover:-translate-y-2 transition-transform">
@@ -778,8 +842,16 @@ export default function HomePage() {
                       <p className="text-white/85 text-xs sm:text-sm mb-4 line-clamp-2">
                         {service.shortDesc}
                       </p>
+                      {/* Descriptive anchor, not "Explore details" - the anchor
+                          text is the only signal telling Google what the target
+                          page is about, and it was being spent on two words that
+                          describe nothing.
+                          The service name alone is deliberate: appending "in
+                          Kothrud" to all eight cards pushed the homepage to 24
+                          mentions (1.57%) and read like a machine wrote it. The
+                          section H2 above carries the location once. */}
                       <span className="inline-flex items-center gap-1 sm:gap-2 text-[hsl(var(--color-accent))] text-xs sm:text-sm font-medium">
-                        Explore details
+                        {service.title}
                         <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
                       </span>
                     </div>
@@ -789,12 +861,51 @@ export default function HomePage() {
             ))}
           </div>
 
+          {/* In-body contextual links. The cards above are chrome - Google
+              weights prose anchors far more heavily, and this is the highest-
+              signal internal linking we control from an already-indexed page
+              into pages that have never been crawled
+              (audit/01-content-spine.md §6.1). Area names are in real sentences,
+              two per sentence, never a list. */}
+          <AnimatedSection className="mx-auto mt-10 max-w-3xl text-center sm:mt-12">
+            <p className="text-sm leading-relaxed text-white/75 sm:text-base">
+              Patients travel to us from Bavdhan and Warje for{' '}
+              <Link href="/services/dental-implants" className="font-semibold text-[hsl(var(--color-accent))] underline underline-offset-4 hover:text-white transition-colors">
+                dental implants in Kothrud
+              </Link>{' '}
+              and for{' '}
+              <Link href="/services/full-mouth-rehabilitation" className="font-semibold text-[hsl(var(--color-accent))] underline underline-offset-4 hover:text-white transition-colors">
+                full mouth rehabilitation
+              </Link>
+              , because both are planned by a specialist prosthodontist rather
+              than referred out. Closer to home, most of our{' '}
+              <Link href="/services/root-canal" className="font-semibold text-[hsl(var(--color-accent))] underline underline-offset-4 hover:text-white transition-colors">
+                root canal treatment in Kothrud
+              </Link>{' '}
+              and{' '}
+              <Link href="/services/orthodontic-treatment" className="font-semibold text-[hsl(var(--color-accent))] underline underline-offset-4 hover:text-white transition-colors">
+                braces and aligners
+              </Link>{' '}
+              patients come from Karve Nagar and the Paud Road side &mdash; with
+              braces meaning a check-up roughly every month for a year and a
+              half, ten minutes matters more than people expect. We also fit{' '}
+              <Link href="/services/dentures" className="font-semibold text-[hsl(var(--color-accent))] underline underline-offset-4 hover:text-white transition-colors">
+                dentures in Kothrud
+              </Link>{' '}
+              and plan{' '}
+              <Link href="/services/digital-smile-design" className="font-semibold text-[hsl(var(--color-accent))] underline underline-offset-4 hover:text-white transition-colors">
+                Digital Smile Design in Pune
+              </Link>
+              .
+            </p>
+          </AnimatedSection>
+
           <AnimatedSection className="text-center mt-10 sm:mt-12 md:mt-14 lg:mt-16">
             <Link
               href="/services"
               className="inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-white hover:bg-white/90 text-[hsl(var(--primary))] font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 text-sm sm:text-base md:text-lg"
             >
-              Explore all services
+              Explore all dental treatments in Kothrud
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </Link>
           </AnimatedSection>
@@ -804,7 +915,7 @@ export default function HomePage() {
       {/* Insights Section - Premium Editorial */}
       <InsightsSection
         title="Insights"
-        subtitle="Trusted knowledge from real experts—not generic content. Real answers to real patient questions."
+        subtitle="Trusted knowledge from real experts-not generic content. Real answers to real patient questions."
       />
 
       {/* Doctors Section */}
@@ -814,30 +925,45 @@ export default function HomePage() {
             <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] rounded-full text-xs sm:text-sm font-semibold">
               Our Team
             </div>
+            {/* "Top Dentists in Kothrud" was an opinion we awarded ourselves.
+                Replaced with the qualification, which is checkable. */}
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[hsl(var(--color-text))] leading-tight mb-3 sm:mb-6">
-              Top Dentists in Kothrud, Pune
+              Prosthodontist and dentists in Kothrud, Pune
             </h2>
             <p className="text-sm sm:text-base md:text-lg text-[hsl(var(--color-text-muted))] max-w-2xl mx-auto">
-              Our dedicated team of skilled dental professionals at Aesthedent is committed to providing exceptional care, ensuring every treatment is as comfortable and precise as possible.
+              A prosthodontist is a dentist who has done three further years of
+              specialist training in rebuilding and replacing teeth. That is who
+              plans the complex work here.
             </p>
           </AnimatedSection>
 
+          {/* Phase 4B: credentials replace adjectives. "Specializes in implants"
+              and "Expert in painless extractions" were unsourced descriptions;
+              an MDS from a named university is a fact a patient can check.
+              Names, roles and credentials all come from lib/clinic.ts.
+              NOTE: Dr. Aishwarya is BDS / general and family dentist - NOT a
+              specialist. Nothing here may imply otherwise. */}
           <div className="grid md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
             {[
               {
-                name: "Dr. Sahil Wathodkar",
-                role: "Lead Dentist & Founder",
+                name: DOCTORS.sahil.name,
+                role: "Founder & Prosthodontist",
+                credential: DOCTORS.sahil.credential,
                 image: "/assets/doctor-male.jpeg",
-                desc: "Specializes in implants and restorative dentistry with a focus on patient education and comfort.",
+                desc: "Plans the implant, full mouth rehabilitation and denture work here. My focus is on precision and the preservation of natural tooth structure.",
               },
               {
-                name: "Dr. Aishwarya Kulkarni",
-                role: "Dental Surgeon",
+                name: DOCTORS.aishwarya.name,
+                role: "General & Family Dentist",
+                credential: DOCTORS.aishwarya.credential,
                 image: "/assets/doctor-female.jpeg",
-                desc: "Expert in painless extractions and complex cases. Known for her calm, thorough approach.",
+                desc: "Root canals, preventive and family care, with additional training in endodontics and pregnancy dentistry. I emphasize clear communication and proactive preventive care.",
               },
             ].map((doctor, i) => (
               <AnimatedSection key={i} delay={i * 0.15}>
+                {/* Cards now link to /doctor - an unindexed page that had no
+                    in-body inbound link from the homepage at all. */}
+                <Link href="/doctor" aria-label={`${doctor.name} - ${doctor.credential}`}>
                 <div className="card-elevated group rounded-xl sm:rounded-2xl bg-white overflow-hidden">
                   {/* Image Container */}
                   <div className="relative overflow-hidden">
@@ -852,7 +978,7 @@ export default function HomePage() {
                     </div>
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/8 via-transparent to-[hsl(var(--primary))]/15" />
 
-                    {/* Name — one copy. Flows below the image on mobile,
+                    {/* Name - one copy. Flows below the image on mobile,
                         overlays the top of it from sm up. Previously this was
                         duplicated as hidden sm:block / sm:hidden, which put both
                         doctors' names in the DOM twice. */}
@@ -867,11 +993,16 @@ export default function HomePage() {
                       </div>
                     </div>
 
-                    {/* Role + description — one copy. Flows on mobile, glass
+                    {/* Role + description - one copy. Flows on mobile, glass
                         panel over the image from sm up. */}
                     <div className="px-4 pb-4 sm:p-5 sm:absolute sm:bottom-5 sm:left-5 sm:right-5 sm:rounded-[1.6rem] sm:border sm:border-white/65 sm:bg-[hsl(var(--background))]/84 sm:shadow-[0_24px_54px_-30px_hsl(var(--color-primary)/0.38)] sm:backdrop-blur-xl">
                       <p className="mb-2 sm:mb-3 inline-flex rounded-full bg-[hsl(var(--color-primary))] px-3.5 py-1.5 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.26em] text-[hsl(var(--color-accent))]">
                         {doctor.role}
+                      </p>
+                      {/* The qualification, verbatim. This is the proof the
+                          word "specialist" rests on. */}
+                      <p className="mb-2 text-[11px] sm:text-xs font-semibold text-[hsl(var(--color-primary))]">
+                        {doctor.credential}
                       </p>
                       <p className="text-xs sm:text-sm leading-relaxed text-[hsl(var(--color-text-muted))]">
                         {doctor.desc}
@@ -879,6 +1010,7 @@ export default function HomePage() {
                     </div>
                   </div>
                 </div>
+                </Link>
               </AnimatedSection>
             ))}
           </div>
@@ -888,7 +1020,7 @@ export default function HomePage() {
               href="/doctor"
               className="inline-flex items-center gap-2 text-[hsl(var(--color-primary))] font-semibold hover:text-[hsl(var(--color-primary-dark))] transition-colors"
             >
-              Meet the full team
+              Meet our prosthodontist and dentists in Kothrud
               <ArrowRight className="w-4 h-4" />
             </Link>
           </AnimatedSection>
@@ -915,7 +1047,7 @@ export default function HomePage() {
                   href="https://maps.app.goo.gl/BVb9iy5EQkmbYSVPA"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Get directions to Aesthedent Dental Clinic, Dahanukar Colony, Kothrud — open in Google Maps"
+                  aria-label="Get directions to Aesthedent Dental Clinic, Dahanukar Colony, Kothrud - open in Google Maps"
                   className="flex items-start gap-3 sm:gap-5 hover:opacity-80 transition-opacity cursor-pointer group"
                 >
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-white/30 transition-colors">

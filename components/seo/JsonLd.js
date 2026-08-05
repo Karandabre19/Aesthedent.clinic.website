@@ -1,4 +1,4 @@
-// Server component — renders JSON-LD into the HTML at build time so it is
+// Server component - renders JSON-LD into the HTML at build time so it is
 // present for crawlers with JS disabled. Pass a single object or an array;
 // null/undefined entries are dropped (buildFaqSchema returns null when a page
 // has no FAQs, and an empty FAQPage is invalid).

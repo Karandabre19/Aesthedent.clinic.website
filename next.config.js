@@ -34,6 +34,23 @@ const nextConfig = {
     '*.vusercontent.net',
   ],
 
+  // Phase 4F. Established deliberately, and deliberately EMPTY.
+  //
+  // This project has never had a redirect map, which is exactly why the hard
+  // rule is that no existing URL may be renamed: a changed slug would 404 with
+  // nothing to catch it, and three indexed pages is not a budget for that.
+  //
+  // /dental-clinic-in-kothrud is a NET-NEW path, so it needs no redirect - there
+  // is no old URL to send anywhere. The array exists so the pattern is in place
+  // before the next area page, not because this one uses it.
+  //
+  // If you ever DO retire an area page, add it here in the same commit that
+  // removes it:
+  //   { source: '/old-path', destination: '/new-path', permanent: true },
+  async redirects() {
+    return [];
+  },
+
   async headers() {
     return [
       {

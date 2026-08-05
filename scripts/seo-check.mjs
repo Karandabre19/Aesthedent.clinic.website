@@ -16,7 +16,7 @@ const check = (name, ok, detail) => {
   (ok ? passes : failures).push({ name, detail });
 };
 
-/** Strip tags the way a text extractor does — no aria-hidden exemption. */
+/** Strip tags the way a text extractor does - no aria-hidden exemption. */
 const crawlerText = (html) =>
   html
     .replace(/<script[\s\S]*?<\/script>/g, ' ')
@@ -71,7 +71,7 @@ for (const hc of headingChecks) {
 }
 
 // Catch any future split-text regression: no 4+ char run immediately repeated.
-// (\b(\w+)\1\b does NOT work here — with no spaces between stripped elements
+// (\b(\w+)\1\b does NOT work here - with no spaces between stripped elements
 // there are no word boundaries inside the run for the backreference to anchor.)
 {
   const html = read('index.html');
@@ -89,11 +89,11 @@ for (const hc of headingChecks) {
   if (html) {
     const text = crawlerText(html);
     // Two traps here, both of which produced wrong results while writing this:
-    //  1. No \b anchors — tag-stripping yields "Scroll0.0Google Rating", so `0`
+    //  1. No \b anchors - tag-stripping yields "Scroll0.0Google Rating", so `0`
     //     is preceded by a word char and \b never matches.
     //  2. The (?<![\d.]) lookbehind is load-bearing. Without it, "0+Years"
     //     matches inside the CORRECT "10+Years", "0+Happy" inside "5000+Happy",
-    //     and "0%Painless" inside "100%Painless" — reporting failure on a fix
+    //     and "0%Painless" inside "100%Painless" - reporting failure on a fix
     //     that works.
     const zeroPatterns = [
       { pat: /(?<![\d.])0\.0\s*Google Rating/, label: 'Google Rating renders 0.0' },
@@ -102,7 +102,7 @@ for (const hc of headingChecks) {
       { pat: /(?<![\d.])0%\s*Painless/, label: 'Painless renders 0%' },
     ];
     for (const z of zeroPatterns) {
-      check(`/ stat not zeroed — ${z.label.split(' renders')[0]}`, !z.pat.test(text), z.pat.test(text) ? z.label : '');
+      check(`/ stat not zeroed - ${z.label.split(' renders')[0]}`, !z.pat.test(text), z.pat.test(text) ? z.label : '');
     }
     check('/ ships "5000" (Happy Patients real value)', html.includes('5000'), 'absent from SSR HTML');
     // 277, not 263: verified against the live Google Business Profile on
@@ -142,7 +142,7 @@ const routes = [
   ['/services', 'services.html'],
   ['/insights', 'insights.html'],
   ['/aesthedent-experience', 'aesthedent-experience.html'],
-  // Prerendered via generateStaticParams — the money pages. Included so a
+  // Prerendered via generateStaticParams - the money pages. Included so a
   // regression on any one of them fails the check.
   ...SERVICE_SLUGS.map((s) => [`/services/${s}`, `services/${s}.html`]),
   ...INSIGHT_SLUGS.map((s) => [`/insights/${s}`, `insights/${s}.html`]),
@@ -218,7 +218,7 @@ const ldTypes = (html) => {
     for (const want of ['Dentist', 'LocalBusiness', 'Organization', 'WebSite']) {
       check(`/ has ${want} schema`, t.has(want), 'missing');
     }
-    // Held until the clinic confirms 277/5.0 — schema states facts to Google.
+    // Held until the clinic confirms 277/5.0 - schema states facts to Google.
     check('/ does NOT publish aggregateRating yet', !t.has('AggregateRating'), 'shipped without sign-off');
     check('/ no stale 263 review count', !home.includes('263 Reviews'), 'stale count still rendered');
   }
@@ -234,7 +234,7 @@ const ldTypes = (html) => {
     check(`/services/${slug} BreadcrumbList`, t.has('BreadcrumbList'), 'missing');
   }
 
-  // FAQPage must carry real questions — an empty one is invalid markup.
+  // FAQPage must carry real questions - an empty one is invalid markup.
   const di = read('services/dental-implants.html');
   if (di) {
     const m = [...di.matchAll(/<script[^>]*application\/ld\+json[^>]*>([\s\S]*?)<\/script>/gi)]

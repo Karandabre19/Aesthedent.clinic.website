@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Runs an Apify actor synchronously and writes the raw dataset to audit/raw/.
- * Raw output is never discarded or trimmed — it must stay re-queryable.
+ * Raw output is never discarded or trimmed - it must stay re-queryable.
  *
  * Usage: node scripts/apify-run.mjs <actor-id> <input.json> <out-name>
  *   e.g. node scripts/apify-run.mjs compass~crawler-google-places gbp-in.json 2b-gbp
@@ -14,7 +14,7 @@ if (!actorId || !inputPath || !outName) {
   process.exit(1);
 }
 
-// Token comes from .env.local only — never hardcoded, never logged.
+// Token comes from .env.local only - never hardcoded, never logged.
 const env = readFileSync('.env.local', 'utf8');
 const TOKEN = env.match(/^APIFY_TOKEN=(.+)$/m)?.[1]?.trim();
 if (!TOKEN) {

@@ -425,7 +425,7 @@ export default function ExperiencePage() {
 
   return (
     <PageWrapper>
-      {/* SECTION 1: Treatment Portfolio — Immediate Visibility, All Services, No Carousel */}
+      {/* SECTION 1: Treatment Portfolio - Immediate Visibility, All Services, No Carousel */}
       <section
         id="services-grid-section"
         className="pt-28 pb-20 md:pt-36 md:pb-28 bg-[hsl(var(--color-primary))] relative overflow-hidden"
@@ -436,22 +436,32 @@ export default function ExperiencePage() {
         <div className="main-container relative z-10">
           <AnimatedSection className="text-center mb-12 sm:mb-16 md:mb-20">
             <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-white/20 text-white rounded-full text-[10px] sm:text-xs font-black tracking-widest uppercase">
-              Prosthodontist Specialist Portfolio
+              Painless Treatment in Kothrud
             </div>
+            {/* Phase 4B: was "Specialized Unique Treatments." - no location, no
+                service noun, on one of only three indexed pages. The two-tone
+                accent treatment is unchanged; only the words moved. */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-[0.9] tracking-tighter mb-4 sm:mb-6 italic">
-              Specialized{" "}
-              <span className="text-[hsl(var(--color-accent))]">Unique</span>{" "}
-              Treatments.
+              What it's like to be treated here - specialist care,{" "}
+              <span className="text-[hsl(var(--color-accent))]">
+                no surprises, no pain
+              </span>
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto font-light leading-relaxed">
-              Precision-engineered solutions for complex clinical cases.
-              Engineered for longevity and natural aesthetics.
+              Most people who sit in this chair have been putting it off for
+              years. Painless dental treatment in Kothrud starts before any
+              instrument does: we show you the scan, explain what we found in
+              plain words, and agree the plan with you first. Raise your hand at
+              any point and we stop.
             </p>
           </AnimatedSection>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 max-w-7xl mx-auto">
+            {/* Phase 4B: was .filter((s) => s.isFeatured), which rendered just
+                two cards. This page is INDEXED and the eight service pages are
+                not - so every outbound link from here is one of the few crawl
+                paths we actually control (audit/01-content-spine.md §6.1). */}
             {services
-              .filter((s) => s.isFeatured)
               .map((service, i) => (
                 <AnimatedSection key={service.slug} delay={i * 0.06}>
                   <div className="group relative overflow-hidden rounded-[2rem] bg-[hsl(var(--color-primary-dark))] border border-white/10 transition-all duration-500 shadow-2xl hover:shadow-[hsl(var(--color-accent))]/10 flex flex-col h-full">
@@ -501,12 +511,14 @@ export default function ExperiencePage() {
                         </a>
 
                         <MagneticWrapper offset={0.1} className="w-full">
+                          {/* "Know More" told Google nothing about the target.
+                              The service name is the anchor now. */}
                           <Link
                             href={`/services/${service.slug}`}
                             className="flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-[hsl(var(--color-accent))] text-[hsl(var(--color-primary-dark))] rounded-xl text-xs sm:text-sm font-black shadow-lg hover:shadow-[hsl(var(--color-accent))]/40 transition-all whitespace-nowrap"
                           >
                             <ArrowRight className="w-4 h-4 flex-shrink-0" />
-                            Know More
+                            {service.title}
                           </Link>
                         </MagneticWrapper>
                       </div>
@@ -518,7 +530,7 @@ export default function ExperiencePage() {
         </div>
       </section>
 
-      {/* SECTION 2: Welcome — Emotional Hook After Treatments */}
+      {/* SECTION 2: Welcome - Emotional Hook After Treatments */}
       <section
         ref={heroRef}
         className="relative py-20 md:py-28 flex items-center justify-center overflow-hidden bg-black"
@@ -539,12 +551,12 @@ export default function ExperiencePage() {
           />
         </motion.div>
 
-        {/* Floating Ambient Orbs — Home Page Design Language */}
+        {/* Floating Ambient Orbs - Home Page Design Language */}
         <div className="hero-orb-exp hero-orb-exp-1 pointer-events-none absolute -left-16 top-[15%] w-[280px] h-[280px] rounded-full bg-[hsl(var(--color-accent))]/12 blur-[80px] opacity-0 transform-gpu will-change-transform z-[11]" />
         <div className="hero-orb-exp hero-orb-exp-2 pointer-events-none absolute right-[-5%] top-[35%] w-[320px] h-[320px] rounded-full bg-white/[0.06] blur-[70px] opacity-0 transform-gpu will-change-transform z-[11]" />
         <div className="hero-orb-exp hero-orb-exp-3 pointer-events-none absolute left-[20%] bottom-[10%] w-[200px] h-[200px] rounded-full bg-[hsl(var(--color-primary-light))]/10 blur-[60px] opacity-0 transform-gpu will-change-transform z-[11]" />
 
-        {/* Directional Light Flow — Guides Eye Across Canvas */}
+        {/* Directional Light Flow - Guides Eye Across Canvas */}
         <motion.div
           className="pointer-events-none absolute inset-y-0 w-[500px] bg-gradient-to-r from-transparent via-[hsl(var(--color-accent))]/[0.03] to-transparent blur-2xl z-[11]"
           animate={{ x: ["-500px", "110vw"] }}
@@ -569,7 +581,7 @@ export default function ExperiencePage() {
             </span>
           </motion.div>
 
-          {/* Divider — mirrors Home page eyebrow divider */}
+          {/* Divider - mirrors Home page eyebrow divider */}
           <div className="hero-divider-exp mx-auto mb-8 h-px w-28 origin-center bg-gradient-to-r from-transparent via-[hsl(var(--color-accent))] to-transparent opacity-0 transform-gpu" />
 
           <h2
@@ -594,7 +606,7 @@ export default function ExperiencePage() {
               <span className="text-[hsl(var(--color-accent))] font-bold">
                 specialized unique treatments
               </span>{" "}
-              are led by a master Prosthodontist—the architect of dentistry. We
+              are led by a master Prosthodontist-the architect of dentistry. We
               go beyond standard care to deliver precise, engineered outcomes
               that restore both your clinical health and your natural confidence
               permanently.
@@ -675,7 +687,7 @@ export default function ExperiencePage() {
               num="03"
               icon={Info}
               title="Sensory Transparency"
-              desc="We bridge the gap of clinical anxiety by narrating each step of your treatment in real-time—preparing you for every sensation. When you know exactly what's coming, the fear of the unexpected fades."
+              desc="We bridge the gap of clinical anxiety by narrating each step of your treatment in real-time-preparing you for every sensation. When you know exactly what's coming, the fear of the unexpected fades."
             />
             <AdvancedPromiseCard
               num="04"
@@ -773,10 +785,32 @@ export default function ExperiencePage() {
                 </span>{" "}
                 Matters.
               </h2>
+              {/* Highest-value internal link in the Phase 4B plan: exact-match
+                  anchor from an INDEXED page into /doctor, which owns the
+                  "prosthodontist kothrud" term and has never been crawled.
+                  Credential added - it is what makes "specialist" a fact. */}
               <p className="text-base sm:text-lg text-[hsl(var(--color-text-muted))] leading-relaxed mb-10 font-light">
-                A Prosthodontist is the "architect" of dentistry. At Aesthedent,
-                we don't just fix a single tooth; we plan the entire
-                biomechanical harmony of your mouth.
+                A prosthodontist is the "architect" of dentistry &mdash; a
+                dentist with three further years of specialist training in
+                rebuilding and replacing teeth. Your treatment here is planned by{' '}
+                <Link href="/doctor" className="font-semibold text-[hsl(var(--color-primary))] underline underline-offset-4 hover:text-[hsl(var(--color-accent))] transition-colors">
+                  our prosthodontist in Kothrud
+                </Link>
+                , Dr. Sahil Wathodkar, BDS, MDS (Prosthodontics), Bharati
+                Vidyapeeth, Pune. We don't just fix a single tooth; we plan how
+                the whole mouth works together, which is what{' '}
+                <Link href="/services/full-mouth-rehabilitation" className="font-semibold text-[hsl(var(--color-primary))] underline underline-offset-4 hover:text-[hsl(var(--color-accent))] transition-colors">
+                  full mouth rehabilitation
+                </Link>{' '}
+                and{' '}
+                <Link href="/services/dental-implants" className="font-semibold text-[hsl(var(--color-primary))] underline underline-offset-4 hover:text-[hsl(var(--color-accent))] transition-colors">
+                  dental implants in Kothrud
+                </Link>{' '}
+                actually require. If you would rather read how we work first,{' '}
+                <Link href="/about" className="font-semibold text-[hsl(var(--color-primary))] underline underline-offset-4 hover:text-[hsl(var(--color-accent))] transition-colors">
+                  here is how we work
+                </Link>
+                .
               </p>
 
               <div className="space-y-8">
@@ -827,8 +861,12 @@ export default function ExperiencePage() {
             <h2 className="text-3xl md:text-5xl font-black mb-4 tracking-tight">
               Clinical Technology Portfolio
             </h2>
+            {/* Phase 4B: "the software and hardware that drive our 98% success
+                rate" - an unsourced clinical statistic, live in SSR HTML. Not in
+                NEEDS-INPUT before now; logged as N10. Number removed, sentence
+                kept. Do not restore without a source from Dr. Sahil. */}
             <p className="text-base text-[hsl(var(--color-text-muted))] max-w-2xl mx-auto font-light">
-              The software and hardware that drive our 98% success rate.
+              The software and hardware behind every plan we build.
             </p>
           </AnimatedSection>
 
@@ -1013,9 +1051,9 @@ export default function ExperiencePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div>
               <h2 className="text-3xl md:text-5xl font-black mb-10 tracking-[0.02em] leading-[0.9] text-[hsl(var(--color-primary))]">
-                The Clinical <br />
+                What Happens <br />
                 <span className="text-[hsl(var(--color-accent))]">
-                  Journey.
+                  When You Visit.
                 </span>
               </h2>
               <div className="space-y-12">

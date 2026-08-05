@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import PageWrapper from '@/components/layout/PageWrapper';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import { getServiceBySlug, services } from '@/lib/services';
+import { buildWhatsappMessage } from '@/lib/clinic';
 import { 
   ArrowRight, 
   ArrowLeft,
@@ -20,11 +21,13 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 
-const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
+// Phase 4D: was a single hardcoded generic message, so an enquiry from the
+// implants page and one from the braces page arrived identical. Now built per
+// service - see buildWhatsappMessage() in lib/clinic.ts.
 const phoneNumber = '+919309816336';
 
 // The slug arrives resolved from the server shell, which already 404s on an
-// unknown one — see ./page.js.
+// unknown one - see ./page.js.
 export default function ServiceDetailClient({ slug }) {
   const service = getServiceBySlug(slug);
   const [openFaq, setOpenFaq] = useState(null);
@@ -34,6 +37,7 @@ export default function ServiceDetailClient({ slug }) {
   }
 
   const otherServices = services.filter(s => s.slug !== service.slug).slice(0, 3);
+  const whatsappLink = buildWhatsappMessage(service.title);
 
   return (
     <PageWrapper>
@@ -56,8 +60,11 @@ export default function ServiceDetailClient({ slug }) {
               <Badge className="mb-4 bg-[hsl(var(--color-primary))]/10 text-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary))]/20">
                 Service
               </Badge>
+              {/* Phase 4D: was a bare service name. The <title> carried the
+                  location and the H1 did not, so the two disagreed - H1 and
+                  title should mirror (audit/03-gap-analysis.md §3.2). */}
               <h1 className="text-4xl lg:text-[52px] font-semibold text-[hsl(var(--color-text))] mb-6 leading-tight">
-                {service.title}
+                {service.title} in {service.locality}
               </h1>
               <p className="text-lg text-[hsl(var(--color-text-muted))] leading-relaxed mb-8">
                 {service.shortDesc}
@@ -284,7 +291,7 @@ export default function ServiceDetailClient({ slug }) {
         <div className="main-container">
           <AnimatedSection className="text-center mb-12">
             <h2 className="text-2xl lg:text-3xl font-semibold text-[hsl(var(--color-text))]">
-              Explore Other Services
+              Other dental treatments in Kothrud
             </h2>
           </AnimatedSection>
 
@@ -307,7 +314,7 @@ export default function ServiceDetailClient({ slug }) {
                         {s.title}
                       </h3>
                       <div className="flex items-center text-[hsl(var(--color-primary))] text-sm font-medium">
-                        Learn More
+                        {s.title}
                         <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                       </div>
                     </CardContent>

@@ -42,7 +42,7 @@ export default function Footer() {
               />
             </Link>
             <p className="text-white/90 text-sm leading-relaxed font-light mb-10 tracking-wide">
-              Aesthedent — Reclaim Your Smile. Honest, clear dental care in Kothrud, Pune. We focus on reliable treatments and ensuring you understand everything before we start.
+              Aesthedent - Reclaim Your Smile. Honest, clear dental care in Kothrud, Pune. We focus on reliable treatments and ensuring you understand everything before we start.
             </p>
             <div className="flex gap-5">
               <a 

@@ -10,7 +10,7 @@ import InsightsSection from '@/components/sections/InsightsSection';
 // Insights data - can be moved to a separate file or fetched from CMS
 const insightsData = {
   'dental-implants-pune-specialist': {
-    title: 'Why choose a Prosthodontist for your Dental Implants?',
+    title: 'Prosthodontist or general dentist for your dental implants?',
     category: 'Dental Implants',
     readTime: '5 min read',
     date: 'March 15, 2024',
@@ -33,17 +33,18 @@ const insightsData = {
       <p>Dental implants are not just a surgical procedure; they are a restorative one. A Prosthodontist ensures that the final tooth (the crown) is perfectly aligned with the implant and your natural bite, preventing future complications like implant failure or jaw pain.</p>
 
       <h2>What to expect at Aesthedent</h2>
-      <p>At Aesthedent, every implant case is led by our specialist Prosthodontist, Dr. Sahil. Our process includes:</p>
+      <p>Every implant case here is planned by <a href="/doctor">our prosthodontist in Kothrud</a>, Dr. Sahil Wathodkar, BDS, MDS (Prosthodontics), Bharati Vidyapeeth, Pune. Our process includes:</p>
       <ul>
         <li>Comprehensive 3D digital diagnostic mapping</li>
         <li>Specialist-led surgical and restorative planning</li>
-        <li>Precision execution using world-class hardware</li>
-        <li>Ongoing monitoring for lifelong success</li>
+        <li>Planning of the final tooth before the implant goes in, not after</li>
+        <li>Ongoing monitoring at review appointments</li>
       </ul>
+      <p>If you already know replacement is what you need, the practical detail - what the procedure involves, how long each stage takes and what affects the cost - is on our <a href="/services/dental-implants">dental implants in Kothrud</a> page.</p>
     `,
   },
   'root-canal-pain-myths': {
-    title: 'Is root canal treatment painful?',
+    title: 'Is a root canal painful?',
     category: 'Root Canal',
     readTime: '4 min read',
     date: 'March 10, 2024',
@@ -52,7 +53,7 @@ const insightsData = {
       <p class="lead">The phrase "root canal" often triggers fear, but modern root canal treatment is nothing like the horror stories. Here is the truth about what to expect.</p>
       
       <h2>The myth vs. reality</h2>
-      <p>The biggest misconception about root canals is that they are extremely painful. In reality, root canal treatment relieves pain—it does not cause it. The pain you feel before treatment is from the infected tooth, not the procedure itself.</p>
+      <p>The biggest misconception about root canals is that they are extremely painful. In reality, root canal treatment relieves pain-it does not cause it. The pain you feel before treatment is from the infected tooth, not the procedure itself.</p>
 
       <h2>What modern technology has changed</h2>
       <p>Today's root canal procedures benefit from:</p>
@@ -68,10 +69,13 @@ const insightsData = {
 
       <h2>After the procedure</h2>
       <p>Some mild discomfort for a few days is normal and can be managed with over-the-counter pain medication. This is far less than the pain of an untreated infected tooth.</p>
+
+      <h2>If the fear is what has kept you away</h2>
+      <p>Say so when you book - it changes how we run the appointment, not how we judge you. We talk through each step before it happens, and if you raise a hand at any point we stop. Plenty of people here have avoided a dentist for years. If you want the clinical detail first, our <a href="/services/root-canal">root canal treatment in Kothrud</a> page walks through the stages, and <a href="/insights/dental-anxiety-tips">what we do for patients who are frightened of the dentist</a> covers the rest.</p>
     `,
   },
   'best-dentist-kothrud-pune': {
-    title: 'How to find a good dentist in Kothrud',
+    title: 'How to Choose a Dentist in Kothrud',
     category: 'Dental Care',
     readTime: '3 min read',
     date: 'March 5, 2024',
@@ -103,6 +107,9 @@ const insightsData = {
 
       <h2>The importance of comfort</h2>
       <p>A good dentist makes you feel comfortable and heard. They should take time to explain things, answer your questions, and never make you feel rushed or judged.</p>
+
+      <h2>How we measure up</h2>
+      <p>Everything above is a fair test to put us through too. Our treatment planning is done by an MDS-qualified prosthodontist, we show you the scan and explain what we have found before anything starts, and you can stop us at any point by raising a hand. If that is the kind of practice you are looking for, you can <a href="/">book a consultation with our dentist in Kothrud</a>, read how we work with <a href="/about">nervous patients</a>, or check where our <a href="/dental-clinic-in-kothrud">dental clinic in Kothrud</a> actually is before you commit to anything.</p>
     `,
   },
   'teeth-whitening-safety': {
@@ -166,7 +173,7 @@ const insightsData = {
     `,
   },
   'when-to-get-braces': {
-    title: 'When is the right time to get braces?',
+    title: 'When is the right time for braces?',
     category: 'Orthodontics',
     readTime: '5 min read',
     date: 'February 15, 2024',
@@ -193,13 +200,16 @@ const insightsData = {
 
       <h2>Making the decision</h2>
       <p>The best time to get braces is when you are ready to commit to the process. Good oral hygiene and regular appointments are essential for success.</p>
+
+      <h2>Where to go next</h2>
+      <p>Timing is only half the question - the other half is which appliance suits the case, and that needs someone to look at your teeth. Our <a href="/services/orthodontic-treatment">braces and aligners in Kothrud</a> page covers the options we fit and what each involves. Worth knowing before you commit: this is a treatment measured in monthly visits over a year or more, so most of our orthodontic patients come from Kothrud and Karve Nagar simply because the trip is short.</p>
     `,
   },
 };
 
 const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
 
-// Slug arrives resolved from the server shell — see ./page.js.
+// Slug arrives resolved from the server shell - see ./page.js.
 export default function InsightDetailClient({ slug }) {
   const article = insightsData[slug];
 

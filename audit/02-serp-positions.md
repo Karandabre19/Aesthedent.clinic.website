@@ -1,4 +1,4 @@
-# Phase 2C — Live SERP Positions & Indexation
+# Phase 2C - Live SERP Positions & Indexation
 
 **Actor:** `apify/google-search-scraper` · `countryCode: in`, `languageCode: en`
 **Raw:** `audit/raw/2c-serp-tier1.json`, `2c-serp-indexation.json`, `2c-serp-indexation-paths.json`
@@ -24,7 +24,7 @@ Verified with independent per-path probes rather than resting on one `site:` que
 |---|---|
 | `site:aesthedentpune.com` | 3 URLs |
 | `site:www.aesthedentpune.com` | same 3 URLs |
-| `site:aesthedentpune.com/services` | **1** — only `/services/dentures` |
+| `site:aesthedentpune.com/services` | **1** - only `/services/dentures` |
 | `site:aesthedentpune.com/services/dental-implants` | **0** ← the flagship money page |
 | `site:aesthedentpune.com/doctor` | **0** |
 | `site:aesthedentpune.com/insights` | **0** |
@@ -33,7 +33,7 @@ Verified with independent per-path probes rather than resting on one `site:` que
 
 You cannot rank for `root canal kothrud` when `/services/root-canal` is not in the index. Every content, keyword and copy recommendation downstream is moot until this is fixed. **This is the answer to "why isn't the site ranking".**
 
-*(`site:` counts are approximate by nature — but six independent probes agreeing on "0" for specific known-good URLs is not noise.)*
+*(`site:` counts are approximate by nature - but six independent probes agreeing on "0" for specific known-good URLs is not noise.)*
 
 ---
 
@@ -49,11 +49,11 @@ Because that string never existed in the HTML. Google indexed:
 ```
 RedefiningRedefiningDental Care in Pune.in Pune.
 ```
-The clean phrase isn't in the document, so it matches nothing. This is empirical confirmation that Bug 1 was not cosmetic — and that the Phase 1 fix was worth shipping. Re-run this query after deploy; it should start matching.
+The clean phrase isn't in the document, so it matches nothing. This is empirical confirmation that Bug 1 was not cosmetic - and that the Phase 1 fix was worth shipping. Re-run this query after deploy; it should start matching.
 
 ---
 
-## Organic positions — Tier 1 & 2
+## Organic positions - Tier 1 & 2
 
 | Keyword | Aesthedent organic |
 |---|---|
@@ -68,9 +68,9 @@ The clean phrase isn't in the document, so it matches nothing. This is empirical
 | full mouth rehabilitation pune | not in top 9 |
 | braces kothrud | not in top 9 |
 
-**0 of 10.** Entirely consistent with 3 pages indexed — the pages that would rank don't exist as far as Google is concerned.
+**0 of 10.** Entirely consistent with 3 pages indexed - the pages that would rank don't exist as far as Google is concerned.
 
-> **Data-quality note:** the first run returned `dental implant kothrud` with **zero results in every array and no error** — a scrape failure, not an empty SERP. I re-ran it separately rather than report "0 results" as a finding. The re-run returned a normal 9-result SERP (shown below). One invalid data point, caught and discarded.
+> **Data-quality note:** the first run returned `dental implant kothrud` with **zero results in every array and no error** - a scrape failure, not an empty SERP. I re-ran it separately rather than report "0 results" as a finding. The re-run returned a normal 9-result SERP (shown below). One invalid data point, caught and discarded.
 
 ---
 
@@ -101,13 +101,13 @@ The clean phrase isn't in the document, so it matches nothing. This is empirical
 | 8 | drmukeshdental.com | |
 | 9 | instagram.com/suyashdental | |
 
-**Aggregators take the #1 slot on both.** Practo is unbeatable on these terms and should be treated as a channel to be *listed on*, not a competitor to outrank — the brief's chain-segmentation logic (Sabka, Clove) applies to Practo and Justdial with even more force.
+**Aggregators take the #1 slot on both.** Practo is unbeatable on these terms and should be treated as a channel to be *listed on*, not a competitor to outrank - the brief's chain-segmentation logic (Sabka, Clove) applies to Practo and Justdial with even more force.
 
-The eight beatable independents from the brief are exactly who occupies #2–#8. They are reachable — **once our pages exist in the index.**
+The eight beatable independents from the brief are exactly who occupies #2–#8. They are reachable - **once our pages exist in the index.**
 
 ---
 
-## Brand search — we don't fully own our own name
+## Brand search - we don't fully own our own name
 
 ### `aesthedent`
 | # | Result |
@@ -136,20 +136,20 @@ There is a **UK entity sharing the "Aesthedent" name** (Companies House + Trustp
 | 8 | practo.com |
 | 9 | justdial.com |
 
-Qualified brand search is fine. Only the ambiguous single word is contested — and by a genuinely different business, which limits how much can be done. Not a priority; noted for completeness.
+Qualified brand search is fine. Only the ambiguous single word is contested - and by a genuinely different business, which limits how much can be done. Not a priority; noted for completeness.
 
-**Useful side-finding:** Aesthedent already has profiles on **Justdial, Practo, KiviHealth, Facebook and Instagram**. Citations exist and are indexed. None are in the site's `sameAs` (which lists only Google Maps) — a free Phase 4E win, and it answers `NEEDS-INPUT` B4 in part.
+**Useful side-finding:** Aesthedent already has profiles on **Justdial, Practo, KiviHealth, Facebook and Instagram**. Citations exist and are indexed. None are in the site's `sameAs` (which lists only Google Maps) - a free Phase 4E win, and it answers `NEEDS-INPUT` B4 in part.
 
 ---
 
 ## What this means for the roadmap
 
 1. **Indexation is priority zero.** Nothing else matters until more than 3 pages are indexed.
-2. **Phase 1 already addressed the most likely cause.** All 21 pages previously shipped a **byte-identical title and meta description with no canonical**. That is a textbook duplicate-content signature — Google consolidates near-duplicates and indexes a handful. Phase 1 gave every route a unique title and a self-referencing canonical, and prerendered the service pages. Whether that was *the* cause is a hypothesis the deploy will test, and I'd rather frame it that way than claim it as proven.
-3. **Site age is a live confounder.** ~4 months old (go-live confirmed March/April 2026). Some of this is Google simply not having finished. Search Console will separate "excluded as duplicate" from "discovered — not yet indexed"; those have very different answers. **Still blocked on Search Console access.**
-4. **Local is already working** — see `02-gbp-comparison.md`. Don't spend the roadmap there.
+2. **Phase 1 already addressed the most likely cause.** All 21 pages previously shipped a **byte-identical title and meta description with no canonical**. That is a textbook duplicate-content signature - Google consolidates near-duplicates and indexes a handful. Phase 1 gave every route a unique title and a self-referencing canonical, and prerendered the service pages. Whether that was *the* cause is a hypothesis the deploy will test, and I'd rather frame it that way than claim it as proven.
+3. **Site age is a live confounder.** ~4 months old (go-live confirmed March/April 2026). Some of this is Google simply not having finished. Search Console will separate "excluded as duplicate" from "discovered - not yet indexed"; those have very different answers. **Still blocked on Search Console access.**
+4. **Local is already working** - see `02-gbp-comparison.md`. Don't spend the roadmap there.
 
-## Not done — budget
+## Not done - budget
 - People Also Ask / related searches: captured in raw JSON, not yet analysed.
 - Aggregator listing audit (where Aesthedent is present vs absent on Practo/Justdial/Lybrate): partially answered above.
 - Per-keyword map-pack composition on the SERP itself (as opposed to the local finder used in 2B).

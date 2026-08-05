@@ -5,7 +5,7 @@ import { buildBreadcrumbSchema } from '@/lib/schema';
 export const metadata = {
   title: 'Dental Advice from Our Kothrud Dentists',
   description:
-    'Straight answers to what patients actually ask us about root canals, implants, braces and dental anxiety — from our dentists in Kothrud, Pune.',
+    'Straight answers to what patients actually ask us about root canals, implants, braces and dental anxiety - from our dentists in Kothrud, Pune.',
   alternates: {
     canonical: '/insights',
   },

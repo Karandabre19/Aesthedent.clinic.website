@@ -172,7 +172,7 @@ function ArticleCard({ article, index }) {
               {article.readTime}
             </span>
             <span className="inline-flex items-center gap-1.5 text-[hsl(var(--primary))] font-semibold text-xs group-hover:gap-2 transition-all duration-300">
-              Read more
+              {article.title}
               <ArrowRight className="w-3.5 h-3.5" />
             </span>
           </div>
@@ -210,7 +210,7 @@ export default function InsightsPage() {
               </h1>
               
               <p className="text-lg sm:text-xl text-[hsl(var(--color-text-muted))] leading-relaxed">
-                Real answers to real patient questions. Trusted knowledge from our experienced dental team—not generic content.
+                Real answers to real patient questions. Trusted knowledge from our experienced dental team-not generic content.
               </p>
             </div>
           </AnimatedSection>
