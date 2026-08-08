@@ -55,9 +55,20 @@ const Button = ButtonBase as ComponentType<
 | File | Responsibility |
 |---|---|
 | `lib/intake-form-config.ts` | **Create.** All copy, options, validation patterns. Single source of truth for form content. |
-| `lib/intake-form-types.ts` | **Create.** `Answers`, `StepConfig` union, screen-grouping helper. Kept separate so the config file stays pure data. |
+| `lib/intake-form-message.ts` | **Create.** `Answers` type + the pure functions: `normalisePhone`, `isValidPhone`, `assembleMessage`. **Zero runtime imports** — see below. |
+| `lib/intake-form-types.ts` | **Create.** `StepConfig` union, `EMPTY_ANSWERS`, `getScreens()`. Config-dependent glue. |
 | `components/forms/IntakeWizard.tsx` | **Rewrite in place.** Renders from config. Currently a 5-step build. |
-| `scratch/check-message.mjs` | **Create** (gitignored scratch). Node assertions for the pure assembler. |
+| `scratch/check-message.mjs` | **Create** (scratch, not committed). Node assertions importing the **real** functions. |
+
+**Why the pure functions get their own file.** Node 24 strips TypeScript types natively, so `scratch/check-message.mjs` can `import` a `.ts` module directly and assert against the **code that actually ships** — but only if that module has no runtime imports of its own (Node ESM will not resolve the extensionless `./intake-form-config` specifier that Next/webpack accepts).
+
+Keeping `intake-form-message.ts` import-free is what makes the verification real. The alternative — a check script that re-declares the phone regex — is a test that passes while the shipped function is broken, which is worse than no test. Consequently `assembleMessage` takes the resolved comfort **label** as a parameter rather than looking it up from the config:
+
+```ts
+assembleMessage(a: Answers, comfortLabel: string): string
+```
+
+The component resolves it (`levels[a.comfort].value`) and passes it in.
 
 ---
 
@@ -65,18 +76,22 @@ const Button = ButtonBase as ComponentType<
 
 **Files:**
 - Create: `lib/intake-form-config.ts`
+- Create: `lib/intake-form-message.ts`
 - Create: `lib/intake-form-types.ts`
 - Create: `scratch/check-message.mjs`
 
 **Interfaces:**
 - Consumes: `buildWhatsappLink(body: string): string` from `lib/clinic.ts` (already exists, line 103).
-- Produces:
-  - `INTAKE_FORM` — the config object, exactly as specified below.
-  - `type Answers` — `{ name, patientFor, reason, duration, comfort, contactMethod, phone, day, time, notes }`. Note `comfort` is a `number` (slider index 0–2); everything else is `string`.
-  - `EMPTY_ANSWERS: Answers`
+- Produces, from `lib/intake-form-message.ts` (**no runtime imports in this file**):
+  - `type Answers` — `{ name, patientFor, reason, duration, comfort, contactMethod, phone, day, time, notes }`. `comfort` is a `number` (slider index 0–2); everything else is `string`.
   - `normalisePhone(raw: string): string`
   - `isValidPhone(raw: string): boolean`
-  - `assembleMessage(a: Answers): string`
+  - `assembleMessage(a: Answers, comfortLabel: string): string`
+- Produces, from `lib/intake-form-config.ts`:
+  - `INTAKE_FORM` — the config object, exactly as specified below.
+- Produces, from `lib/intake-form-types.ts`:
+  - `type StepConfig`
+  - `EMPTY_ANSWERS: Answers`
   - `getScreens(): StepConfig[][]` — groups consecutive step configs by shared `label`, returning 8 arrays from 9 configs.
 
 **Why `Answers` keys are not step ids:** the `schedule` step produces two answers (`day` and `time`), and `review.rowLabels` lists them separately. There are 9 step configs, 8 screens, and 10 answer keys. These three counts are all correct and all different.
@@ -106,20 +121,30 @@ Create `lib/intake-form-config.ts` with the config object **exactly as given in 
 
 Then the object from the spec verbatim, ending `} as const;`.
 
-- [ ] **Step 2: Create the types and helpers file**
+- [ ] **Step 2: Create the pure message module**
 
-Create `lib/intake-form-types.ts`:
+Create `lib/intake-form-message.ts`. **This file must have no `import` statements** — that is what lets the verification script load the real code. Do not add one.
 
 ```ts
-import { INTAKE_FORM } from './intake-form-config';
-
-export type StepConfig = (typeof INTAKE_FORM.steps)[number];
+/**
+ * The pure half of the intake form: the answer shape, phone normalisation, and
+ * the WhatsApp message assembler.
+ *
+ * NO IMPORTS IN THIS FILE, DELIBERATELY. Node 24 strips TypeScript types
+ * natively, so scratch/check-message.mjs can import this module directly and
+ * assert against the code that actually ships. Node ESM will not resolve the
+ * extensionless specifiers Next accepts, so a single import here would force
+ * the checks to re-declare the phone regex — and a check that re-declares the
+ * thing it checks passes happily while the shipped function is broken.
+ *
+ * That is why assembleMessage takes the comfort LABEL as a parameter instead
+ * of looking it up in the config: the lookup is the component's job.
+ */
 
 /**
- * The shape the wizard actually holds. Deliberately NOT keyed by step id:
- * `schedule` yields two answers (day + time), so 9 step configs produce 10
- * answer keys. `comfort` is the slider INDEX, not its label — the label is
- * looked up from the config when the message is assembled.
+ * The shape the wizard holds. Deliberately NOT keyed by step id: `schedule`
+ * yields two answers (day + time), so 9 step configs produce 10 answer keys.
+ * `comfort` is the slider INDEX, not its label.
  */
 export interface Answers {
   name: string;
@@ -133,6 +158,52 @@ export interface Answers {
   time: string;
   notes: string;
 }
+
+/** 10-digit Indian mobile, starts 6-9. Tolerates spaces, dashes, brackets, +91. */
+export function normalisePhone(raw: string): string {
+  return raw.replace(/[\s\-()]/g, '').replace(/^(\+?91)/, '');
+}
+
+export function isValidPhone(raw: string): boolean {
+  return /^[6-9]\d{9}$/.test(normalisePhone(raw));
+}
+
+/**
+ * Assembles the WhatsApp body. Skips empty rows, so an optional field the
+ * patient left blank never ships as a dangling "Notes: ".
+ */
+export function assembleMessage(a: Answers, comfortLabel: string): string {
+  const rows: [string, string][] = [
+    ['Name', a.name.trim()],
+    ['Appointment for', a.patientFor],
+    ['Reason', a.reason],
+    ['Duration', a.duration],
+    ['Comfort level', comfortLabel],
+    ['Preferred contact', a.contactMethod],
+    ['Mobile', normalisePhone(a.phone)],
+    ['Preferred day', a.day],
+    ['Preferred time', a.time],
+    ['Notes', a.notes.trim()],
+  ];
+
+  return [
+    'Hello Aesthedent Dental Clinic,',
+    "I'd like to book an appointment.",
+    '',
+    ...rows.filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`),
+  ].join('\n');
+}
+```
+
+- [ ] **Step 3: Create the config-dependent glue**
+
+Create `lib/intake-form-types.ts`:
+
+```ts
+import { INTAKE_FORM } from './intake-form-config';
+import type { Answers } from './intake-form-message';
+
+export type StepConfig = (typeof INTAKE_FORM.steps)[number];
 
 export const EMPTY_ANSWERS: Answers = {
   name: '', patientFor: '', reason: '', duration: '', comfort: 0,
@@ -153,99 +224,69 @@ export function getScreens(): StepConfig[][] {
   }
   return screens;
 }
-
-/** 10-digit Indian mobile, starts 6-9. Tolerates spaces, dashes, brackets, +91. */
-export function normalisePhone(raw: string): string {
-  return raw.replace(/[\s\-()]/g, '').replace(/^(\+?91)/, '');
-}
-
-export function isValidPhone(raw: string): boolean {
-  return /^[6-9]\d{9}$/.test(normalisePhone(raw));
-}
-
-/** Comfort slider index -> its configured label. */
-function comfortLabel(index: number): string {
-  const step = INTAKE_FORM.steps.find((s) => s.id === 'comfort');
-  const levels = (step as { levels?: readonly { value: string }[] })?.levels;
-  return levels?.[index]?.value ?? '';
-}
-
-/**
- * Assembles the WhatsApp body. Pure, and skips empty lines so an optional
- * field the patient left blank does not ship as "Notes: ".
- */
-export function assembleMessage(a: Answers): string {
-  const rows: [string, string][] = [
-    ['Name', a.name.trim()],
-    ['Appointment for', a.patientFor],
-    ['Reason', a.reason],
-    ['Duration', a.duration],
-    ['Comfort level', comfortLabel(a.comfort)],
-    ['Preferred contact', a.contactMethod],
-    ['Mobile', normalisePhone(a.phone)],
-    ['Preferred day', a.day],
-    ['Preferred time', a.time],
-    ['Notes', a.notes.trim()],
-  ];
-
-  const lines = [
-    'Hello Aesthedent Dental Clinic,',
-    "I'd like to book an appointment.",
-    '',
-    ...rows.filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`),
-  ];
-
-  return lines.join('\n');
-}
 ```
 
-- [ ] **Step 3: Write the pure-function assertions**
+- [ ] **Step 4: Write assertions against the real functions**
 
-Create `scratch/check-message.mjs`. It reimports nothing from TS — instead assert against a compiled copy. Simplest reliable route in this repo: run the checks through `tsx`-free Node by testing the regex and shape logic directly.
+Create `scratch/check-message.mjs`. It imports the **shipped** module — do not re-declare any logic here.
 
 ```js
-// scratch/check-message.mjs — throwaway verification, not shipped.
+// scratch/check-message.mjs — verification scratch, not committed.
+// Imports the real .ts module so a broken shipped function fails these checks.
 import assert from 'node:assert/strict';
-
-const normalisePhone = (raw) => raw.replace(/[\s\-()]/g, '').replace(/^(\+?91)/, '');
-const isValidPhone = (raw) => /^[6-9]\d{9}$/.test(normalisePhone(raw));
+import { isValidPhone, normalisePhone, assembleMessage } from '../lib/intake-form-message.ts';
 
 // Accepts the forms a real patient types.
-assert.equal(isValidPhone('9309816336'), true, 'plain 10-digit');
-assert.equal(isValidPhone('+919309816336'), true, '+91 prefix');
-assert.equal(isValidPhone('93098 16336'), true, 'spaced');
-assert.equal(isValidPhone('93098-16336'), true, 'dashed');
-assert.equal(isValidPhone('919309816336'), true, '91 without plus');
+for (const good of ['9309816336', '+919309816336', '93098 16336', '93098-16336', '919309816336']) {
+  assert.equal(isValidPhone(good), true, `should accept ${good}`);
+}
 
 // Rejects what it must.
-assert.equal(isValidPhone('5309816336'), false, 'must start 6-9');
-assert.equal(isValidPhone('930981633'), false, 'too short');
-assert.equal(isValidPhone('93098163361'), false, 'too long');
-assert.equal(isValidPhone(''), false, 'empty');
+for (const bad of ['5309816336', '930981633', '93098163361', '', 'abcdefghij']) {
+  assert.equal(isValidPhone(bad), false, `should reject "${bad}"`);
+}
+
+assert.equal(normalisePhone('+91 93098-16336'), '9309816336', 'strips +91, space and dash');
+
+const full = {
+  name: '  Asha Kulkarni  ', patientFor: 'Myself', reason: 'Tooth pain or sensitivity',
+  duration: 'A few weeks', comfort: 1, contactMethod: 'WhatsApp', phone: '+919309816336',
+  day: 'Thu', time: 'Morning (10 – 1)', notes: 'Upper right molar aches with cold water.',
+};
+
+const body = assembleMessage(full, 'A little nervous');
+assert.ok(body.startsWith('Hello Aesthedent Dental Clinic,\nI\'d like to book an appointment.\n\n'), 'greeting block');
+assert.ok(body.includes('Name: Asha Kulkarni'), 'name is trimmed');
+assert.ok(body.includes('Mobile: 9309816336'), 'phone is normalised in the message');
+assert.ok(body.includes('Comfort level: A little nervous'), 'comfort label passed through');
 
 // Empty optional fields must not produce dangling label lines.
-const rows = [['Name', 'Asha'], ['Notes', ''], ['Mobile', '9309816336']];
-const body = rows.filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`).join('\n');
-assert.ok(!body.includes('Notes:'), 'blank Notes line must be omitted');
-assert.equal(body, 'Name: Asha\nMobile: 9309816336');
+const sparse = assembleMessage({ ...full, notes: '   ', day: '', time: '' }, 'Calm');
+assert.ok(!sparse.includes('Notes:'), 'blank Notes line must be omitted');
+assert.ok(!sparse.includes('Preferred day:'), 'blank day line must be omitted');
+assert.ok(sparse.includes('Name: Asha Kulkarni'), 'filled rows survive');
 
 console.log('OK — all message/phone assertions passed');
 ```
 
-- [ ] **Step 4: Run the assertions**
+- [ ] **Step 5: Run the assertions**
 
 Run: `node scratch/check-message.mjs`
 Expected: `OK — all message/phone assertions passed`
 
-- [ ] **Step 5: Type-check**
+A `MODULE_TYPELESS_PACKAGE_JSON` warning on stderr is expected and harmless.
+
+To prove the checks actually bind to the shipped code, temporarily break the regex in `lib/intake-form-message.ts` (e.g. `[6-9]` → `[7-9]`), re-run, confirm it FAILS, then revert.
+
+- [ ] **Step 6: Type-check**
 
 Run: `npx tsc --noEmit`
-Expected: no errors referencing `lib/intake-form-config.ts` or `lib/intake-form-types.ts`.
+Expected: no errors referencing `lib/intake-form-config.ts`, `lib/intake-form-message.ts`, or `lib/intake-form-types.ts`.
 
-- [ ] **Step 6: Commit**
+- [ ] **Step 7: Commit**
 
 ```bash
-git add lib/intake-form-config.ts lib/intake-form-types.ts
+git add lib/intake-form-config.ts lib/intake-form-message.ts lib/intake-form-types.ts
 git commit -m "feat(form): add config-driven intake form content and assembler
 
 All intake copy moves into one file so changing what a patient reads
@@ -510,7 +551,16 @@ Renders at `screen === TOTAL`. Shows `review.label`, `review.title`, then a defi
 - `review.callAlt` + `review.callAltStrong` as a `tel:` link
 
 ```tsx
-const message = useMemo(() => assembleMessage(a), [a]);
+// The comfort LABEL is resolved here, not inside assembleMessage — that keeps
+// lib/intake-form-message.ts import-free so its checks can load the real code.
+const comfortLevels = (INTAKE_FORM.steps.find((s) => s.id === 'comfort') as {
+  levels?: readonly { value: string; note: string }[];
+}).levels!;
+
+const message = useMemo(
+  () => assembleMessage(a, comfortLevels[a.comfort]?.value ?? ''),
+  [a, comfortLevels],
+);
 const waLink = useMemo(() => buildWhatsappLink(message), [message]);
 ```
 
@@ -663,9 +713,10 @@ export const getTestimonials = (type = 'latest', limit = null) => {
 
 - [ ] **Step 2: Verify the count**
 
-Run: `node -e "const m=require('esm');" 2>/dev/null; npx next build`
+Run: `node -e "import('./lib/testimonials.js').then(m => { const v = m.getTestimonials('all'); console.log(v.length, v.map(t => t.id).join(',')); })"`
+Expected: `4 9,8,7,1`
 
-Then in the browser confirm the homepage renders **4** review cards (ids 9, 8, 7, 1) and `/aesthedent-experience` also shows only those 4.
+Then run `npx next build`, and in the browser confirm the homepage renders **4** review cards and `/aesthedent-experience` also shows only those 4.
 
 - [ ] **Step 3: Commit**
 
