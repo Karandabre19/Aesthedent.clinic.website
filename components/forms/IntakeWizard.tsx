@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Hand } from 'lucide-react';
 import type { ComponentPropsWithoutRef, ComponentType, ReactNode } from 'react';
@@ -11,8 +11,9 @@ import { Textarea as TextareaBase } from '@/components/ui/textarea';
 import { INTAKE_FORM } from '@/lib/intake-form-config';
 import { EMPTY_ANSWERS, getScreens } from '@/lib/intake-form-types';
 import type { StepConfig } from '@/lib/intake-form-types';
-import { isValidPhone } from '@/lib/intake-form-message';
+import { assembleMessage, isValidPhone, normalisePhone } from '@/lib/intake-form-message';
 import type { Answers } from '@/lib/intake-form-message';
+import { buildWhatsappLink, WHATSAPP_NUMBER } from '@/lib/clinic';
 
 // The shadcn kit under components/ui is untyped .jsx (the project sets
 // checkJs:false), so TypeScript infers "no props at all" for each forwardRef
@@ -30,11 +31,13 @@ const Textarea = TextareaBase as ComponentType<ComponentPropsWithoutRef<'textare
 /**
  * The intake wizard's shell: screens, progress, validation and focus.
  *
- * The review screen + WhatsApp send (Task 4) is deliberately NOT built here —
- * the review step (screen === TOTAL) shows a short stand-in section instead
- * of the answer table and send button. The six field renderers (text, tel,
- * textarea, single-select, slider, day-time) ARE built here, see `Field`
- * below, dispatched on `step.type`.
+ * The review step (screen === TOTAL) renders a definition list of every
+ * non-empty answer plus the WhatsApp send button (a real anchor — see
+ * `waLink` below). This is click-to-chat: WhatsApp opens with the message
+ * prefilled and the PATIENT taps send there; the site never transmits
+ * anything itself. The six field renderers (text, tel, textarea,
+ * single-select, slider, day-time) are also built here, see `Field` below,
+ * dispatched on `step.type`.
  *
  * WHAT THIS IS NOT: a diagnostic tool. This screen shell renders whatever
  * question config/steps supply; it adds no clinical branching of its own —
@@ -51,6 +54,11 @@ const Textarea = TextareaBase as ComponentType<ComponentPropsWithoutRef<'textare
 // share the label "Step 6 of 8" and render together — see getScreens().
 const SCREENS = getScreens();
 const TOTAL = SCREENS.length;
+
+// lib/clinic.ts's WHATSAPP_NUMBER ('91-9309816336') is the single source of
+// truth for the clinic's number; there is no separately-exported tel: form,
+// so it is reformatted here rather than hardcoding the digits a second time.
+const CLINIC_TEL = `+${WHATSAPP_NUMBER.replace(/-/g, '')}`;
 
 /* ── small presentational pieces ─────────────────────────────────────────── */
 
@@ -341,8 +349,10 @@ export default function IntakeWizard() {
   const [screen, setScreen] = useState(0); // 0-indexed; screen === TOTAL is the review step
   const [a, setA] = useState<Answers>(EMPTY_ANSWERS);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  // Read and set by Task 4's review/send screen; declared here so the state
-  // shape doesn't shift under that task.
+  // Set true when the patient taps "Send via WhatsApp"; only ever flips the
+  // on-screen reassurance copy below the review table — it cannot know
+  // whether WhatsApp actually opened or whether the patient went on to tap
+  // send there, so it never claims the message was sent.
   const [sent, setSent] = useState(false);
 
   const reduceMotion = useReducedMotion();
@@ -350,6 +360,42 @@ export default function IntakeWizard() {
   const firstRender = useRef(true);
 
   const set: SetAnswer = (key, value) => setA((prev) => ({ ...prev, [key]: value }));
+
+  // The comfort LABEL is resolved here, not inside assembleMessage — that keeps
+  // lib/intake-form-message.ts import-free so its checks can load the real code.
+  const comfortLevels = (INTAKE_FORM.steps.find((s) => s.id === 'comfort') as {
+    levels?: readonly { value: string; note: string }[];
+  }).levels!;
+
+  const message = useMemo(
+    () => assembleMessage(a, comfortLevels[a.comfort]?.value ?? ''),
+    [a, comfortLevels],
+  );
+  const waLink = useMemo(() => buildWhatsappLink(message), [message]);
+
+  // Same rows assembleMessage sends, in the same order, so the table the
+  // patient reviews matches the message it will send exactly — including
+  // which optional rows (comfort default aside, chiefly notes) are skipped
+  // when left blank.
+  const { rowLabels } = INTAKE_FORM.review;
+  const reviewRows = useMemo<[string, string][]>(
+    () =>
+      (
+        [
+          [rowLabels.name, a.name.trim()],
+          [rowLabels.patientFor, a.patientFor],
+          [rowLabels.reason, a.reason],
+          [rowLabels.duration, a.duration],
+          [rowLabels.comfort, comfortLevels[a.comfort]?.value ?? ''],
+          [rowLabels.contactMethod, a.contactMethod],
+          [rowLabels.phone, normalisePhone(a.phone)],
+          [rowLabels.day, a.day],
+          [rowLabels.time, a.time],
+          [rowLabels.notes, a.notes.trim()],
+        ] as [string, string][]
+      ).filter(([, v]) => v),
+    [a, comfortLevels, rowLabels],
+  );
 
   // Move focus to the new screen's heading so screen-reader and keyboard users
   // are told where they landed. Skipped on first paint so the page does not
@@ -417,19 +463,48 @@ export default function IntakeWizard() {
           transition={reduceMotion ? { duration: 0 } : { duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
         >
           {isReview ? (
-            // Task 4 replaces this with the answer table and the WhatsApp send
-            // button (a real <a href target="_blank">, never window.open).
             <section aria-labelledby="step-h">
+              <p className="mb-2 text-sm font-semibold uppercase tracking-wide text-[hsl(var(--color-primary))]">
+                {INTAKE_FORM.review.label}
+              </p>
               <h3
                 id="step-h"
                 ref={headingRef}
                 tabIndex={-1}
-                className="mb-2 text-xl font-semibold text-[hsl(var(--color-text))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--color-primary))] focus-visible:ring-offset-2"
+                className="mb-6 text-xl font-semibold text-[hsl(var(--color-text))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--color-primary))] focus-visible:ring-offset-2"
               >
                 {INTAKE_FORM.review.title}
               </h3>
-              <p className="text-[hsl(var(--color-text-muted))]">
-                Review screen coming soon — your answers are safe, nothing has been sent.
+
+              <dl className="divide-y divide-[hsl(var(--border))] overflow-hidden rounded-2xl border border-[hsl(var(--border))]">
+                {reviewRows.map(([label, value]) => (
+                  <div
+                    key={label}
+                    className="flex flex-col gap-0.5 bg-[hsl(var(--color-bg-alt))] px-4 py-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
+                  >
+                    <dt className="shrink-0 text-sm font-medium text-[hsl(var(--color-text-muted))]">
+                      {label}
+                    </dt>
+                    <dd className="text-base text-[hsl(var(--color-text))] sm:text-right">{value}</dd>
+                  </div>
+                ))}
+              </dl>
+
+              {sent && (
+                <p role="status" className="mt-4 text-sm text-[hsl(var(--color-text-muted))]">
+                  WhatsApp opened in a new tab with this message ready to go — just tap send there
+                  and we&apos;ll take it from there.
+                </p>
+              )}
+
+              <p className="mt-6 text-base text-[hsl(var(--color-text-muted))]">
+                {INTAKE_FORM.review.callAlt}{' '}
+                <a
+                  href={`tel:${CLINIC_TEL}`}
+                  className="font-semibold text-[hsl(var(--color-primary))] underline underline-offset-4 hover:no-underline"
+                >
+                  {INTAKE_FORM.review.callAltStrong}
+                </a>
               </p>
             </section>
           ) : (
@@ -463,13 +538,27 @@ export default function IntakeWizard() {
         {screen > 0 ? (
           <Button variant="outline" onClick={back} className="h-12 px-6">
             <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
-            {INTAKE_FORM.buttons.back}
+            {isReview ? INTAKE_FORM.review.backButton : INTAKE_FORM.buttons.back}
           </Button>
         ) : (
           <span className="hidden sm:block" />
         )}
 
-        {!isReview && (
+        {isReview ? (
+          // Real anchor, not window.open: it survives popup blockers and
+          // supports long-press / middle-click. This is click-to-chat — the
+          // patient still taps send inside WhatsApp; the site never
+          // transmits the message itself.
+          <Button
+            asChild
+            className="h-12 bg-[hsl(var(--color-primary))] px-8 text-base hover:opacity-90"
+          >
+            <a href={waLink} target="_blank" rel="noopener noreferrer" onClick={() => setSent(true)}>
+              {INTAKE_FORM.review.sendButton}
+              <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+            </a>
+          </Button>
+        ) : (
           <Button
             onClick={next}
             className="h-12 bg-[hsl(var(--color-primary))] px-8 text-base hover:opacity-90"
