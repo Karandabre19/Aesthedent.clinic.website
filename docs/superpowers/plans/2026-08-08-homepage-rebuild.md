@@ -119,7 +119,167 @@ Create `lib/intake-form-config.ts` with the config object **exactly as given in 
  */
 ```
 
-Then the object from the spec verbatim, ending `} as const;`.
+Then this object, verbatim. Every string here is final patient-facing copy — transcribe, do not paraphrase:
+
+```ts
+export const INTAKE_FORM = {
+  eyebrow: "We're here when you're ready",
+  title: "Let's get you seen, comfortably.",
+  intro: "Tell us a little about what's going on. No forms with fifty fields — just a short conversation, and we'll take it from there.",
+
+  steps: [
+    {
+      id: "name",
+      label: "Step 1 of 8",
+      question: "What's your name?",
+      type: "text",
+      placeholder: "Your full name",
+      autocomplete: "name",
+      required: true,
+    },
+    {
+      id: "patientFor",
+      label: "Step 2 of 8",
+      question: "Who is this appointment for?",
+      type: "single-select",
+      columns: 2,
+      required: true,
+      options: [
+        { value: "Myself" },
+        { value: "My child" },
+        { value: "A parent" },
+        { value: "Someone else" },
+      ],
+    },
+    {
+      id: "reason",
+      label: "Step 3 of 8",
+      question: "What brings you in?",
+      type: "single-select",
+      columns: 1,
+      required: true,
+      options: [
+        { value: "Tooth pain or sensitivity", sub: "Something's hurting and needs a look" },
+        { value: "Missing tooth / implants",  sub: "Replacing one or more teeth" },
+        { value: "Root canal concern",        sub: "Suspected infection or old RCT pain" },
+        { value: "Smile design / cosmetic",   sub: "Whitening, veneers, alignment" },
+        { value: "Routine check-up",          sub: "Cleaning, cavity check, general health" },
+        { value: "Something else",            sub: "We'll ask you to explain below" },
+      ],
+    },
+    {
+      id: "duration",
+      label: "Step 4 of 8",
+      question: "How long has this been going on?",
+      type: "single-select",
+      columns: 2,
+      required: true,
+      options: [
+        { value: "Just started" },
+        { value: "A few weeks" },
+        { value: "Over a month" },
+        { value: "Not urgent — planning ahead" },
+      ],
+    },
+    {
+      id: "comfort",
+      label: "Step 5 of 8",
+      question: "How are you feeling about the visit?",
+      type: "slider",
+      required: false,
+      default: 0,
+      levels: [
+        { value: "Calm",
+          note: "Good to know. We'll keep things simple and quick." },
+        { value: "A little nervous",
+          note: "Totally normal. We talk you through every step before it happens, and pause any time you ask." },
+        { value: "Quite anxious",
+          note: "We hear you — many patients feel this way. Raise your hand at any point during treatment and we stop immediately. That's our word." },
+      ],
+    },
+    {
+      id: "contactMethod",
+      label: "Step 6 of 8",
+      question: "How should we reach you?",
+      type: "single-select",
+      columns: 2,
+      required: true,
+      options: [
+        { value: "WhatsApp" },
+        { value: "A phone call" },
+      ],
+    },
+    {
+      id: "phone",
+      label: "Step 6 of 8",
+      question: "What's your mobile number?",
+      helper: "So we can reach you about your appointment.",
+      type: "tel",
+      placeholder: "10-digit mobile number",
+      inputMode: "numeric",
+      required: true,
+      // shown immediately after contactMethod, on the same step
+      validation: "^[6-9]\\d{9}$",
+      errorMessage: "Please enter a valid 10-digit mobile number.",
+    },
+    {
+      id: "schedule",
+      label: "Step 7 of 8",
+      question: "Which day and time work for you?",
+      helper: "We're open Monday–Sunday, 10 AM – 8 PM. Closed Wednesdays.",
+      type: "day-time",
+      required: true,
+      days: [
+        { value: "Mon" }, { value: "Tue" },
+        { value: "Wed", disabled: true, title: "Closed Wednesdays" },
+        { value: "Thu" }, { value: "Fri" }, { value: "Sat" }, { value: "Sun" },
+      ],
+      times: [
+        { value: "Morning (10 – 1)" },
+        { value: "Afternoon (1 – 4)" },
+        { value: "Evening (4 – 8)" },
+      ],
+    },
+    {
+      id: "notes",
+      label: "Step 8 of 8",
+      question: "Anything else you'd like to share?",
+      type: "textarea",
+      placeholder: "Optional — describe symptoms, past treatment, or questions you have",
+      required: false,
+    },
+  ],
+
+  review: {
+    label: "Almost done",
+    title: "Here's what we'll send",
+    sendButton: "Send via WhatsApp",
+    callAlt: "Prefer to talk now?",
+    callAltStrong: "Call the clinic directly",
+    backButton: "Back & edit",
+    rowLabels: {
+      name: "Name",
+      patientFor: "Appointment for",
+      reason: "Reason for visit",
+      duration: "Duration",
+      comfort: "Comfort level",
+      contactMethod: "Contact via",
+      phone: "Mobile",
+      day: "Preferred day",
+      time: "Preferred time",
+      notes: "Notes",
+    },
+  },
+
+  buttons: { continue: "Continue", back: "Back", review: "Review" },
+} as const;
+```
+
+**Transcription notes** (these are easy to "fix" by accident — don't):
+- The em-dashes (`—`), en-dashes in times (`10 – 1`), and the curly apostrophes are intentional. Keep them.
+- `validation: "^[6-9]\\d{9}$"` keeps the doubled backslash — it is a string, not a regex literal.
+- The aligned whitespace in the `reason` options is cosmetic; preserving it is fine, reflowing it is also fine.
+- `review.rowLabels.reason` is `"Reason for visit"` while the assembled message line is `"Reason"`. Both are correct — the review table and the WhatsApp body use different wording on purpose.
 
 - [ ] **Step 2: Create the pure message module**
 
@@ -276,7 +436,9 @@ Expected: `OK — all message/phone assertions passed`
 
 A `MODULE_TYPELESS_PACKAGE_JSON` warning on stderr is expected and harmless.
 
-To prove the checks actually bind to the shipped code, temporarily break the regex in `lib/intake-form-message.ts` (e.g. `[6-9]` → `[7-9]`), re-run, confirm it FAILS, then revert.
+To prove the checks actually bind to the shipped code, temporarily break the regex in `lib/intake-form-message.ts` — change `[6-9]` to **`[6-8]`** — re-run, confirm it FAILS with an `AssertionError` and exit code 1, then revert and confirm it passes again.
+
+Use `[6-8]`, not `[7-9]`: every "good" fixture starts with 9, so narrowing the range at the top end still accepts all of them and the check would pass against broken code — exactly the false-confidence this negative check exists to rule out.
 
 - [ ] **Step 6: Type-check**
 
