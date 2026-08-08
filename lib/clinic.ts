@@ -118,13 +118,28 @@ export function buildWhatsappLink(body: string): string {
 }
 
 /**
- * Countable patient/case numbers are DELIBERATELY ABSENT.
+ * Countable figures, confirmed by Dr. Sahil on 2026-08-08.
  *
- * "5000+ Happy Patients", "500+ successful cases", "1000+ patients" and
- * "98% success rate" have all appeared on this site with no source behind any of
- * them (audit/NEEDS-INPUT.md N3, N4, N5, N10). Until Dr. Sahil supplies a real
- * countable figure, the trust number we use is the one anyone can verify for
- * themselves: REVIEWS.count five-star Google reviews.
+ * THIS BLOCK USED TO BE A PROHIBITION. "5000+ Happy Patients", "500+ successful
+ * cases", "1000+ patients" and "98% success rate" had all shipped with no source
+ * behind any of them (audit/NEEDS-INPUT.md N3, N4, N5, N10), and were stripped.
  *
- * Do not add a patient count here without a source.
+ * The rule was never "no numbers" — it was "no numbers without a source", and it
+ * named its own release condition: until Dr. Sahil supplies a real countable
+ * figure. He has. These four are his, given 2026-08-08, and that is why they are
+ * here when the earlier ones were removed.
+ *
+ * Anything NOT in this object still needs a source before it ships. "98% success
+ * rate" in particular was NOT reinstated and must not be.
+ *
+ * rootCanals is a COUNT OF PROCEDURES. It renders as "Root Canals / Completed"
+ * and must never be labelled "Painless Root Canals" — pain is an outcome that
+ * varies by patient and procedure, which is precisely why "100% Painless
+ * Treatments" was removed from the trust bar already.
  */
+export const STATS = {
+  years: '10+',
+  patients: '1000+',
+  implants: '100+',
+  rootCanals: '500+',
+} as const;
