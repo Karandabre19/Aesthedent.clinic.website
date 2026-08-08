@@ -203,7 +203,7 @@ export default function IntakeWizard() {
                 id="step-h"
                 ref={headingRef}
                 tabIndex={-1}
-                className="mb-2 text-xl font-semibold text-[hsl(var(--color-text))] outline-none"
+                className="mb-2 text-xl font-semibold text-[hsl(var(--color-text))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--color-primary))] focus-visible:ring-offset-2"
               >
                 {INTAKE_FORM.review.title}
               </h3>
@@ -219,7 +219,7 @@ export default function IntakeWizard() {
                     id={i === 0 ? 'step-h' : undefined}
                     ref={i === 0 ? headingRef : undefined}
                     tabIndex={i === 0 ? -1 : undefined}
-                    className="mb-2 text-xl font-semibold text-[hsl(var(--color-text))] outline-none"
+                    className="mb-2 text-xl font-semibold text-[hsl(var(--color-text))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--color-primary))] focus-visible:ring-offset-2"
                   >
                     {step.question}
                   </h3>
