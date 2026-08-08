@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Hand } from 'lucide-react';
 import type { ComponentPropsWithoutRef, ComponentType, ReactNode } from 'react';
 import { Button as ButtonBase } from '@/components/ui/button';
 import { Input as InputBase } from '@/components/ui/input';
@@ -30,16 +30,18 @@ const Textarea = TextareaBase as ComponentType<ComponentPropsWithoutRef<'textare
 /**
  * The intake wizard's shell: screens, progress, validation and focus.
  *
- * Field rendering (Task 3) and the review screen + WhatsApp send (Task 4) are
- * deliberately NOT built here — each unfilled screen shows a disabled
- * placeholder control so the wizard is fully navigable and typecheckable in
- * the meantime, and the review step (screen === TOTAL) shows a short stand-in
- * section instead of the answer table and send button.
+ * The review screen + WhatsApp send (Task 4) is deliberately NOT built here —
+ * the review step (screen === TOTAL) shows a short stand-in section instead
+ * of the answer table and send button. The six field renderers (text, tel,
+ * textarea, single-select, slider, day-time) ARE built here, see `Field`
+ * below, dispatched on `step.type`.
  *
  * WHAT THIS IS NOT: a diagnostic tool. This screen shell renders whatever
  * question config/steps supply; it adds no clinical branching of its own —
  * an intake form that appears to triage is making a clinical claim this site
- * is not allowed to make.
+ * is not allowed to make. The comfort slider (Step 5) is reassurance copy
+ * only: it swaps a sentence of text and never gates navigation or alters any
+ * other answer.
  *
  * State is React-local only. Nothing is persisted: no localStorage, no
  * sessionStorage, no network call.
@@ -90,30 +92,247 @@ function FieldError({ id, children }: { id: string; children: ReactNode }) {
   );
 }
 
+/** Updates one answer field. Generic per-call so `set('comfort', 0)` stays a
+ * number and `set('name', 'x')` stays a string — no `string | number` union
+ * to accidentally widen the wrong field. */
+type SetAnswer = <K extends keyof Answers>(key: K, value: Answers[K]) => void;
+
+const optionButtonBase =
+  'flex min-h-[56px] w-full flex-col items-start justify-center gap-0.5 rounded-2xl border p-4 text-left text-base transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--color-primary))] focus-visible:ring-offset-2';
+const optionButtonState = (selected: boolean) =>
+  selected
+    ? 'border-[hsl(var(--color-primary))] bg-[hsl(var(--color-primary))]/5 shadow-sm'
+    : 'border-[hsl(var(--border))] bg-[hsl(var(--background))] hover:border-[hsl(var(--color-primary))]/50';
+
 /**
- * Stand-in for Task 3's real field renderers (text / single-select / slider /
- * tel / day-time / textarea). Disabled and non-interactive on purpose — this
- * task wires screens, validation, focus and nav, not inputs.
+ * Dispatches on `step.type` and renders the real control for one of the six
+ * question shapes the config can describe. Every control reads its current
+ * value from `a` and writes through `set`; errors are looked up by
+ * `step.id` (the shell already keys `errors` that way, including the
+ * `schedule` step's combined day/time error) and rendered by the caller via
+ * `FieldError` — this component only wires `aria-describedby` /
+ * `aria-invalid` so the two stay associated.
  */
-function FieldPlaceholder({ step }: { step: StepConfig }) {
+function Field({
+  step,
+  a,
+  set,
+  setErrors,
+  errors,
+}: {
+  step: StepConfig;
+  a: Answers;
+  set: SetAnswer;
+  setErrors: (e: Record<string, string>) => void;
+  errors: Record<string, string>;
+}) {
   const inputId = `iw-${step.id}`;
-  const Control = step.type === 'textarea' ? Textarea : Input;
-  return (
-    <div>
-      <Label htmlFor={inputId} className="sr-only">
-        {step.question}
-      </Label>
-      <Control
-        id={inputId}
-        disabled
-        readOnly
-        aria-hidden="true"
-        tabIndex={-1}
-        placeholder={`Task 3 renders a "${step.type}" control here`}
-        className="mt-2 h-12 text-base opacity-60"
-      />
-    </div>
-  );
+  const errorId = `${inputId}-err`;
+  const hasError = Boolean(errors[step.id]);
+
+  switch (step.type) {
+    case 'text': {
+      return (
+        <div>
+          <Label htmlFor={inputId} className="sr-only">
+            {step.question}
+          </Label>
+          <Input
+            id={inputId}
+            type="text"
+            autoComplete={step.autocomplete}
+            placeholder={step.placeholder}
+            value={a[step.id]}
+            onChange={(e) => set(step.id, e.target.value)}
+            aria-invalid={hasError}
+            aria-describedby={hasError ? errorId : undefined}
+            className="text-base"
+          />
+        </div>
+      );
+    }
+
+    case 'tel': {
+      return (
+        <div>
+          <Label htmlFor={inputId} className="sr-only">
+            {step.question}
+          </Label>
+          <Input
+            id={inputId}
+            type="tel"
+            inputMode="numeric"
+            autoComplete="tel"
+            placeholder={step.placeholder}
+            value={a[step.id]}
+            onChange={(e) => set(step.id, e.target.value)}
+            aria-invalid={hasError}
+            aria-describedby={hasError ? errorId : undefined}
+            className="text-base"
+          />
+        </div>
+      );
+    }
+
+    case 'textarea': {
+      return (
+        <div>
+          <Label htmlFor={inputId} className="sr-only">
+            {step.question}
+          </Label>
+          <Textarea
+            id={inputId}
+            placeholder={step.placeholder}
+            value={a[step.id]}
+            onChange={(e) => set(step.id, e.target.value)}
+            aria-invalid={hasError}
+            aria-describedby={hasError ? errorId : undefined}
+            rows={4}
+            className="text-base"
+          />
+        </div>
+      );
+    }
+
+    case 'single-select': {
+      const gridCols = step.columns === 2 ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1';
+      return (
+        <div
+          role="group"
+          aria-label={step.question}
+          aria-describedby={hasError ? errorId : undefined}
+          className={`grid gap-3 ${gridCols}`}
+        >
+          {step.options.map((option) => {
+            const selected = a[step.id] === option.value;
+            return (
+              <button
+                key={option.value}
+                type="button"
+                aria-pressed={selected}
+                onClick={() => {
+                  set(step.id, option.value);
+                  setErrors({});
+                }}
+                className={`${optionButtonBase} ${optionButtonState(selected)}`}
+              >
+                <span className="font-medium text-[hsl(var(--color-text))]">{option.value}</span>
+                {'sub' in option && option.sub && (
+                  <span className="text-sm text-[hsl(var(--color-text-muted))]">{option.sub}</span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      );
+    }
+
+    case 'slider': {
+      const levels = step.levels;
+      const comfort = a.comfort;
+      return (
+        <div>
+          <div className="flex items-center gap-4">
+            <Hand
+              aria-hidden="true"
+              style={{ transform: `scale(${1 + comfort * 0.12}) rotate(${comfort * -8}deg)` }}
+              className="h-8 w-8 shrink-0 text-[hsl(var(--color-primary))] transition-transform duration-300 motion-reduce:transition-none"
+            />
+            <input
+              id={inputId}
+              type="range"
+              min={0}
+              max={2}
+              step={1}
+              value={comfort}
+              onChange={(e) => set('comfort', Number(e.target.value))}
+              aria-valuetext={levels[comfort].value}
+              aria-label={step.question}
+              aria-describedby={hasError ? errorId : undefined}
+              className="h-11 w-full accent-[hsl(var(--color-primary))]"
+            />
+          </div>
+          <p aria-live="polite" className="mt-4 text-base text-[hsl(var(--color-text-muted))]">
+            {levels[comfort].note}
+          </p>
+        </div>
+      );
+    }
+
+    case 'day-time': {
+      return (
+        <div>
+          <fieldset>
+            <legend className="mb-2 text-base font-medium text-[hsl(var(--color-text))]">
+              {INTAKE_FORM.review.rowLabels.day}
+            </legend>
+            <div
+              className="grid grid-cols-3 gap-2 sm:grid-cols-4"
+              aria-describedby={hasError ? errorId : undefined}
+            >
+              {step.days.map((day) => {
+                const disabled = 'disabled' in day && Boolean(day.disabled);
+                const title = 'title' in day ? day.title : undefined;
+                const selected = a.day === day.value;
+                return (
+                  <button
+                    key={day.value}
+                    type="button"
+                    disabled={disabled}
+                    title={title}
+                    aria-pressed={selected}
+                    onClick={() => {
+                      set('day', day.value);
+                      setErrors({});
+                    }}
+                    className={`min-h-[44px] min-w-[44px] rounded-xl border px-3 py-2 text-base font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--color-primary))] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 ${
+                      selected
+                        ? 'border-[hsl(var(--color-primary))] bg-[hsl(var(--color-primary))]/5 text-[hsl(var(--color-primary))]'
+                        : 'border-[hsl(var(--border))] bg-[hsl(var(--background))] hover:border-[hsl(var(--color-primary))]/50'
+                    }`}
+                  >
+                    {day.value}
+                  </button>
+                );
+              })}
+            </div>
+          </fieldset>
+
+          <fieldset className="mt-6">
+            <legend className="mb-2 text-base font-medium text-[hsl(var(--color-text))]">
+              {INTAKE_FORM.review.rowLabels.time}
+            </legend>
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+              {step.times.map((time) => {
+                const selected = a.time === time.value;
+                return (
+                  <button
+                    key={time.value}
+                    type="button"
+                    aria-pressed={selected}
+                    onClick={() => {
+                      set('time', time.value);
+                      setErrors({});
+                    }}
+                    className={`min-h-[44px] w-full rounded-xl border px-3 py-2 text-base font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--color-primary))] focus-visible:ring-offset-2 ${
+                      selected
+                        ? 'border-[hsl(var(--color-primary))] bg-[hsl(var(--color-primary))]/5 text-[hsl(var(--color-primary))]'
+                        : 'border-[hsl(var(--border))] bg-[hsl(var(--background))] hover:border-[hsl(var(--color-primary))]/50'
+                    }`}
+                  >
+                    {time.value}
+                  </button>
+                );
+              })}
+            </div>
+          </fieldset>
+        </div>
+      );
+    }
+
+    default:
+      return null;
+  }
 }
 
 /* ── the wizard ──────────────────────────────────────────────────────────── */
@@ -129,6 +348,8 @@ export default function IntakeWizard() {
   const reduceMotion = useReducedMotion();
   const headingRef = useRef<HTMLHeadingElement>(null);
   const firstRender = useRef(true);
+
+  const set: SetAnswer = (key, value) => setA((prev) => ({ ...prev, [key]: value }));
 
   // Move focus to the new screen's heading so screen-reader and keyboard users
   // are told where they landed. Skipped on first paint so the page does not
@@ -226,7 +447,7 @@ export default function IntakeWizard() {
                   {'helper' in step && step.helper && (
                     <p className="mb-4 text-[hsl(var(--color-text-muted))]">{step.helper}</p>
                   )}
-                  <FieldPlaceholder step={step} />
+                  <Field step={step} a={a} set={set} setErrors={setErrors} errors={errors} />
                   {errors[step.id] && (
                     <FieldError id={`iw-${step.id}-err`}>{errors[step.id]}</FieldError>
                   )}
