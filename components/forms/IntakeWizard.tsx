@@ -55,10 +55,13 @@ const Textarea = TextareaBase as ComponentType<ComponentPropsWithoutRef<'textare
 const SCREENS = getScreens();
 const TOTAL = SCREENS.length;
 
-// lib/clinic.ts's WHATSAPP_NUMBER ('91-9309816336') is the single source of
-// truth for the clinic's number; there is no separately-exported tel: form,
-// so it is reformatted here rather than hardcoding the digits a second time.
-const CLINIC_TEL = `+${WHATSAPP_NUMBER.replace(/-/g, '')}`;
+// lib/clinic.ts's WHATSAPP_NUMBER is the single source of truth for the
+// clinic's number and is deliberately digits-only, because it goes into a URL
+// parameter. There is no separately-exported tel: form, so the '+' is added
+// here rather than hardcoding the digits a second time. The strip is defensive:
+// if anyone punctuates the constant again, the tel: link still works even
+// though the WhatsApp link would not.
+const CLINIC_TEL = `+${WHATSAPP_NUMBER.replace(/[^\d]/g, '')}`;
 
 /* ── small presentational pieces ─────────────────────────────────────────── */
 
