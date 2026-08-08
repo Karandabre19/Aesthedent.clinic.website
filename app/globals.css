@@ -19,6 +19,15 @@
     /* ACCENT (Warm Gold) */
     --color-accent: 39 100% 50%;
 
+    /* ACCENT INK - the same gold, dark enough to be TEXT ON WHITE.
+       --color-accent scores 1.96:1 against white, which fails WCAG AA even at
+       large-heading sizes (3:1). It is a fill and a highlight, not a text
+       colour: correct on the dark blue sections, unreadable on the light ones.
+       This companion is 5.05:1, so it clears AA for body (4.5) and large (3)
+       alike and can be used anywhere on a white ground without a second check.
+       Use --color-accent on dark, --color-accent-ink on light. */
+    --color-accent-ink: 39 100% 30%;
+
     /* TEXT */
     --color-text: 217 33% 17%;
     --color-text-muted: 217 14% 44%;
