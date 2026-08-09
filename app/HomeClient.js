@@ -1147,7 +1147,7 @@ export default function HomePage() {
         <TestimonialsSection
           title="Real Stories From Real Patients"
           subtitle="These transformations inspire us every day-and we love sharing them."
-          limit={4}
+          limit={6}
           variant="compact"
         />
 

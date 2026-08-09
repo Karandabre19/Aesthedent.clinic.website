@@ -177,9 +177,8 @@ export default function TestimonialsSection({
           </AnimatedSection>
 
           {/* One column on phones, as the mobile pass requires. Two from md
-              rather than three: the homepage now renders FOUR verified reviews,
-              and a 3-column grid left the fourth stranded alone on a second
-              row. Four divides evenly by two. */}
+              rather than three: the homepage now renders six verified reviews,
+              which divide evenly into three two-card rows. */}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {testimonials.map((testimonial, index) => (
               <TestimonialCard
