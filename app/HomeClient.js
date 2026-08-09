@@ -697,7 +697,7 @@ export default function HomePage() {
           it sits on the dark image overlay, not on the section background. */}
       <section className="section-y bg-white">
         <div className="main-container">
-          <AnimatedSection className="text-center mb-12 sm:mb-16 md:mb-24">
+          <AnimatedSection className="text-center mb-10 sm:mb-12 md:mb-16">
             <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-[hsl(var(--color-accent))]/15 text-[hsl(var(--color-accent-ink))] rounded-full text-sm font-semibold">
               Specialized Care
             </div>
@@ -907,8 +907,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Smile Stories Section - Dynamic */}
-      <section className="section-y bg-white">
+      {/* Smile Stories Section - Dynamic.
+          NO section-y here. TestimonialsSection renders its own padded
+          <section>, so a padded wrapper stacked two full paddings on top of
+          each other and opened a 443px hole above the reviews on desktop. */}
+      <section className="bg-white">
         <TestimonialsSection
           title="Real Stories From Real Patients"
           subtitle="These transformations inspire us every day-and we love sharing them."
@@ -936,7 +939,7 @@ export default function HomePage() {
       {/* Doctors Section */}
       <section className="section-y bg-gradient-to-b from-white to-[hsl(var(--bg-alt))]">
         <div className="main-container">
-          <AnimatedSection className="text-center mb-12 sm:mb-16 md:mb-24">
+          <AnimatedSection className="text-center mb-10 sm:mb-12 md:mb-16">
             <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] rounded-full text-sm font-semibold">
               Our Team
             </div>
