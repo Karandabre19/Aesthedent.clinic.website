@@ -1,40 +1,43 @@
-import { services } from '@/lib/services';
 import { insights } from '@/lib/insights';
+import { services } from '@/lib/services';
+
+const SITE_URL = 'https://www.aesthedentpune.com';
+
+// Only indexable, canonical URLs belong here. Keep this list aligned with the
+// routes that emit a canonical tag; never add API, 404, redirect, filter, or
+// preview URLs to a sitemap.
+const staticPaths = [
+  '/',
+  '/about',
+  '/aesthedent-experience',
+  '/contact',
+  '/dental-clinic-in-kothrud',
+  '/doctor',
+  '/services',
+  '/insights',
+];
+
+function absoluteUrl(path) {
+  return new URL(path, SITE_URL).toString();
+}
+
+function publishedDate(date) {
+  const timestamp = Date.parse(date);
+  return Number.isNaN(timestamp) ? undefined : new Date(timestamp);
+}
 
 export default function sitemap() {
-  const baseUrl = 'https://www.aesthedentpune.com';
+  const staticRoutes = staticPaths.map((path) => ({ url: absoluteUrl(path) }));
 
-  // 1. Static Routes
-  const staticRoutes = [
-    '',
-    '/aesthedent-experience',
-    '/dental-clinic-in-kothrud', // Phase 4F - net-new area page
-    '/about',
-    '/contact',
-    '/doctor',
-    '/services',
-    '/insights',
-  ].map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly',
-    priority: route === '' ? 1 : 0.8,
+  const serviceRoutes = services.map(({ slug }) => ({
+    url: absoluteUrl(`/services/${slug}`),
   }));
 
-  // 2. Dynamic Services
-  const serviceRoutes = services.map((service) => ({
-    url: `${baseUrl}/services/${service.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly',
-    priority: 0.7,
-  }));
-
-  // 3. Dynamic Insights
-  const insightRoutes = insights.map((insight) => ({
-    url: `${baseUrl}/insights/${insight.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: 0.6,
+  const insightRoutes = insights.map(({ slug, date }) => ({
+    url: absoluteUrl(`/insights/${slug}`),
+    // The article publication date is the only verified page-change date in the
+    // source data. Omit lastModified for other pages rather than inventing one.
+    lastModified: publishedDate(date),
   }));
 
   return [...staticRoutes, ...serviceRoutes, ...insightRoutes];
