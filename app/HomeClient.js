@@ -190,19 +190,19 @@ function AdvancedPromiseCard({ num, title, desc, icon: Icon, isLast }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
-      className={`group relative overflow-hidden rounded-[1.5rem] bg-white border-2 p-6 sm:p-7 shadow-sm hover:shadow-xl transition-all duration-300 z-10 ${isLast
+      className={`group relative overflow-hidden rounded-[1.25rem] sm:rounded-[1.5rem] bg-white border-2 p-5 sm:p-7 shadow-sm hover:shadow-xl transition-all duration-300 z-10 ${isLast
           ? 'border-orange-500/20 hover:border-orange-500/40'
           : 'border-[hsl(var(--color-primary))]/10 hover:border-[hsl(var(--color-primary))]/30'
         }`}
     >
       {/* Background Decorative Icon (Smaller) */}
-      <div className="absolute top-0 right-0 p-6 opacity-[0.03] group-hover:opacity-[0.08] transition-all duration-500 pointer-events-none transform group-hover:scale-125 group-hover:-translate-x-2">
-        <Icon className="w-24 h-24" />
+      <div className="absolute top-0 right-0 p-4 sm:p-6 opacity-[0.03] group-hover:opacity-[0.08] transition-all duration-500 pointer-events-none transform group-hover:scale-125 group-hover:-translate-x-2">
+        <Icon className="w-16 h-16 sm:w-24 sm:h-24" />
       </div>
 
-      <div className="flex items-center justify-between w-full mb-4">
-        <div className={`relative w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 ${isLast ? 'bg-orange-500/10 text-orange-600 group-hover:bg-orange-500 group-hover:text-white' : 'bg-[hsl(var(--color-accent))]/10 text-[hsl(var(--color-accent))] group-hover:bg-[hsl(var(--color-accent))] group-hover:text-white'}`}>
-          <Icon className="w-6 h-6" />
+      <div className="flex items-center justify-between w-full mb-3 sm:mb-4">
+        <div className={`relative w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center transition-all duration-300 ${isLast ? 'bg-orange-500/10 text-orange-600 group-hover:bg-orange-500 group-hover:text-white' : 'bg-[hsl(var(--color-accent))]/10 text-[hsl(var(--color-accent))] group-hover:bg-[hsl(var(--color-accent))] group-hover:text-white'}`}>
+          <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
           {isLast && (
             <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
@@ -210,22 +210,26 @@ function AdvancedPromiseCard({ num, title, desc, icon: Icon, isLast }) {
             </span>
           )}
         </div>
-        <span className="text-3xl font-black text-[hsl(var(--color-primary))]/10 group-hover:text-[hsl(var(--color-primary))]/15 transition-colors duration-300">
+        <span className="text-2xl sm:text-3xl font-black text-[hsl(var(--color-primary))]/10 group-hover:text-[hsl(var(--color-primary))]/15 transition-colors duration-300">
           {num}
         </span>
       </div>
 
       <div className="relative z-10">
-        <h3 className="text-lg sm:text-xl font-bold text-[hsl(var(--color-primary))] mb-2 group-hover:text-[hsl(var(--color-text))] transition-colors duration-300">
+        <h3 className="text-base sm:text-xl font-bold text-[hsl(var(--color-primary))] mb-1.5 sm:mb-2 group-hover:text-[hsl(var(--color-text))] transition-colors duration-300">
           {title}
         </h3>
-        <p className="text-sm text-[hsl(var(--color-text-muted))] leading-relaxed group-hover:text-[hsl(var(--color-text))] transition-colors duration-300">
+        <p className="text-[13px] leading-6 sm:text-sm sm:leading-relaxed text-[hsl(var(--color-text-muted))] group-hover:text-[hsl(var(--color-text))] transition-colors duration-300">
           {desc}
         </p>
       </div>
 
+      {/* hidden below sm: this badge is revealed by group-hover, and a touch
+          device has no hover, so on phones it was never going to appear - it
+          just reserved ~46px of blank card under the paragraph. Removing it
+          from the flow there is what closes that gap. */}
       {isLast && (
-        <div className="mt-4 flex items-center gap-2 px-2.5 py-1 bg-orange-50 rounded-lg border border-orange-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="mt-4 hidden sm:flex items-center gap-2 px-2.5 py-1 bg-orange-50 rounded-lg border border-orange-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <span className="text-sm font-bold text-orange-600 uppercase tracking-wide">Control Signal active</span>
         </div>
       )}
@@ -516,20 +520,54 @@ export default function HomePage() {
   return (
     <PageWrapper>
       {/* Hero Section - Full Screen Cinematic */}
+      {/* Height is capped rather than h-screen on purpose. object-cover scales
+          by whichever axis needs more, so a hero TALLER than the art's aspect
+          ratio makes height the binding axis and magnifies the subject: at
+          390x844 the 9:16 mobile art was painted at scale 0.505 and lost 18%
+          off its sides. Keeping the hero at or under width x (artH/artW) - 1.78
+          for both banners - hands the constraint back to width, so the art sits
+          at its natural cover size and only trims a few percent off the bottom.
+          78vh/88vh keep a margin below that ceiling across common viewports. */}
       <section
         ref={heroRef}
-        className="relative h-screen min-h-[700px] overflow-hidden"
+        className="relative h-[100vh] min-h-[700px] overflow-hidden md:h-[100vh] md:min-h-[620px]"
       >
         {/* Background Image with Parallax */}
         <motion.div className="absolute inset-0" style={{ scale: heroScale }}>
           <div className="hero-overlay absolute inset-0 bg-gradient-to-r from-[hsl(var(--color-secondary))]/60 via-[hsl(var(--color-secondary))]/30 to-transparent z-10" />
+          {/* hero-bg-image is the hook the GSAP hero timeline animates (the
+              intro scale-down and the ambient drift). It was missing here, so
+              five gsap calls were targeting a selector that matched nothing and
+              logging "target not found" on every page load.
+
+              Two art-directed crops, not one: the desktop banner is landscape
+              (1672x941) and the mobile banner is portrait (941x1672), so a
+              single file cannot serve both - object-cover would throw away the
+              subject on whichever viewport it wasn't cut for. Both carry
+              hero-bg-image so the timeline animates whichever one is visible.
+
+              Each `sizes` collapses to 1px on the viewport where its element is
+              display:none. Browsers still fetch hidden <img> elements, so
+              without this every visitor would download BOTH banners at full
+              width. The 1px branch drops the hidden one to the smallest width
+              Next generates for a fill image (640w) - cheap, not free. Resizing
+              across the breakpoint re-evaluates sizes and pulls the full image,
+              which is normal srcset behaviour. */}
+          <Image
+            src="/homepage-banner-mobile.png"
+            alt="Premium Dental Care - Crystalline Tooth"
+            className="hero-bg-image h-full w-full object-cover object-bottom will-change-transform transform-gpu md:hidden"
+            fill
+            priority
+            sizes="(min-width: 768px) 1px, 100vw"
+          />
           <Image
             src="/homepage-banner.png"
             alt="Premium Dental Care - Crystalline Tooth"
-            className="h-full w-full object-cover will-change-transform transform-gpu"
+            className="hero-bg-image hidden h-full w-full object-cover will-change-transform transform-gpu md:block"
             fill
             priority
-            sizes="100vw"
+            sizes="(max-width: 767px) 1px, 100vw"
           />
         </motion.div>
 
@@ -768,7 +806,7 @@ export default function HomePage() {
               two per sentence, never a list. */}
           <AnimatedSection className="measure mx-auto mt-10 text-center sm:mt-12">
             <p className="text-base leading-relaxed text-[hsl(var(--color-text-muted))]">
-              Patients travel to us from Bavdhan and Warje for{' '}
+              Patients travel to us from Bavdhan,Kothrud, Warje and all over the Pune for{' '}
               <Link href="/services/dental-implants" className="font-semibold text-[hsl(var(--color-primary))] underline underline-offset-4 hover:text-[hsl(var(--color-accent-ink))] transition-colors">
                 dental implants in Kothrud
               </Link>{' '}
@@ -907,34 +945,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Smile Stories Section - Dynamic.
-          NO section-y here. TestimonialsSection renders its own padded
-          <section>, so a padded wrapper stacked two full paddings on top of
-          each other and opened a 443px hole above the reviews on desktop. */}
-      <section className="bg-white">
-        <TestimonialsSection
-          title="Real Stories From Real Patients"
-          subtitle="These transformations inspire us every day-and we love sharing them."
-          limit={4}
-          variant="compact"
-        />
-
-        <div className="main-container mt-12">
-          <AnimatedSection className="text-center">
-            <a
-              href="https://www.google.com/maps/place/Aesthedent+Dental+Clinic,+Kothrud/@18.4972761,73.8108921,17z/data=!3m1!5s0x3bc2bfc407d2eb7d:0xeb43317068a295aa!4m8!3m7!1s0x3bc2bfa49403bd57:0xb59ec17e89bd289f!8m2!3d18.497271!4d73.813467!9m1!1b1!16s%2Fg%2F11j2v_ph1x?entry=ttu&g_ep=EgoyMDI2MDQwOC4wIKXMDSoASAFQAw%3D%3D"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Read all Aesthedent patient reviews on Google"
-              className="inline-flex min-h-[44px] items-center gap-3 py-2 text-lg font-semibold text-[hsl(var(--primary))] transition-colors hover:text-[hsl(var(--primary-dark))]"
-            >
-              View all patient stories
-              <ArrowRight className="w-5 h-5" />
-            </a>
-          </AnimatedSection>
-        </div>
-      </section>
-
       {/* Painless Dentistry Section */}
       {/* Doctors Section */}
       <section className="section-y bg-gradient-to-b from-white to-[hsl(var(--bg-alt))]">
@@ -1040,10 +1050,10 @@ export default function HomePage() {
                         {/* Per-doctor role tag. Was a hardcoded "Dentist" on
                             both cards, which flattened the one distinction that
                             matters here. */}
-                        <p className="mb-1 sm:mb-2 text-sm font-bold uppercase tracking-wider text-[hsl(var(--primary))]/70">
+                        <p className="mb-1 sm:mb-2 text-[11px] sm:text-sm font-bold uppercase tracking-wider text-[hsl(var(--primary))]/70">
                           {doctor.tag}
                         </p>
-                        <h3 className="text-lg sm:text-xl font-bold leading-tight text-[hsl(var(--primary))]">
+                        <h3 className="text-base sm:text-xl font-bold leading-tight text-[hsl(var(--primary))]">
                           {doctor.name}
                         </h3>
                       </div>
@@ -1052,15 +1062,22 @@ export default function HomePage() {
                     {/* Role + description - one copy. Flows on mobile, glass
                         panel over the image from sm up. */}
                     <div className="px-4 pb-4 sm:p-5 sm:absolute sm:bottom-5 sm:left-5 sm:right-5 sm:rounded-[1.6rem] sm:border sm:border-white/65 sm:bg-[hsl(var(--background))]/84 sm:shadow-[0_24px_54px_-30px_hsl(var(--color-primary)/0.38)] sm:backdrop-blur-xl">
-                      <p className="mb-2 sm:mb-3 inline-flex rounded-full bg-[hsl(var(--color-primary))] px-3.5 py-1.5 text-sm font-semibold uppercase tracking-[0.22em] text-[hsl(var(--color-accent))]">
+                      {/* tracking-[0.22em] is the reason this pill looked huge on
+                          a phone: at 14px uppercase it adds ~3px between every
+                          letter, and "General & Family Dentist, Co-Owner" is 34
+                          of them - roughly 100px of pure letter-spacing, enough
+                          to force a two-line pill on its own. Mobile drops to
+                          11px with tracking dialled back; the wide, airy version
+                          returns at sm: where the panel has the width for it. */}
+                      <p className="mb-2 sm:mb-3 inline-flex rounded-full bg-[hsl(var(--color-primary))] px-2.5 py-1 text-[11px] font-semibold uppercase leading-snug tracking-[0.1em] text-[hsl(var(--color-accent))] sm:px-3.5 sm:py-1.5 sm:text-sm sm:tracking-[0.22em]">
                         {doctor.role}
                       </p>
                       {/* The qualification, verbatim. This is the proof the
                           word "specialist" rests on. */}
-                      <p className="mb-2 text-sm font-semibold text-[hsl(var(--color-primary))]">
+                      <p className="mb-1.5 text-xs font-semibold text-[hsl(var(--color-primary))] sm:mb-2 sm:text-sm">
                         {doctor.credential}
                       </p>
-                      <p className="text-sm leading-relaxed text-[hsl(var(--color-text-muted))]">
+                      <p className="text-[13px] leading-6 text-[hsl(var(--color-text-muted))] sm:text-sm sm:leading-relaxed">
                         {doctor.desc}
                       </p>
                     </div>
@@ -1111,6 +1128,42 @@ export default function HomePage() {
               desc="Ethical care means you are always the primary decision-maker. We implement a specific 'rest signal' before any treatment begins. If you raise your hand, our tools are down instantly. You have our word that we pause as often and for as long as you need."
             />
           </div>
+        </div>
+      </section>
+
+      {/* Smile Stories Section - Dynamic.
+          NO section-y here. TestimonialsSection renders its own padded
+          <section>, so a padded wrapper stacked two full paddings on top of
+          each other and opened a 443px hole above the reviews on desktop.
+
+          Moved below the Doctors section so the page runs team -> reviews.
+          Stays bg-white: the Doctors and Insights gradients around it name
+          --bg-alt, which is not a defined token (globals.css only declares
+          --color-bg-alt), so those gradients are invalid and both sections
+          paint transparent over the white page ground. White here matches what
+          they actually render, and keeps matching if that token is ever fixed
+          to its 216 50% 98% value, which is white to within a hair. */}
+      <section className="bg-white">
+        <TestimonialsSection
+          title="Real Stories From Real Patients"
+          subtitle="These transformations inspire us every day-and we love sharing them."
+          limit={4}
+          variant="compact"
+        />
+
+        <div className="main-container mt-12">
+          <AnimatedSection className="text-center">
+            <a
+              href="https://www.google.com/maps/place/Aesthedent+Dental+Clinic,+Kothrud/@18.4972761,73.8108921,17z/data=!3m1!5s0x3bc2bfc407d2eb7d:0xeb43317068a295aa!4m8!3m7!1s0x3bc2bfa49403bd57:0xb59ec17e89bd289f!8m2!3d18.497271!4d73.813467!9m1!1b1!16s%2Fg%2F11j2v_ph1x?entry=ttu&g_ep=EgoyMDI2MDQwOC4wIKXMDSoASAFQAw%3D%3D"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Read all Aesthedent patient reviews on Google"
+              className="inline-flex min-h-[44px] items-center gap-3 py-2 text-lg font-semibold text-[hsl(var(--primary))] transition-colors hover:text-[hsl(var(--primary-dark))]"
+            >
+              View all patient stories
+              <ArrowRight className="w-5 h-5" />
+            </a>
+          </AnimatedSection>
         </div>
       </section>
 
