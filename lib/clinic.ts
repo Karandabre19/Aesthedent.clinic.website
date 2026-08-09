@@ -73,13 +73,13 @@ export const OPENING = {
 } as const;
 
 /**
- * DIGITS ONLY — country code + number, no '+', no dashes, no spaces.
+ * DIGITS ONLY -country code + number, no '+', no dashes, no spaces.
  *
  * This is not a display string. It is interpolated straight into the `phone`
  * query parameter of the click-to-chat URL below, and WhatsApp rejects any
  * separator there: '91-9309816336' produces a link that opens WhatsApp to
  * nothing. Formatting it for readability silently breaks every WhatsApp CTA on
- * the site at once — the service pages, the Kothrud area page and the intake
+ * the site at once -the service pages, the Kothrud area page and the intake
  * form all route through buildWhatsappLink().
  *
  * If a human-readable form is ever needed on screen, add a SEPARATE export for
@@ -105,12 +105,12 @@ export function buildWhatsappMessage(context?: string): string {
 /**
  * The ONE place a wa.me / click-to-chat URL is constructed. Everything that
  * opens WhatsApp goes through here so the number and the encoding live in a
- * single spot — buildWhatsappMessage() above is a thin wrapper over it, and the
+ * single spot -buildWhatsappMessage() above is a thin wrapper over it, and the
  * intake wizard passes its assembled body straight in.
  *
  * This is click-to-chat: it opens WhatsApp with the text prefilled and the
- * PATIENT taps send. It cannot auto-send — no website can without the paid
- * WhatsApp Business API — and that is the behaviour we want, because the enquiry
+ * PATIENT taps send. It cannot auto-send -no website can without the paid
+ * WhatsApp Business API -and that is the behaviour we want, because the enquiry
  * then arrives from the patient's own number and the front desk can just reply.
  */
 export function buildWhatsappLink(body: string): string {
@@ -124,7 +124,7 @@ export function buildWhatsappLink(body: string): string {
  * cases", "1000+ patients" and "98% success rate" had all shipped with no source
  * behind any of them (audit/NEEDS-INPUT.md N3, N4, N5, N10), and were stripped.
  *
- * The rule was never "no numbers" — it was "no numbers without a source", and it
+ * The rule was never "no numbers" -it was "no numbers without a source", and it
  * named its own release condition: until Dr. Sahil supplies a real countable
  * figure. He has. These four are his, given 2026-08-08, and that is why they are
  * here when the earlier ones were removed.
@@ -133,7 +133,7 @@ export function buildWhatsappLink(body: string): string {
  * rate" in particular was NOT reinstated and must not be.
  *
  * rootCanals is a COUNT OF PROCEDURES. It renders as "Root Canals / Completed"
- * and must never be labelled "Painless Root Canals" — pain is an outcome that
+ * and must never be labelled "Painless Root Canals" -pain is an outcome that
  * varies by patient and procedure, which is precisely why "100% Painless
  * Treatments" was removed from the trust bar already.
  */

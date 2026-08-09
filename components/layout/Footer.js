@@ -41,7 +41,7 @@ export default function Footer() {
                 className="h-14 w-auto group-hover:opacity-85 transition-opacity duration-300"
               />
             </Link>
-            <p className="text-white/90 text-sm leading-relaxed font-light mb-10 tracking-wide">
+            <p className="measure text-white/90 text-sm leading-relaxed font-light mb-10 tracking-wide">
               Aesthedent - Reclaim Your Smile. Honest, clear dental care in Kothrud, Pune. We focus on reliable treatments and ensuring you understand everything before we start.
             </p>
             <div className="flex gap-5">
@@ -90,7 +90,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link 
                     href={link.href}
-                    className="text-white/90 hover:text-[hsl(var(--color-accent))] transition-all duration-300 text-sm font-normal hover:translate-x-1 inline-block"
+                    className="inline-flex min-h-[44px] items-center py-2 text-sm font-normal text-white/90 transition-all duration-300 hover:translate-x-1 hover:text-[hsl(var(--color-accent))]"
                   >
                     {link.label}
                   </Link>
@@ -107,7 +107,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link 
                     href={link.href}
-                    className="text-white/90 hover:text-[hsl(var(--color-accent))] transition-all duration-300 text-sm font-normal hover:translate-x-1 inline-block"
+                    className="inline-flex min-h-[44px] items-center py-2 text-sm font-normal text-white/90 transition-all duration-300 hover:translate-x-1 hover:text-[hsl(var(--color-accent))]"
                   >
                     {link.label}
                   </Link>
@@ -141,13 +141,13 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-3.5 group">
                 <Phone className="w-4 h-4 text-[hsl(var(--color-accent))] flex-shrink-0 mt-1 group-hover:scale-110 transition-transform duration-300" />
-                <a id="footer-contact-call" href={`tel:${phoneNumber}`} className="text-white/90 text-sm hover:text-[hsl(var(--color-accent))] transition-colors duration-300 font-normal">
+                <a id="footer-contact-call" href={`tel:${phoneNumber}`} className="inline-flex min-h-[44px] items-center py-2 text-sm font-normal text-white/90 transition-colors duration-300 hover:text-[hsl(var(--color-accent))]">
                   +91 93098 16336
                 </a>
               </li>
               <li className="flex items-start gap-3.5 group">
                 <Mail className="w-4 h-4 text-[hsl(var(--color-accent))] flex-shrink-0 mt-1 group-hover:scale-110 transition-transform duration-300" />
-                <a id="footer-contact-email" href="mailto:aesthedentpune@gmail.com" className="text-white/90 text-sm hover:text-[hsl(var(--color-accent))] transition-colors duration-300 font-normal break-all">
+                <a id="footer-contact-email" href="mailto:aesthedentpune@gmail.com" className="inline-flex min-h-[44px] items-center py-2 text-sm font-normal text-white/90 transition-colors duration-300 hover:text-[hsl(var(--color-accent))] break-all">
                   aesthedentpune@gmail.com
                 </a>
               </li>
@@ -163,10 +163,19 @@ export default function Footer() {
           <p className="text-white/80 text-sm font-normal">
             © {new Date().getFullYear()} Aesthedent Dental Clinic. All rights reserved.
           </p>
-          <div className="flex gap-8 text-sm">
-            <Link href="/privacy" className="text-white/80 hover:text-[hsl(var(--color-accent))] transition-colors duration-300 font-normal">Privacy Policy</Link>
-            <Link href="/terms" className="text-white/80 hover:text-[hsl(var(--color-accent))] transition-colors duration-300 font-normal">Terms of Service</Link>
-          </div>
+          {/* The "Privacy Policy" and "Terms of Service" links lived here and
+              pointed at /privacy and /terms, neither of which exists. Because
+              this footer renders on all 22 pages, that was 44 live links into
+              404s -removed 2026-08-08, immediately before submitting the site
+              for indexing, so Googlebot's first real crawl does not spend budget
+              on dead ends.
+
+              The whole wrapper div went with them rather than being left empty:
+              an empty flex child would hold layout space for nothing.
+
+              RE-ADD BOTH once the pages exist with real, reviewed legal copy.
+              See audit/NEEDS-INPUT.md T3. Do not replace them with placeholder
+              pages -thin legal content is its own problem. */}
         </div>
       </div>
     </footer>

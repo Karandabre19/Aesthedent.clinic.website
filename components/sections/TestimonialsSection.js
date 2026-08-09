@@ -13,7 +13,7 @@ function GoogleReviewBadge() {
         <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--color-primary))]" />
         <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--color-accent))]" />
       </div>
-      <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[hsl(var(--color-text-muted))]">
+      <span className="text-sm font-semibold uppercase tracking-[0.14em] text-[hsl(var(--color-text-muted))]">
         Google Review
       </span>
     </div>
@@ -86,7 +86,11 @@ function TestimonialCard({ testimonial, delay = 0 }) {
         <div className="flex items-center gap-3 min-w-0">
           <ReviewerAvatar testimonial={testimonial} />
           <div className="min-w-0">
-            <h3 className="truncate text-base font-semibold text-[hsl(var(--color-text))]">
+            {/* Not truncated. At 360px `truncate` was cutting real patients'
+                names mid-word ("Shekhar Bhosle" into 80px of an available
+                125px), and a review signed by a clipped name reads as less
+                real, not more compact. Names wrap instead. */}
+            <h3 className="text-base font-semibold leading-snug text-[hsl(var(--color-text))]">
               {testimonial.name}
             </h3>
             <p className="mt-1 text-sm text-[hsl(var(--color-text-muted))]">
@@ -99,7 +103,7 @@ function TestimonialCard({ testimonial, delay = 0 }) {
 
       <div className="mb-4 flex items-center justify-between gap-3">
         <ReviewStars rating={testimonial.rating} />
-        <span className="rounded-full bg-[hsl(var(--color-bg-alt))] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[hsl(var(--color-primary))]">
+        <span className="rounded-full bg-[hsl(var(--color-bg-alt))] px-3 py-1 text-sm font-semibold uppercase tracking-[0.14em] text-[hsl(var(--color-primary))]">
           {testimonial.service}
         </span>
       </div>
@@ -113,7 +117,7 @@ function TestimonialCard({ testimonial, delay = 0 }) {
           <p className="text-sm font-medium text-[hsl(var(--color-primary))]">
             {isVerified ? 'Shared on Google' : 'Patient feedback'}
           </p>
-          <p className="text-xs text-[hsl(var(--color-text-muted))]">
+          <p className="text-sm text-[hsl(var(--color-text-muted))]">
             {isVerified
               ? `One of ${REVIEWS.count} five-star reviews`
               : 'Awaiting profile confirmation'}
@@ -123,7 +127,7 @@ function TestimonialCard({ testimonial, delay = 0 }) {
           href="https://www.google.com/maps/place/Aesthedent+Dental+Clinic,+Kothrud/@18.4972761,73.8108921,17z/data=!3m1!5s0x3bc2bfc407d2eb7d:0xeb43317068a295aa!4m8!3m7!1s0x3bc2bfa49403bd57:0xb59ec17e89bd289f!8m2!3d18.497271!4d73.813467!9m1!1b1!16s%2Fg%2F11j2v_ph1x?entry=ttu&g_ep=EgoyMDI2MDQwOC4wIKXMDSoASAFQAw%3D%3D"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-sm font-medium text-[hsl(var(--color-primary))] hover:text-[hsl(var(--color-accent))] transition-colors"
+          className="inline-flex min-h-[44px] items-center gap-2 py-2 text-sm font-medium text-[hsl(var(--color-primary))] hover:text-[hsl(var(--color-accent))] transition-colors"
         >
           <span>Read our Google reviews</span>
           <ArrowRight size={14} />
@@ -146,7 +150,11 @@ export default function TestimonialsSection({
       <section className="py-16 md:py-24 bg-[hsl(var(--background))]">
         <div className="main-container">
           <AnimatedSection className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-[hsl(var(--accent))] mb-4">
+            {/* accent-ink, not accent: this section's ground is
+                --background (pure white), where the brand gold measures
+                1.96:1 and fails AA at every size. Same fix as the treatments
+                heading. --accent stays correct on the dark blue sections. */}
+            <h2 className="heading-section font-bold text-[hsl(var(--color-accent-ink))] mb-4">
               {title}
             </h2>
             <p className="text-[hsl(var(--color-text-muted))] text-lg max-w-2xl mx-auto">
@@ -154,7 +162,11 @@ export default function TestimonialsSection({
             </p>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* One column on phones, as the mobile pass requires. Two from md
+              rather than three: the homepage now renders FOUR verified reviews,
+              and a 3-column grid left the fourth stranded alone on a second
+              row. Four divides evenly by two. */}
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {testimonials.map((testimonial, index) => (
               <TestimonialCard
                 key={testimonial.id}
@@ -173,7 +185,7 @@ export default function TestimonialsSection({
     <section className="py-16 md:py-24 bg-[hsl(var(--color-bg-alt))]">
       <div className="main-container">
         <AnimatedSection className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-[hsl(var(--color-text))] mb-4">
+          <h2 className="heading-section font-bold text-[hsl(var(--color-text))] mb-4">
             {title}
           </h2>
           <p className="text-[hsl(var(--color-text-muted))] text-lg max-w-2xl mx-auto">

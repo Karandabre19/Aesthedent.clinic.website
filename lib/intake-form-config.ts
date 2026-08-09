@@ -5,7 +5,7 @@
  *
  * SHAPE NOTE: there are 9 entries in `steps` but the labels read "of 8".
  * `contactMethod` and `phone` deliberately share "Step 6 of 8" and render on
- * one screen — the spec offers "A phone call" as a contact method, so a number
+ * one screen -the spec offers "A phone call" as a contact method, so a number
  * has to be collected or a patient who asks to be called cannot be called.
  * Screens are derived by grouping consecutive entries that share a `label`;
  * see getScreens() in ./intake-form-types.
@@ -17,7 +17,7 @@
 export const INTAKE_FORM = {
   eyebrow: "We're here when you're ready",
   title: "Let's get you seen, comfortably.",
-  intro: "Tell us a little about what's going on. No forms with fifty fields — just a short conversation, and we'll take it from there.",
+  intro: "Tell us a little about what's going on. No forms with fifty fields -just a short conversation, and we'll take it from there.",
 
   steps: [
     {
@@ -70,7 +70,7 @@ export const INTAKE_FORM = {
         { value: "Just started" },
         { value: "A few weeks" },
         { value: "Over a month" },
-        { value: "Not urgent — planning ahead" },
+        { value: "Not urgent -planning ahead" },
       ],
     },
     {
@@ -86,7 +86,7 @@ export const INTAKE_FORM = {
         { value: "A little nervous",
           note: "Totally normal. We talk you through every step before it happens, and pause any time you ask." },
         { value: "Quite anxious",
-          note: "We hear you — many patients feel this way. Raise your hand at any point during treatment and we stop immediately. That's our word." },
+          note: "We hear you -many patients feel this way. Raise your hand at any point during treatment and we stop immediately. That's our word." },
       ],
     },
     {
@@ -137,7 +137,7 @@ export const INTAKE_FORM = {
       label: "Step 8 of 8",
       question: "Anything else you'd like to share?",
       type: "textarea",
-      placeholder: "Optional — describe symptoms, past treatment, or questions you have",
+      placeholder: "Optional -describe symptoms, past treatment, or questions you have",
       required: false,
     },
   ],

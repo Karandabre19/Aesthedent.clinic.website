@@ -18,7 +18,7 @@ import { buildWhatsappLink, WHATSAPP_NUMBER } from '@/lib/clinic';
 // The shadcn kit under components/ui is untyped .jsx (the project sets
 // checkJs:false), so TypeScript infers "no props at all" for each forwardRef
 // export and rejects every attribute. These aliases restore prop typing at the
-// call site WITHOUT touching the shared kit — every other page imports those
+// call site WITHOUT touching the shared kit -every other page imports those
 // same files as plain JS and must keep working. Task 3's field renderers reuse
 // Input/Label/Textarea from here; only Button is exercised by this file today.
 const Button = ButtonBase as ComponentType<
@@ -32,7 +32,7 @@ const Textarea = TextareaBase as ComponentType<ComponentPropsWithoutRef<'textare
  * The intake wizard's shell: screens, progress, validation and focus.
  *
  * The review step (screen === TOTAL) renders a definition list of every
- * non-empty answer plus the WhatsApp send button (a real anchor — see
+ * non-empty answer plus the WhatsApp send button (a real anchor -see
  * `waLink` below). This is click-to-chat: WhatsApp opens with the message
  * prefilled and the PATIENT taps send there; the site never transmits
  * anything itself. The six field renderers (text, tel, textarea,
@@ -51,7 +51,7 @@ const Textarea = TextareaBase as ComponentType<ComponentPropsWithoutRef<'textare
  */
 
 // 9 step configs collapse into 8 screens because `contactMethod` and `phone`
-// share the label "Step 6 of 8" and render together — see getScreens().
+// share the label "Step 6 of 8" and render together -see getScreens().
 const SCREENS = getScreens();
 const TOTAL = SCREENS.length;
 
@@ -104,7 +104,7 @@ function FieldError({ id, children }: { id: string; children: ReactNode }) {
 }
 
 /** Updates one answer field. Generic per-call so `set('comfort', 0)` stays a
- * number and `set('name', 'x')` stays a string — no `string | number` union
+ * number and `set('name', 'x')` stays a string -no `string | number` union
  * to accidentally widen the wrong field. */
 type SetAnswer = <K extends keyof Answers>(key: K, value: Answers[K]) => void;
 
@@ -121,7 +121,7 @@ const optionButtonState = (selected: boolean) =>
  * value from `a` and writes through `set`; errors are looked up by
  * `step.id` (the shell already keys `errors` that way, including the
  * `schedule` step's combined day/time error) and rendered by the caller via
- * `FieldError` — this component only wires `aria-describedby` /
+ * `FieldError` -this component only wires `aria-describedby` /
  * `aria-invalid` so the two stay associated.
  */
 function Field({
@@ -353,7 +353,7 @@ export default function IntakeWizard() {
   const [a, setA] = useState<Answers>(EMPTY_ANSWERS);
   const [errors, setErrors] = useState<Record<string, string>>({});
   // Set true when the patient taps "Send via WhatsApp"; only ever flips the
-  // on-screen reassurance copy below the review table — it cannot know
+  // on-screen reassurance copy below the review table -it cannot know
   // whether WhatsApp actually opened or whether the patient went on to tap
   // send there, so it never claims the message was sent.
   const [sent, setSent] = useState(false);
@@ -364,7 +364,7 @@ export default function IntakeWizard() {
 
   const set: SetAnswer = (key, value) => setA((prev) => ({ ...prev, [key]: value }));
 
-  // The comfort LABEL is resolved here, not inside assembleMessage — that keeps
+  // The comfort LABEL is resolved here, not inside assembleMessage -that keeps
   // lib/intake-form-message.ts import-free so its checks can load the real code.
   const comfortLevels = (INTAKE_FORM.steps.find((s) => s.id === 'comfort') as {
     levels?: readonly { value: string; note: string }[];
@@ -377,7 +377,7 @@ export default function IntakeWizard() {
   const waLink = useMemo(() => buildWhatsappLink(message), [message]);
 
   // Same rows assembleMessage sends, in the same order, so the table the
-  // patient reviews matches the message it will send exactly — including
+  // patient reviews matches the message it will send exactly -including
   // which optional rows (comfort default aside, chiefly notes) are skipped
   // when left blank.
   const { rowLabels } = INTAKE_FORM.review;
@@ -495,7 +495,7 @@ export default function IntakeWizard() {
 
               {sent && (
                 <p role="status" className="mt-4 text-sm text-[hsl(var(--color-text-muted))]">
-                  WhatsApp opened in a new tab with this message ready to go — just tap send there
+                  WhatsApp opened in a new tab with this message ready to go -just tap send there
                   and we&apos;ll take it from there.
                 </p>
               )}
@@ -536,7 +536,7 @@ export default function IntakeWizard() {
         </motion.div>
       </AnimatePresence>
 
-      {/* Nav — thumb-reachable on mobile */}
+      {/* Nav -thumb-reachable on mobile */}
       <div className="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-between">
         {screen > 0 ? (
           <Button variant="outline" onClick={back} className="h-12 px-6">
@@ -549,7 +549,7 @@ export default function IntakeWizard() {
 
         {isReview ? (
           // Real anchor, not window.open: it survives popup blockers and
-          // supports long-press / middle-click. This is click-to-chat — the
+          // supports long-press / middle-click. This is click-to-chat -the
           // patient still taps send inside WhatsApp; the site never
           // transmits the message itself.
           <Button

@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Rebuild the patient intake form as an 8-step config-driven wizard, reassemble the homepage to the supplied section spec, and run a mobile design pass — without touching any route, slug, canonical, or page metadata.
+**Goal:** Rebuild the patient intake form as an 8-step config-driven wizard, reassemble the homepage to the supplied section spec, and run a mobile design pass -without touching any route, slug, canonical, or page metadata.
 
-**Architecture:** All intake copy moves into `lib/intake-form-config.ts`; `IntakeWizard.tsx` renders from that config and holds no strings of its own. The homepage (`app/HomeClient.js`, 1139 lines) is **reordered and restyled in place**, not rewritten — sections move as whole JSX blocks. Every number renders from `lib/clinic.ts` constants.
+**Architecture:** All intake copy moves into `lib/intake-form-config.ts`; `IntakeWizard.tsx` renders from that config and holds no strings of its own. The homepage (`app/HomeClient.js`, 1139 lines) is **reordered and restyled in place**, not rewritten -sections move as whole JSX blocks. Every number renders from `lib/clinic.ts` constants.
 
 **Tech Stack:** Next.js 16 App Router, React 18, TypeScript 6 (`strict: false`, `checkJs: false`), Tailwind 3, shadcn/ui (untyped `.jsx`), Framer Motion 12, GSAP, lucide-react.
 
@@ -13,20 +13,20 @@
 Every task's requirements implicitly include this section.
 
 - **No route, slug, canonical, or page metadata changes.** Nothing in `app/**/page.js` metadata exports, `app/sitemap.js`, or `lib/schema.js` canonical fields.
-- **Homepage has exactly ONE `<h1>`** — the hero. Everything else `<h2>`/`<h3>`.
+- **Homepage has exactly ONE `<h1>`** -the hero. Everything else `<h2>`/`<h3>`.
 - **Treatments section: WHITE background + gold heading.** Gold is the existing `--color-accent: 39 100% 50%`. Do not import a second palette.
 - **All numbers render from `lib/clinic.ts` constants.** Never hardcode a stat in a component.
 - **No "Top Dentists".** Self-awarded claim.
-- **No "painless" as an outcome promise.** `rootCanals` is a COUNT — label `Root Canals` / `Completed`, never "Painless Root Canals". Patient quotes containing the word are fine; clinic assertions are not.
+- **No "painless" as an outcome promise.** `rootCanals` is a COUNT -label `Root Canals` / `Completed`, never "Painless Root Canals". Patient quotes containing the word are fine; clinic assertions are not.
 - **Dr. Aishwarya is NEVER called a specialist.** She is `General & Family Dentist, Co-Owner`. `lib/clinic.ts` carries `isSpecialist: false` for her.
-- **React state only** — no `localStorage`, no `sessionStorage`, no network call from the form.
+- **React state only** -no `localStorage`, no `sessionStorage`, no network call from the form.
 - **The form collects triage context only.** It must not diagnose or suggest treatment.
 - **Type-check + build after each job.**
 - **Do NOT import a second palette** (`--teal`/`--amber`/`--ivory`). Map onto existing tokens.
 
 ### Verification commands (this repo has no test runner)
 
-`package.json` has no test script and `tests/` holds only a vestigial `__init__.py`. Do not add a test framework — that is scope the user did not ask for. Verify with:
+`package.json` has no test script and `tests/` holds only a vestigial `__init__.py`. Do not add a test framework -that is scope the user did not ask for. Verify with:
 
 ```bash
 npx tsc --noEmit                      # type-check
@@ -38,7 +38,7 @@ Pure logic (`assembleMessage`, phone normalisation) is verified by running real 
 
 ### shadcn typing gotcha
 
-`components/ui/*.jsx` is untyped and `tsconfig.json` sets `checkJs: false`, so TypeScript infers "no props at all" for each `forwardRef` export and rejects every attribute. The existing `IntakeWizard.tsx` solves this with local `ComponentType` aliases. **Keep that pattern** — do not retype the shared kit, because every other page imports those same files as plain JS and must keep working.
+`components/ui/*.jsx` is untyped and `tsconfig.json` sets `checkJs: false`, so TypeScript infers "no props at all" for each `forwardRef` export and rejects every attribute. The existing `IntakeWizard.tsx` solves this with local `ComponentType` aliases. **Keep that pattern** -do not retype the shared kit, because every other page imports those same files as plain JS and must keep working.
 
 ```ts
 const Button = ButtonBase as ComponentType<
@@ -48,21 +48,21 @@ const Button = ButtonBase as ComponentType<
 
 ---
 
-# JOB 1 — Intake Form
+# JOB 1 -Intake Form
 
 ## File Structure
 
 | File | Responsibility |
 |---|---|
 | `lib/intake-form-config.ts` | **Create.** All copy, options, validation patterns. Single source of truth for form content. |
-| `lib/intake-form-message.ts` | **Create.** `Answers` type + the pure functions: `normalisePhone`, `isValidPhone`, `assembleMessage`. **Zero runtime imports** — see below. |
+| `lib/intake-form-message.ts` | **Create.** `Answers` type + the pure functions: `normalisePhone`, `isValidPhone`, `assembleMessage`. **Zero runtime imports** -see below. |
 | `lib/intake-form-types.ts` | **Create.** `StepConfig` union, `EMPTY_ANSWERS`, `getScreens()`. Config-dependent glue. |
 | `components/forms/IntakeWizard.tsx` | **Rewrite in place.** Renders from config. Currently a 5-step build. |
 | `scratch/check-message.mjs` | **Create** (scratch, not committed). Node assertions importing the **real** functions. |
 
-**Why the pure functions get their own file.** Node 24 strips TypeScript types natively, so `scratch/check-message.mjs` can `import` a `.ts` module directly and assert against the **code that actually ships** — but only if that module has no runtime imports of its own (Node ESM will not resolve the extensionless `./intake-form-config` specifier that Next/webpack accepts).
+**Why the pure functions get their own file.** Node 24 strips TypeScript types natively, so `scratch/check-message.mjs` can `import` a `.ts` module directly and assert against the **code that actually ships** -but only if that module has no runtime imports of its own (Node ESM will not resolve the extensionless `./intake-form-config` specifier that Next/webpack accepts).
 
-Keeping `intake-form-message.ts` import-free is what makes the verification real. The alternative — a check script that re-declares the phone regex — is a test that passes while the shipped function is broken, which is worse than no test. Consequently `assembleMessage` takes the resolved comfort **label** as a parameter rather than looking it up from the config:
+Keeping `intake-form-message.ts` import-free is what makes the verification real. The alternative -a check script that re-declares the phone regex -is a test that passes while the shipped function is broken, which is worse than no test. Consequently `assembleMessage` takes the resolved comfort **label** as a parameter rather than looking it up from the config:
 
 ```ts
 assembleMessage(a: Answers, comfortLabel: string): string
@@ -83,22 +83,22 @@ The component resolves it (`levels[a.comfort].value`) and passes it in.
 **Interfaces:**
 - Consumes: `buildWhatsappLink(body: string): string` from `lib/clinic.ts` (already exists, line 103).
 - Produces, from `lib/intake-form-message.ts` (**no runtime imports in this file**):
-  - `type Answers` — `{ name, patientFor, reason, duration, comfort, contactMethod, phone, day, time, notes }`. `comfort` is a `number` (slider index 0–2); everything else is `string`.
+  - `type Answers` -`{ name, patientFor, reason, duration, comfort, contactMethod, phone, day, time, notes }`. `comfort` is a `number` (slider index 0–2); everything else is `string`.
   - `normalisePhone(raw: string): string`
   - `isValidPhone(raw: string): boolean`
   - `assembleMessage(a: Answers, comfortLabel: string): string`
 - Produces, from `lib/intake-form-config.ts`:
-  - `INTAKE_FORM` — the config object, exactly as specified below.
+  - `INTAKE_FORM` -the config object, exactly as specified below.
 - Produces, from `lib/intake-form-types.ts`:
   - `type StepConfig`
   - `EMPTY_ANSWERS: Answers`
-  - `getScreens(): StepConfig[][]` — groups consecutive step configs by shared `label`, returning 8 arrays from 9 configs.
+  - `getScreens(): StepConfig[][]` -groups consecutive step configs by shared `label`, returning 8 arrays from 9 configs.
 
 **Why `Answers` keys are not step ids:** the `schedule` step produces two answers (`day` and `time`), and `review.rowLabels` lists them separately. There are 9 step configs, 8 screens, and 10 answer keys. These three counts are all correct and all different.
 
 - [ ] **Step 1: Create the config file**
 
-Create `lib/intake-form-config.ts` with the config object **exactly as given in the spec** — every string verbatim, no paraphrasing. Prefix it with this comment:
+Create `lib/intake-form-config.ts` with the config object **exactly as given in the spec** -every string verbatim, no paraphrasing. Prefix it with this comment:
 
 ```ts
 /**
@@ -108,7 +108,7 @@ Create `lib/intake-form-config.ts` with the config object **exactly as given in 
  *
  * SHAPE NOTE: there are 9 entries in `steps` but the labels read "of 8".
  * `contactMethod` and `phone` deliberately share "Step 6 of 8" and render on
- * one screen — the spec offers "A phone call" as a contact method, so a number
+ * one screen -the spec offers "A phone call" as a contact method, so a number
  * has to be collected or a patient who asks to be called cannot be called.
  * Screens are derived by grouping consecutive entries that share a `label`;
  * see getScreens() in ./intake-form-types.
@@ -119,13 +119,13 @@ Create `lib/intake-form-config.ts` with the config object **exactly as given in 
  */
 ```
 
-Then this object, verbatim. Every string here is final patient-facing copy — transcribe, do not paraphrase:
+Then this object, verbatim. Every string here is final patient-facing copy -transcribe, do not paraphrase:
 
 ```ts
 export const INTAKE_FORM = {
   eyebrow: "We're here when you're ready",
   title: "Let's get you seen, comfortably.",
-  intro: "Tell us a little about what's going on. No forms with fifty fields — just a short conversation, and we'll take it from there.",
+  intro: "Tell us a little about what's going on. No forms with fifty fields -just a short conversation, and we'll take it from there.",
 
   steps: [
     {
@@ -178,7 +178,7 @@ export const INTAKE_FORM = {
         { value: "Just started" },
         { value: "A few weeks" },
         { value: "Over a month" },
-        { value: "Not urgent — planning ahead" },
+        { value: "Not urgent -planning ahead" },
       ],
     },
     {
@@ -194,7 +194,7 @@ export const INTAKE_FORM = {
         { value: "A little nervous",
           note: "Totally normal. We talk you through every step before it happens, and pause any time you ask." },
         { value: "Quite anxious",
-          note: "We hear you — many patients feel this way. Raise your hand at any point during treatment and we stop immediately. That's our word." },
+          note: "We hear you -many patients feel this way. Raise your hand at any point during treatment and we stop immediately. That's our word." },
       ],
     },
     {
@@ -245,7 +245,7 @@ export const INTAKE_FORM = {
       label: "Step 8 of 8",
       question: "Anything else you'd like to share?",
       type: "textarea",
-      placeholder: "Optional — describe symptoms, past treatment, or questions you have",
+      placeholder: "Optional -describe symptoms, past treatment, or questions you have",
       required: false,
     },
   ],
@@ -275,15 +275,15 @@ export const INTAKE_FORM = {
 } as const;
 ```
 
-**Transcription notes** (these are easy to "fix" by accident — don't):
+**Transcription notes** (these are easy to "fix" by accident -don't):
 - The em-dashes (`—`), en-dashes in times (`10 – 1`), and the curly apostrophes are intentional. Keep them.
-- `validation: "^[6-9]\\d{9}$"` keeps the doubled backslash — it is a string, not a regex literal.
+- `validation: "^[6-9]\\d{9}$"` keeps the doubled backslash -it is a string, not a regex literal.
 - The aligned whitespace in the `reason` options is cosmetic; preserving it is fine, reflowing it is also fine.
-- `review.rowLabels.reason` is `"Reason for visit"` while the assembled message line is `"Reason"`. Both are correct — the review table and the WhatsApp body use different wording on purpose.
+- `review.rowLabels.reason` is `"Reason for visit"` while the assembled message line is `"Reason"`. Both are correct -the review table and the WhatsApp body use different wording on purpose.
 
 - [ ] **Step 2: Create the pure message module**
 
-Create `lib/intake-form-message.ts`. **This file must have no `import` statements** — that is what lets the verification script load the real code. Do not add one.
+Create `lib/intake-form-message.ts`. **This file must have no `import` statements** -that is what lets the verification script load the real code. Do not add one.
 
 ```ts
 /**
@@ -294,7 +294,7 @@ Create `lib/intake-form-message.ts`. **This file must have no `import` statement
  * natively, so scratch/check-message.mjs can import this module directly and
  * assert against the code that actually ships. Node ESM will not resolve the
  * extensionless specifiers Next accepts, so a single import here would force
- * the checks to re-declare the phone regex — and a check that re-declares the
+ * the checks to re-declare the phone regex -and a check that re-declares the
  * thing it checks passes happily while the shipped function is broken.
  *
  * That is why assembleMessage takes the comfort LABEL as a parameter instead
@@ -388,10 +388,10 @@ export function getScreens(): StepConfig[][] {
 
 - [ ] **Step 4: Write assertions against the real functions**
 
-Create `scratch/check-message.mjs`. It imports the **shipped** module — do not re-declare any logic here.
+Create `scratch/check-message.mjs`. It imports the **shipped** module -do not re-declare any logic here.
 
 ```js
-// scratch/check-message.mjs — verification scratch, not committed.
+// scratch/check-message.mjs -verification scratch, not committed.
 // Imports the real .ts module so a broken shipped function fails these checks.
 import assert from 'node:assert/strict';
 import { isValidPhone, normalisePhone, assembleMessage } from '../lib/intake-form-message.ts';
@@ -426,19 +426,19 @@ assert.ok(!sparse.includes('Notes:'), 'blank Notes line must be omitted');
 assert.ok(!sparse.includes('Preferred day:'), 'blank day line must be omitted');
 assert.ok(sparse.includes('Name: Asha Kulkarni'), 'filled rows survive');
 
-console.log('OK — all message/phone assertions passed');
+console.log('OK -all message/phone assertions passed');
 ```
 
 - [ ] **Step 5: Run the assertions**
 
 Run: `node scratch/check-message.mjs`
-Expected: `OK — all message/phone assertions passed`
+Expected: `OK -all message/phone assertions passed`
 
 A `MODULE_TYPELESS_PACKAGE_JSON` warning on stderr is expected and harmless.
 
-To prove the checks actually bind to the shipped code, temporarily break the regex in `lib/intake-form-message.ts` — change `[6-9]` to **`[6-8]`** — re-run, confirm it FAILS with an `AssertionError` and exit code 1, then revert and confirm it passes again.
+To prove the checks actually bind to the shipped code, temporarily break the regex in `lib/intake-form-message.ts` -change `[6-9]` to **`[6-8]`** -re-run, confirm it FAILS with an `AssertionError` and exit code 1, then revert and confirm it passes again.
 
-Use `[6-8]`, not `[7-9]`: every "good" fixture starts with 9, so narrowing the range at the top end still accepts all of them and the check would pass against broken code — exactly the false-confidence this negative check exists to rule out.
+Use `[6-8]`, not `[7-9]`: every "good" fixture starts with 9, so narrowing the range at the top end still accepts all of them and the check would pass against broken code -exactly the false-confidence this negative check exists to rule out.
 
 - [ ] **Step 6: Type-check**
 
@@ -458,14 +458,14 @@ so an optional field left blank never ships as a dangling label."
 
 ---
 
-### Task 2: Wizard shell — screens, progress, navigation, focus
+### Task 2: Wizard shell -screens, progress, navigation, focus
 
 **Files:**
 - Modify: `components/forms/IntakeWizard.tsx` (full rewrite, 635 lines currently)
 
 **Interfaces:**
 - Consumes: `INTAKE_FORM`, `Answers`, `EMPTY_ANSWERS`, `getScreens`, `isValidPhone`, `assembleMessage` from Task 1; `buildWhatsappLink` from `lib/clinic.ts`.
-- Produces: `export default function IntakeWizard()` — mounted by Task 8.
+- Produces: `export default function IntakeWizard()` -mounted by Task 8.
 
 **Carry forward from the current implementation** (these are already right, do not regress them):
 - Send is a real `<a href target="_blank" rel="noopener noreferrer">`, never `window.open`.
@@ -495,7 +495,7 @@ export default function IntakeWizard() {
 }
 ```
 
-Progress bar renders **8 segments** driven by screen index — never by config index:
+Progress bar renders **8 segments** driven by screen index -never by config index:
 
 ```tsx
 function ProgressBar({ screen, total }: { screen: number; total: number }) {
@@ -571,7 +571,7 @@ Nav buttons use `INTAKE_FORM.buttons.continue` / `.back` / `.review`. The final 
 - [ ] **Step 4: Type-check and build**
 
 Run: `npx tsc --noEmit && npx next build`
-Expected: both succeed. Build may warn about unused imports until Task 3 lands — errors are not acceptable, warnings are.
+Expected: both succeed. Build may warn about unused imports until Task 3 lands -errors are not acceptable, warnings are.
 
 - [ ] **Step 5: Commit**
 
@@ -594,9 +594,9 @@ on step number."
 
 **Interfaces:**
 - Consumes: `StepConfig` from Task 1, shell state from Task 2.
-- Produces: one renderer per `type` in the config — `text`, `tel`, `textarea`, `single-select`, `slider`, `day-time`. Dispatched by `step.type`.
+- Produces: one renderer per `type` in the config -`text`, `tel`, `textarea`, `single-select`, `slider`, `day-time`. Dispatched by `step.type`.
 
-**Accessibility requirements — all six renderers:**
+**Accessibility requirements -all six renderers:**
 - Option cards are real `<button type="button" aria-pressed={selected}>`, not divs.
 - Day/time groups sit in `<fieldset>` with a `<legend>`.
 - Slider has `aria-valuetext` naming the level, not the number.
@@ -632,7 +632,7 @@ Reads `columns` from config (1 or 2) to pick `grid-cols-1` vs `sm:grid-cols-2`, 
 
 - [ ] **Step 3: Comfort slider renderer**
 
-A native `<input type="range" min={0} max={2} step={1}>` — native gives keyboard and screen-reader behaviour for free. The hand icon scales and rotates with value; the note text swaps from `levels[value].note`.
+A native `<input type="range" min={0} max={2} step={1}>` -native gives keyboard and screen-reader behaviour for free. The hand icon scales and rotates with value; the note text swaps from `levels[value].note`.
 
 ```tsx
 <input
@@ -661,7 +661,7 @@ The note is `aria-live="polite"` so the reassurance is announced when the level 
 
 - [ ] **Step 4: day-time renderer**
 
-Two `<fieldset>`s. Wednesday is `disabled` with `title="Closed Wednesdays"` from config — render it visually muted and non-interactive, and make sure `disabled` is on the real `<button>` so keyboard users skip it:
+Two `<fieldset>`s. Wednesday is `disabled` with `title="Closed Wednesdays"` from config -render it visually muted and non-interactive, and make sure `disabled` is on the real `<button>` so keyboard users skip it:
 
 ```tsx
 <button
@@ -708,12 +708,12 @@ the clinic is shut."
 
 Renders at `screen === TOTAL`. Shows `review.label`, `review.title`, then a definition list of `review.rowLabels` → answers, **skipping empty rows** so the patient sees exactly what will send. Then:
 
-- `review.sendButton` — "Send via WhatsApp"
-- `review.backButton` — "Back & edit"
+- `review.sendButton` -"Send via WhatsApp"
+- `review.backButton` -"Back & edit"
 - `review.callAlt` + `review.callAltStrong` as a `tel:` link
 
 ```tsx
-// The comfort LABEL is resolved here, not inside assembleMessage — that keeps
+// The comfort LABEL is resolved here, not inside assembleMessage -that keeps
 // lib/intake-form-message.ts import-free so its checks can load the real code.
 const comfortLevels = (INTAKE_FORM.steps.find((s) => s.id === 'comfort') as {
   levels?: readonly { value: string; note: string }[];
@@ -768,13 +768,13 @@ long-press and middle-click. Empty optional rows are skipped, so the
 review shows exactly what will be sent and nothing more."
 ```
 
-## 🛑 STOP — JOB 1 REPORT
+## 🛑 STOP -JOB 1 REPORT
 
 Report: the config path, a sample assembled message, and confirmation that 9 configs render as 8 screens. Do not start Job 2 until the user responds.
 
 ---
 
-# JOB 2 — Homepage Assembly
+# JOB 2 -Homepage Assembly
 
 ## File Structure
 
@@ -794,9 +794,9 @@ Report: the config path, a sample assembled message, and confirmation that 9 con
 - Modify: `audit/NEEDS-INPUT.md`
 
 **Interfaces:**
-- Produces: `export const STATS = { years, patients, implants, rootCanals } as const;` — consumed by Task 7's ratings bar.
+- Produces: `export const STATS = { years, patients, implants, rootCanals } as const;` -consumed by Task 7's ratings bar.
 
-**This is the task the design doc flagged.** `lib/clinic.ts:107-118` currently forbids exactly these numbers. Its stated release condition is *"Until Dr. Sahil supplies a real countable figure"*, which the spec satisfies. **Replace the comment — do not delete it and do not leave it standing above the numbers it forbids.** A future auditor who finds a prohibition sitting above the prohibited values will strip them again.
+**This is the task the design doc flagged.** `lib/clinic.ts:107-118` currently forbids exactly these numbers. Its stated release condition is *"Until Dr. Sahil supplies a real countable figure"*, which the spec satisfies. **Replace the comment -do not delete it and do not leave it standing above the numbers it forbids.** A future auditor who finds a prohibition sitting above the prohibited values will strip them again.
 
 - [ ] **Step 1: Replace the closing comment and add STATS**
 
@@ -809,7 +809,7 @@ Replace lines 107-118 of `lib/clinic.ts` with:
  * THIS BLOCK USED TO BE A PROHIBITION. "5000+ Happy Patients", "500+
  * successful cases", "1000+ patients" and "98% success rate" had all shipped
  * with no source behind any of them (audit/NEEDS-INPUT.md N3, N4, N5, N10),
- * and were stripped. The rule was never "no numbers" — it was "no numbers
+ * and were stripped. The rule was never "no numbers" -it was "no numbers
  * without a source", and it named its own release condition: until Dr. Sahil
  * supplies a real countable figure.
  *
@@ -818,7 +818,7 @@ Replace lines 107-118 of `lib/clinic.ts` with:
  * a source before it ships.
  *
  * rootCanals is a COUNT OF PROCEDURES. It renders as "Root Canals /
- * Completed" and must never be labelled "Painless Root Canals" — pain is an
+ * Completed" and must never be labelled "Painless Root Canals" -pain is an
  * outcome that varies by patient and procedure, which is precisely why
  * "100% Painless Treatments" was removed from the trust bar already.
  */
@@ -832,7 +832,7 @@ export const STATS = {
 
 - [ ] **Step 2: Log the provenance in the audit file**
 
-Add to `audit/NEEDS-INPUT.md` under N3/N4/N5/N10 — a note that the four figures were supplied by Dr. Sahil on 2026-08-08 and now live in `lib/clinic.ts` `STATS`, and that "98% success rate" remains unsourced and is **not** reinstated.
+Add to `audit/NEEDS-INPUT.md` under N3/N4/N5/N10 -a note that the four figures were supplied by Dr. Sahil on 2026-08-08 and now live in `lib/clinic.ts` `STATS`, and that "98% success rate" remains unsourced and is **not** reinstated.
 
 - [ ] **Step 3: Type-check and commit**
 
@@ -864,7 +864,7 @@ Entries 2–6 stay in the file. The audit's open question against them is *"conf
 ```js
 // Only reviews we can point at on the live Google profile ever render. Entries
 // without the flag stay in the file because audit T4 still has to check them
-// against the profile — real gets the flag, not-real gets deleted. Data that
+// against the profile -real gets the flag, not-real gets deleted. Data that
 // never renders is inert; deleted data is unrecoverable.
 export const getTestimonials = (type = 'latest', limit = null) => {
   const source = type === 'latest' ? testimonialsData.latest : testimonialsData.all;
@@ -904,7 +904,7 @@ the file pending audit T4 rather than being deleted."
 
 - [ ] **Step 1: Rewrite `trustStats` to 5 entries**
 
-Replace the array at `app/HomeClient.js:75-96`. Keep the existing count-up component. Update the comment above it — it currently says "REMOVED: 10+ Years Experience (N3) and 5000+ Happy Patients (N4)", which will be false.
+Replace the array at `app/HomeClient.js:75-96`. Keep the existing count-up component. Update the comment above it -it currently says "REMOVED: 10+ Years Experience (N3) and 5000+ Happy Patients (N4)", which will be false.
 
 | Value | Label | Sub |
 |---|---|---|
@@ -918,13 +918,13 @@ Replace the array at `app/HomeClient.js:75-96`. Keep the existing count-up compo
 
 - [ ] **Step 2: Confirm hero copy and the single `<h1>`**
 
-Hero keeps current live copy. Verify eyebrow, `<h1>` (`HERO_HEADING`, line 58), sub-line, body, and both CTAs match the spec. `HERO_HEADING` must stay in sync with the composed words — the comment at line 46 explains why.
+Hero keeps current live copy. Verify eyebrow, `<h1>` (`HERO_HEADING`, line 58), sub-line, body, and both CTAs match the spec. `HERO_HEADING` must stay in sync with the composed words -the comment at line 46 explains why.
 
 - [ ] **Step 3: Strip the paragraph from the Marathi section**
 
-Remove the `<p>` at `:658-678` — it **moves to Doctors in Task 8**. Cut it, do not retype it: it contains three internal links (`/insights/dental-anxiety-tips`, `/about`, `/dental-clinic-in-kothrud`) that the content spine depends on. Losing them is an SEO regression.
+Remove the `<p>` at `:658-678` -it **moves to Doctors in Task 8**. Cut it, do not retype it: it contains three internal links (`/insights/dental-anxiety-tips`, `/about`, `/dental-clinic-in-kothrud`) that the content spine depends on. Losing them is an SEO regression.
 
-The Marathi `<h2>` stays and gets generous vertical padding — it is a brand statement.
+The Marathi `<h2>` stays and gets generous vertical padding -it is a brand statement.
 
 - [ ] **Step 4: Cut the four promise cards**
 
@@ -936,7 +936,7 @@ At `:802`, change `bg-[hsl(var(--primary))]` → `bg-white`. At `:810`, change `
 
 Card text was written for a blue background and will be invisible on white. Every `text-white` and `text-white/*` inside this section must move to `--color-text` / `--color-text-muted`, and card borders need a visible value on white.
 
-**Contrast gate:** gold `39 100% 50%` on white is ~2.1:1 — it FAILS AA for body text. It is permitted for the large `<h2>` only (3:1 large-text threshold, verify at final rendered size). Card body and anchors stay on `--color-text` / `--color-primary`. If the heading fails, darken the token — never a one-off hex.
+**Contrast gate:** gold `39 100% 50%` on white is ~2.1:1 -it FAILS AA for body text. It is permitted for the large `<h2>` only (3:1 large-text threshold, verify at final rendered size). Card body and anchors stay on `--color-text` / `--color-primary`. If the heading fails, darken the token -never a one-off hex.
 
 - [ ] **Step 6: Verify all 8 treatment cards**
 
@@ -951,7 +951,7 @@ git commit -m "feat(home): 5-stat ratings bar, white/gold treatments, section pr
 
 Treatments moves off blue onto white with a gold heading; card text that
 was written for a dark ground moves onto text tokens so it stays legible.
-Gold is heading-only — it fails AA against white at body size.
+Gold is heading-only -it fails AA against white at body size.
 
 The Marathi section's paragraph and the four promise cards are cut here
 and land in Doctors next, so the tree is briefly short two blocks."
@@ -962,7 +962,7 @@ and land in Doctors next, so the tree is briefly short two blocks."
 ### Task 8: Form mount, visit process, reviews, doctors, contact
 
 **Files:**
-- Modify: `app/HomeClient.js` — sections 5 through 9
+- Modify: `app/HomeClient.js` -sections 5 through 9
 
 - [ ] **Step 1: Mount the intake form as section 5**
 
@@ -976,21 +976,21 @@ Full-width section with `<h2>` *"Let's get you seen, comfortably."* and the spec
 
 Currently a `<div>` of strings at `:757+` with 6 items whose wording does not match the spec. Replace with the spec's 6 steps verbatim, in a real `<ol>`, plus the lead blockquote:
 
-> "We don't just treat teeth — we plan every case with the precision of a specialist and the patience of someone who remembers you're a person, not a procedure."
+> "We don't just treat teeth -we plan every case with the precision of a specialist and the patience of someone who remembers you're a person, not a procedure."
 
 CTA: `Learn about our process →` → `/aesthedent-experience`.
 
 - [ ] **Step 3: Reviews section**
 
-`<h2>` *"Real Stories From Real Patients"*, sub *"These transformations inspire us every day—and we love sharing them."* Change `limit={3}` → `limit={4}`. Task 6's filter guarantees all 4 are verified. Confirm cards use initials avatars — the `image` fields are Pexels stock photos of unrelated people and must never render (`lib/testimonials.js:26-29`). Footer link: `View all patient stories →`.
+`<h2>` *"Real Stories From Real Patients"*, sub *"These transformations inspire us every day—and we love sharing them."* Change `limit={3}` → `limit={4}`. Task 6's filter guarantees all 4 are verified. Confirm cards use initials avatars -the `image` fields are Pexels stock photos of unrelated people and must never render (`lib/testimonials.js:26-29`). Footer link: `View all patient stories →`.
 
 - [ ] **Step 4: Doctors section + moved content**
 
 Eyebrow `Our Team`; `<h2>` **`Meet your dentists in Kothrud`** (never "Top Dentists"). Paste the paragraph cut in Task 7 Step 3 as the sub-line, **with its three internal links intact**.
 
-Cards from `DOCTORS` in `lib/clinic.ts` — do not retype credentials:
-- Dr. Sahil — `Lead Dentist & Founder` / `Specialist Prosthodontist, Founder & Co-Owner` / `BDS, MDS (Prosthodontics) — Bharati Vidyapeeth, Pune`
-- Dr. Aishwarya — `Dental Surgeon` / `General & Family Dentist, Co-Owner` / `BDS — Bharati Vidyapeeth, Pune`
+Cards from `DOCTORS` in `lib/clinic.ts` -do not retype credentials:
+- Dr. Sahil -`Lead Dentist & Founder` / `Specialist Prosthodontist, Founder & Co-Owner` / `BDS, MDS (Prosthodontics) -Bharati Vidyapeeth, Pune`
+- Dr. Aishwarya -`Dental Surgeon` / `General & Family Dentist, Co-Owner` / `BDS -Bharati Vidyapeeth, Pune`
 
 **Dr. Aishwarya must not be called a specialist anywhere in this block.**
 
@@ -998,7 +998,7 @@ Link `Meet the full team →` → `/doctor`. Then paste the four promise cards c
 
 - [ ] **Step 5: Ready-to-talk section**
 
-Keep existing content. One change: two CTA options — (a) button → `/contact` labelled `Go to contact page`, and (b) an inline block with `Message on WhatsApp` (via `buildWhatsappMessage()`), a `tel:` button for `+91 93098 16336`, and the address. Hours: `Mon - Sun: 10 AM - 8 PM` + `(Wednesday Holiday)`.
+Keep existing content. One change: two CTA options -(a) button → `/contact` labelled `Go to contact page`, and (b) an inline block with `Message on WhatsApp` (via `buildWhatsappMessage()`), a `tel:` button for `+91 93098 16336`, and the address. Hours: `Mon - Sun: 10 AM - 8 PM` + `(Wednesday Holiday)`.
 
 - [ ] **Step 6: Verify exactly one `<h1>`**
 
@@ -1020,19 +1020,19 @@ git commit -m "feat(home): assemble sections to spec
 
 Promise cards and the positioning paragraph land in Doctors. The visit
 process becomes a real ordered list. Reviews render the 4 verified cards
-with initials avatars — the stock photos in the data file are strangers
+with initials avatars -the stock photos in the data file are strangers
 and must never appear as patients."
 ```
 
-## 🛑 STOP — JOB 2 REPORT
+## 🛑 STOP -JOB 2 REPORT
 
 Report the rendered section order and confirm exactly one `<h1>`. Do not start Job 3 until the user responds.
 
 ---
 
-# JOB 3 — Mobile Design Pass
+# JOB 3 -Mobile Design Pass
 
-This is a design pass over the assembled page, not a refactor. No new heavy assets — the ~1.1s load is a constraint.
+This is a design pass over the assembled page, not a refactor. No new heavy assets -the ~1.1s load is a constraint.
 
 ### Task 9: Type scale, spacing, and rhythm
 
@@ -1041,7 +1041,7 @@ This is a design pass over the assembled page, not a refactor. No new heavy asse
 
 - [ ] **Step 1: Establish the mobile type scale**
 
-Headings use `clamp()` with a real mobile scale — do not just shrink desktop values. Body 16–17px, line-height 1.6–1.75. **Nothing below 14px anywhere.** Cap measure at ~38–42ch on phone via a utility:
+Headings use `clamp()` with a real mobile scale -do not just shrink desktop values. Body 16–17px, line-height 1.6–1.75. **Nothing below 14px anywhere.** Cap measure at ~38–42ch on phone via a utility:
 
 ```css
 .measure { max-width: 42ch; }
@@ -1070,7 +1070,7 @@ git commit -m "feat(mobile): real mobile type scale and consistent rhythm"
 
 | Section | Rule |
 |---|---|
-| Ratings bar (5 stats) | 2-column grid or horizontal scroll — **must not squash** |
+| Ratings bar (5 stats) | 2-column grid or horizontal scroll -**must not squash** |
 | Treatment cards | Single column; overlay text passes AA on white |
 | 6-step list | Numbered, one idea per row, scannable |
 | Promise cards | Single column, full text readable |
@@ -1101,10 +1101,10 @@ npx tsc --noEmit && npx next build
 git add -A
 git commit -m "feat(mobile): per-section mobile rules and width fixes
 
-Verified at 360/390/414 — no overflow, overlap, or horizontal scroll."
+Verified at 360/390/414 -no overflow, overlap, or horizontal scroll."
 ```
 
-## 🛑 STOP — JOB 3 REPORT
+## 🛑 STOP -JOB 3 REPORT
 
 Report with notes at all three widths.
 
@@ -1115,11 +1115,11 @@ Report with notes at all three widths.
 **Spec coverage.** Job 1 sections 1A–1D → Tasks 1–4. Job 2 sections 1–9 → Tasks 5–8 (nav unchanged; hero §2 → Task 7 Step 2; Marathi §3 → Task 7 Step 3; treatments §4 → Task 7 Steps 5–6; form §5 → Task 8 Step 1; visit §6 → Step 2; reviews §7 → Step 3; doctors + promises §8 → Step 4; contact §9 → Step 5). Job 3 → Tasks 9–10.
 
 **Deliberate deviations from the spec, all recorded in the design doc:**
-1. Treatments is currently blue; the spec says "keep white". Task 7 Step 5 *makes* it white — the spec describes the target, not the current state.
+1. Treatments is currently blue; the spec says "keep white". Task 7 Step 5 *makes* it white -the spec describes the target, not the current state.
 2. Reviews 2–6 are not deleted as the spec assumes; the flag filter reaches the same rendered outcome (Task 6).
 3. `STATS` contradicts a standing comment; Task 5 rewrites the comment rather than ignoring it.
-4. Gold-on-white is heading-only. The spec says "gold heading" but does not mention that gold fails AA at body size on white — Task 7 Step 5 constrains it.
+4. Gold-on-white is heading-only. The spec says "gold heading" but does not mention that gold fails AA at body size on white -Task 7 Step 5 constrains it.
 
 **Type consistency.** `Answers` is defined once in Task 1 and referenced unchanged in Tasks 2–4. `getScreens()`, `assembleMessage()`, `normalisePhone()`, `isValidPhone()` keep identical names throughout. `STATS` field names (`years`, `patients`, `implants`, `rootCanals`) match between Task 5 and Task 7.
 
-**Known risk.** `app/HomeClient.js` is 1139 lines and Tasks 7–8 move large JSX blocks between sections. Cut-and-paste whole blocks rather than retyping — the moved paragraph carries three internal links the content spine depends on, and the promise cards carry four blocks of verbatim copy.
+**Known risk.** `app/HomeClient.js` is 1139 lines and Tasks 7–8 move large JSX blocks between sections. Cut-and-paste whole blocks rather than retyping -the moved paragraph carries three internal links the content spine depends on, and the promise cards carry four blocks of verbatim copy.

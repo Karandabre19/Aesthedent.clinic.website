@@ -77,8 +77,12 @@ export default function DoctorPage() {
             transition={{ duration: 0.5 }}
           >
             <Badge className="mb-4 bg-[hsl(var(--color-primary-light))] text-[hsl(var(--color-primary))]">Our Team</Badge>
+            {/* Phase 4H: was "Top Dentists in Kothrud, Pune - Our Team". "Top"
+                is an opinion we awarded ourselves -the same self-claim removed
+                from the homepage doctors section in Part B. The qualification is
+                checkable; the superlative is not. */}
             <h1 className="text-4xl lg:text-[52px] font-semibold text-[hsl(var(--color-text))] mb-6 leading-tight">
-              Top Dentists in Kothrud, Pune – Our Team
+              Prosthodontist and dentists in Kothrud, Pune
             </h1>
             <p className="text-lg lg:text-xl text-[hsl(var(--color-text-muted))] leading-relaxed">
               Professional, compassionate, and devoted to your comfort. Our doctors bring years of experience with a patient-first approach.
@@ -118,7 +122,7 @@ export default function DoctorPage() {
                     <div className="mb-8">
                       <div className="flex items-center gap-2 mb-4">
                         <GraduationCap className="w-5 h-5 text-[hsl(var(--color-primary))]" />
-                        <h4 className="font-semibold text-[hsl(var(--color-text))]">Qualifications</h4>
+                        <h3 className="font-semibold text-[hsl(var(--color-text))]">Qualifications</h3>
                       </div>
                       <ul className="space-y-2">
                         {doctor.qualifications.map((q, j) => (
@@ -134,7 +138,7 @@ export default function DoctorPage() {
                     <div className="mb-8">
                       <div className="flex items-center gap-2 mb-4">
                         <Award className="w-5 h-5 text-[hsl(var(--color-primary))]" />
-                        <h4 className="font-semibold text-[hsl(var(--color-text))]">Specializations</h4>
+                        <h3 className="font-semibold text-[hsl(var(--color-text))]">Specializations</h3>
                       </div>
                       <div className="flex flex-wrap gap-2">
                         {doctor.specializations.map((s, j) => (

@@ -6,7 +6,7 @@
  * natively, so scratch/check-message.mjs can import this module directly and
  * assert against the code that actually ships. Node ESM will not resolve the
  * extensionless specifiers Next accepts, so a single import here would force
- * the checks to re-declare the phone regex — and a check that re-declares the
+ * the checks to re-declare the phone regex -and a check that re-declares the
  * thing it checks passes happily while the shipped function is broken.
  *
  * That is why assembleMessage takes the comfort LABEL as a parameter instead

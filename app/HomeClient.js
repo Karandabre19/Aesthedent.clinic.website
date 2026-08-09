@@ -1,7 +1,7 @@
 'use client';
 
 import { pushToDataLayer } from '@/lib/gtm';
-import { animate, motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { animate, motion, useInView, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import Link from 'next/link';
@@ -49,7 +49,7 @@ import { toast } from 'sonner';
 gsap.registerPlugin(useGSAP);
 
 // Built, not typed. This used to be a hand-written URL with the clinic's number
-// baked into it — a second copy of a value that lives in lib/clinic.ts, and one
+// baked into it -a second copy of a value that lives in lib/clinic.ts, and one
 // that would not have been fixed when the number was corrected there.
 const whatsappLink = buildWhatsappMessage();
 const phoneNumber = `+${WHATSAPP_NUMBER}`;
@@ -92,13 +92,13 @@ const trustStats = [
     sub: `${REVIEWS.count} Reviews`,
   },
   // The four STATS entries are strings carrying a "+" ("10+", "1000+"), so they
-  // use `display` — a literal, like 'MDS' did — rather than `value`, which
+  // use `display` -a literal, like 'MDS' did -rather than `value`, which
   // drives the count-up and needs a number. A count-up to "1000+" would have to
   // invent a number to animate toward and would drop the "+".
   { display: STATS.years, label: 'Years', sub: 'Experience' },
   { display: STATS.patients, label: 'Happy', sub: 'Patients' },
   { display: STATS.implants, label: 'Implants', sub: 'Placed' },
-  // COUNT of procedures, never "Painless Root Canals" — see the STATS comment
+  // COUNT of procedures, never "Painless Root Canals" -see the STATS comment
   // in lib/clinic.ts. Pain is an outcome we cannot promise; a count is a fact.
   { display: STATS.rootCanals, label: 'Root Canals', sub: 'Completed' },
 ];
@@ -144,7 +144,7 @@ function AnimatedStatNumber({ value, decimals = 0, suffix = '', delay = 0 }) {
   return <span ref={ref}>{formattedValue}{suffix}</span>;
 }
 
-function TrustStatCard({ stat, index }) {
+function TrustStatCard({ stat, index, className = '' }) {
   return (
     <motion.div
       initial={false}
@@ -152,7 +152,7 @@ function TrustStatCard({ stat, index }) {
       viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.6, delay: index * 0.05 }}
       whileHover={{ y: -6, scale: 1.02 }}
-      className="group relative overflow-hidden rounded-[1.75rem] bg-[hsl(var(--background))] px-5 py-6 text-center transition-all duration-300"
+      className={`group relative overflow-hidden rounded-[1.75rem] bg-[hsl(var(--background))] px-4 py-5 text-center transition-all duration-300 sm:px-5 sm:py-6 ${className}`}
     >
       <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[hsl(var(--color-accent))]/90 to-transparent opacity-80" />
       <div className="absolute -right-10 -top-10 h-24 w-24 rounded-full bg-[hsl(var(--color-accent))]/12 blur-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
@@ -174,8 +174,11 @@ function TrustStatCard({ stat, index }) {
           />
         )}
       </p>
-      <p className="text-sm font-semibold text-[hsl(var(--color-text))]">{stat.label}</p>
-      <p className="mt-1 text-xs text-[hsl(var(--color-text-muted))]">{stat.sub}</p>
+      {/* Both lines are 14px minimum. The sub-label was text-xs (12px), which
+          is below the readable floor for the smallest text on the page and was
+          carrying real information ("280 Reviews", "Completed"), not decoration. */}
+      <p className="text-sm font-semibold leading-snug text-[hsl(var(--color-text))]">{stat.label}</p>
+      <p className="mt-1 text-sm leading-snug text-[hsl(var(--color-text-muted))]">{stat.sub}</p>
     </motion.div>
   );
 }
@@ -216,14 +219,14 @@ function AdvancedPromiseCard({ num, title, desc, icon: Icon, isLast }) {
         <h3 className="text-lg sm:text-xl font-bold text-[hsl(var(--color-primary))] mb-2 group-hover:text-[hsl(var(--color-text))] transition-colors duration-300">
           {title}
         </h3>
-        <p className="text-xs sm:text-sm text-[hsl(var(--color-text-muted))] leading-relaxed group-hover:text-[hsl(var(--color-text))] transition-colors duration-300">
+        <p className="text-sm text-[hsl(var(--color-text-muted))] leading-relaxed group-hover:text-[hsl(var(--color-text))] transition-colors duration-300">
           {desc}
         </p>
       </div>
 
       {isLast && (
         <div className="mt-4 flex items-center gap-2 px-2.5 py-1 bg-orange-50 rounded-lg border border-orange-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <span className="text-[9px] font-bold text-orange-600 uppercase tracking-wider">Control Signal active</span>
+          <span className="text-sm font-bold text-orange-600 uppercase tracking-wide">Control Signal active</span>
         </div>
       )}
     </motion.div>
@@ -255,6 +258,11 @@ function HeroWord({ children, className = '' }) {
 }
 
 export default function HomePage() {
+  // GSAP's hero timeline already guards this (see useGSAP below), but the two
+  // Framer loops here run forever and were not covered: an endlessly pulsing
+  // scroll cue and a shimmer sweeping the trust bar every 7s. Perpetual motion
+  // is exactly what this setting exists to stop.
+  const reduceMotion = useReducedMotion();
   const heroRef = useRef(null);
   const hasTrackedHomeView = useRef(false);
   const { scrollYProgress } = useScroll({
@@ -566,7 +574,7 @@ export default function HomePage() {
 
               {/* Sub-line carries the Tier-1 terms the H1 gave up, plus the
                   specialism as proof rather than headline. */}
-              <p className="hero-copy mb-8 sm:mb-10 max-w-xl translate-y-6 text-base sm:text-lg leading-relaxed text-[hsl(var(--color-primary))]/85 opacity-0 transform-gpu md:text-lg">
+              <p className="hero-copy measure mb-8 sm:mb-10 translate-y-6 text-base sm:text-lg leading-relaxed text-[hsl(var(--color-primary))]/85 opacity-0 transform-gpu md:text-lg">
                 Kothrud&rsquo;s specialist prosthodontist-led clinic. We explain every step before we start &mdash; so nothing catches you by surprise.
               </p>
 
@@ -615,11 +623,11 @@ export default function HomePage() {
           transition={{ delay: 1.2 }}
         >
           <div className="flex flex-col items-center gap-2 text-white/60">
-            <span className="text-xs tracking-widest uppercase">Scroll</span>
+            <span className="text-sm tracking-widest uppercase">Scroll</span>
             <motion.div
               className="w-px h-12 bg-gradient-to-b from-white/60 to-transparent"
-              animate={{ scaleY: [1, 0.5, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
+              animate={reduceMotion ? { scaleY: 1 } : { scaleY: [1, 0.5, 1] }}
+              transition={reduceMotion ? { duration: 0 } : { duration: 1.5, repeat: Infinity }}
             />
           </div>
         </motion.div>
@@ -635,20 +643,27 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
           >
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,hsl(var(--color-accent)/0.16),transparent_26%),radial-gradient(circle_at_bottom_left,hsl(var(--color-primary)/0.08),transparent_28%)]" />
-            <motion.div
-              className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 bg-gradient-to-r from-transparent via-white/45 to-transparent blur-2xl"
-              animate={{ x: ["0%", "230%"] }}
-              transition={{ duration: 7, repeat: Infinity, ease: "linear" }}
-            />
+            {!reduceMotion && (
+              <motion.div
+                className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 bg-gradient-to-r from-transparent via-white/45 to-transparent blur-2xl"
+                animate={{ x: ["0%", "230%"] }}
+                transition={{ duration: 7, repeat: Infinity, ease: "linear" }}
+              />
+            )}
 
-            {/* Five stats: 2-up on phones (the 5th centres on its own row),
-                5-across from md. Never 4 columns — that orphans one card. */}
-            <div className="relative grid grid-cols-2 gap-4 md:grid-cols-5 md:gap-5">
+            {/* Five stats into a 2-column phone grid leaves one over. Rather
+                than let it sit half-width against an empty cell, the Google
+                rating - the only externally checkable number here, and the one
+                worth leading with - spans both columns as a wide first card.
+                The remaining four then tile 2x2 evenly. From md all five sit
+                across in one row. Never 4 columns: that orphans a card. */}
+            <div className="relative grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-5 md:gap-5">
               {trustStats.map((stat, i) => (
                 <TrustStatCard
                   key={`${stat.label}-${stat.sub}`}
                   stat={stat}
                   index={i}
+                  className={i === 0 ? 'col-span-2 md:col-span-1' : undefined}
                 />
               ))}
             </div>
@@ -665,10 +680,10 @@ export default function HomePage() {
           The generous vertical padding IS the design here. This line is the
           clinic's promise in the language many of its patients think in;
           crowding it with body copy is what made it read as a subheading. */}
-      <section className="relative z-20 bg-gradient-to-b from-[hsl(var(--background))] to-white py-24 sm:py-32 md:py-40">
+      <section className="relative z-20 bg-gradient-to-b from-[hsl(var(--background))] to-white section-y-airy">
         <div className="main-container">
           <AnimatedSection>
-            <h2 className="mx-auto max-w-4xl text-center text-3xl font-bold leading-[1.35] text-[hsl(var(--color-primary))] sm:text-4xl md:text-5xl lg:text-6xl">
+            <h2 className="mx-auto max-w-4xl text-center font-bold leading-[1.35] text-[hsl(var(--color-primary))] text-[clamp(1.75rem,1.2rem+2.6vw,3.75rem)]">
               दातों के साथ भी, दातों के बाद भी
             </h2>
           </AnimatedSection>
@@ -676,11 +691,11 @@ export default function HomePage() {
       </section>
 
 
-      {/* Services Section — WHITE ground, gold heading.
+      {/* Services Section -WHITE ground, gold heading.
           This section used to be solid blue. Everything that sat directly on
           that blue had to move onto text tokens; the CARD copy did not, because
           it sits on the dark image overlay, not on the section background. */}
-      <section className="py-12 sm:py-16 md:py-24 lg:py-32 bg-white">
+      <section className="section-y bg-white">
         <div className="main-container">
           <AnimatedSection className="text-center mb-12 sm:mb-16 md:mb-24">
             <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-[hsl(var(--color-accent))]/15 text-[hsl(var(--color-accent-ink))] rounded-full text-sm font-semibold">
@@ -691,10 +706,10 @@ export default function HomePage() {
 
                 --color-accent-ink, NOT --color-accent: the brand gold is
                 1.96:1 on white and fails AA at any size. See globals.css. */}
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[hsl(var(--color-accent-ink))] leading-tight mb-3 sm:mb-6">
+            <h2 className="heading-section font-bold text-[hsl(var(--color-accent-ink))] leading-tight mb-3 sm:mb-6">
               Dental treatments in Kothrud, Pune.
             </h2>
-            <p className="text-base md:text-lg text-[hsl(var(--color-text-muted))] max-w-2xl mx-auto">
+            <p className="measure mx-auto text-base text-[hsl(var(--color-text-muted))] md:text-lg">
               Everything below is planned by a specialist prosthodontist and explained to you in plain words first. Nothing starts until you have said yes.
             </p>
           </AnimatedSection>
@@ -723,7 +738,7 @@ export default function HomePage() {
                       <h3 className="text-base sm:text-lg font-semibold mb-1 sm:mb-2 text-white group-hover:text-[hsl(var(--color-accent))] transition-colors">
                         {service.title}
                       </h3>
-                      <p className="text-white/85 text-xs sm:text-sm mb-4 line-clamp-2">
+                      <p className="text-white/85 text-sm mb-4 line-clamp-2">
                         {service.shortDesc}
                       </p>
                       {/* Descriptive anchor, not "Explore details" - the anchor
@@ -734,7 +749,7 @@ export default function HomePage() {
                           Kothrud" to all eight cards pushed the homepage to 24
                           mentions (1.57%) and read like a machine wrote it. The
                           section H2 above carries the location once. */}
-                      <span className="inline-flex items-center gap-1 sm:gap-2 text-[hsl(var(--color-accent))] text-xs sm:text-sm font-medium">
+                      <span className="inline-flex items-center gap-1 sm:gap-2 text-[hsl(var(--color-accent))] text-sm font-medium">
                         {service.title}
                         <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
                       </span>
@@ -751,7 +766,7 @@ export default function HomePage() {
               into pages that have never been crawled
               (audit/01-content-spine.md §6.1). Area names are in real sentences,
               two per sentence, never a list. */}
-          <AnimatedSection className="mx-auto mt-10 max-w-3xl text-center sm:mt-12">
+          <AnimatedSection className="measure mx-auto mt-10 text-center sm:mt-12">
             <p className="text-base leading-relaxed text-[hsl(var(--color-text-muted))]">
               Patients travel to us from Bavdhan and Warje for{' '}
               <Link href="/services/dental-implants" className="font-semibold text-[hsl(var(--color-primary))] underline underline-offset-4 hover:text-[hsl(var(--color-accent-ink))] transition-colors">
@@ -797,19 +812,19 @@ export default function HomePage() {
       </section>
 
       {/* Intake form. Sits directly after the treatments a visitor was just
-          reading, which is the moment intent is highest — sending them to
+          reading, which is the moment intent is highest -sending them to
           /contact from here would have spent that moment on a page load.
           The component is shared with /contact; it owns all its own state and
           copy (lib/intake-form-config.ts). */}
-      <section className="bg-[hsl(var(--color-bg-alt))]/40 py-12 sm:py-16 md:py-24 lg:py-32">
+      <section className="bg-[hsl(var(--color-bg-alt))]/40 section-y">
         <div className="main-container">
-          <AnimatedSection className="mx-auto mb-10 max-w-2xl text-center sm:mb-14">
-            <h2 className="mb-4 text-2xl font-bold leading-tight text-[hsl(var(--color-text))] sm:text-3xl md:text-4xl lg:text-5xl">
+          <AnimatedSection className="measure mx-auto mb-10 text-center sm:mb-14">
+            <h2 className="mb-4 heading-section font-bold text-[hsl(var(--color-text))]">
               Let&apos;s get you seen, comfortably.
             </h2>
             <p className="text-base text-[hsl(var(--color-text-muted))] md:text-lg">
               Tell us a little about what&apos;s going on. No forms with fifty
-              fields — just a short conversation, and we&apos;ll take it from there.
+              fields -just a short conversation, and we&apos;ll take it from there.
             </p>
           </AnimatedSection>
 
@@ -820,35 +835,35 @@ export default function HomePage() {
       </section>
 
       {/* Treatment Experience Section */}
-      <section className="py-12 sm:py-16 md:py-24 lg:py-32 bg-gradient-to-br from-[hsl(var(--primary))]/5 via-white to-[hsl(var(--accent))]/5">
+      <section className="section-y bg-gradient-to-br from-[hsl(var(--primary))]/5 via-white to-[hsl(var(--accent))]/5">
         <div className="main-container">
           <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 md:gap-16 lg:gap-24 items-center">
             <AnimatedSection direction="left">
-              <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-green-100 text-green-700 rounded-full text-xs sm:text-sm font-semibold">
+              <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-semibold">
                 Your Visit
               </div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[hsl(var(--color-text))] leading-tight mb-4 sm:mb-6">
+              <h2 className="heading-section font-bold text-[hsl(var(--color-text))] leading-tight mb-4 sm:mb-6">
                 What happens when you visit.
               </h2>
               {/* The lead quote states the positioning in the founder's voice:
                   specialist planning AND the patience to explain it. */}
               <blockquote className="mb-8 border-l-4 border-[hsl(var(--color-accent))] pl-5 text-base italic leading-relaxed text-[hsl(var(--color-text-muted))] sm:pl-6 sm:text-lg">
-                “We don&apos;t just treat teeth — we plan every case with the
+                “We don&apos;t just treat teeth -we plan every case with the
                 precision of a specialist and the patience of someone who
                 remembers you&apos;re a person, not a procedure.”
               </blockquote>
 
               {/* A real <ol>. These are six sequential stages of one visit, and
-                  the order is the meaning — a div stack said nothing about
+                  the order is the meaning -a div stack said nothing about
                   sequence to a screen reader. Numbers are rendered by the list
                   itself rather than drawn as chevrons. */}
               <ol className="mb-8 space-y-4 sm:mb-10 sm:space-y-5">
                 {[
-                  ["Checkup", "Intraoral imaging — you see exactly what we see, live on screen."],
+                  ["Checkup", "Intraoral imaging -you see exactly what we see, live on screen."],
                   ["Diagnosis", "We explain the problem in plain language, not jargon."],
-                  ["Planning", "What's urgent, what can wait, and every option — laid out clearly."],
+                  ["Planning", "What's urgent, what can wait, and every option -laid out clearly."],
                   ["Your call", "Full cost and plan agreed before we start. Nothing is a surprise."],
-                  ["Treatment", "Fully numb, fully narrated — and it stops the moment you raise your hand."],
+                  ["Treatment", "Fully numb, fully narrated -and it stops the moment you raise your hand."],
                   ["Follow-up", "We check on your healing after you leave the chair."],
                 ].map(([stage, detail], i) => (
                   <li key={stage} className="flex items-start gap-4">
@@ -893,7 +908,7 @@ export default function HomePage() {
       </section>
 
       {/* Smile Stories Section - Dynamic */}
-      <section className="py-20 md:py-32 bg-white">
+      <section className="section-y bg-white">
         <TestimonialsSection
           title="Real Stories From Real Patients"
           subtitle="These transformations inspire us every day-and we love sharing them."
@@ -908,7 +923,7 @@ export default function HomePage() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Read all Aesthedent patient reviews on Google"
-              className="inline-flex items-center gap-3 text-[hsl(var(--primary))] font-semibold hover:text-[hsl(var(--primary-dark))] transition-colors text-lg"
+              className="inline-flex min-h-[44px] items-center gap-3 py-2 text-lg font-semibold text-[hsl(var(--primary))] transition-colors hover:text-[hsl(var(--primary-dark))]"
             >
               View all patient stories
               <ArrowRight className="w-5 h-5" />
@@ -918,28 +933,27 @@ export default function HomePage() {
       </section>
 
       {/* Painless Dentistry Section */}
-      {/* Insights Section - Premium Editorial */}
-      <InsightsSection
-        title="Insights"
-        subtitle="Trusted knowledge from real experts-not generic content. Real answers to real patient questions."
-      />
-
       {/* Doctors Section */}
-      <section className="py-12 sm:py-16 md:py-24 lg:py-32 bg-gradient-to-b from-white to-[hsl(var(--bg-alt))]">
+      <section className="section-y bg-gradient-to-b from-white to-[hsl(var(--bg-alt))]">
         <div className="main-container">
           <AnimatedSection className="text-center mb-12 sm:mb-16 md:mb-24">
-            <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] rounded-full text-xs sm:text-sm font-semibold">
+            <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] rounded-full text-sm font-semibold">
               Our Team
             </div>
             {/* "Top Dentists in Kothrud" was an opinion we awarded ourselves.
                 Never reinstate it. */}
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[hsl(var(--color-text))] leading-tight mb-3 sm:mb-6">
+            <h2 className="heading-section font-bold text-[hsl(var(--color-text))] leading-tight mb-3 sm:mb-6">
               Meet your dentists in Kothrud
             </h2>
-            <p className="text-base md:text-lg text-[hsl(var(--color-text-muted))] max-w-2xl mx-auto">
-              Dr. Sahil and Dr. Aishwarya bring specialist-level precision to
-              every case — and the patience to walk you through it, step by step,
-              so nothing catches you by surprise.
+            {/* "specialist-level" was removed from this sentence deliberately.
+                It described the practice, not Dr. Aishwarya, but it put the word
+                within a few characters of her name - and she is BDS, not a
+                specialist. Precision and patience say the same thing about the
+                pair without borrowing a qualification only one of them holds. */}
+            <p className="measure mx-auto text-base text-[hsl(var(--color-text-muted))] md:text-lg">
+              Dr. Sahil and Dr. Aishwarya bring precision and genuine patience to
+              every case &mdash; walking you through it step by step, so nothing
+              catches you by surprise.
             </p>
 
             {/* MOVED here from under the Marathi line, links intact. These are
@@ -947,7 +961,7 @@ export default function HomePage() {
                 article, which is the least-linked page on the site and holds our
                 entire wedge, and /about. Losing them would be a real regression,
                 which is why this paragraph travelled rather than being retyped. */}
-            <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-[hsl(var(--color-text-muted))]">
+            <p className="measure mx-auto mt-5 text-base leading-relaxed text-[hsl(var(--color-text-muted))]">
               Plenty of people arrive here having avoided a dentist for years,
               and nobody is going to make you feel foolish about that. If that
               is you, read{' '}
@@ -986,7 +1000,7 @@ export default function HomePage() {
               {
                 name: DOCTORS.aishwarya.name,
                 tag: "Dental Surgeon",
-                // "General & Family Dentist" — the word "specialist" must never
+                // "General & Family Dentist" -the word "specialist" must never
                 // appear on this card. She holds a BDS; Dr. Sahil's MDS is what
                 // makes the clinic prosthodontist-led, and overclaiming her
                 // qualification is a regulatory problem, not just a trust one.
@@ -1023,7 +1037,7 @@ export default function HomePage() {
                         {/* Per-doctor role tag. Was a hardcoded "Dentist" on
                             both cards, which flattened the one distinction that
                             matters here. */}
-                        <p className="mb-1 sm:mb-2 text-xs font-bold uppercase tracking-wider text-[hsl(var(--primary))]/70">
+                        <p className="mb-1 sm:mb-2 text-sm font-bold uppercase tracking-wider text-[hsl(var(--primary))]/70">
                           {doctor.tag}
                         </p>
                         <h3 className="text-lg sm:text-xl font-bold leading-tight text-[hsl(var(--primary))]">
@@ -1035,15 +1049,15 @@ export default function HomePage() {
                     {/* Role + description - one copy. Flows on mobile, glass
                         panel over the image from sm up. */}
                     <div className="px-4 pb-4 sm:p-5 sm:absolute sm:bottom-5 sm:left-5 sm:right-5 sm:rounded-[1.6rem] sm:border sm:border-white/65 sm:bg-[hsl(var(--background))]/84 sm:shadow-[0_24px_54px_-30px_hsl(var(--color-primary)/0.38)] sm:backdrop-blur-xl">
-                      <p className="mb-2 sm:mb-3 inline-flex rounded-full bg-[hsl(var(--color-primary))] px-3.5 py-1.5 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.26em] text-[hsl(var(--color-accent))]">
+                      <p className="mb-2 sm:mb-3 inline-flex rounded-full bg-[hsl(var(--color-primary))] px-3.5 py-1.5 text-sm font-semibold uppercase tracking-[0.22em] text-[hsl(var(--color-accent))]">
                         {doctor.role}
                       </p>
                       {/* The qualification, verbatim. This is the proof the
                           word "specialist" rests on. */}
-                      <p className="mb-2 text-[11px] sm:text-xs font-semibold text-[hsl(var(--color-primary))]">
+                      <p className="mb-2 text-sm font-semibold text-[hsl(var(--color-primary))]">
                         {doctor.credential}
                       </p>
-                      <p className="text-xs sm:text-sm leading-relaxed text-[hsl(var(--color-text-muted))]">
+                      <p className="text-sm leading-relaxed text-[hsl(var(--color-text-muted))]">
                         {doctor.desc}
                       </p>
                     </div>
@@ -1097,15 +1111,21 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Insights Section - Premium Editorial */}
+      <InsightsSection
+        title="Insights"
+        subtitle="Trusted knowledge from real experts-not generic content. Real answers to real patient questions."
+      />
+
       {/* Contact Section */}
-      <section className="py-12 sm:py-16 md:py-24 lg:py-32 bg-[hsl(var(--primary))]">
+      <section className="section-y bg-[hsl(var(--primary))]">
         <div className="main-container">
           <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 md:gap-16 lg:gap-20 items-center">
             <AnimatedSection>
-              <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-white/20 text-white rounded-full text-xs sm:text-sm font-semibold">
+              <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-white/20 text-white rounded-full text-sm font-semibold">
                 Get in Touch
               </div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4 sm:mb-6 md:mb-8">
+              <h2 className="heading-section font-bold text-white leading-tight mb-4 sm:mb-6 md:mb-8">
                 Ready to talk?
               </h2>
               <p className="text-sm sm:text-base md:text-lg text-white/85 leading-relaxed mb-6 sm:mb-8 md:mb-10">
@@ -1127,7 +1147,7 @@ export default function HomePage() {
                     <p className="font-bold text-white mb-1 sm:mb-2 text-base sm:text-lg group-hover:text-[hsl(var(--accent))] transition-colors">
                       Our Clinic
                     </p>
-                    <p className="text-white/80 leading-relaxed text-xs sm:text-sm md:text-base group-hover:text-white transition-colors">
+                    <p className="text-white/80 leading-relaxed text-sm md:text-base group-hover:text-white transition-colors">
                       No.5 First Floor, AJ Tower, above Irani Cafe,
                       <br />
                       Dahanukar Colony, Kothrud, Pune 411038
@@ -1142,10 +1162,10 @@ export default function HomePage() {
                     <p className="font-bold text-white mb-1 sm:mb-2 text-base sm:text-lg">
                       Hours
                     </p>
-                    <p className="text-white/80 leading-relaxed text-xs sm:text-sm md:text-base">
+                    <p className="text-white/80 leading-relaxed text-sm md:text-base">
                       Mon - Sun: 10 AM - 8 PM
                       <br />
-                      <span className="text-xs font-bold text-[hsl(var(--accent))]">
+                      <span className="text-sm font-bold text-[hsl(var(--accent))]">
                         (Wednesday Holiday)
                       </span>
                     </p>

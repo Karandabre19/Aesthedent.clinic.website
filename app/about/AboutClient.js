@@ -263,9 +263,11 @@ export default function AboutPage() {
                   <div className="w-14 h-14 bg-[hsl(var(--color-primary-light))] rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <item.icon className="w-7 h-7 text-[hsl(var(--color-primary))]" />
                   </div>
-                  <h4 className="font-semibold text-[hsl(var(--color-text))] mb-2">
+                  {/* Phase 4H: was h4 directly under the "A Space for Everyone"
+                      h2 -a skipped level. Same classes, same look. */}
+                  <h3 className="font-semibold text-[hsl(var(--color-text))] mb-2">
                     {item.title}
-                  </h4>
+                  </h3>
                   <p className="text-sm text-[hsl(var(--color-text-muted))]">
                     {item.desc}
                   </p>
