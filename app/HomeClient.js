@@ -709,7 +709,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Brand statement. Deliberately a single line with nothing under it —
+      {/* Brand statement. Deliberately a single line with nothing under it -
           the paragraph that used to sit here now opens the Doctors section,
           where its three internal links (/insights/dental-anxiety-tips,
           /about, /dental-clinic-in-kothrud) still carry the content spine's

@@ -150,12 +150,12 @@
   }
 
   /* Reduced motion, as a backstop.
-     The animations that matter are already gated in JS — GSAP's hero timeline
+     The animations that matter are already gated in JS - GSAP's hero timeline
      checks the media query and jumps to its end state, and the two infinite
      Framer loops are switched off at the component. This block catches
      everything else: CSS transitions, keyframes, and smooth scrolling, which no
      amount of JS gating would cover.
-     `scroll-behavior: auto` matters as much as the rest here — Lenis-style
+     `scroll-behavior: auto` matters as much as the rest here - Lenis-style
      smooth scrolling is a common motion-sickness trigger. */
   @media (prefers-reduced-motion: reduce) {
     *,
@@ -178,7 +178,7 @@
 ========================= */
 @layer components {
   /* Section H2s. Replaces the `text-2xl sm:text-3xl md:text-4xl lg:text-5xl`
-     chain that was repeated on six headings — four discrete jumps that were
+     chain that was repeated on six headings - four discrete jumps that were
      really one continuous ramp, and which pinned every phone from 320px to
      639px to the same 24px regardless of how much room it had.
 
@@ -205,7 +205,7 @@
     padding-bottom: clamp(2.25rem, 1.6rem + 1.6vw, 3.25rem);
   }
 
-  /* The Marathi brand statement gets more air than anything else — the space
+  /* The Marathi brand statement gets more air than anything else - the space
      is the design there. But it is one line of text, and at 10rem a side its
      own padding was 320px around a 40px line. */
   .section-y-airy {

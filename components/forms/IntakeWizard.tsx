@@ -40,7 +40,7 @@ const Textarea = TextareaBase as ComponentType<ComponentPropsWithoutRef<'textare
  * dispatched on `step.type`.
  *
  * WHAT THIS IS NOT: a diagnostic tool. This screen shell renders whatever
- * question config/steps supply; it adds no clinical branching of its own —
+ * question config/steps supply; it adds no clinical branching of its own -
  * an intake form that appears to triage is making a clinical claim this site
  * is not allowed to make. The comfort slider (Step 5) is reassurance copy
  * only: it swaps a sentence of text and never gates navigation or alters any
@@ -66,7 +66,7 @@ const CLINIC_TEL = `+${WHATSAPP_NUMBER.replace(/[^\d]/g, '')}`;
 /* ── small presentational pieces ─────────────────────────────────────────── */
 
 /**
- * Renders TOTAL segments driven by the SCREEN index, never the config index —
+ * Renders TOTAL segments driven by the SCREEN index, never the config index -
  * with 9 configs and 8 screens those are not the same number.
  */
 function ProgressBar({ screen, total }: { screen: number; total: number }) {
