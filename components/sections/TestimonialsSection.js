@@ -147,9 +147,9 @@ export default function TestimonialsSection({
 
   if (variant === 'compact') {
     return (
-      <section className="py-16 md:py-24 bg-[hsl(var(--background))]">
+      <section className="section-y bg-[hsl(var(--background))]">
         <div className="main-container">
-          <AnimatedSection className="text-center mb-16">
+          <AnimatedSection className="text-center mb-10 sm:mb-12">
             {/* accent-ink, not accent: this section's ground is
                 --background (pure white), where the brand gold measures
                 1.96:1 and fails AA at every size. Same fix as the treatments
@@ -182,9 +182,9 @@ export default function TestimonialsSection({
 
   // Full variant for testimonials page
   return (
-    <section className="py-16 md:py-24 bg-[hsl(var(--color-bg-alt))]">
+    <section className="section-y bg-[hsl(var(--color-bg-alt))]">
       <div className="main-container">
-        <AnimatedSection className="text-center mb-16">
+        <AnimatedSection className="text-center mb-10 sm:mb-12">
           <h2 className="heading-section font-bold text-[hsl(var(--color-text))] mb-4">
             {title}
           </h2>

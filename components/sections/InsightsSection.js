@@ -144,7 +144,7 @@ export default function InsightsSection({
   const otherArticles = displayedInsights.filter(a => a.id !== featuredArticle.id);
 
   return (
-    <section className="py-12 sm:py-16 md:py-24 lg:py-32 bg-gradient-to-b from-[hsl(var(--bg-alt))] to-white">
+    <section className="section-y bg-gradient-to-b from-[hsl(var(--bg-alt))] to-white">
       <div className="main-container">
         {/* Section Header */}
         <AnimatedSection className="mb-10 sm:mb-12 lg:mb-16">

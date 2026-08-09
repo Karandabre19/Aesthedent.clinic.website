@@ -195,16 +195,22 @@
      padding on phones (where 80px of dead space just pushed content below the
      fold) without becoming cramped. `py-20 md:py-32` and
      `py-12 sm:py-16 md:py-24 lg:py-32` were both in use; this is the one. */
+  /* SIZED FOR THE BOUNDARY, NOT THE SECTION.
+     Sections stack, so the visible gap between any two is this value TWICE.
+     At 8rem that meant 256px of dead space at every seam on desktop, and the
+     page read as a series of islands. 4rem gives a 128px boundary, which is
+     the gap that actually looks intentional. */
   .section-y {
-    padding-top: clamp(3.5rem, 2.5rem + 4vw, 8rem);
-    padding-bottom: clamp(3.5rem, 2.5rem + 4vw, 8rem);
+    padding-top: clamp(2.25rem, 1.6rem + 1.6vw, 3.25rem);
+    padding-bottom: clamp(2.25rem, 1.6rem + 1.6vw, 3.25rem);
   }
 
-  /* The Marathi brand statement gets deliberately more air than anything else
-     on the page — the space is the design, not padding left over. */
+  /* The Marathi brand statement gets more air than anything else — the space
+     is the design there. But it is one line of text, and at 10rem a side its
+     own padding was 320px around a 40px line. */
   .section-y-airy {
-    padding-top: clamp(5rem, 3rem + 8vw, 10rem);
-    padding-bottom: clamp(5rem, 3rem + 8vw, 10rem);
+    padding-top: clamp(3rem, 2.2rem + 2vw, 4.5rem);
+    padding-bottom: clamp(3rem, 2.2rem + 2vw, 4.5rem);
   }
 
   /* Caps line length at roughly 38-42 characters on a phone, widening to a
