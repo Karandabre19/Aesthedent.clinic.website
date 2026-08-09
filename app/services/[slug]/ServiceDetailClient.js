@@ -44,7 +44,7 @@ const phoneNumber = '+919309816336';
 //   <details>/<summary> native accordion. Replaces a useState + framer-motion
 //                       accordion: the answer text is now IN the DOM on first
 //                       paint instead of conditionally rendered, so it is
-//                       crawlable and it matches the FAQPage JSON-LD exactly —
+//                       crawlable and it matches the FAQPage JSON-LD exactly -
 //                       Google requires the marked-up answer to be visible.
 //                       Also removes JS from the page rather than adding it,
 //                       which protects the ~1.1s load.

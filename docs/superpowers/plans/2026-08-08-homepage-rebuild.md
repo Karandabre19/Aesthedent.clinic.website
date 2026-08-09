@@ -276,7 +276,7 @@ export const INTAKE_FORM = {
 ```
 
 **Transcription notes** (these are easy to "fix" by accident -don't):
-- The em-dashes (`—`), en-dashes in times (`10 – 1`), and the curly apostrophes are intentional. Keep them.
+- The em-dashes (`-`), en-dashes in times (`10 – 1`), and the curly apostrophes are intentional. Keep them.
 - `validation: "^[6-9]\\d{9}$"` keeps the doubled backslash -it is a string, not a regex literal.
 - The aligned whitespace in the `reason` options is cosmetic; preserving it is fine, reflowing it is also fine.
 - `review.rowLabels.reason` is `"Reason for visit"` while the assembled message line is `"Reason"`. Both are correct -the review table and the WhatsApp body use different wording on purpose.
@@ -982,7 +982,7 @@ CTA: `Learn about our process →` → `/aesthedent-experience`.
 
 - [ ] **Step 3: Reviews section**
 
-`<h2>` *"Real Stories From Real Patients"*, sub *"These transformations inspire us every day—and we love sharing them."* Change `limit={3}` → `limit={4}`. Task 6's filter guarantees all 4 are verified. Confirm cards use initials avatars -the `image` fields are Pexels stock photos of unrelated people and must never render (`lib/testimonials.js:26-29`). Footer link: `View all patient stories →`.
+`<h2>` *"Real Stories From Real Patients"*, sub *"These transformations inspire us every day-and we love sharing them."* Change `limit={3}` → `limit={4}`. Task 6's filter guarantees all 4 are verified. Confirm cards use initials avatars -the `image` fields are Pexels stock photos of unrelated people and must never render (`lib/testimonials.js:26-29`). Footer link: `View all patient stories →`.
 
 - [ ] **Step 4: Doctors section + moved content**
 
