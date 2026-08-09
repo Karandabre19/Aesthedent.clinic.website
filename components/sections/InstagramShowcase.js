@@ -93,7 +93,7 @@ export default function InstagramShowcase() {
           {/* Left Side: Content */}
           <div className="lg:w-2/5">
             <AnimatedSection>
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-[hsl(var(--color-primary))]/5 border border-[hsl(var(--color-primary))]/10 rounded-full text-[hsl(var(--color-primary))] font-bold text-[10px] uppercase tracking-[0.2em] mb-8">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-[hsl(var(--color-primary))]/5 border border-[hsl(var(--color-primary))]/10 rounded-full text-[hsl(var(--color-primary))] font-bold text-sm uppercase tracking-[0.16em] mb-8">
                 <Camera size={14} className="text-[hsl(var(--color-accent))]" />
                 Digital Smile Gallery
               </div>
@@ -114,7 +114,7 @@ export default function InstagramShowcase() {
                 {instagramStats.map((stat, i) => (
                   <div key={i} className="flex flex-col gap-1">
                     <span className="text-2xl font-black text-[hsl(var(--color-primary))] tracking-tighter">{stat.value}</span>
-                    <span className="text-[10px] font-black uppercase tracking-widest text-[hsl(var(--color-text-muted))/60]">{stat.label}</span>
+                    <span className="text-sm font-black uppercase tracking-wide text-[hsl(var(--color-text-muted))/60]">{stat.label}</span>
                   </div>
                 ))}
               </div>
@@ -142,11 +142,11 @@ export default function InstagramShowcase() {
                        <div className="flex items-center gap-6">
                           <div className="flex items-center gap-2 py-1 px-3 bg-white/10 rounded-full border border-white/10 backdrop-blur-md">
                              <Heart size={14} className="text-[hsl(var(--color-accent))]" fill="currentColor" />
-                             <span className="text-xs font-black text-white">{image.likes}</span>
+                             <span className="text-sm font-black text-white">{image.likes}</span>
                           </div>
                           <div className="flex items-center gap-2 py-1 px-3 bg-white/10 rounded-full border border-white/10 backdrop-blur-md">
                              <MessageCircle size={14} className="text-white" />
-                             <span className="text-xs font-black text-white">{Math.floor(image.likes / 10)}</span>
+                             <span className="text-sm font-black text-white">{Math.floor(image.likes / 10)}</span>
                           </div>
                        </div>
                     </div>

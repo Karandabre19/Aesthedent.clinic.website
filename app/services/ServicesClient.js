@@ -85,11 +85,14 @@ export default function ServicesPage() {
                           <IconComponent className="w-6 h-6 lg:w-7 lg:h-7" />
                         </div>
                         <div>
-                          <h3 className={`text-xl lg:text-2xl font-semibold transition-colors ${
+                          {/* Phase 4H: h1 -> h3 skipped a level. Each treatment
+                              is a top-level block on this catalogue page, so it
+                              is h2. Classes untouched. */}
+                          <h2 className={`text-xl lg:text-2xl font-semibold transition-colors ${
                             isExpanded ? 'text-[hsl(var(--color-primary))]' : 'text-[hsl(var(--color-text))]'
                           }`}>
                             {service.title}
-                          </h3>
+                          </h2>
                           {!isExpanded && (
                             <p className="text-sm text-[hsl(var(--color-text-muted))] mt-1 line-clamp-1">
                               {service.shortDesc}
@@ -116,9 +119,9 @@ export default function ServicesPage() {
                             <div className="h-px bg-[hsl(var(--color-border))] mb-8" />
                             <div className="grid md:grid-cols-2 gap-8 items-center">
                               <div>
-                                <h4 className="text-[hsl(var(--color-primary))] font-semibold uppercase tracking-wider text-xs mb-3">
+                                <h3 className="text-[hsl(var(--color-primary))] font-semibold uppercase tracking-wider text-xs mb-3">
                                   Why this treatment?
-                                </h4>
+                                </h3>
                                 <p className="text-[hsl(var(--color-text))] text-lg mb-6 leading-relaxed">
                                   {service.problem}
                                 </p>
@@ -182,7 +185,7 @@ export default function ServicesPage() {
                   <div className="w-12 h-12 bg-[hsl(var(--color-primary-light))] rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <CheckCircle2 className="w-6 h-6 text-[hsl(var(--color-primary))]" />
                   </div>
-                  <h4 className="font-semibold text-[hsl(var(--color-text))] mb-2">{item.title}</h4>
+                  <h3 className="font-semibold text-[hsl(var(--color-text))] mb-2">{item.title}</h3>
                   <p className="text-sm text-[hsl(var(--color-text-muted))]">{item.desc}</p>
                 </div>
               </AnimatedSection>

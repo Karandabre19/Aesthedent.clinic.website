@@ -291,12 +291,21 @@ export default function Navbar() {
                                       <Icon className="w-5 h-5" />
                                     </div>
                                     <div>
-                                      <h4 className={`text-sm font-semibold mb-1 transition-colors ${
+                                      {/* Phase 4H -heading-hierarchy fix.
+                                          This was an <h4>, and the Treatments
+                                          dropdown renders on EVERY page, so every
+                                          page in the site opened with eight h4s
+                                          before its own h1. Headings define the
+                                          document outline; they are not a text
+                                          size. A <span> with the identical classes
+                                          looks the same and says nothing about
+                                          structure. */}
+                                      <span className={`block text-sm font-semibold mb-1 transition-colors ${
                                         isSubActive ? 'text-[hsl(var(--color-primary))]' : 'text-[hsl(var(--color-text))]'
                                       }`}>
                                         {subLink.label}
-                                      </h4>
-                                      <p className="text-xs text-[hsl(var(--color-text-muted))] line-clamp-2 leading-relaxed">
+                                      </span>
+                                      <p className="text-sm text-[hsl(var(--color-text-muted))] line-clamp-2 leading-relaxed">
                                         {subLink.description}
                                       </p>
                                     </div>
@@ -308,8 +317,11 @@ export default function Navbar() {
                             {/* Sidebar CTA */}
                             <div className="w-[240px] bg-[hsl(var(--color-bg-alt))]/50 border-l border-[hsl(var(--border))] p-8 flex flex-col justify-center">
                               <div className="mb-6">
-                                <h3 className="text-lg font-bold text-[hsl(var(--color-primary))] mb-2">Our Promise</h3>
-                                <p className="text-xs text-[hsl(var(--color-text-muted))] leading-relaxed">
+                                {/* Phase 4H: was an <h3> in nav chrome, landing
+                                    above every page's h1. Same classes, no
+                                    outline contribution. */}
+                                <p className="text-lg font-bold text-[hsl(var(--color-primary))] mb-2">Our Promise</p>
+                                <p className="text-sm text-[hsl(var(--color-text-muted))] leading-relaxed">
                                   Expert clinical care with a focus on your comfort and long-term oral health.
                                 </p>
                               </div>

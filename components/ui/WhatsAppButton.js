@@ -127,7 +127,7 @@ export default function WhatsAppButton() {
             className="group relative"
           >
             {/* Tooltip Label */}
-            <div className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-[10px] font-bold text-white opacity-0 group-hover:opacity-100 transition-all translate-x-3 group-hover:translate-x-0 pointer-events-none whitespace-nowrap shadow-2xl">
+            <div className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-sm font-bold text-white opacity-0 group-hover:opacity-100 transition-all translate-x-3 group-hover:translate-x-0 pointer-events-none whitespace-nowrap shadow-2xl">
               Call Clinic Directly
             </div>
             
@@ -154,7 +154,7 @@ export default function WhatsAppButton() {
             className="group relative"
           >
             {/* Tooltip Label */}
-            <div className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-[10px] font-bold text-white opacity-0 group-hover:opacity-100 transition-all translate-x-3 group-hover:translate-x-0 pointer-events-none whitespace-nowrap shadow-2xl">
+            <div className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-sm font-bold text-white opacity-0 group-hover:opacity-100 transition-all translate-x-3 group-hover:translate-x-0 pointer-events-none whitespace-nowrap shadow-2xl">
               Live Cases & Results
             </div>
             
@@ -197,12 +197,12 @@ export default function WhatsAppButton() {
                     <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${status.pingColor} opacity-75`}></span>
                     <span className={`relative inline-flex rounded-full h-2 w-2 ${status.dotColor}`}></span>
                   </span>
-                  <span className={`text-[9px] uppercase tracking-widest font-black ${status.headerColor}`}>{status.header}</span>
+                  <span className={`text-sm uppercase tracking-wide font-black ${status.headerColor}`}>{status.header}</span>
                 </div>
                 <p className="text-sm font-black text-[hsl(var(--color-primary))] leading-tight">
                   {status.main}
                 </p>
-                <p className="text-[11px] text-[hsl(var(--color-text-muted))] font-medium">
+                <p className="text-sm text-[hsl(var(--color-text-muted))] font-medium">
                   {status.sub}
                 </p>
               </div>

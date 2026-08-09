@@ -19,6 +19,15 @@
     /* ACCENT (Warm Gold) */
     --color-accent: 39 100% 50%;
 
+    /* ACCENT INK - the same gold, dark enough to be TEXT ON WHITE.
+       --color-accent scores 1.96:1 against white, which fails WCAG AA even at
+       large-heading sizes (3:1). It is a fill and a highlight, not a text
+       colour: correct on the dark blue sections, unreadable on the light ones.
+       This companion is 5.05:1, so it clears AA for body (4.5) and large (3)
+       alike and can be used anywhere on a white ground without a second check.
+       Use --color-accent on dark, --color-accent-ink on light. */
+    --color-accent-ink: 39 100% 30%;
+
     /* TEXT */
     --color-text: 217 33% 17%;
     --color-text-muted: 217 14% 44%;
@@ -108,11 +117,59 @@
     color: hsl(var(--foreground));
     overflow-x: hidden;
     position: relative;
+
+    /* MOBILE READING BASE.
+       16px floor, not 14: below 16 iOS Safari zooms the whole page when a form
+       field takes focus, and this site's primary mobile action is a form.
+       Scales to 17px on wider phones and tablets, where the extra size costs
+       nothing. Line-height 1.65 sits in the 1.6-1.75 band that long clinical
+       paragraphs need to stay scannable. */
+    font-size: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+    line-height: 1.65;
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
   }
+
+  /* Headings get a real mobile scale rather than a shrunk desktop one: each
+     starts at a size that works on a 360px screen and grows with the viewport,
+     so nothing has to be read at a size chosen for a 1440px layout. */
+  h1 { font-size: clamp(2rem, 1.4rem + 3.2vw, 4rem); line-height: 1.12; }
+  h2 { font-size: clamp(1.5rem, 1.15rem + 1.9vw, 3rem); line-height: 1.2; }
+  h3 { font-size: clamp(1.125rem, 1rem + 0.7vw, 1.5rem); line-height: 1.3; }
+
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+    overflow-wrap: break-word;
+  }
+
+  p { text-wrap: pretty; }
 
   ::selection {
     background-color: hsl(var(--accent) / 0.22);
     color: hsl(var(--color-primary));
+  }
+
+  /* Reduced motion, as a backstop.
+     The animations that matter are already gated in JS — GSAP's hero timeline
+     checks the media query and jumps to its end state, and the two infinite
+     Framer loops are switched off at the component. This block catches
+     everything else: CSS transitions, keyframes, and smooth scrolling, which no
+     amount of JS gating would cover.
+     `scroll-behavior: auto` matters as much as the rest here — Lenis-style
+     smooth scrolling is a common motion-sickness trigger. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    html {
+      scroll-behavior: auto !important;
+    }
   }
 }
 
@@ -120,6 +177,46 @@
    COMPONENTS
 ========================= */
 @layer components {
+  /* Section H2s. Replaces the `text-2xl sm:text-3xl md:text-4xl lg:text-5xl`
+     chain that was repeated on six headings — four discrete jumps that were
+     really one continuous ramp, and which pinned every phone from 320px to
+     639px to the same 24px regardless of how much room it had.
+
+     A Tailwind text-* utility beats the bare `h2` element selector on
+     specificity, so those chains silently overrode the fluid base scale. This
+     is a class, so it wins the same way and the ramp actually applies. */
+  .heading-section {
+    font-size: clamp(1.5rem, 1.15rem + 1.9vw, 3rem);
+    line-height: 1.2;
+  }
+
+  /* One vertical rhythm for every section, so each reads as a distinct block
+     instead of bleeding into the next. Tighter than the old desktop-first
+     padding on phones (where 80px of dead space just pushed content below the
+     fold) without becoming cramped. `py-20 md:py-32` and
+     `py-12 sm:py-16 md:py-24 lg:py-32` were both in use; this is the one. */
+  .section-y {
+    padding-top: clamp(3.5rem, 2.5rem + 4vw, 8rem);
+    padding-bottom: clamp(3.5rem, 2.5rem + 4vw, 8rem);
+  }
+
+  /* The Marathi brand statement gets deliberately more air than anything else
+     on the page — the space is the design, not padding left over. */
+  .section-y-airy {
+    padding-top: clamp(5rem, 3rem + 8vw, 10rem);
+    padding-bottom: clamp(5rem, 3rem + 8vw, 10rem);
+  }
+
+  /* Caps line length at roughly 38-42 characters on a phone, widening to a
+     comfortable 65 on desktop. Long clinical paragraphs set full-bleed across
+     a 414px screen are the main reason this page read as a wall of text. */
+  .measure {
+    max-width: 42ch;
+  }
+  @media (min-width: 768px) {
+    .measure { max-width: 65ch; }
+  }
+
   .main-container {
     @apply w-full max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative;
   }

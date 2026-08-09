@@ -493,9 +493,11 @@ export default function ExperiencePage() {
                     {/* Content Area */}
                     <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
                       <div>
-                        <h3 className="text-base sm:text-lg font-black mb-1.5 text-white group-hover:text-[hsl(var(--color-accent))] transition-colors tracking-tight">
+                        {/* Phase 4H: h1 -> h3 skipped a level; these treatment cards are
+                            top-level blocks on this page. Classes untouched. */}
+                        <h2 className="text-base sm:text-lg font-black mb-1.5 text-white group-hover:text-[hsl(var(--color-accent))] transition-colors tracking-tight">
                           {service.title}
-                        </h3>
+                        </h2>
                         <p className="text-white/60 text-xs sm:text-sm mb-4 font-light leading-relaxed line-clamp-2">
                           {service.shortDesc}
                         </p>
@@ -836,9 +838,9 @@ export default function ExperiencePage() {
                       <Target size={20} />
                     </div>
                     <div>
-                      <h4 className="font-bold text-base sm:text-lg text-[hsl(var(--color-primary))] leading-tight mb-1">
+                      <h3 className="font-bold text-base sm:text-lg text-[hsl(var(--color-primary))] leading-tight mb-1">
                         {item.title}
-                      </h4>
+                      </h3>
                       <p className="text-sm sm:text-base text-[hsl(var(--color-text-muted))] font-light leading-relaxed">
                         {item.desc}
                       </p>
@@ -972,9 +974,9 @@ export default function ExperiencePage() {
                   <div className="absolute top-0 right-0 p-12 opacity-10 scale-150 rotate-12">
                     <Users size={120} />
                   </div>
-                  <h4 className="text-2xl font-bold mb-6 text-[hsl(var(--color-accent))]">
+                  <h3 className="text-2xl font-bold mb-6 text-[hsl(var(--color-accent))]">
                     The Specialist Advantage
-                  </h4>
+                  </h3>
                   <p className="text-white/80 leading-relaxed font-light mb-8">
                     While general dentistry focuses on basic care and
                     maintenance, a Prosthodontist undergoes three additional
@@ -1088,9 +1090,9 @@ export default function ExperiencePage() {
                       <item.icon size={32} />
                     </div>
                     <div>
-                      <h4 className="text-lg font-bold text-[hsl(var(--color-primary))] mb-1">
+                      <h3 className="text-lg font-bold text-[hsl(var(--color-primary))] mb-1">
                         {item.title}
-                      </h4>
+                      </h3>
                       <p className="text-[hsl(var(--color-text-muted))] font-light leading-relaxed">
                         {item.desc}
                       </p>

@@ -5,50 +5,21 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Clock } from 'lucide-react';
 import AnimatedSection from '@/components/ui/AnimatedSection';
+import { insights as allInsights } from '@/lib/insights';
 
-// Default insights data - can be replaced with dynamic data
-const defaultInsights = [
-  {
-    id: 1,
-    slug: 'dental-implants-cost-pune',
-    title: 'How much do dental implants cost in Pune?',
-    excerpt: 'A transparent breakdown of implant pricing, what affects the cost, and why investing in quality matters for your long-term oral health.',
-    category: 'Dental Implants',
-    readTime: '5 min read',
-    image: 'https://images.pexels.com/photos/6627566/pexels-photo-6627566.jpeg?auto=compress&cs=tinysrgb&w=800',
-    featured: true,
-  },
-  {
-    id: 2,
-    slug: 'root-canal-pain-myths',
-    title: 'Is root canal treatment painful?',
-    excerpt: 'The truth about modern root canal procedures and why they are nothing like the horror stories you have heard.',
-    category: 'Root Canal',
-    readTime: '4 min read',
-    image: 'https://images.pexels.com/photos/6502019/pexels-photo-6502019.jpeg?auto=compress&cs=tinysrgb&w=800',
-    featured: false,
-  },
-  {
-    id: 3,
-    slug: 'best-dentist-kothrud-pune',
-    title: 'How to find a good dentist in Kothrud',
-    excerpt: 'What to look for when choosing a dentist, red flags to avoid, and questions you should always ask.',
-    category: 'Dental Care',
-    readTime: '3 min read',
-    image: 'https://images.pexels.com/photos/3845810/pexels-photo-3845810.jpeg?auto=compress&cs=tinysrgb&w=800',
-    featured: false,
-  },
-  {
-    id: 4,
-    slug: 'teeth-whitening-safety',
-    title: 'Is teeth whitening safe for your enamel?',
-    excerpt: 'Understanding professional whitening versus at-home kits, and what dentists actually recommend.',
-    category: 'Cosmetic',
-    readTime: '4 min read',
-    image: 'https://images.pexels.com/photos/3762940/pexels-photo-3762940.jpeg?auto=compress&cs=tinysrgb&w=800',
-    featured: false,
-  },
-];
+// SINGLE SOURCE OF TRUTH: lib/insights.js.
+//
+// This file used to carry its own hardcoded `defaultInsights` array, and it had
+// drifted. Its first entry pointed at `/insights/dental-implants-cost-pune`,
+// which has never existed - the real slug is `dental-implants-pune-specialist`.
+// Because this component renders on the homepage AND on all six article pages,
+// that was a live 404 linked from seven pages, including the most-crawled page
+// on the site.
+//
+// It is the same failure mode as the /services/tooth-extraction 404: a second
+// copy of a list that nobody remembered to update. The fix is to not have a
+// second copy. Do not reintroduce a local array here - pass an `insights` prop
+// if a caller needs a different subset.
 
 function FeaturedArticle({ article }) {
   return (
@@ -73,7 +44,7 @@ function FeaturedArticle({ article }) {
           {/* Content Overlay */}
           <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8 lg:p-10">
             {/* Category Badge */}
-            <span className="inline-flex self-start mb-4 px-3 py-1.5 bg-[hsl(var(--accent))] text-[hsl(var(--accent-foreground))] text-xs font-semibold rounded-full uppercase tracking-wider">
+            <span className="inline-flex self-start mb-4 px-3 py-1.5 bg-[hsl(var(--accent))] text-[hsl(var(--accent-foreground))] text-sm font-semibold rounded-full uppercase tracking-wider">
               {article.category}
             </span>
             
@@ -95,7 +66,7 @@ function FeaturedArticle({ article }) {
               </span>
               {/* Descriptive anchor - the article title tells Google what the
                   target page is about; "Read more" tells it nothing. */}
-              <span className="inline-flex items-center gap-2 text-[hsl(var(--accent))] font-semibold text-sm group-hover:gap-3 transition-all duration-300">
+              <span className="inline-flex min-h-[44px] items-center gap-2 py-2 text-[hsl(var(--accent))] font-semibold text-sm group-hover:gap-3 transition-all duration-300">
                 {article.title}
                 <ArrowRight className="w-4 h-4" />
               </span>
@@ -132,17 +103,19 @@ function ArticleCard({ article, index }) {
         {/* Content */}
         <div className="flex-1 min-w-0 flex flex-col justify-center">
           {/* Category */}
-          <span className="text-[hsl(var(--accent))] text-xs font-semibold uppercase tracking-wider mb-1.5">
+          <span className="text-[hsl(var(--accent))] text-sm font-semibold uppercase tracking-wider mb-1.5">
             {article.category}
           </span>
           
           {/* Title */}
-          <h4 className="text-sm sm:text-base font-semibold text-[hsl(var(--color-text))] leading-snug mb-2 line-clamp-2 group-hover:text-[hsl(var(--primary))] transition-colors duration-300">
+          {/* Phase 4H: was h4 under an h2 on both the homepage and every
+              insight article. Same classes. */}
+          <h3 className="text-sm sm:text-base font-semibold text-[hsl(var(--color-text))] leading-snug mb-2 line-clamp-2 group-hover:text-[hsl(var(--primary))] transition-colors duration-300">
             {article.title}
-          </h4>
+          </h3>
           
           {/* Read Time */}
-          <span className="flex items-center gap-1.5 text-[hsl(var(--color-text-muted))] text-xs">
+          <span className="flex items-center gap-1.5 text-[hsl(var(--color-text-muted))] text-sm">
             <Clock className="w-3 h-3" />
             {article.readTime}
           </span>
@@ -160,7 +133,7 @@ function ArticleCard({ article, index }) {
 export default function InsightsSection({ 
   title = "Insights",
   subtitle = "Trusted knowledge from real experts",
-  insights = defaultInsights,
+  insights = allInsights,
   limit = 4,
   variant = 'default', // 'default' for homepage, 'compact' for landing pages
   contextHeading, // e.g., "Before you decide, read this"
@@ -182,7 +155,7 @@ export default function InsightsSection({
                 {contextHeading}
               </p>
             ) : (
-              <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] rounded-full text-xs sm:text-sm font-semibold">
+              <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] rounded-full text-sm sm:text-sm font-semibold">
                 Knowledge Hub
               </div>
             )}

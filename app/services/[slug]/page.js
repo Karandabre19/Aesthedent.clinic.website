@@ -1,7 +1,12 @@
 import { notFound } from 'next/navigation';
 import { getServiceBySlug, getAllServiceSlugs } from '@/lib/services';
 import JsonLd from '@/components/seo/JsonLd';
-import { buildFaqSchema, buildProcedureSchema, buildBreadcrumbSchema } from '@/lib/schema';
+import {
+  buildFaqSchema,
+  buildProcedureSchema,
+  buildBreadcrumbSchema,
+  buildMedicalWebPageSchema,
+} from '@/lib/schema';
 import ServiceDetailClient from './ServiceDetailClient';
 
 // Prerender all eight service pages at build time. Without this they were
@@ -54,6 +59,7 @@ export default async function Page({ params }) {
           Only 1 of 10 competitors has FAQPage - see audit/02-schema-matrix.md. */}
       <JsonLd
         schema={[
+          buildMedicalWebPageSchema(service),
           buildFaqSchema(service.faqs),
           buildProcedureSchema(service),
           buildBreadcrumbSchema([

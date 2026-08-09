@@ -72,6 +72,19 @@ export const OPENING = {
   hours: '10am–8pm',
 } as const;
 
+/**
+ * DIGITS ONLY -country code + number, no '+', no dashes, no spaces.
+ *
+ * This is not a display string. It is interpolated straight into the `phone`
+ * query parameter of the click-to-chat URL below, and WhatsApp rejects any
+ * separator there: '91-9309816336' produces a link that opens WhatsApp to
+ * nothing. Formatting it for readability silently breaks every WhatsApp CTA on
+ * the site at once -the service pages, the Kothrud area page and the intake
+ * form all route through buildWhatsappLink().
+ *
+ * If a human-readable form is ever needed on screen, add a SEPARATE export for
+ * it. Do not punctuate this one.
+ */
 export const WHATSAPP_NUMBER = '919309816336';
 
 /**
@@ -86,17 +99,47 @@ export function buildWhatsappMessage(context?: string): string {
   const body = context
     ? `Hello, Aesthedent Dental Clinic.\nI was reading about ${context} and would like to ask a few questions.`
     : 'Hello, Aesthedent Dental Clinic.\nI would like to book an appointment.';
+  return buildWhatsappLink(body);
+}
+
+/**
+ * The ONE place a wa.me / click-to-chat URL is constructed. Everything that
+ * opens WhatsApp goes through here so the number and the encoding live in a
+ * single spot -buildWhatsappMessage() above is a thin wrapper over it, and the
+ * intake wizard passes its assembled body straight in.
+ *
+ * This is click-to-chat: it opens WhatsApp with the text prefilled and the
+ * PATIENT taps send. It cannot auto-send -no website can without the paid
+ * WhatsApp Business API -and that is the behaviour we want, because the enquiry
+ * then arrives from the patient's own number and the front desk can just reply.
+ */
+export function buildWhatsappLink(body: string): string {
   return `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(body)}`;
 }
 
 /**
- * Countable patient/case numbers are DELIBERATELY ABSENT.
+ * Countable figures, confirmed by Dr. Sahil on 2026-08-08.
  *
- * "5000+ Happy Patients", "500+ successful cases", "1000+ patients" and
- * "98% success rate" have all appeared on this site with no source behind any of
- * them (audit/NEEDS-INPUT.md N3, N4, N5, N10). Until Dr. Sahil supplies a real
- * countable figure, the trust number we use is the one anyone can verify for
- * themselves: REVIEWS.count five-star Google reviews.
+ * THIS BLOCK USED TO BE A PROHIBITION. "5000+ Happy Patients", "500+ successful
+ * cases", "1000+ patients" and "98% success rate" had all shipped with no source
+ * behind any of them (audit/NEEDS-INPUT.md N3, N4, N5, N10), and were stripped.
  *
- * Do not add a patient count here without a source.
+ * The rule was never "no numbers" -it was "no numbers without a source", and it
+ * named its own release condition: until Dr. Sahil supplies a real countable
+ * figure. He has. These four are his, given 2026-08-08, and that is why they are
+ * here when the earlier ones were removed.
+ *
+ * Anything NOT in this object still needs a source before it ships. "98% success
+ * rate" in particular was NOT reinstated and must not be.
+ *
+ * rootCanals is a COUNT OF PROCEDURES. It renders as "Root Canals / Completed"
+ * and must never be labelled "Painless Root Canals" -pain is an outcome that
+ * varies by patient and procedure, which is precisely why "100% Painless
+ * Treatments" was removed from the trust bar already.
  */
+export const STATS = {
+  years: '10+',
+  patients: '1000+',
+  implants: '100+',
+  rootCanals: '500+',
+} as const;

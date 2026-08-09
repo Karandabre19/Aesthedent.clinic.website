@@ -1,13 +1,10 @@
 'use client';
 
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
+import IntakeWizard from '@/components/forms/IntakeWizard';
 import PageWrapper from '@/components/layout/PageWrapper';
 import SectionHeading from '@/components/ui/SectionHeading';
 import AnimatedSection from '@/components/ui/AnimatedSection';
@@ -64,36 +61,10 @@ const contactInfo = [
 ];
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    message: ''
-  });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-      
-      if (response.ok) {
-        setIsSubmitted(true);
-        setFormData({ name: '', phone: '', email: '', message: '' });
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-    }
-    
-    setIsLoading(false);
-  };
+  // The form state and the /api/contact POST that lived here were removed with
+  // the old form -IntakeWizard owns its own state and sends via WhatsApp
+  // click-to-chat instead. The /api/contact route is left in place and is simply
+  // no longer called from this page; delete it separately if nothing else uses it.
 
   return (
     <PageWrapper>
@@ -107,8 +78,10 @@ export default function ContactPage() {
             transition={{ duration: 0.5 }}
           >
             <Badge className="mb-4 bg-[hsl(var(--color-primary-light))] text-[hsl(var(--color-primary))]">Contact Us</Badge>
+            {/* Phase 4H: was "Get in Touch" -zero keywords, zero location, on
+                one of the four Tier-1 pages (audit/01-content-spine.md §1.1). */}
             <h1 className="text-4xl lg:text-[52px] font-semibold text-[hsl(var(--color-text))] mb-6 leading-tight">
-              Get in Touch
+              Contact Aesthedent &mdash; Book a Dentist in Kothrud, Pune
             </h1>
             <p className="text-lg lg:text-xl text-[hsl(var(--color-text-muted))] leading-relaxed">
               Have questions? Want to book an appointment? We're here to help. Reach out to us through any of the channels below.
@@ -172,7 +145,10 @@ export default function ContactPage() {
                     <div className="w-14 h-14 bg-[hsl(var(--color-primary-light))] rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <info.icon className="w-7 h-7 text-[hsl(var(--color-primary))]" />
                     </div>
-                    <h3 className="font-semibold text-[hsl(var(--color-text))] mb-3">{info.title}</h3>
+                    {/* Phase 4H: h1 -> h3 skipped a level. These cards are the
+                        page's top-level content blocks, so they are h2. Classes
+                        unchanged, so nothing moves visually. */}
+                    <h2 className="font-semibold text-[hsl(var(--color-text))] mb-3">{info.title}</h2>
                     <div className="space-y-1 mb-4">
                       {info.details.map((detail, j) => (
                         <p key={j} className="text-[hsl(var(--color-text-muted))] text-sm">{detail}</p>
@@ -228,97 +204,17 @@ export default function ContactPage() {
             <AnimatedSection direction="right">
               <Card className="border-[hsl(var(--color-border))] shadow-lg">
                 <CardContent className="p-8">
-                  <h3 className="text-2xl font-semibold text-[hsl(var(--color-text))] mb-2">Send Us a Message</h3>
-                  <p className="text-[hsl(var(--color-text-muted))] mb-6">We'll get back to you within 24 hours.</p>
+                  <h2 className="text-2xl font-semibold text-[hsl(var(--color-text))] mb-2">Book an appointment</h2>
+                  <p className="text-[hsl(var(--color-text-muted))] mb-6">Five quick questions, then it opens in WhatsApp for you to send.</p>
                   
-                  {isSubmitted ? (
-                    <motion.div 
-                      className="text-center py-12"
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                    >
-                      <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <CheckCircle2 className="w-8 h-8 text-green-600" />
-                      </div>
-                      <h4 className="text-xl font-semibold text-[hsl(var(--color-text))] mb-2">Message Sent!</h4>
-                      <p className="text-[hsl(var(--color-text-muted))] mb-6">Thank you for contacting us. We'll reach out to you soon.</p>
-                      <Button 
-                        variant="outline" 
-                        onClick={() => setIsSubmitted(false)}
-                      >
-                        Send Another Message
-                      </Button>
-                    </motion.div>
-                  ) : (
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                      <div className="grid sm:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="name">Your Name *</Label>
-                          <Input 
-                            id="name"
-                            required
-                            placeholder="John Doe"
-                            value={formData.name}
-                            onChange={(e) => setFormData({...formData, name: e.target.value})}
-                            className="h-12"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="phone">Phone Number *</Label>
-                          <Input 
-                            id="phone"
-                            type="tel"
-                            required
-                            placeholder="+91 93098 16336"
-                            value={formData.phone}
-                            onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                            className="h-12"
-                          />
-                        </div>
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <Label htmlFor="email">Email (Optional)</Label>
-                        <Input 
-                          id="email"
-                          type="email"
-                          placeholder="john@example.com"
-                          value={formData.email}
-                          onChange={(e) => setFormData({...formData, email: e.target.value})}
-                          className="h-12"
-                        />
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <Label htmlFor="message">Your Message *</Label>
-                        <Textarea 
-                          id="message"
-                          required
-                          placeholder="Tell us how we can help you..."
-                          value={formData.message}
-                          onChange={(e) => setFormData({...formData, message: e.target.value})}
-                          rows={4}
-                          className="resize-none"
-                        />
-                      </div>
-                      
-                      <Button 
-                        type="submit" 
-                        size="lg" 
-                        className="w-full bg-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary-dark))] text-[hsl(var(--primary-foreground))] py-6"
-                        disabled={isLoading}
-                      >
-                        {isLoading ? (
-                          'Sending...'
-                        ) : (
-                          <>
-                            <Send className="w-5 h-5 mr-2" />
-                            Send Message
-                          </>
-                        )}
-                      </Button>
-                    </form>
-                  )}
+                  {/* Phase 4I: the old contact form POSTed to /api and the
+                      patient then waited, with no confirmation they could see.
+                      Replaced by the WhatsApp intake wizard - the enquiry lands
+                      in a thread from the patient's own number, which the front
+                      desk can simply reply to.
+                      See components/forms/IntakeWizard.tsx. */}
+                  <IntakeWizard />
+
                 </CardContent>
               </Card>
             </AnimatedSection>
