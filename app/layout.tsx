@@ -46,7 +46,11 @@ export const metadata = {
     siteName: 'Aesthedent Dental Clinic',
     locale: 'en_IN',
     type: 'website',
-    images: [{ url: '/homepage-banner.png', width: 1200, height: 630, alt: 'Aesthedent Dental Clinic, Kothrud, Pune' }],
+    // Dimensions must match the real file (1672x941), not the 1200x630 OG
+    // template size - crawlers lay the card out from these numbers, so a wrong
+    // ratio gets the preview letterboxed or cropped. Stays the landscape
+    // banner: the portrait mobile crop is wrong for a social card.
+    images: [{ url: '/homepage-banner.png', width: 1672, height: 941, alt: 'Aesthedent Dental Clinic, Kothrud, Pune' }],
   },
   twitter: {
     card: 'summary_large_image',

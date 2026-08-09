@@ -6,14 +6,19 @@ import AnimatedSection from '@/components/ui/AnimatedSection';
 import { getTestimonials } from '@/lib/testimonials';
 import { REVIEWS } from '@/lib/clinic';
 
+// shrink-0 + whitespace-nowrap are load-bearing on phones. This badge shares a
+// justify-between row with the reviewer's name, and at 390px it was both
+// wrapping to two lines itself ("GOOGLE / REVIEW") and squeezing the name into
+// ~80px so that wrapped too. Held on one line at a smaller size it costs ~124px
+// and the name keeps a single line. Desktop sizing is restored at sm:.
 function GoogleReviewBadge() {
   return (
-    <div className="inline-flex items-center gap-2 rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--color-bg-alt))] px-3 py-1.5">
+    <div className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--color-bg-alt))] px-2 py-1 sm:gap-2 sm:px-3 sm:py-1.5">
       <div className="flex items-center gap-1">
         <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--color-primary))]" />
         <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--color-accent))]" />
       </div>
-      <span className="text-sm font-semibold uppercase tracking-[0.14em] text-[hsl(var(--color-text-muted))]">
+      <span className="whitespace-nowrap text-[10px] font-semibold uppercase tracking-[0.08em] text-[hsl(var(--color-text-muted))] sm:text-sm sm:tracking-[0.14em]">
         Google Review
       </span>
     </div>
@@ -44,13 +49,15 @@ function ReviewerAvatar({ testimonial }) {
     .toUpperCase();
 
   return (
-    <div className="relative h-14 w-14 overflow-hidden rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--color-bg-alt))] flex items-center justify-center">
+    // shrink-0 so the circle never deforms into an ellipse when the name beside
+    // it is long. 40px on phones, the original 56px from sm: up.
+    <div className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--color-bg-alt))] sm:h-14 sm:w-14">
       {initials ? (
-        <span className="text-base font-semibold tracking-wide text-[hsl(var(--color-primary))]">
+        <span className="text-sm font-semibold tracking-wide text-[hsl(var(--color-primary))] sm:text-base">
           {initials}
         </span>
       ) : (
-        <User className="w-7 h-7 text-[hsl(var(--color-primary))]/40" />
+        <User className="h-5 w-5 text-[hsl(var(--color-primary))]/40 sm:h-7 sm:w-7" />
       )}
     </div>
   );
@@ -80,20 +87,20 @@ function TestimonialCard({ testimonial, delay = 0 }) {
     <AnimatedSection
       key={testimonial.id}
       delay={delay}
-      className="overflow-hidden rounded-[1.6rem] border border-[hsl(var(--border))] bg-[hsl(var(--background))] p-6 shadow-[0_22px_50px_-32px_hsl(var(--color-primary)/0.16)] transition-all duration-300 hover:-translate-y-1 hover:border-[hsl(var(--color-primary))]/20 hover:shadow-[0_28px_60px_-34px_hsl(var(--color-primary)/0.2)]"
+      className="overflow-hidden rounded-[1.25rem] border border-[hsl(var(--border))] bg-[hsl(var(--background))] p-4 shadow-[0_22px_50px_-32px_hsl(var(--color-primary)/0.16)] transition-all duration-300 hover:-translate-y-1 hover:border-[hsl(var(--color-primary))]/20 hover:shadow-[0_28px_60px_-34px_hsl(var(--color-primary)/0.2)] sm:rounded-[1.6rem] sm:p-6"
     >
-      <div className="mb-5 flex items-start justify-between gap-4">
-        <div className="flex items-center gap-3 min-w-0">
+      <div className="mb-3.5 flex items-start justify-between gap-2 sm:mb-5 sm:gap-4">
+        <div className="flex min-w-0 items-center gap-2.5 sm:gap-3">
           <ReviewerAvatar testimonial={testimonial} />
           <div className="min-w-0">
             {/* Not truncated. At 360px `truncate` was cutting real patients'
                 names mid-word ("Shekhar Bhosle" into 80px of an available
                 125px), and a review signed by a clipped name reads as less
                 real, not more compact. Names wrap instead. */}
-            <h3 className="text-base font-semibold leading-snug text-[hsl(var(--color-text))]">
+            <h3 className="text-sm font-semibold leading-snug text-[hsl(var(--color-text))] sm:text-base">
               {testimonial.name}
             </h3>
-            <p className="mt-1 text-sm text-[hsl(var(--color-text-muted))]">
+            <p className="mt-0.5 text-xs text-[hsl(var(--color-text-muted))] sm:mt-1 sm:text-sm">
               {isVerified ? 'Verified patient' : 'Patient feedback'}
             </p>
           </div>
@@ -101,23 +108,30 @@ function TestimonialCard({ testimonial, delay = 0 }) {
         {isVerified && <GoogleReviewBadge />}
       </div>
 
-      <div className="mb-4 flex items-center justify-between gap-3">
+      <div className="mb-3 flex items-center justify-between gap-2 sm:mb-4 sm:gap-3">
         <ReviewStars rating={testimonial.rating} />
-        <span className="rounded-full bg-[hsl(var(--color-bg-alt))] px-3 py-1 text-sm font-semibold uppercase tracking-[0.14em] text-[hsl(var(--color-primary))]">
+        {/* No nowrap here on purpose: services run as long as "Tooth Extraction
+            & Implant", which cannot hold one line at 390px. It shrinks and
+            wraps rather than pushing the stars off the row. */}
+        <span className="rounded-full bg-[hsl(var(--color-bg-alt))] px-2 py-0.5 text-right text-[10px] font-semibold uppercase tracking-[0.08em] text-[hsl(var(--color-primary))] sm:px-3 sm:py-1 sm:text-sm sm:tracking-[0.14em]">
           {testimonial.service}
         </span>
       </div>
 
-      <p className="mb-6 text-[15px] leading-7 text-[hsl(var(--color-text))] line-clamp-4">
+      <p className="mb-4 text-sm leading-6 text-[hsl(var(--color-text))] line-clamp-4 sm:mb-6 sm:text-[15px] sm:leading-7">
         {testimonial.text}
       </p>
 
-      <div className="flex items-center justify-between border-t border-[hsl(var(--border))] pt-4">
+      {/* Stacked on phones. Side by side, these two blocks had ~150px each at
+          390px, so the provenance line and the link BOTH wrapped and the row
+          ran four lines deep. Stacking spends one line on each instead, and is
+          shorter than what the squeezed row produced. Row layout returns at sm:. */}
+      <div className="flex flex-col items-start gap-2 border-t border-[hsl(var(--border))] pt-3 sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:pt-4">
         <div>
-          <p className="text-sm font-medium text-[hsl(var(--color-primary))]">
+          <p className="text-xs font-medium text-[hsl(var(--color-primary))] sm:text-sm">
             {isVerified ? 'Shared on Google' : 'Patient feedback'}
           </p>
-          <p className="text-sm text-[hsl(var(--color-text-muted))]">
+          <p className="text-xs text-[hsl(var(--color-text-muted))] sm:text-sm">
             {isVerified
               ? `One of ${REVIEWS.count} five-star reviews`
               : 'Awaiting profile confirmation'}
