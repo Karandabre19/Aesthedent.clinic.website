@@ -1,5 +1,9 @@
 import { insights } from '@/lib/insights';
 import { services } from '@/lib/services';
+import { getInsightOverrides } from '@/sanity/lib/insights';
+import { applyInsightOverrides } from '@/sanity/lib/insight-overrides';
+import { getSeoState } from '@/sanity/lib/seo';
+import { resolveSeoMetadata } from '@/sanity/lib/seo-mapping';
 
 const SITE_URL = 'https://www.aesthedentpune.com';
 
@@ -26,19 +30,24 @@ function publishedDate(date) {
   return Number.isNaN(timestamp) ? undefined : new Date(timestamp);
 }
 
-export default function sitemap() {
+export default async function sitemap() {
   const staticRoutes = staticPaths.map((path) => ({ url: absoluteUrl(path) }));
 
   const serviceRoutes = services.map(({ slug }) => ({
     url: absoluteUrl(`/services/${slug}`),
   }));
 
-  const insightRoutes = insights.map(({ slug, date }) => ({
+  const articles = applyInsightOverrides(insights, await getInsightOverrides(true));
+  const insightRoutes = articles.map(({ slug, date, publishedDate: cmsDate, modifiedAt }) => ({
     url: absoluteUrl(`/insights/${slug}`),
     // The article publication date is the only verified page-change date in the
     // source data. Omit lastModified for other pages rather than inventing one.
-    lastModified: publishedDate(date),
+    lastModified: publishedDate(modifiedAt ?? (cmsDate ? `${cmsDate}T00:00:00.000Z` : date)),
   }));
 
-  return [...staticRoutes, ...serviceRoutes, ...insightRoutes];
+  const state = await getSeoState(true);
+  return [...staticRoutes, ...serviceRoutes, ...insightRoutes].filter(entry => {
+    const route = new URL(entry.url).pathname;
+    return resolveSeoMetadata(route, {}, state.defaults, state.pages[route], state.pages).indexable;
+  });
 }

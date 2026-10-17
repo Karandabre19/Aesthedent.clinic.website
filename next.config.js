@@ -3,6 +3,12 @@ const nextConfig = {
 
   images: {
     remotePatterns: [
+      ...(/^[a-z0-9]{8}$/.test(process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '') && /^[a-z0-9][a-z0-9_-]*$/.test(process.env.NEXT_PUBLIC_SANITY_DATASET || '') ? [{
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+        port: '',
+        pathname: `/images/${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}/${process.env.NEXT_PUBLIC_SANITY_DATASET}/**`,
+      }] : []),
       {
         protocol: 'https',
         hostname: 'images.pexels.com',

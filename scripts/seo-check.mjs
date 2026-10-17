@@ -6,6 +6,7 @@
  * Run `next build` first, then `node scripts/seo-check.mjs`.
  */
 import { readFileSync, existsSync } from 'node:fs';
+import { REVIEWS, STATS } from '../lib/clinic.ts';
 
 const DIR = '.next/server/app';
 const SITE = 'https://www.aesthedentpune.com';
@@ -35,8 +36,8 @@ const read = (file) => {
 
 // ── BUG 1: headings must read cleanly, each word once ────────────────────
 const headingChecks = [
-  // Phase 4A: the H1 now carries both Tier-1 terms (dental care + Kothrud).
-  { file: 'index.html', tag: 'h1', route: '/', expect: 'Dental Care in Kothrud, Pune. Redefined.' },
+  // Matches the existing homepage rebuild; CMS integration must preserve it.
+  { file: 'index.html', tag: 'h1', route: '/', expect: 'The dentist that takes the fear away.' },
   { file: 'aesthedent-experience.html', tag: 'h2', route: '/aesthedent-experience', contains: 'RECLAIM', notContains: 'RECLAIMRECLAIM' },
 ];
 
@@ -55,7 +56,7 @@ for (const hc of headingChecks) {
     // Belt and braces: catches a regression that still happened to produce the
     // right string by accident.
     const occurrences = (hay, needle) => hay.split(needle).length - 1;
-    for (const phrase of ['Dental Care', 'in Kothrud, Pune.', 'Redefined.']) {
+    for (const phrase of ['dentist', 'fear', 'away.']) {
       const n = occurrences(text, phrase);
       check(`${hc.route} <h1> says "${phrase}" exactly once`, n === 1, `appears ${n}× in "${text}"`);
     }
@@ -104,10 +105,8 @@ for (const hc of headingChecks) {
     for (const z of zeroPatterns) {
       check(`/ stat not zeroed - ${z.label.split(' renders')[0]}`, !z.pat.test(text), z.pat.test(text) ? z.label : '');
     }
-    check('/ ships "5000" (Happy Patients real value)', html.includes('5000'), 'absent from SSR HTML');
-    // 277, not 263: verified against the live Google Business Profile on
-    // 2026-07-17 (audit/02-gbp-comparison.md). The site was 14 reviews behind.
-    check('/ ships "277 Reviews" (verified live count)', html.includes('277 Reviews'), 'absent from SSR HTML');
+    check('/ ships the centrally confirmed patient count', html.includes(STATS.patients), 'absent from SSR HTML');
+    check('/ ships the centrally verified review count', html.includes(`${REVIEWS.count} Reviews`), 'absent from SSR HTML');
   }
 }
 

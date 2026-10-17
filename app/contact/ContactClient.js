@@ -60,7 +60,7 @@ const contactInfo = [
   }
 ];
 
-export default function ContactPage() {
+export default function ContactPage({ presentation = {} }) {
   // The form state and the /api/contact POST that lived here were removed with
   // the old form -IntakeWizard owns its own state and sends via WhatsApp
   // click-to-chat instead. The /api/contact route is left in place and is simply
@@ -77,15 +77,15 @@ export default function ContactPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Badge className="mb-4 bg-[hsl(var(--color-primary-light))] text-[hsl(var(--color-primary))]">Contact Us</Badge>
+            <Badge className="mb-4 bg-[hsl(var(--color-primary-light))] text-[hsl(var(--color-primary))]">{presentation?.hero?.eyebrow ?? <>Contact Us</>}</Badge>
             {/* Phase 4H: was "Get in Touch" -zero keywords, zero location, on
                 one of the four Tier-1 pages (audit/01-content-spine.md §1.1). */}
             <h1 className="text-4xl lg:text-[52px] font-semibold text-[hsl(var(--color-text))] mb-6 leading-tight">
-              Contact Aesthedent &mdash; Book a Dentist in Kothrud, Pune
-            </h1>
+              {presentation?.hero?.heading ?? <>Contact Aesthedent &mdash; Book a Dentist in Kothrud, Pune
+            </>}</h1>
             <p className="text-lg lg:text-xl text-[hsl(var(--color-text-muted))] leading-relaxed">
-              Have questions? Want to book an appointment? We're here to help. Reach out to us through any of the channels below.
-            </p>
+              {presentation?.hero?.intro ?? <>Have questions? Want to book an appointment? We're here to help. Reach out to us through any of the channels below.
+            </>}</p>
           </motion.div>
         </div>
       </section>
@@ -102,8 +102,8 @@ export default function ContactPage() {
               >
                 <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="w-5 h-5 mr-2" />
-                  Book on WhatsApp
-                </a>
+                  {presentation?.actions?.whatsappLabel ?? <>Book on WhatsApp
+                </>}</a>
               </Button>
             </MagneticWrapper>
 
@@ -116,8 +116,8 @@ export default function ContactPage() {
               >
                 <a href={instagramLink} target="_blank" rel="noopener noreferrer">
                   <Instagram className="w-5 h-5 mr-2" />
-                  Follow on Instagram
-                </a>
+                  {presentation?.actions?.instagramLabel ?? <>Follow on Instagram
+                </>}</a>
               </Button>
             </MagneticWrapper>
 
@@ -195,8 +195,8 @@ export default function ContactPage() {
                   rel="noopener noreferrer"
                   className="absolute bottom-4 right-4 bg-white px-4 py-2 rounded-full shadow-lg text-sm font-medium text-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary-light))] transition-colors"
                 >
-                  Open in Google Maps
-                </a>
+                  {presentation?.visit?.mapLabel ?? <>Open in Google Maps
+                </>}</a>
               </div>
             </AnimatedSection>
 
@@ -204,7 +204,7 @@ export default function ContactPage() {
             <AnimatedSection direction="right">
               <Card className="border-[hsl(var(--color-border))] shadow-lg">
                 <CardContent className="p-8">
-                  <h2 className="text-2xl font-semibold text-[hsl(var(--color-text))] mb-2">Book an appointment</h2>
+                  <h2 className="text-2xl font-semibold text-[hsl(var(--color-text))] mb-2">{presentation?.appointment?.heading ?? <>Book an appointment</>}</h2>
                   <p className="text-[hsl(var(--color-text-muted))] mb-6">Five quick questions, then it opens in WhatsApp for you to send.</p>
                   
                   {/* Phase 4I: the old contact form POSTed to /api and the
@@ -228,8 +228,8 @@ export default function ContactPage() {
           <AnimatedSection>
             <div className="bg-gradient-to-br from-[hsl(var(--color-primary))] to-[hsl(var(--color-primary-dark))] rounded-3xl p-8 lg:p-12 text-center text-[hsl(var(--primary-foreground))]">
               <h2 className="text-2xl lg:text-3xl font-semibold mb-4">
-                Prefer Instant Booking?
-              </h2>
+                {presentation?.closing?.heading ?? <>Prefer Instant Booking?
+              </>}</h2>
               <p className="text-[hsl(var(--primary-foreground)/0.8)] mb-8 max-w-xl mx-auto">
                 Skip the form and book directly on WhatsApp. Our team will confirm your appointment within minutes.
               </p>
@@ -241,8 +241,8 @@ export default function ContactPage() {
                 >
                   <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
                     <MessageCircle className="w-6 h-6 mr-3" />
-                    Book on WhatsApp
-                  </a>
+                    {presentation?.closing?.whatsappLabel ?? <>Book on WhatsApp
+                  </>}</a>
                 </Button>
               </MagneticWrapper>
             </div>

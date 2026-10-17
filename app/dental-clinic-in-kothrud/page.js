@@ -1,3 +1,5 @@
+import { getPageSeo } from '@/sanity/lib/seo';
+import { getPresentationPage } from '@/sanity/lib/presentation-pages';
 import AreaClient from './AreaClient';
 import JsonLd from '@/components/seo/JsonLd';
 import { buildClinicSchema, buildBreadcrumbSchema, SITE_URL } from '@/lib/schema';
@@ -21,7 +23,7 @@ const PAGE_PATH = '/dental-clinic-in-kothrud';
 //   /contact                   → booking, phone, map, form      - transactional
 // The exact-match URL is why this page takes "dental clinic in kothrud" rather
 // than /about, which held it after Part C.
-export const metadata = {
+const fallbackMetadata = {
   title: 'Dental Clinic in Kothrud, Pune',
   description:
     'Aesthedent is a dental clinic on Paud Road in Kothrud, Pune, a short drive from Karve Nagar, Erandwane and Deccan. Open six days including weekends.',
@@ -37,11 +39,13 @@ export const metadata = {
     locale: 'en_IN',
   },
 };
+export async function generateMetadata() { return (await getPageSeo('/dental-clinic-in-kothrud', fallbackMetadata)).metadata; }
 
-export default function Page() {
+export default async function Page() {
+  const seoState = await getPageSeo('/dental-clinic-in-kothrud', fallbackMetadata);
   return (
     <>
-      <JsonLd
+      <>{seoState.structuredData && <JsonLd
         schema={[
           // Same @id as every other page - one clinic, one entity. See the note
           // on buildClinicSchema in lib/schema.js.
@@ -51,8 +55,8 @@ export default function Page() {
             { name: 'Dental Clinic in Kothrud', path: PAGE_PATH },
           ]),
         ]}
-      />
-      <AreaClient />
+      />}</>
+      <AreaClient presentation={await getPresentationPage('localLandingPage')} />
     </>
   );
 }

@@ -1,14 +1,15 @@
 'use client';
 
+import EditorialImage from '@/components/insights/EditorialImage';
+
 import Link from 'next/link';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import PageWrapper from '@/components/layout/PageWrapper';
 import SectionHeading from '@/components/ui/SectionHeading';
 import AnimatedSection from '@/components/ui/AnimatedSection';
-import { services } from '@/lib/services';
+import { services as fallbackServices } from '@/lib/services';
 import { 
   ArrowRight, 
   CheckCircle2, 
@@ -29,7 +30,7 @@ const iconMap = {
 
 const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
 
-export default function ServicesPage() {
+export default function ServicesPage({ presentation = {}, services = fallbackServices }) {
   return (
     <PageWrapper>
       {/* Hero */}
@@ -48,11 +49,11 @@ export default function ServicesPage() {
                 treatment kothrud" (Part A) and /about owns "dental clinic in
                 kothrud". Three distinct terms, three pages. */}
             <h1 className="text-4xl lg:text-[52px] font-semibold text-[hsl(var(--color-text))] mb-6 leading-tight">
-              Dental treatments in Kothrud, Pune
-            </h1>
+              {presentation?.hero?.heading ?? <>Dental treatments in Kothrud, Pune
+            </>}</h1>
             <p className="text-lg lg:text-xl text-[hsl(var(--color-text-muted))] leading-relaxed">
-              Eight treatments, each planned by a specialist prosthodontist and explained to you in plain words before anything starts.
-            </p>
+              {presentation?.hero?.intro ?? <>Eight treatments, each planned by a specialist prosthodontist and explained to you in plain words before anything starts.
+            </>}</p>
           </motion.div>
         </div>
       </section>
@@ -120,8 +121,8 @@ export default function ServicesPage() {
                             <div className="grid md:grid-cols-2 gap-8 items-center">
                               <div>
                                 <h3 className="text-[hsl(var(--color-primary))] font-semibold uppercase tracking-wider text-xs mb-3">
-                                  Why this treatment?
-                                </h3>
+                                  {presentation?.labels?.why ?? <>Why this treatment?
+                                </>}</h3>
                                 <p className="text-[hsl(var(--color-text))] text-lg mb-6 leading-relaxed">
                                   {service.problem}
                                 </p>
@@ -136,18 +137,18 @@ export default function ServicesPage() {
                                   </Button>
                                   <Button variant="outline" className="border-[hsl(var(--color-primary))] text-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary-light))]" asChild>
                                     <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                                      Book Consultation
-                                    </a>
+                                      {presentation?.labels?.book ?? <>Book Consultation
+                                    </>}</a>
                                   </Button>
                                 </div>
                               </div>
                               <div className="hidden md:block">
-                                <Image 
+                                <EditorialImage
                                   src={service.image} 
                                   alt={service.title}
                                   width={600}
                                   height={340}
-                                  className="rounded-2xl shadow-lg aspect-video object-cover"
+                                  className="rounded-2xl shadow-lg aspect-video object-cover" imageOverride={service.coverImage} cropWidth={960} cropHeight={540}
                                 />
                               </div>
                             </div>
@@ -167,9 +168,9 @@ export default function ServicesPage() {
       <section className="section-spacing bg-[hsl(var(--color-bg-alt))]">
         <div className="main-container">
           <SectionHeading 
-            badge="Our Approach"
-            title="What Makes Our Services Different"
-            subtitle="We combine advanced technology with a compassionate approach"
+            badge={presentation?.approach?.eyebrow ?? "Our Approach"}
+            title={presentation?.approach?.heading ?? "What Makes Our Services Different"}
+            subtitle={presentation?.approach?.intro ?? "We combine advanced technology with a compassionate approach"}
           />
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -200,11 +201,11 @@ export default function ServicesPage() {
           <AnimatedSection>
             <div className="bg-[hsl(var(--color-primary))] rounded-3xl p-8 lg:p-12 text-center text-[hsl(var(--primary-foreground))]">
               <h2 className="text-2xl lg:text-3xl font-semibold mb-4">
-                Not Sure Which Service You Need?
-              </h2>
+                {presentation?.closing?.heading ?? <>Not Sure Which Service You Need?
+              </>}</h2>
               <p className="text-[hsl(var(--primary-foreground)/0.8)] mb-8 max-w-xl mx-auto">
-                Book a consultation and let our experts recommend the best treatment for you. No pressure, just honest advice.
-              </p>
+                {presentation?.closing?.intro ?? <>Book a consultation and let our experts recommend the best treatment for you. No pressure, just honest advice.
+              </>}</p>
               <Button 
                 size="lg" 
                 className="bg-[hsl(var(--background))] text-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-bg-alt))] px-8 py-6 text-base font-medium"
@@ -212,8 +213,8 @@ export default function ServicesPage() {
               >
                 <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="w-5 h-5 mr-2" />
-                  Book a Consultation
-                </a>
+                  {presentation?.closing?.whatsappLabel ?? <>Book a Consultation
+                </>}</a>
               </Button>
             </div>
           </AnimatedSection>

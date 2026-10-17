@@ -23,7 +23,7 @@ import { REVIEWS, OPENING, DOCTORS, buildWhatsappMessage } from '@/lib/clinic';
 
 const whatsappLink = buildWhatsappMessage('your clinic in Kothrud');
 
-export default function AreaClient() {
+export default function AreaClient({ presentation = {} }) {
   return (
     <PageWrapper>
       {/* Hero */}
@@ -31,8 +31,8 @@ export default function AreaClient() {
         <div className="main-container">
           <AnimatedSection className="max-w-3xl">
             <h1 className="text-4xl lg:text-[52px] font-semibold text-[hsl(var(--color-primary))] mb-6 leading-tight">
-              A dental clinic in Kothrud, Pune &mdash; and how to find it
-            </h1>
+              {presentation?.hero?.heading ?? <>A dental clinic in Kothrud, Pune &mdash; and how to find it
+            </>}</h1>
             <p className="text-lg lg:text-xl text-[hsl(var(--color-text-muted))] leading-relaxed">
               We are on the first floor of AJ Tower in Dahanukar Colony, just off
               Paud Road. This page is the practical one: where we are, who we
@@ -49,8 +49,8 @@ export default function AreaClient() {
           <div className="grid gap-10 lg:grid-cols-2">
             <AnimatedSection>
               <h2 className="text-2xl lg:text-3xl font-semibold text-[hsl(var(--color-text))] mb-5">
-                Finding us
-              </h2>
+                {presentation?.visit?.heading ?? <>Finding us
+              </>}</h2>
               <p className="text-base leading-relaxed text-[hsl(var(--color-text-muted))] mb-4">
                 The clinic is at {NAP.streetAddress}, {NAP.addressLocality}{' '}
                 {NAP.postalCode}. The landmark most people navigate by is the
@@ -113,8 +113,8 @@ export default function AreaClient() {
         <div className="main-container">
           <AnimatedSection className="max-w-3xl">
             <h2 className="text-2xl lg:text-3xl font-semibold text-[hsl(var(--color-text))] mb-5">
-              Where our patients come from
-            </h2>
+              {presentation?.area?.heading ?? <>Where our patients come from
+            </>}</h2>
             <p className="text-base leading-relaxed text-[hsl(var(--color-text-muted))] mb-4">
               Most people who come to us live within a few minutes of the clinic
               &mdash; Kothrud itself, and the Karve Nagar side. For anything
@@ -145,8 +145,8 @@ export default function AreaClient() {
         <div className="main-container">
           <AnimatedSection className="max-w-3xl">
             <h2 className="text-2xl lg:text-3xl font-semibold text-[hsl(var(--color-text))] mb-5">
-              Why people here choose us
-            </h2>
+              {presentation?.why?.heading ?? <>Why people here choose us
+            </>}</h2>
             <p className="text-base leading-relaxed text-[hsl(var(--color-text-muted))] mb-6">
               Two things, and we would rather state them plainly than describe
               ourselves with adjectives.
@@ -203,12 +203,12 @@ export default function AreaClient() {
         <div className="main-container">
           <AnimatedSection className="max-w-3xl mb-8">
             <h2 className="text-2xl lg:text-3xl font-semibold text-[hsl(var(--color-text))] mb-5">
-              What we treat
-            </h2>
+              {presentation?.treatments?.heading ?? <>What we treat
+            </>}</h2>
             <p className="text-base leading-relaxed text-[hsl(var(--color-text-muted))]">
-              Eight treatments, each with its own page explaining what is
+              {presentation?.treatments?.intro ?? <>Eight treatments, each with its own page explaining what is
               involved, how long it takes and what to expect afterwards.
-            </p>
+            </>}</p>
           </AnimatedSection>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -236,12 +236,12 @@ export default function AreaClient() {
         <div className="main-container">
           <AnimatedSection className="mx-auto max-w-2xl text-center">
             <h2 className="text-2xl lg:text-3xl font-semibold text-[hsl(var(--color-text))] mb-4">
-              Come and see us
-            </h2>
+              {presentation?.closing?.heading ?? <>Come and see us
+            </>}</h2>
             <p className="mb-8 text-base leading-relaxed text-[hsl(var(--color-text-muted))]">
-              Book a consultation, or just ask a question first &mdash; plenty of
+              {presentation?.closing?.intro ?? <>Book a consultation, or just ask a question first &mdash; plenty of
               people message before they are ready to book, and that is fine.
-            </p>
+            </>}</p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
               <Button
                 size="lg"
@@ -249,8 +249,8 @@ export default function AreaClient() {
                 asChild
               >
                 <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                  Ask us on WhatsApp
-                </a>
+                  {presentation?.closing?.whatsappLabel ?? <>Ask us on WhatsApp
+                </>}</a>
               </Button>
               <Button
                 size="lg"
@@ -258,7 +258,7 @@ export default function AreaClient() {
                 className="border-[hsl(var(--color-primary))] text-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary-light))] px-8 py-6 text-base font-medium"
                 asChild
               >
-                <Link href="/contact">Directions and booking</Link>
+                <Link href="/contact">{presentation?.closing?.contactLabel ?? <>Directions and booking</>}</Link>
               </Button>
             </div>
           </AnimatedSection>

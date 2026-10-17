@@ -1,7 +1,8 @@
 'use client';
 
+import EditorialImage from '@/components/insights/EditorialImage';
+
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Clock } from 'lucide-react';
 import AnimatedSection from '@/components/ui/AnimatedSection';
@@ -31,12 +32,12 @@ function FeaturedArticle({ article }) {
       >
         {/* Image Container */}
         <div className="relative aspect-[16/10] lg:aspect-[16/12] overflow-hidden">
-          <Image
+          <EditorialImage
             src={article.image}
             alt={article.title}
             fill
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            sizes="(max-width: 1024px) 100vw, 60vw"
+            sizes="(max-width: 1024px) 100vw, 60vw" imageOverride={article.coverImage} cropWidth={1200} cropHeight={750}
           />
           {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--primary))]/90 via-[hsl(var(--primary))]/40 to-transparent" />
@@ -91,12 +92,12 @@ function ArticleCard({ article, index }) {
       >
         {/* Image */}
         <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 rounded-lg overflow-hidden">
-          <Image
+          <EditorialImage
             src={article.image}
             alt={article.title}
             fill
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            sizes="100px"
+            sizes="100px" imageOverride={article.coverImage} cropWidth={1200} cropHeight={750}
           />
         </div>
         
@@ -132,6 +133,8 @@ function ArticleCard({ article, index }) {
 
 export default function InsightsSection({ 
   title = "Insights",
+  eyebrow = "Knowledge Hub",
+  viewAllLabel = "Explore all insights",
   subtitle = "Trusted knowledge from real experts",
   insights = allInsights,
   limit = 4,
@@ -156,7 +159,7 @@ export default function InsightsSection({
               </p>
             ) : (
               <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] rounded-full text-sm sm:text-sm font-semibold">
-                Knowledge Hub
+                {eyebrow}
               </div>
             )}
             
@@ -204,7 +207,7 @@ export default function InsightsSection({
               href="/insights"
               className="group inline-flex items-center gap-3 text-[hsl(var(--primary))] font-semibold hover:text-[hsl(var(--primary-dark))] transition-colors text-base sm:text-lg"
             >
-              Explore all insights
+              {viewAllLabel}
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </AnimatedSection>

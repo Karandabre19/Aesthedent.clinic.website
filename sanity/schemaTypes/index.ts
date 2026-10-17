@@ -1,0 +1,12 @@
+
+import { DocumentStatusInput } from "../studio/DocumentStatusInput";
+import type { SchemaTypeDefinition } from "sanity";
+import { insight } from "./insight";
+import { service } from "./service";
+import { doctor, homePage, aboutPage, experiencePage } from "./pages";
+import { testimonial } from "./testimonial";
+import { presentationPageTypes } from "./presentation-pages";
+import { navigation } from "./navigation";
+import { seoSettings, withPageSeo } from "./seo";
+
+export const schemaTypes: SchemaTypeDefinition[] = [insight, service, doctor, homePage, aboutPage, experiencePage, testimonial, ...presentationPageTypes, navigation, seoSettings].map(withPageSeo).map(model => ({ ...model, components: { ...model.components, input: DocumentStatusInput } }));

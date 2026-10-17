@@ -1,19 +1,20 @@
 'use client';
 
+import EditorialImage from '@/components/insights/EditorialImage';
+
 import { pushToDataLayer } from '@/lib/gtm';
 import { animate, motion, useInView, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import PageWrapper from '@/components/layout/PageWrapper';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import InstagramShowcase from '@/components/sections/InstagramShowcase';
 import { MagneticWrapper, HeroParticles } from '@/components/ui/InteractiveHighTech';
-import { services } from '@/lib/services';
+import { services as fallbackServices } from '@/lib/services';
 import {
   REVIEWS,
   REVIEWS_NUMERIC,
@@ -261,7 +262,7 @@ function HeroWord({ children, className = '' }) {
   );
 }
 
-export default function HomePage() {
+export default function HomePage({ insightCards, services = fallbackServices, doctorNarratives = [], editorial, reviewCards }) {
   // GSAP's hero timeline already guards this (see useGSAP below), but the two
   // Framer loops here run forever and were not covered: an endlessly pulsing
   // scroll cue and a shimmer sweeping the trust bar every 7s. Perpetual motion
@@ -553,21 +554,21 @@ export default function HomePage() {
               Next generates for a fill image (640w) - cheap, not free. Resizing
               across the breakpoint re-evaluates sizes and pulls the full image,
               which is normal srcset behaviour. */}
-          <Image
+          <EditorialImage
             src="/homepage-banner-mobile.png"
             alt="Premium Dental Care - Crystalline Tooth"
             className="hero-bg-image h-full w-full object-cover object-bottom will-change-transform transform-gpu md:hidden"
             fill
             priority
-            sizes="(min-width: 768px) 1px, 100vw"
+            sizes="(min-width: 768px) 1px, 100vw" imageOverride={editorial?.hero?.mobileImage} cropWidth={941} cropHeight={1672}
           />
-          <Image
+          <EditorialImage
             src="/homepage-banner.png"
             alt="Premium Dental Care - Crystalline Tooth"
             className="hero-bg-image hidden h-full w-full object-cover will-change-transform transform-gpu md:block"
             fill
             priority
-            sizes="(max-width: 767px) 1px, 100vw"
+            sizes="(max-width: 767px) 1px, 100vw" imageOverride={editorial?.hero?.desktopImage} cropWidth={1672} cropHeight={941}
           />
         </motion.div>
 
@@ -582,21 +583,19 @@ export default function HomePage() {
               <div className="hero-orb hero-orb-2 pointer-events-none absolute right-6 top-28 h-36 w-36 translate-y-6 rounded-full bg-white/10 opacity-0 blur-3xl transform-gpu" />
 
               <div>
-                <p className="hero-eyebrow mb-6 translate-y-4 text-sm font-medium uppercase tracking-[0.3em] text-[hsl(var(--color-accent))] opacity-0 transform-gpu md:text-base">
+                <p className="hero-eyebrow mb-6 translate-y-4 text-sm font-medium uppercase tracking-[0.3em] text-[hsl(var(--color-accent))] opacity-0 transform-gpu md:text-base">{editorial?.hero?.eyebrow ?? <>
                   Aesthedent - Reclaim Your Smile
-                </p>
+                </>}</p>
                 <div className="hero-divider mb-8 h-px w-24 origin-left scale-x-0 bg-gradient-to-r from-[hsl(var(--color-accent))] to-transparent opacity-0 transform-gpu" />
               </div>
 
               <h1
-                aria-label={HERO_HEADING}
+                aria-label={editorial?.hero?.headline ? [editorial.hero.headline.opening, editorial.hero.headline.continuation, editorial.hero.headline.emphasis].join(' ') : HERO_HEADING}
                 className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-[hsl(var(--color-primary))] leading-[0.95] tracking-tighter mb-6 sm:mb-8"
               >
                 <span className="hero-line hero-line-1 relative block overflow-hidden pb-2 leading-tight">
-                  <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--color-primary))] via-[hsl(var(--color-accent))] to-[hsl(var(--color-primary))] bg-[length:200%_auto] animate-shimmer">
-                    The dentist
-                  </span>{" "}
-                  <HeroWord>that takes</HeroWord>
+                  <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--color-primary))] via-[hsl(var(--color-accent))] to-[hsl(var(--color-primary))] bg-[length:200%_auto] animate-shimmer">{editorial?.hero?.headline?.opening ?? "The dentist"}</span>{" "}
+                  <HeroWord>{editorial?.hero?.headline?.continuation ?? "that takes"}</HeroWord>
                 </span>
                 {/* Explicit space: these are block-level lines, so whitespace
                     between them is dropped from layout but keeps the heading's
@@ -604,17 +603,15 @@ export default function HomePage() {
                     than "…that takesthe fear away.". No visual effect. */}
                 {' '}
                 <span className="hero-line hero-line-2 relative block overflow-hidden pb-2 leading-tight">
-                  <HeroWord className="hero-accent-word font-black text-[hsl(var(--color-accent))]">
-                    the fear away.
-                  </HeroWord>
+                  <HeroWord className="hero-accent-word font-black text-[hsl(var(--color-accent))]">{editorial?.hero?.headline?.emphasis ?? "the fear away."}</HeroWord>
                 </span>
               </h1>
 
               {/* Sub-line carries the Tier-1 terms the H1 gave up, plus the
                   specialism as proof rather than headline. */}
-              <p className="hero-copy measure mb-8 sm:mb-10 translate-y-6 text-base sm:text-lg leading-relaxed text-[hsl(var(--color-primary))]/85 opacity-0 transform-gpu md:text-lg">
+              <p className="hero-copy measure mb-8 sm:mb-10 translate-y-6 text-base sm:text-lg leading-relaxed text-[hsl(var(--color-primary))]/85 opacity-0 transform-gpu md:text-lg">{editorial?.hero?.supportingCopy ?? <>
                 Kothrud&rsquo;s specialist prosthodontist-led clinic. We explain every step before we start &mdash; so nothing catches you by surprise.
-              </p>
+              </>}</p>
 
               <div className="hero-actions flex flex-col gap-3 sm:flex-row sm:gap-6">
                 <MagneticWrapper>
@@ -626,7 +623,7 @@ export default function HomePage() {
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 translate-x-[-150%] group-hover:translate-x-[150%] transition-transform duration-1000" />
                     <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 text-[hsl(var(--color-accent))]" />
-                    <span className="relative z-10">Chat on WhatsApp</span>
+                    <span className="relative z-10">{editorial?.hero?.whatsappLabel ?? <>Chat on WhatsApp</>}</span>
                     <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform relative z-10" />
                   </a>
                 </MagneticWrapper>
@@ -644,8 +641,8 @@ export default function HomePage() {
                     className="hero-action-btn group relative inline-flex translate-y-6 scale-95 items-center justify-center gap-2 sm:gap-4 rounded-2xl border-2 border-[hsl(var(--color-primary))]/20 bg-white/10 backdrop-blur-xl px-8 sm:px-10 py-4 sm:py-5 font-black text-[hsl(var(--color-primary))] opacity-0 transition-all duration-300 transform-gpu hover:border-[hsl(var(--color-primary))]/40 hover:bg-white/20 text-base sm:text-lg"
                   >
                     <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-[hsl(var(--color-accent))]" />
-                    <span className="hidden sm:inline">Visit Clinic</span>
-                    <span className="sm:hidden">Location</span>
+                    <span className="hidden sm:inline">{editorial?.hero?.mapDesktopLabel ?? <>Visit Clinic</>}</span>
+                    <span className="sm:hidden">{editorial?.hero?.mapMobileLabel ?? <>Location</>}</span>
                   </a>
                 </MagneticWrapper>
               </div>
@@ -736,20 +733,20 @@ export default function HomePage() {
       <section className="section-y bg-white">
         <div className="main-container">
           <AnimatedSection className="text-center mb-10 sm:mb-12 md:mb-16">
-            <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-[hsl(var(--color-accent))]/15 text-[hsl(var(--color-accent-ink))] rounded-full text-sm font-semibold">
+            <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-[hsl(var(--color-accent))]/15 text-[hsl(var(--color-accent-ink))] rounded-full text-sm font-semibold">{editorial?.treatments?.eyebrow ?? <>
               Specialized Care
-            </div>
+            </>}</div>
             {/* H2 carries "dental treatments in Kothrud" - one of the Tier-1
                 terms the hero H1 gave up.
 
                 --color-accent-ink, NOT --color-accent: the brand gold is
                 1.96:1 on white and fails AA at any size. See globals.css. */}
-            <h2 className="heading-section font-bold text-[hsl(var(--color-accent-ink))] leading-tight mb-3 sm:mb-6">
+            <h2 className="heading-section font-bold text-[hsl(var(--color-accent-ink))] leading-tight mb-3 sm:mb-6">{editorial?.treatments?.heading ?? <>
               Dental treatments in Kothrud, Pune.
-            </h2>
-            <p className="measure mx-auto text-base text-[hsl(var(--color-text-muted))] md:text-lg">
+            </>}</h2>
+            <p className="measure mx-auto text-base text-[hsl(var(--color-text-muted))] md:text-lg">{editorial?.treatments?.intro ?? <>
               Everything below is planned by a specialist prosthodontist and explained to you in plain words first. Nothing starts until you have said yes.
-            </p>
+            </>}</p>
           </AnimatedSection>
 
           {/* Phase 4B: was services.slice(0, 6) - which silently dropped the
@@ -763,12 +760,12 @@ export default function HomePage() {
                 <Link href={`/services/${service.slug}`}>
                   <div className="card-elevated group relative overflow-hidden rounded-xl sm:rounded-2xl bg-white border border-white/20 hover:-translate-y-2 transition-transform">
                     <div className="aspect-[16/10] overflow-hidden bg-[hsl(var(--bg-alt))]">
-                      <Image
+                      <EditorialImage
                         src={service.image}
                         alt={service.title}
                         width={600}
                         height={400}
-                        className="w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-500"
+                        className="w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-500" imageOverride={service.coverImage} cropWidth={900} cropHeight={600}
                       />
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--color-primary))]/95 via-[hsl(var(--color-primary))]/60 to-transparent" />
@@ -841,9 +838,9 @@ export default function HomePage() {
             <Link
               href="/services"
               className="inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-white hover:bg-white/90 text-[hsl(var(--primary))] font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 text-sm sm:text-base md:text-lg"
-            >
+            >{editorial?.treatments?.allTreatmentsLabel ?? <>
               Explore all dental treatments in Kothrud
-              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+              </>}<ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </Link>
           </AnimatedSection>
         </div>
@@ -857,13 +854,13 @@ export default function HomePage() {
       <section className="bg-[hsl(var(--color-bg-alt))]/40 section-y">
         <div className="main-container">
           <AnimatedSection className="measure mx-auto mb-10 text-center sm:mb-14">
-            <h2 className="mb-4 heading-section font-bold text-[hsl(var(--color-text))]">
+            <h2 className="mb-4 heading-section font-bold text-[hsl(var(--color-text))]">{editorial?.appointment?.heading ?? <>
               Let&apos;s get you seen, comfortably.
-            </h2>
-            <p className="text-base text-[hsl(var(--color-text-muted))] md:text-lg">
+            </>}</h2>
+            <p className="text-base text-[hsl(var(--color-text-muted))] md:text-lg">{editorial?.appointment?.intro ?? <>
               Tell us a little about what&apos;s going on. No forms with fifty
               fields -just a short conversation, and we&apos;ll take it from there.
-            </p>
+            </>}</p>
           </AnimatedSection>
 
           <AnimatedSection className="mx-auto max-w-2xl rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--background))] p-5 shadow-sm sm:p-8">
@@ -877,33 +874,33 @@ export default function HomePage() {
         <div className="main-container">
           <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 md:gap-16 lg:gap-24 items-center">
             <AnimatedSection direction="left">
-              <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-semibold">
+              <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-semibold">{editorial?.visitPresentation?.eyebrow ?? <>
                 Your Visit
-              </div>
-              <h2 className="heading-section font-bold text-[hsl(var(--color-text))] leading-tight mb-4 sm:mb-6">
+              </>}</div>
+              <h2 className="heading-section font-bold text-[hsl(var(--color-text))] leading-tight mb-4 sm:mb-6">{editorial?.visitHeading ?? <>
                 What happens when you visit.
-              </h2>
+              </>}</h2>
               {/* The lead quote states the positioning in the founder's voice:
                   specialist planning AND the patience to explain it. */}
-              <blockquote className="mb-8 border-l-4 border-[hsl(var(--color-accent))] pl-5 text-base italic leading-relaxed text-[hsl(var(--color-text-muted))] sm:pl-6 sm:text-lg">
+              <blockquote className="mb-8 border-l-4 border-[hsl(var(--color-accent))] pl-5 text-base italic leading-relaxed text-[hsl(var(--color-text-muted))] sm:pl-6 sm:text-lg">{editorial?.visitQuote ?? <>
                 “We don&apos;t just treat teeth -we plan every case with the
                 precision of a specialist and the patience of someone who
                 remembers you&apos;re a person, not a procedure.”
-              </blockquote>
+              </>}</blockquote>
 
               {/* A real <ol>. These are six sequential stages of one visit, and
                   the order is the meaning -a div stack said nothing about
                   sequence to a screen reader. Numbers are rendered by the list
                   itself rather than drawn as chevrons. */}
               <ol className="mb-8 space-y-4 sm:mb-10 sm:space-y-5">
-                {[
+                {(editorial?.visitSteps?.map(({ stage, detail }) => [stage, detail]) ?? [
                   ["Checkup", "Intraoral imaging -you see exactly what we see, live on screen."],
                   ["Diagnosis", "We explain the problem in plain language, not jargon."],
                   ["Planning", "What's urgent, what can wait, and every option -laid out clearly."],
                   ["Your call", "Full cost and plan agreed before we start. Nothing is a surprise."],
                   ["Treatment", "Fully numb, fully narrated -and it stops the moment you raise your hand."],
                   ["Follow-up", "We check on your healing after you leave the chair."],
-                ].map(([stage, detail], i) => (
+                ]).map(([stage, detail], i) => (
                   <li key={stage} className="flex items-start gap-4">
                     <span
                       aria-hidden="true"
@@ -921,23 +918,23 @@ export default function HomePage() {
               <Link
                 href="/aesthedent-experience"
                 className="inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary-dark))] text-white font-semibold rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-1 text-sm sm:text-base"
-              >
+              >{editorial?.visitPresentation?.processLinkLabel ?? <>
                 Learn about our process
-                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                </>}<ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
               </Link>
             </AnimatedSection>
 
             <AnimatedSection direction="right" className="relative">
               <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5">
-                <Image
+                <EditorialImage
                   src={treatmentProcessImage}
                   alt="Gentle dental care at Aesthedent"
-                  className="rounded-2xl shadow-lg w-full aspect-[3/4] object-cover"
+                  className="rounded-2xl shadow-lg w-full aspect-[3/4] object-cover" imageOverride={editorial?.visitPresentation?.treatmentImage} cropWidth={900} cropHeight={1200}
                 />
-                <Image
+                <EditorialImage
                   src={treatMentChairImage}
                   alt="Modern dental equipment"
-                  className="rounded-2xl shadow-lg w-full aspect-[3/4] object-cover mt-4 sm:mt-6 md:mt-8"
+                  className="rounded-2xl shadow-lg w-full aspect-[3/4] object-cover mt-4 sm:mt-6 md:mt-8" imageOverride={editorial?.visitPresentation?.equipmentImage} cropWidth={900} cropHeight={1200}
                 />
               </div>
             </AnimatedSection>
@@ -950,24 +947,24 @@ export default function HomePage() {
       <section className="section-y bg-gradient-to-b from-white to-[hsl(var(--bg-alt))]">
         <div className="main-container">
           <AnimatedSection className="text-center mb-10 sm:mb-12 md:mb-16">
-            <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] rounded-full text-sm font-semibold">
+            <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] rounded-full text-sm font-semibold">{editorial?.team?.eyebrow ?? <>
               Our Team
-            </div>
+            </>}</div>
             {/* "Top Dentists in Kothrud" was an opinion we awarded ourselves.
                 Never reinstate it. */}
-            <h2 className="heading-section font-bold text-[hsl(var(--color-text))] leading-tight mb-3 sm:mb-6">
+            <h2 className="heading-section font-bold text-[hsl(var(--color-text))] leading-tight mb-3 sm:mb-6">{editorial?.team?.heading ?? <>
               Meet your dentists in Kothrud
-            </h2>
+            </>}</h2>
             {/* "specialist-level" was removed from this sentence deliberately.
                 It described the practice, not Dr. Aishwarya, but it put the word
                 within a few characters of her name - and she is BDS, not a
                 specialist. Precision and patience say the same thing about the
                 pair without borrowing a qualification only one of them holds. */}
-            <p className="measure mx-auto text-base text-[hsl(var(--color-text-muted))] md:text-lg">
+            <p className="measure mx-auto text-base text-[hsl(var(--color-text-muted))] md:text-lg">{editorial?.team?.intro ?? <>
               Dr. Sahil and Dr. Aishwarya bring precision and genuine patience to
               every case &mdash; walking you through it step by step, so nothing
               catches you by surprise.
-            </p>
+            </>}</p>
 
             {/* MOVED here from under the Marathi line, links intact. These are
                 the two the content spine ranks highest (§6.1): the dental-anxiety
@@ -1003,6 +1000,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
             {[
               {
+                personKey: 'sahil',
                 name: DOCTORS.sahil.name,
                 tag: "Lead Dentist & Founder",
                 role: "Specialist Prosthodontist, Founder & Co-Owner",
@@ -1011,6 +1009,7 @@ export default function HomePage() {
                 desc: "Specializes in implants and restorative dentistry with a focus on patient education and comfort.",
               },
               {
+                personKey: 'aishwarya',
                 name: DOCTORS.aishwarya.name,
                 tag: "Dental Surgeon",
                 // "General & Family Dentist" -the word "specialist" must never
@@ -1031,12 +1030,12 @@ export default function HomePage() {
                   {/* Image Container */}
                   <div className="relative overflow-hidden">
                     <div className="aspect-[4/5] overflow-hidden">
-                      <Image
+                      <EditorialImage
                         src={doctor.image}
                         alt={doctor.name}
                         width={600}
                         height={750}
-                        className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                        className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105" imageOverride={doctorNarratives.find(narrative => narrative.slug === doctor.personKey)?.portrait} cropWidth={600} cropHeight={750}
                       />
                     </div>
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/8 via-transparent to-[hsl(var(--primary))]/15" />
@@ -1078,7 +1077,7 @@ export default function HomePage() {
                         {doctor.credential}
                       </p>
                       <p className="text-[13px] leading-6 text-[hsl(var(--color-text-muted))] sm:text-sm sm:leading-relaxed">
-                        {doctor.desc}
+                        {doctorNarratives.find((item) => item.slug === doctor.personKey)?.homeSummary ?? doctor.desc}
                       </p>
                     </div>
                   </div>
@@ -1092,9 +1091,9 @@ export default function HomePage() {
             <Link
               href="/doctor"
               className="inline-flex items-center gap-2 text-[hsl(var(--color-primary))] font-semibold hover:text-[hsl(var(--color-primary-dark))] transition-colors"
-            >
+            >{editorial?.team?.teamLinkLabel ?? <>
               Meet the full team
-              <ArrowRight className="w-4 h-4" />
+              </>}<ArrowRight className="w-4 h-4" />
             </Link>
           </AnimatedSection>
 
@@ -1144,9 +1143,9 @@ export default function HomePage() {
           they actually render, and keeps matching if that token is ever fixed
           to its 216 50% 98% value, which is white to within a hair. */}
       <section className="bg-white">
-        <TestimonialsSection
-          title="Real Stories From Real Patients"
-          subtitle="These transformations inspire us every day-and we love sharing them."
+        <TestimonialsSection reviewCards={reviewCards}
+          title={editorial?.reviews?.heading ?? "Real Stories From Real Patients"}
+          subtitle={editorial?.reviews?.intro ?? "These transformations inspire us every day-and we love sharing them."}
           limit={6}
           variant="compact"
         />
@@ -1159,9 +1158,9 @@ export default function HomePage() {
               rel="noopener noreferrer"
               aria-label="Read all Aesthedent patient reviews on Google"
               className="inline-flex min-h-[44px] items-center gap-3 py-2 text-lg font-semibold text-[hsl(var(--primary))] transition-colors hover:text-[hsl(var(--primary-dark))]"
-            >
+            >{editorial?.reviews?.allReviewsLabel ?? <>
               View all patient stories
-              <ArrowRight className="w-5 h-5" />
+              </>}<ArrowRight className="w-5 h-5" />
             </a>
           </AnimatedSection>
         </div>
@@ -1169,8 +1168,11 @@ export default function HomePage() {
 
       {/* Insights Section - Premium Editorial */}
       <InsightsSection
-        title="Insights"
-        subtitle="Trusted knowledge from real experts-not generic content. Real answers to real patient questions."
+        eyebrow={editorial?.insights?.eyebrow}
+        viewAllLabel={editorial?.insights?.allInsightsLabel}
+        title={editorial?.insights?.heading ?? "Insights"}
+        insights={insightCards}
+        subtitle={editorial?.insights?.intro ?? "Trusted knowledge from real experts-not generic content. Real answers to real patient questions."}
       />
 
       {/* Contact Section */}
@@ -1178,15 +1180,15 @@ export default function HomePage() {
         <div className="main-container">
           <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 md:gap-16 lg:gap-20 items-center">
             <AnimatedSection>
-              <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-white/20 text-white rounded-full text-sm font-semibold">
+              <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-white/20 text-white rounded-full text-sm font-semibold">{editorial?.contact?.eyebrow ?? <>
                 Get in Touch
-              </div>
-              <h2 className="heading-section font-bold text-white leading-tight mb-4 sm:mb-6 md:mb-8">
+              </>}</div>
+              <h2 className="heading-section font-bold text-white leading-tight mb-4 sm:mb-6 md:mb-8">{editorial?.contact?.heading ?? <>
                 Ready to talk?
-              </h2>
-              <p className="text-sm sm:text-base md:text-lg text-white/85 leading-relaxed mb-6 sm:mb-8 md:mb-10">
+              </>}</h2>
+              <p className="text-sm sm:text-base md:text-lg text-white/85 leading-relaxed mb-6 sm:mb-8 md:mb-10">{editorial?.contact?.intro ?? <>
                 We're in Kothrud. You can visit or call. We'll explain everything before we start.
-              </p>
+              </>}</p>
 
               <div className="space-y-4 sm:space-y-5 md:space-y-7 mb-8 sm:mb-10 md:mb-12">
                 <a
@@ -1259,9 +1261,9 @@ export default function HomePage() {
                     rel="noopener noreferrer"
                     className="inline-flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-lg bg-[hsl(var(--accent))] px-6 py-3 text-base font-semibold text-[hsl(var(--accent-foreground))] shadow-lg transition-all duration-300 hover:-translate-y-1 hover:bg-[hsl(var(--accent))]/90 hover:shadow-xl sm:px-8 sm:py-4"
                   >
-                    <MessageCircle className="h-5 w-5" />
+                    <MessageCircle className="h-5 w-5" />{editorial?.contact?.whatsappLabel ?? <>
                     Message on WhatsApp
-                  </a>
+                  </>}</a>
                   <a
                     href={`tel:${phoneNumber}`}
                     className="inline-flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-lg border-2 border-white/50 bg-white/10 px-6 py-3 text-base font-semibold text-white transition-all duration-300 hover:border-white/70 hover:bg-white/20 sm:px-8 sm:py-4"
@@ -1275,7 +1277,7 @@ export default function HomePage() {
                   href="/contact"
                   className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg px-6 py-3 text-base font-medium text-white/90 underline underline-offset-4 transition-colors hover:text-white"
                 >
-                  <span>Go to contact page</span>
+                  <span>{editorial?.contact?.contactPageLabel ?? <>Go to contact page</>}</span>
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
@@ -1283,12 +1285,12 @@ export default function HomePage() {
 
             <AnimatedSection direction="right">
               <div className="rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-300">
-                <Image
+                <EditorialImage
                   src={sahilTreatmentImage}
                   alt="Aesthedent Dental Clinic in Kothrud"
                   width={800}
                   height={600}
-                  className="w-full aspect-[4/3] object-cover hover:scale-105 transition-transform duration-500"
+                  className="w-full aspect-[4/3] object-cover hover:scale-105 transition-transform duration-500" imageOverride={editorial?.contact?.image} cropWidth={800} cropHeight={600}
                 />
               </div>
             </AnimatedSection>

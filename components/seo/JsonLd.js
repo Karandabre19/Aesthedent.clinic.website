@@ -12,8 +12,8 @@ export default function JsonLd({ schema }) {
         <script
           key={i}
           type="application/ld+json"
-          // Content is built from our own data in lib/schema.js, never user input.
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(block) }}
+          // Validated CMS text can still contain a script-closing sequence.
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(block).replace(/</g, '\\u003c') }}
         />
       ))}
     </>
