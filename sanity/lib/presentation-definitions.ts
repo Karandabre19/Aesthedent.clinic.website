@@ -528,7 +528,7 @@ export function presentationSpecs(name: PresentationPageName): SectionSpec[] {
     fields: Object.fromEntries(Object.entries(fields as Record<string, { title: string; max: number; multiline: boolean }>).map(([key, field]) => {
       const label = `${sectionLabels[name]?.[section] ?? section} ${fieldLabels[key] ?? field.title.toLowerCase()}`;
       const current = presentationDefaults[`${name}.${section}.${key}`];
-      return [key, { ...field, kind: "text" as const, title: label.replace(/^./, c => c.toUpperCase()), description: `Shown in the ${(sectionLabels[name]?.[section] ?? section).toLowerCase()} section on ${placement(name, section)}. Leave empty to keep the current website text${current ? `: “${current}”` : ""}. Destinations, facts, clinical credentials and behaviour stay in code.` }];
+      return [key, { ...field, kind: "text" as const, title: label.replace(/^./, c => c.toUpperCase()), description: `Shown in the ${(sectionLabels[name]?.[section] ?? section).toLowerCase()} section on ${placement(name, section)}.${current ? ` Current website text: “${current}”.` : ""} Destinations, facts, clinical credentials and behaviour stay in code.` }];
     })),
   }));
 }
