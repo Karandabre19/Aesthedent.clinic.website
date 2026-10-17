@@ -126,7 +126,7 @@ test('shared treatment, doctor and Insight mappings isolate bad images from vali
   const doctor = { _id: 'doctor-fixture', slug: 'sahil', bio: 'Biography', philosophy: 'Philosophy', homeSummary: 'Summary', portrait: { ...media(), alt: null } };
   assert.ok(resolveDoctors([doctor]).value[0].portrait);
   assert.equal(resolveDoctors([{ ...doctor, portrait: {} }]).value[0].bio, doctor.bio);
-  const insight = { _id: 'insight-fixture', _type: 'insight', slug: { current: 'fixture' }, title: 'Fixture', excerpt: 'Summary', category: 'Existing category', date: '2026-10-17', readTimeMinutes: 2, featured: false, body: [{ _type: 'block', _key: 'block', style: 'normal', markDefs: [], children: [{ _type: 'span', _key: 'span', text: 'Fixture content', marks: [] }] }], coverImage: { ...media(), asset: { _type: 'reference', _ref: asset()._id } } };
+  const insight = { _id: 'insight-fixture', _type: 'insight', slug: { current: 'fixture' }, title: 'Fixture', excerpt: 'Summary', category: 'Dental Care', date: '2026-10-17', readTimeMinutes: 2, featured: false, body: [{ _type: 'block', _key: 'block', style: 'normal', markDefs: [], children: [{ _type: 'span', _key: 'span', text: 'Fixture content', marks: [] }] }], coverImage: { ...media(), asset: { _type: 'reference', _ref: asset()._id } } };
   const result = await (await evaluate(parse(insightsQuery), { dataset: [insight, asset()], params: { slugs: ['fixture'] } })).get();
   const mapped = resolveInsightOverrides(result, [{ slug: 'fixture' }]);
   assert.equal(mapped.status, 'sanity'); assert.ok(mapped.overrides[0].coverImage);

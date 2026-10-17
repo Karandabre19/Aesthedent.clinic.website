@@ -1,6 +1,11 @@
 import { z } from "zod";
 import { imageForDocument, type CmsImage } from "./image";
 import { seoCopy, mapSeo, type SeoControls } from "./seo-mapping";
+import { insights } from "../../lib/insights.js";
+
+// Same list the Studio offers. Published and preview reads now agree; the
+// authenticated inventory on 2026-10-17 held no stored category values to strand.
+export const insightCategories = [...new Set(insights.map((item: { category: string }) => item.category))] as [string, ...string[]];
 
 const text = z.string().min(1).regex(/\S/, "Use nonblank text.").regex(/^(?![\s\S]*<\/?[A-Za-z][^>]*>)[\s\S]*$/, "Use plain text.");
 const key = z.string().min(1);
@@ -46,7 +51,7 @@ export const insightContent = z.object({
   title: text.max(180), excerpt: text.max(600), metaTitle: text.max(100).nullish(),
   metaDescription: text.max(320).nullish(), listingTitle: text.max(180).nullish(), listingExcerpt: text.max(600).nullish(),
   modifiedAt: z.string().datetime({ offset: true }).nullish(),
-  category: text.max(80), date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Use a date in YYYY-MM-DD format.").refine((value) => {
+  category: z.enum(insightCategories, { message: "Choose one of the existing Insight categories." }), date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Use a date in YYYY-MM-DD format.").refine((value) => {
     const date = new Date(`${value}T00:00:00Z`);
     return !Number.isNaN(date.valueOf()) && date.toISOString().slice(0, 10) === value;
   }, "Use a valid calendar date."),

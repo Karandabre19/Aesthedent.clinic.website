@@ -318,3 +318,17 @@ test('actual URL rule preserves published slugs and fails closed on lookup error
     names.forEach((name, i) => previous[i] === undefined ? delete process.env[name] : process.env[name] = previous[i]);
   }
 });
+
+test('insight category is limited to the existing categories on every read path', () => {
+  const { insightContent, insightCategories } = require('../sanity/lib/insight-mapping.ts');
+  const base = fixture();
+
+  const results = insightCategories.map(category => insightContent.safeParse({ ...base, category }).success);
+  const unlisted = insightContent.safeParse({ ...base, category: 'Miracle Cures' });
+
+  assert.deepEqual(insightCategories, [...new Set(insights.map(i => i.category))]);
+  assert.ok(results.every(Boolean));
+  assert.equal(unlisted.success, false);
+  assert.match(unlisted.error.issues[0].message, /existing Insight categories/);
+  assert.notEqual(resolveInsightOverrides([{ ...base, category: 'Miracle Cures' }], insights).status, 'sanity', 'preview/published resolver rejects it too');
+});
