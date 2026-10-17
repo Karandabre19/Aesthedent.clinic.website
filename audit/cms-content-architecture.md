@@ -215,7 +215,9 @@ Updates to the dispositions above and to the historical register below:
 - **A14 — Legacy appointment API:** confirmed and remediated locally. `GET /api/appointments` returned up to 100 names/phones/services/schedules with no authorization and `Access-Control-Allow-Origin: *`. It now returns 405 before any database access; wildcard CORS is removed from the route and from `next.config.js`; errors no longer echo upstream messages. No frontend caller exists. Unused legacy POST endpoints remain. No real data was queried; tests use a synthetic database double.
 - **G01/G03 — Synchronization review:** each candidate is classified `create | update | skip | conflict | blocked` with target ID, provenance, validation result and reason, and rendered to `.cache/content-sync/draft-plan.md`. Final keyed payloads (including navigation, SEO defaults and testimonials) are validated against the website's Zod contracts; duplicate identities are rejected; unmatched stored records of a candidate type become conflicts; comparisons are key-order-insensitive; manifest hashes are portable. Apply gate and draft-only writes are unchanged.
 - **G10 — Editor usability:** the 69 presentation-page fields now have explicit titles and per-field placement/current-text help (matrix entries below regenerated from the live spec). Required core content on Home/About/Experience still blocks publishing optional sections alone; this is a retained decision, recorded as a usability recommendation.
-- **A01, A06, A07, A09:** unchanged by decision or pending the authenticated inventory (A09 tightening needs category values from drafts).
+- **A09 — Category contract:** fixed. The authenticated inventory (2026-10-17T13:18Z) found no stored content in any state, so the runtime category is now limited to the six existing values on both published and preview paths.
+- **A01, A06, A07:** unchanged by decision.
+- **Authenticated inventory:** `ae09qs5c` / `production` holds no content documents, drafts, releases or image assets (only 12 system documents). The dry-run plans 26 draft creates and lists 6 blocked testimonials; nothing has been applied.
 
 #### Route coverage
 
