@@ -3,6 +3,12 @@ const nextConfig = {
 
   images: {
     remotePatterns: [
+      ...(/^[a-z0-9]{8}$/.test(process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '') && /^[a-z0-9][a-z0-9_-]*$/.test(process.env.NEXT_PUBLIC_SANITY_DATASET || '') ? [{
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+        port: '',
+        pathname: `/images/${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}/${process.env.NEXT_PUBLIC_SANITY_DATASET}/**`,
+      }] : []),
       {
         protocol: 'https',
         hostname: 'images.pexels.com',
@@ -58,15 +64,8 @@ const nextConfig = {
         headers: [
           { key: "X-Frame-Options", value: "SAMEORIGIN" }, // safer than ALLOWALL
           { key: "Content-Security-Policy", value: "frame-ancestors 'self';" },
-          {
-            key: "Access-Control-Allow-Origin",
-            value: process.env.CORS_ORIGINS || "*",
-          },
-          {
-            key: "Access-Control-Allow-Methods",
-            value: "GET, POST, PUT, DELETE, OPTIONS",
-          },
-          { key: "Access-Control-Allow-Headers", value: "*" },
+          // No CORS headers: every caller is same-origin, and a wildcard origin let
+          // any website read API responses from a visitor's browser.
         ],
       },
     ];

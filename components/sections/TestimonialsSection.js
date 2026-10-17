@@ -155,9 +155,10 @@ export default function TestimonialsSection({
   title = '#SmileStories',
   subtitle = 'Stories that drive us. Stories that give purpose. Stories that bring smiles.',
   limit = 3,
+  reviewCards,
   variant = 'compact' // 'compact' or 'full'
 }) {
-  const testimonials = getTestimonials('latest', limit);
+  const testimonials = reviewCards ? reviewCards.slice(0, limit) : getTestimonials('latest', limit);
 
   if (variant === 'compact') {
     return (

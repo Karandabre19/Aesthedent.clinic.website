@@ -1,5 +1,7 @@
 'use client';
 
+import EditorialImage from '@/components/insights/EditorialImage';
+
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -19,8 +21,9 @@ import clinicAssistancePic from "../../public/clinic/clinicAssistancePic.png";
 
 const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
 
-const doctors = [
+const fallbackDoctors = [
   {
+    personKey: 'sahil',
     name: 'Dr. Sahil Wathodkar',
     role: 'Founder & Co-Owner | Prosthodontist',
     image: '/assets/doctor-male.jpeg',
@@ -38,6 +41,7 @@ const doctors = [
     philosophy: 'My focus is on precision and the preservation of natural tooth structure. High-quality dental care requires advanced technology and a deep commitment to patient-centric results.'
   },
   {
+    personKey: 'aishwarya',
     name: 'Dr. Aishwarya Kulkarni Wathodkar',
     role: 'Co-Owner | General & Family Dentist',
     image: '/assets/doctor-female.jpeg',
@@ -64,7 +68,11 @@ const staff = [
   }
 ];
 
-export default function DoctorPage() {
+export default function DoctorPage({ presentation = {}, doctorNarratives = [] }) {
+  const doctors = fallbackDoctors.map((doctor, index) => {
+    const copy = doctorNarratives.find((item) => item.slug === doctor.personKey);
+    return copy ? { ...doctor, bio: copy.bio, philosophy: copy.philosophy, ...(copy.portrait ? { portrait: copy.portrait } : {}) } : doctor;
+  });
   return (
     <PageWrapper>
       {/* Hero */}
@@ -76,7 +84,7 @@ export default function DoctorPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Badge className="mb-4 bg-[hsl(var(--color-primary-light))] text-[hsl(var(--color-primary))]">Our Team</Badge>
+            <Badge className="mb-4 bg-[hsl(var(--color-primary-light))] text-[hsl(var(--color-primary))]">{presentation?.hero?.eyebrow ?? <>Our Team</>}</Badge>
             {/* Phase 4H: was "Top Dentists in Kothrud, Pune - Our Team". "Top"
                 is an opinion we awarded ourselves -the same self-claim removed
                 from the homepage doctors section in Part B. The qualification is
@@ -85,8 +93,8 @@ export default function DoctorPage() {
               Prosthodontist and dentists in Kothrud, Pune
             </h1>
             <p className="text-lg lg:text-xl text-[hsl(var(--color-text-muted))] leading-relaxed">
-              Professional, compassionate, and devoted to your comfort. Our doctors bring years of experience with a patient-first approach.
-            </p>
+              {presentation?.hero?.intro ?? <>Professional, compassionate, and devoted to your comfort. Our doctors bring years of experience with a patient-first approach.
+            </>}</p>
           </motion.div>
         </div>
       </section>
@@ -101,13 +109,13 @@ export default function DoctorPage() {
                   <div className={i % 2 === 1 ? 'lg:order-2' : ''}>
                     <div className="relative">
                       <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--color-primary))]/10 to-[hsl(var(--color-primary))]/5 rounded-3xl transform rotate-3"></div>
-                      <Image
+                      <EditorialImage
                         src={doctor.image}
                         alt={doctor.name}
                         width={600}
                         height={750}
                         className="relative rounded-3xl shadow-xl object-cover w-full h-[450px] lg:h-[550px]"
-                        priority={i === 0}
+                        priority={i === 0} imageOverride={doctor.portrait} cropWidth={600} cropHeight={750}
                       />
                     </div>
                   </div>
@@ -165,9 +173,9 @@ export default function DoctorPage() {
       <section className="section-spacing pt-0">
         <div className="main-container">
           <SectionHeading
-            badge="Clinical Excellence"
-            title="Our Dedicated Support Team"
-            subtitle="The professionals who make your clinical experience seamless"
+            badge={presentation?.support?.eyebrow ?? "Clinical Excellence"}
+            title={presentation?.support?.heading ?? "Our Dedicated Support Team"}
+            subtitle={presentation?.support?.intro ?? "The professionals who make your clinical experience seamless"}
           />
 
           <div className="grid lg:grid-cols-1 max-w-4xl mx-auto">
@@ -207,9 +215,9 @@ export default function DoctorPage() {
       <section className="section-spacing bg-[hsl(var(--color-bg-alt))]">
         <div className="main-container">
           <SectionHeading
-            badge="Our Values"
-            title="What Drives Our Team"
-            subtitle="The principles that guide everything we do"
+            badge={presentation?.values?.eyebrow ?? "Our Values"}
+            title={presentation?.values?.heading ?? "What Drives Our Team"}
+            subtitle={presentation?.values?.intro ?? "The principles that guide everything we do"}
           />
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -252,11 +260,11 @@ export default function DoctorPage() {
           <AnimatedSection>
             <div className="bg-gradient-to-br from-[hsl(var(--color-primary))] to-[hsl(var(--color-primary-dark))] rounded-3xl p-8 lg:p-12 text-center text-[hsl(var(--primary-foreground))]">
               <h2 className="text-2xl lg:text-3xl font-semibold mb-4">
-                Ready to Meet Our Team?
-              </h2>
+                {presentation?.closing?.heading ?? <>Ready to Meet Our Team?
+              </>}</h2>
               <p className="text-[hsl(var(--primary-foreground)/0.8)] mb-8 max-w-xl mx-auto">
-                Book your appointment today and experience the difference of compassionate, expert dental care.
-              </p>
+                {presentation?.closing?.intro ?? <>Book your appointment today and experience the difference of compassionate, expert dental care.
+              </>}</p>
               <Button
                 size="lg"
                 className="bg-[hsl(var(--background))] text-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-bg-alt))] px-8 py-6 text-base font-medium"
@@ -264,8 +272,8 @@ export default function DoctorPage() {
               >
                 <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="w-5 h-5 mr-2" />
-                  Book Your Appointment
-                </a>
+                  {presentation?.closing?.whatsappLabel ?? <>Book Your Appointment
+                </>}</a>
               </Button>
             </div>
           </AnimatedSection>

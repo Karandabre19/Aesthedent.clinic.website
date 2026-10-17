@@ -1,3 +1,4 @@
+import { getPageSeo } from '@/sanity/lib/seo';
 // Fixed in Phase 1:
 //  - URLs pointed at https://aesthedent.clinic (wrong domain - live site is
 //    www.aesthedentpune.com), so OG/canonical referenced a site we don't own.
@@ -6,7 +7,7 @@
 //  - `openGraph.image` / `twitter.image` are not valid keys (they are `images`,
 //    plural), so both social images were silently dropped.
 // Wording is provisional pending Phase 2 keyword data - see Phase 4A.
-export const metadata = {
+const fallbackMetadata = {
   // `absolute` bypasses the root "%s | Aesthedent" template - the brand is
   // already in this page's name, and the template would double it.
   //
@@ -51,6 +52,7 @@ export const metadata = {
     images: ['/homepage-banner.png'],
   },
 };
+export async function generateMetadata() { return (await getPageSeo('/aesthedent-experience', fallbackMetadata)).metadata; }
 
 export default function LandingPageLayout({ children }) {
   return children;

@@ -1,5 +1,7 @@
 'use client';
 
+import EditorialImage from '@/components/insights/EditorialImage';
+
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -8,7 +10,6 @@ import { Badge } from '@/components/ui/badge';
 import PageWrapper from '@/components/layout/PageWrapper';
 import SectionHeading from '@/components/ui/SectionHeading';
 import AnimatedSection from '@/components/ui/AnimatedSection';
-import Image from 'next/image';
 import { REVIEWS, OPENING } from '@/lib/clinic';
 import { 
   MessageCircle,
@@ -27,7 +28,7 @@ import clinicWidePicture from "../../public/clinic/clinic-wide.jpeg";
 
 const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
 
-export default function AboutPage() {
+export default function AboutPage({ editorial }) {
   return (
     <PageWrapper>
       {/* Hero */}
@@ -39,9 +40,9 @@ export default function AboutPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <Badge className="mb-4 border border-[hsl(var(--color-primary))]/12 bg-[hsl(var(--background))] text-[hsl(var(--color-primary))] shadow-[0_18px_38px_-28px_hsl(var(--color-primary)/0.35)]">
+              <Badge className="mb-4 border border-[hsl(var(--color-primary))]/12 bg-[hsl(var(--background))] text-[hsl(var(--color-primary))] shadow-[0_18px_38px_-28px_hsl(var(--color-primary)/0.35)]">{editorial?.hero?.eyebrow ?? <>
                 About Us
-              </Badge>
+              </>}</Badge>
               {/* COLLISION C5: the old H1 ("We explain everything before we
                   start.") carried the positioning but neither Tier-1 term, and
                   this page owns "dental clinic in kothrud". Accent-span
@@ -49,15 +50,15 @@ export default function AboutPage() {
               <h1 className="mb-6 text-4xl font-semibold leading-tight text-[hsl(var(--color-primary))] lg:text-[52px]">
                 A dental clinic in Kothrud for people who <span className="text-[hsl(var(--color-accent))]">dread the dentist</span>.
               </h1>
-              <p className="text-lg lg:text-xl text-[hsl(var(--color-text-muted))] leading-relaxed mb-8">
+              <p className="text-lg lg:text-xl text-[hsl(var(--color-text-muted))] leading-relaxed mb-8">{editorial?.hero?.intro ?? <>
                 We explain everything before we start. If you have been putting
                 a visit off &mdash; for a year, or for ten &mdash; that is the
                 most common way people arrive here, and nobody is going to make
                 you feel foolish about it. If you would rather see what a visit
-                actually looks like first, read{' '}
-                <Link href="/aesthedent-experience" className="font-semibold text-[hsl(var(--color-primary))] underline underline-offset-4 hover:text-[hsl(var(--color-accent))] transition-colors">
+                actually looks like first, read</>}{' '}
+                <Link href="/aesthedent-experience" className="font-semibold text-[hsl(var(--color-primary))] underline underline-offset-4 hover:text-[hsl(var(--color-accent))] transition-colors">{editorial?.hero?.experienceLinkLabel ?? <>
                   what it is like to be treated here
-                </Link>
+                </>}</Link>
                 .
               </p>
               <div className="flex gap-4">
@@ -71,9 +72,9 @@ export default function AboutPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <MessageCircle className="w-5 h-5 mr-2" />
+                    <MessageCircle className="w-5 h-5 mr-2" />{editorial?.hero?.whatsappLabel ?? <>
                     Book a Visit
-                  </a>
+                  </>}</a>
                 </Button>
                 <Button
                   variant="outline"
@@ -81,7 +82,7 @@ export default function AboutPage() {
                   className="border-[hsl(var(--color-border))] text-[hsl(var(--color-text))] hover:bg-[hsl(var(--color-bg-alt))] px-8 py-6"
                   asChild
                 >
-                  <Link href="/doctor">Meet Our Doctors</Link>
+                  <Link href="/doctor">{editorial?.hero?.teamLabel ?? <>Meet Our Doctors</>}</Link>
                 </Button>
               </div>
             </motion.div>
@@ -93,13 +94,13 @@ export default function AboutPage() {
               className="relative"
             >
               <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[hsl(var(--color-primary))]/14 via-[hsl(var(--color-accent))]/12 to-[hsl(var(--color-primary-light))] shadow-[0_28px_60px_-36px_hsl(var(--color-primary)/0.34)] transform -rotate-3"></div>
-              <Image
+              <EditorialImage
                 src="https://images.pexels.com/photos/4269950/pexels-photo-4269950.jpeg?auto=compress&cs=tinysrgb&w=800"
                 alt="Aesthedent Clinic"
                 width={800}
                 height={500}
                 className="relative h-[400px] w-full rounded-3xl border border-white/70 object-cover object-center shadow-[0_28px_60px_-34px_hsl(var(--color-primary)/0.32)] lg:h-[450px]"
-                priority
+                priority imageOverride={editorial?.hero?.image} cropWidth={800} cropHeight={500}
               />
             </motion.div>
           </div>
@@ -110,30 +111,30 @@ export default function AboutPage() {
       <section className="section-spacing">
         <div className="main-container-narrow">
           <AnimatedSection className="text-center mb-12">
-            <Badge className="mb-4 bg-[hsl(var(--color-primary-light))] text-[hsl(var(--color-primary))]">
+            <Badge className="mb-4 bg-[hsl(var(--color-primary-light))] text-[hsl(var(--color-primary))]">{editorial?.storyPresentation?.eyebrow ?? <>
               Our Story
-            </Badge>
-            <h2 className="text-3xl lg:text-4xl font-semibold text-[hsl(var(--color-text))]">
+            </>}</Badge>
+            <h2 className="text-3xl lg:text-4xl font-semibold text-[hsl(var(--color-text))]">{editorial?.storyPresentation?.heading ?? <>
               Born from a Simple Belief
-            </h2>
+            </>}</h2>
           </AnimatedSection>
 
           <AnimatedSection delay={0.1}>
             <div className="prose prose-lg max-w-none text-[hsl(var(--color-text-muted))]">
-              <p className="text-lg leading-relaxed mb-6">
+              <p className="text-lg leading-relaxed mb-6">{editorial?.storyIntro ?? <>
                 Aesthedent Multispeciality Dental Clinic was founded by Dr. Sahil Wathodkar with a simple
                 vision: to create a dental clinic where patients actually want
                 to come. A place where fear is replaced with comfort, where
                 every treatment is explained clearly, and where honesty guides
                 every recommendation.
-              </p>
-              <p className="text-lg leading-relaxed mb-6">
+              </>}</p>
+              <p className="text-lg leading-relaxed mb-6">{editorial?.storyApproach ?? <>
                 After years of seeing patients avoid dental care due to fear or
                 past negative experiences, Dr. Sahil Wathodkar knew there had to be a
                 better way. He invested in the latest painless dentistry
                 techniques, created a calm, modern environment, and built a
                 team that shares his patient-first philosophy.
-              </p>
+              </>}</p>
               <p className="text-lg leading-relaxed">
                 Today, Aesthedent has served over 5,000 patients in Kothrud and
                 beyond. Our 5-star rating isn't just a number-it's a reflection
@@ -178,9 +179,9 @@ export default function AboutPage() {
       <section className="section-spacing">
         <div className="main-container">
           <SectionHeading
-            badge="Our Values"
-            title="What We Stand For"
-            subtitle="The principles that guide everything we do at Aesthedent"
+            badge={editorial?.valuesPresentation?.eyebrow ?? "Our Values"}
+            title={editorial?.valuesPresentation?.heading ?? "What We Stand For"}
+            subtitle={editorial?.valuesPresentation?.intro ?? "The principles that guide everything we do at Aesthedent"}
           />
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -205,7 +206,7 @@ export default function AboutPage() {
                 title: "Modern Excellence",
                 desc: "We invest in the latest technology and continuously update our skills to provide you with the best possible care.",
               },
-            ].map((value, i) => (
+            ].map((item, index) => ({ ...item, ...editorial?.values?.[index] })).map((value, i) => (
               <AnimatedSection key={i} delay={i * 0.1}>
                 <Card className="border-[hsl(var(--color-border))] hover:border-[hsl(var(--color-primary))] hover:shadow-lg transition-all h-full">
                   <CardContent className="p-8">
@@ -282,18 +283,18 @@ export default function AboutPage() {
       <section className="section-spacing">
         <div className="main-container">
           <div className="relative rounded-3xl overflow-hidden">
-            <Image
+            <EditorialImage
               src={clinicWidePicture}
               alt="Aesthedent Clinic Interior"
               fill
               className="h-[350px] w-full object-cover object-center lg:h-[500px]"
-              sizes="100vw"
+              sizes="100vw" imageOverride={editorial?.clinicExperience?.image} cropWidth={1600} cropHeight={900}
             />
             <div className="absolute inset-0 bg-gradient-to-r from-[hsl(var(--color-primary))/0.18] via-transparent to-transparent" />
             <div className="absolute inset-0 flex items-center p-6 lg:p-10">
               <div className="max-w-xl rounded-[2rem] border border-white/90 bg-[hsl(var(--background))]/64 p-7 shadow-[0_24px_54px_-34px_hsl(var(--color-primary)/0.24)] backdrop-blur-sm lg:p-10">
                 <p className="mb-3 text-xs font-semibold uppercase tracking-[0.28em] text-[hsl(var(--color-accent))]">
-                  Clinic Experience
+                  {editorial?.clinicExperience?.eyebrow ?? <>Clinic Experience</>}
                 </p>
                 <h3 className="mb-4 text-2xl font-semibold leading-tight text-[hsl(var(--color-primary))] lg:text-4xl">
                   Modern, Clean,
@@ -310,8 +311,8 @@ export default function AboutPage() {
                   className="bg-[hsl(var(--color-primary))] text-[hsl(var(--primary-foreground))] hover:bg-[hsl(var(--color-primary-dark))]"
                   asChild
                 >
-                  <Link href="/contact">
-                    Visit Us Today <ArrowRight className="ml-2 h-4 w-4" />
+                  <Link href="/contact">{editorial?.clinicExperience?.contactLabel ?? <>
+                    Visit Us Today </>}<ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
               </div>
@@ -324,9 +325,9 @@ export default function AboutPage() {
       <section className="section-spacing bg-gradient-to-b from-[hsl(var(--color-primary-light))] to-[hsl(var(--background))]">
         <div className="main-container-narrow text-center">
           <AnimatedSection>
-            <h2 className="text-3xl lg:text-4xl font-semibold text-[hsl(var(--color-text))] mb-6">
+            <h2 className="text-3xl lg:text-4xl font-semibold text-[hsl(var(--color-text))] mb-6">{editorial?.closing?.heading ?? <>
               Experience the Aesthedent Difference
-            </h2>
+            </>}</h2>
             <p className="text-lg text-[hsl(var(--color-text-muted))] mb-10 max-w-xl mx-auto">
               Join thousands of happy patients who have discovered dental care
               that truly puts them first.
@@ -337,9 +338,9 @@ export default function AboutPage() {
               asChild
             >
               <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                <MessageCircle className="w-5 h-5 mr-2" />
+                <MessageCircle className="w-5 h-5 mr-2" />{editorial?.closing?.whatsappLabel ?? <>
                 Book Your First Visit
-              </a>
+              </>}</a>
             </Button>
           </AnimatedSection>
         </div>

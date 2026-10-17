@@ -1,3 +1,5 @@
+import { getPageSeo } from '@/sanity/lib/seo';
+import { getAboutContent } from '@/sanity/lib/pages';
 import AboutClient from './AboutClient';
 import JsonLd from '@/components/seo/JsonLd';
 import { buildBreadcrumbSchema } from '@/lib/schema';
@@ -21,7 +23,7 @@ import { buildBreadcrumbSchema } from '@/lib/schema';
 // wedge (no competitor in the Kothrud top 8 competes on dental anxiety), it
 // matches this page's existing H1, and it collides with nothing -
 // /insights/dental-anxiety-tips is informational, this is commercial.
-export const metadata = {
+const fallbackMetadata = {
   title: 'Dentist for Nervous Patients in Kothrud',
   description:
     'A Kothrud dentist for people who dread dentists. We explain everything before we start, go at your pace, and stop the moment you raise a hand.',
@@ -29,17 +31,19 @@ export const metadata = {
     canonical: '/about',
   },
 };
+export async function generateMetadata() { return (await getPageSeo('/about', fallbackMetadata)).metadata; }
 
-export default function Page() {
+export default async function Page() {
+  const seoState = await getPageSeo('/about', fallbackMetadata);
   return (
     <>
-      <JsonLd
+      <>{seoState.structuredData && <JsonLd
         schema={buildBreadcrumbSchema([
           { name: 'Home', path: '/' },
           { name: 'About Our Clinic', path: '/about' },
         ])}
-      />
-      <AboutClient />
+      />}</>
+      <AboutClient editorial={await getAboutContent()} />
     </>
   );
 }

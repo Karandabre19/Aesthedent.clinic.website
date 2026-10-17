@@ -1,5 +1,7 @@
+import { getPageSeo } from '@/sanity/lib/seo';
+import { getPresentationPage } from '@/sanity/lib/presentation-pages';
 import { notFound } from 'next/navigation';
-import { getServiceBySlug, getAllServiceSlugs } from '@/lib/services';
+import { getAllServiceSlugs } from '@/lib/services';
 import JsonLd from '@/components/seo/JsonLd';
 import {
   buildFaqSchema,
@@ -7,6 +9,7 @@ import {
   buildBreadcrumbSchema,
   buildMedicalWebPageSchema,
 } from '@/lib/schema';
+import { getServices } from '@/sanity/lib/services';
 import ServiceDetailClient from './ServiceDetailClient';
 
 // Prerender all eight service pages at build time. Without this they were
@@ -18,7 +21,8 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const service = getServiceBySlug(slug);
+  const catalog = await getServices();
+  const service = catalog.find((item) => item.slug === slug);
 
   if (!service) return {};
 
@@ -30,7 +34,7 @@ export async function generateMetadata({ params }) {
   // one suburb narrows the page for no gain (audit/01-content-spine.md §4).
   const title = `${service.title} in ${service.locality}`;
 
-  return {
+  const fallbackMetadata = {
     title,
     description: service.shortDesc,
     alternates: {
@@ -43,11 +47,14 @@ export async function generateMetadata({ params }) {
       type: 'article',
     },
   };
+  return (await getPageSeo(`/services/${slug}`, fallbackMetadata)).metadata;
 }
 
 export default async function Page({ params }) {
   const { slug } = await params;
-  const service = getServiceBySlug(slug);
+  const seoState = await getPageSeo(`/services/${slug}`, {});
+  const catalog = await getServices();
+  const service = catalog.find((item) => item.slug === slug);
 
   if (!service) {
     notFound();
@@ -57,10 +64,10 @@ export default async function Page({ params }) {
     <>
       {/* The FAQs were already written in lib/services.js and shipped unmarked.
           Only 1 of 10 competitors has FAQPage - see audit/02-schema-matrix.md. */}
-      <JsonLd
+      <>{seoState.structuredData && <JsonLd
         schema={[
           buildMedicalWebPageSchema(service),
-          buildFaqSchema(service.faqs),
+          ...(seoState.faqStructuredData ? [buildFaqSchema(service.faqs)] : []),
           buildProcedureSchema(service),
           buildBreadcrumbSchema([
             { name: 'Home', path: '/' },
@@ -68,8 +75,8 @@ export default async function Page({ params }) {
             { name: service.title, path: `/services/${slug}` },
           ]),
         ]}
-      />
-      <ServiceDetailClient slug={slug} />
+      />}</>
+      <ServiceDetailClient presentation={await getPresentationPage('servicesPage')} slug={slug} serviceData={service} relatedServices={catalog} />
     </>
   );
 }

@@ -1,14 +1,16 @@
 'use client';
 
+import EditorialImage from '@/components/insights/EditorialImage';
+
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import Image from 'next/image';
 import { ArrowRight, Clock, ArrowLeft } from 'lucide-react';
 import PageWrapper from '@/components/layout/PageWrapper';
 import AnimatedSection from '@/components/ui/AnimatedSection';
+import { applyInsightOverrides } from '@/sanity/lib/insight-overrides';
 
 // Insights data - can be moved to a separate file or fetched from CMS
-const insights = [
+const fallbackInsights = [
   {
     id: 1,
     slug: 'dental-implants-pune-specialist',
@@ -82,13 +84,13 @@ function FeaturedArticle({ article }) {
         <div className="grid lg:grid-cols-2">
           {/* Image */}
           <div className="relative aspect-[16/10] lg:aspect-auto lg:min-h-[400px] overflow-hidden">
-            <Image
+            <EditorialImage
               src={article.image}
               alt={article.title}
               fill
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               priority
-              sizes="(max-width: 1024px) 100vw, 50vw"
+              sizes="(max-width: 1024px) 100vw, 50vw" imageOverride={article.coverImage} cropWidth={1200} cropHeight={750}
             />
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[hsl(var(--background))] lg:block hidden" />
             <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--primary))]/80 to-transparent lg:hidden" />
@@ -142,12 +144,12 @@ function ArticleCard({ article, index }) {
       >
         {/* Image */}
         <div className="relative aspect-[16/10] overflow-hidden">
-          <Image
+          <EditorialImage
             src={article.image}
             alt={article.title}
             fill
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" imageOverride={article.coverImage} cropWidth={1200} cropHeight={750}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
         </div>
@@ -182,7 +184,8 @@ function ArticleCard({ article, index }) {
   );
 }
 
-export default function InsightsPage() {
+export default function InsightsPage({ presentation = {}, insightOverrides = [] }) {
+  const insights = applyInsightOverrides(fallbackInsights, insightOverrides, 'listing');
   const featuredArticle = insights.find(a => a.featured) || insights[0];
   const otherArticles = insights.filter(a => a.id !== featuredArticle.id);
 
@@ -197,21 +200,21 @@ export default function InsightsPage() {
               className="inline-flex items-center gap-2 text-[hsl(var(--color-text-muted))] hover:text-[hsl(var(--primary))] transition-colors mb-6 text-sm"
             >
               <ArrowLeft className="w-4 h-4" />
-              Back to home
-            </Link>
+              {presentation?.hero?.backLabel ?? <>Back to home
+            </>}</Link>
             
             <div className="max-w-3xl">
               <div className="inline-block mb-4 px-4 py-2 bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] rounded-full text-sm font-semibold">
-                Knowledge Hub
-              </div>
+                {presentation?.hero?.eyebrow ?? <>Knowledge Hub
+              </>}</div>
               
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[hsl(var(--color-text))] leading-tight mb-6">
-                Insights
-              </h1>
+                {presentation?.hero?.heading ?? <>Insights
+              </>}</h1>
               
               <p className="text-lg sm:text-xl text-[hsl(var(--color-text-muted))] leading-relaxed">
-                Real answers to real patient questions. Trusted knowledge from our experienced dental team-not generic content.
-              </p>
+                {presentation?.hero?.intro ?? <>Real answers to real patient questions. Trusted knowledge from our experienced dental team-not generic content.
+              </>}</p>
             </div>
           </AnimatedSection>
         </div>
@@ -231,8 +234,8 @@ export default function InsightsPage() {
         <div className="main-container">
           <AnimatedSection className="mb-10">
             <h2 className="text-2xl sm:text-3xl font-bold text-[hsl(var(--color-text))]">
-              More articles
-            </h2>
+              {presentation?.labels?.moreHeading ?? <>More articles
+            </>}</h2>
           </AnimatedSection>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -248,17 +251,17 @@ export default function InsightsPage() {
         <div className="main-container">
           <AnimatedSection className="text-center max-w-2xl mx-auto">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
-              Have a question we have not answered?
-            </h2>
+              {presentation?.closing?.heading ?? <>Have a question we have not answered?
+            </>}</h2>
             <p className="text-white/80 text-lg mb-8">
-              Reach out to us directly. We are happy to help you understand your dental health better.
-            </p>
+              {presentation?.closing?.intro ?? <>Reach out to us directly. We are happy to help you understand your dental health better.
+            </>}</p>
             <Link
               href="/contact"
               className="inline-flex items-center gap-3 px-8 py-4 bg-[hsl(var(--accent))] hover:bg-[hsl(var(--accent))]/90 text-[hsl(var(--accent-foreground))] font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1"
             >
-              Contact us
-              <ArrowRight className="w-5 h-5" />
+              {presentation?.closing?.contactLabel ?? <>Contact us
+              </>}<ArrowRight className="w-5 h-5" />
             </Link>
           </AnimatedSection>
         </div>

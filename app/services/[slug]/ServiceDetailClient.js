@@ -1,8 +1,9 @@
 'use client';
 
+import EditorialImage from '@/components/insights/EditorialImage';
+
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -59,14 +60,14 @@ const phoneNumber = '+919309816336';
 
 // The slug arrives resolved from the server shell, which already 404s on an
 // unknown one - see ./page.js.
-export default function ServiceDetailClient({ slug }) {
-  const service = getServiceBySlug(slug);
+export default function ServiceDetailClient({ presentation = {}, slug, serviceData, relatedServices = services }) {
+  const service = serviceData ?? getServiceBySlug(slug);
 
   if (!service) {
     notFound();
   }
 
-  const otherServices = services.filter((s) => s.slug !== service.slug).slice(0, 3);
+  const otherServices = relatedServices.filter((s) => s.slug !== service.slug).slice(0, 3);
   const whatsappLink = buildWhatsappMessage(service.title);
 
   // Pages carrying Dr. Sahil's copy have these; the rest fall back cleanly.
@@ -92,8 +93,8 @@ export default function ServiceDetailClient({ slug }) {
                   className="inline-flex items-center text-sm text-[hsl(var(--color-text-muted))] hover:text-[hsl(var(--color-primary))] mb-6 transition-colors"
                 >
                   <ArrowLeft className="w-4 h-4 mr-2" />
-                  All dental treatments in Kothrud
-                </Link>
+                  {presentation?.detail?.backLabel ?? <>All dental treatments in Kothrud
+                </>}</Link>
 
                 {/* THE ONLY h1 ON THE PAGE. It is the primary keyword heading;
                     Dr. Sahil's headline sits below it as a lead line, not as a
@@ -128,8 +129,8 @@ export default function ServiceDetailClient({ slug }) {
                       rel="noopener noreferrer"
                     >
                       <MessageCircle className="w-5 h-5 mr-2" />
-                      Book This Treatment
-                    </a>
+                      {presentation?.detail?.bookLabel ?? <>Book This Treatment
+                    </>}</a>
                   </Button>
                   <Button
                     variant="outline"
@@ -139,8 +140,8 @@ export default function ServiceDetailClient({ slug }) {
                   >
                     <a href={`tel:${phoneNumber}`}>
                       <Phone className="w-5 h-5 mr-2" />
-                      Call to Inquire
-                    </a>
+                      {presentation?.detail?.inquireLabel ?? <>Call to Inquire
+                    </>}</a>
                   </Button>
                 </div>
               </motion.div>
@@ -150,13 +151,13 @@ export default function ServiceDetailClient({ slug }) {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                <Image
+                <EditorialImage
                   src={service.image}
                   alt={imageAlt}
                   width={800}
                   height={450}
                   className="rounded-3xl shadow-xl object-cover w-full h-[400px] lg:h-[450px]"
-                  priority
+                  priority imageOverride={service.coverImage} cropWidth={1200} cropHeight={675}
                 />
               </motion.div>
             </div>
@@ -222,8 +223,8 @@ export default function ServiceDetailClient({ slug }) {
             <div className="main-container">
               <AnimatedSection className="text-center mb-12">
                 <Badge className="mb-4 bg-[hsl(var(--color-primary))]/10 text-[hsl(var(--color-primary))]">
-                  Benefits
-                </Badge>
+                  {presentation?.detail?.benefitsEyebrow ?? <>Benefits
+                </>}</Badge>
                 <h2
                   id="benefits-heading"
                   className="text-2xl lg:text-3xl font-semibold text-[hsl(var(--color-text))]"
@@ -264,14 +265,14 @@ export default function ServiceDetailClient({ slug }) {
             <div className="main-container-narrow">
               <AnimatedSection className="mb-10">
                 <Badge className="mb-4 bg-[hsl(var(--color-primary))]/10 text-[hsl(var(--color-primary))]">
-                  Why Aesthedent
-                </Badge>
+                  {presentation?.detail?.whyEyebrow ?? <>Why Aesthedent
+                </>}</Badge>
                 <h2
                   id="why-heading"
                   className="text-2xl lg:text-3xl font-semibold text-[hsl(var(--color-text))]"
                 >
-                  Why patients choose us for this treatment
-                </h2>
+                  {presentation?.detail?.whyHeading ?? <>Why patients choose us for this treatment
+                </>}</h2>
               </AnimatedSection>
 
               <div className="grid gap-6 md:grid-cols-2">
@@ -302,14 +303,14 @@ export default function ServiceDetailClient({ slug }) {
             <div className="main-container-narrow">
               <AnimatedSection className="text-center mb-12">
                 <Badge className="mb-4 bg-[hsl(var(--color-primary))]/20 text-[hsl(var(--color-primary))]">
-                  The Process
-                </Badge>
+                  {presentation?.detail?.processEyebrow ?? <>The Process
+                </>}</Badge>
                 <h2
                   id="process-heading"
                   className="text-2xl lg:text-3xl font-semibold text-[hsl(var(--color-text))]"
                 >
-                  What to expect, step by step
-                </h2>
+                  {presentation?.detail?.processHeading ?? <>What to expect, step by step
+                </>}</h2>
               </AnimatedSection>
 
               <ol className="space-y-6 list-none p-0 m-0">
@@ -347,14 +348,14 @@ export default function ServiceDetailClient({ slug }) {
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
               <AnimatedSection className="text-center mb-12">
                 <Badge className="mb-4 bg-[hsl(var(--color-primary))]/10 text-[hsl(var(--color-primary))]">
-                  FAQs
-                </Badge>
+                  {presentation?.detail?.faqEyebrow ?? <>FAQs
+                </>}</Badge>
                 <h2
                   id="faq-heading"
                   className="text-2xl lg:text-3xl font-semibold text-[hsl(var(--color-text))]"
                 >
-                  Common questions
-                </h2>
+                  {presentation?.detail?.faqHeading ?? <>Common questions
+                </>}</h2>
               </AnimatedSection>
 
               <div className="space-y-4">
@@ -393,12 +394,12 @@ export default function ServiceDetailClient({ slug }) {
               id="cta-heading"
               className="text-2xl lg:text-3xl font-semibold text-[hsl(var(--primary-foreground))] mb-4"
             >
-              Ready to Get Started?
-            </h2>
+              {presentation?.detail?.closingHeading ?? <>Ready to Get Started?
+            </>}</h2>
             <p className="text-[hsl(var(--primary-foreground)/0.8)] mb-8 max-w-xl mx-auto">
-              Book your consultation today and take the first step towards a
+              {presentation?.detail?.closingIntro ?? <>Book your consultation today and take the first step towards a
               healthier smile.
-            </p>
+            </>}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 size="lg"
@@ -412,8 +413,8 @@ export default function ServiceDetailClient({ slug }) {
                   rel="noopener noreferrer"
                 >
                   <MessageCircle className="w-5 h-5 mr-2" />
-                  Book on WhatsApp
-                </a>
+                  {presentation?.detail?.whatsappLabel ?? <>Book on WhatsApp
+                </>}</a>
               </Button>
               <Button
                 variant="outline"
@@ -423,8 +424,8 @@ export default function ServiceDetailClient({ slug }) {
               >
                 <a href={`tel:${phoneNumber}`}>
                   <Phone className="w-5 h-5 mr-2" />
-                  Call Now
-                </a>
+                  {presentation?.detail?.callLabel ?? <>Call Now
+                </>}</a>
               </Button>
             </div>
           </AnimatedSection>
@@ -439,8 +440,8 @@ export default function ServiceDetailClient({ slug }) {
               id="other-heading"
               className="text-2xl lg:text-3xl font-semibold text-[hsl(var(--color-text))]"
             >
-              Other dental treatments in Kothrud
-            </h2>
+              {presentation?.detail?.relatedHeading ?? <>Other dental treatments in Kothrud
+            </>}</h2>
           </AnimatedSection>
 
           <ul className="grid md:grid-cols-3 gap-8 list-none p-0">
@@ -450,12 +451,12 @@ export default function ServiceDetailClient({ slug }) {
                   <Link href={`/services/${s.slug}`}>
                     <Card className="group h-full border-[hsl(var(--border))] hover:border-[hsl(var(--color-primary))] hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer">
                       <div className="aspect-[16/10] overflow-hidden">
-                        <Image
+                        <EditorialImage
                           src={s.image}
                           alt={s.imageAlt ?? `${s.title} at Aesthedent Dental Clinic, Kothrud`}
                           width={600}
                           height={400}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" imageOverride={s.coverImage} cropWidth={900} cropHeight={600}
                         />
                       </div>
                       <CardContent className="p-5">

@@ -2,13 +2,14 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useNavigation } from './NavigationProvider';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Phone, MessageCircle, Menu, X, ChevronRight, Sparkles, Activity, ShieldCheck, HeartPulse, Stethoscope, Microscope, Zap } from 'lucide-react';
 import { services } from '@/lib/services';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useScroll } from 'framer-motion';
 
-const navLinks = [
+const defaultNavLinks = [
   { href: '/', label: 'Home' },
   { 
     label: 'Treatments', 
@@ -124,6 +125,11 @@ function NavLink({ href, label, isActive }) {
 }
 
 export default function Navbar() {
+  const navigation = useNavigation();
+  const navLinks = navigation.header.filter(item => item.visible).map(item => item.key === 'treatments' ? {
+    ...defaultNavLinks[1], key: item.key, label: item.label,
+    subLinks: [{ href: '/services', label: navigation.allTreatmentsLabel }, ...navigation.treatments.filter(item => item.visible).map(item => ({ ...defaultNavLinks[1].subLinks.find(link => link.href === item.route), href: item.route, label: item.label }))],
+  } : { key: item.key, href: item.route, label: item.label });
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollDirection, setScrollDirection] = useState('up');
@@ -238,7 +244,7 @@ export default function Navbar() {
                   if (link.subLinks) {
                     const isActive = link.subLinks.some(sub => pathname === sub.href);
                     return (
-                      <div key={link.label} className="relative group/dropdown">
+                      <div key={link.key ?? link.label} className="relative group/dropdown">
                         <div className="relative px-3 py-2 cursor-pointer flex items-center gap-1 group">
                           {/* Active pill background */}
                           <div className={`absolute inset-0 rounded-full transition-all duration-300 ease-out ${isActive
@@ -329,7 +335,7 @@ export default function Navbar() {
                                 href="/services"
                                 className="inline-flex items-center gap-2 text-sm font-bold text-[hsl(var(--color-accent))] hover:gap-3 transition-all underline underline-offset-4"
                               >
-                                View All Treatments <ChevronRight className="w-4 h-4" />
+                                {navigation.allTreatmentsLabel} <ChevronRight className="w-4 h-4" />
                               </Link>
                             </div>
                           </div>
@@ -529,7 +535,7 @@ export default function Navbar() {
                       const isActive = link.subLinks.some(sub => pathname === sub.href);
                       return (
                         <motion.li
-                          key={link.label}
+                          key={link.key ?? link.label}
                           initial={{ opacity: 0, x: 40 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: i * 0.05 + 0.1 }}

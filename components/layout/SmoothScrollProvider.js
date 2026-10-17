@@ -23,10 +23,12 @@ function shouldEnableSmoothScroll() {
 
 export default function SmoothScrollProvider({ children }) {
   const pathname = usePathname();
+  const isStudio = pathname === '/aesthedent-studio' || pathname?.startsWith('/aesthedent-studio/');
   const lenisRef = useRef(null);
 
   useEffect(() => {
-    if (!shouldEnableSmoothScroll()) {
+    // Studio owns nested form/list/dialog scrolling; Lenis captures their wheel events.
+    if (isStudio || !shouldEnableSmoothScroll()) {
       return undefined;
     }
 
@@ -60,7 +62,7 @@ export default function SmoothScrollProvider({ children }) {
       }
       lenisRef.current = null;
     };
-  }, []);
+  }, [isStudio]);
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {

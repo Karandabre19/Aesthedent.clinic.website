@@ -1,27 +1,13 @@
 'use client';
 
 import Link from 'next/link';
+import { useNavigation } from './NavigationProvider';
 import Image from 'next/image';
 import { Smile, MapPin, Clock, Phone, MessageCircle, Mail, ArrowRight, Instagram } from 'lucide-react';
 
-const footerLinks = {
-  services: [
-    { href: '/services/dental-implants', label: 'Dental Implants' },
-    { href: '/services/root-canal', label: 'Root Canal Treatment' },
-    { href: '/services/full-mouth-rehabilitation', label: 'Full Mouth Rehab' },
-    { href: '/services/orthodontic-treatment', label: 'Braces & Aligners' },
-    { href: '/services/wisdom-tooth-surgery', label: 'Wisdom Tooth Surgery' },
-  ],
-  quickLinks: [
-    { href: '/', label: 'Home' },
-    { href: '/services', label: 'All Services' },
-    { href: '/doctor', label: 'Our Doctors' },
-    { href: '/about', label: 'About Us' },
-    { href: '/contact', label: 'Contact' },
-  ],
-};
-
 export default function Footer() {
+  const navigation = useNavigation();
+  const footerLinks = { services: navigation.footerServices.filter(item => item.visible).map(item => ({ href: item.route, label: item.label })), quickLinks: navigation.footerQuick.filter(item => item.visible).map(item => ({ href: item.route, label: item.label })) };
   const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
   const phoneNumber = '+919309816336';
 
@@ -42,7 +28,7 @@ export default function Footer() {
               />
             </Link>
             <p className="measure text-white/90 text-sm leading-relaxed font-light mb-10 tracking-wide">
-              Aesthedent - Reclaim Your Smile. Honest, clear dental care in Kothrud, Pune. We focus on reliable treatments and ensuring you understand everything before we start.
+              {navigation.footer.intro}
             </p>
             <div className="flex gap-5">
               <a 
@@ -84,7 +70,7 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-[hsl(var(--color-accent))] mb-8 pb-4 border-b border-white/20">Services</h2>
+            <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-[hsl(var(--color-accent))] mb-8 pb-4 border-b border-white/20">{navigation.footer.servicesHeading}</h2>
             <ul className="space-y-4">
               {footerLinks.services.map((link) => (
                 <li key={link.href}>
@@ -101,7 +87,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-[hsl(var(--color-accent))] mb-8 pb-4 border-b border-white/20">Quick Links</h2>
+            <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-[hsl(var(--color-accent))] mb-8 pb-4 border-b border-white/20">{navigation.footer.quickHeading}</h2>
             <ul className="space-y-4">
               {footerLinks.quickLinks.map((link) => (
                 <li key={link.href}>
@@ -118,7 +104,7 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-[hsl(var(--color-accent))] mb-8 pb-4 border-b border-white/20">Contact</h2>
+            <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-[hsl(var(--color-accent))] mb-8 pb-4 border-b border-white/20">{navigation.footer.contactHeading}</h2>
             <ul className="space-y-5">
               <li className="flex items-start gap-3.5 group">
                 <MapPin className="w-4 h-4 text-[hsl(var(--color-accent))] flex-shrink-0 mt-1 group-hover:scale-110 transition-transform duration-300" />

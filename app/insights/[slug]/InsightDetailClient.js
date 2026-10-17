@@ -1,11 +1,13 @@
 'use client';
 
+import EditorialImage from '@/components/insights/EditorialImage';
+
 import Link from 'next/link';
 import { ArrowLeft, Clock, Calendar, ArrowRight, MessageCircle } from 'lucide-react';
 import PageWrapper from '@/components/layout/PageWrapper';
-import Image from 'next/image';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import InsightsSection from '@/components/sections/InsightsSection';
+import InsightBody from '@/components/insights/InsightBody';
 
 // Insights data - can be moved to a separate file or fetched from CMS
 const insightsData = {
@@ -210,8 +212,10 @@ const insightsData = {
 const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
 
 // Slug arrives resolved from the server shell - see ./page.js.
-export default function InsightDetailClient({ slug }) {
-  const article = insightsData[slug];
+export default function InsightDetailClient({ presentation = {}, slug, insightOverrides = [], relatedInsights }) {
+  const fallback = insightsData[slug];
+  const override = insightOverrides.find((item) => item.slug === slug);
+  const article = fallback && override ? { ...fallback, ...override } : fallback;
 
   // Fallback for unknown slugs
   if (!article) {
@@ -249,8 +253,8 @@ export default function InsightDetailClient({ slug }) {
               className="inline-flex items-center gap-2 text-[hsl(var(--color-text-muted))] hover:text-[hsl(var(--primary))] transition-colors mb-6 text-sm"
             >
               <ArrowLeft className="w-4 h-4" />
-              Back to insights
-            </Link>
+              {presentation?.detail?.backLabel ?? <>Back to insights
+            </>}</Link>
             
             <div className="max-w-3xl">
               <span className="inline-block mb-4 px-3 py-1.5 bg-[hsl(var(--accent))] text-[hsl(var(--accent-foreground))] text-xs font-semibold rounded-full uppercase tracking-wider">
@@ -270,6 +274,9 @@ export default function InsightDetailClient({ slug }) {
                   <Clock className="w-4 h-4" />
                   {article.readTime}
                 </span>
+                {article.author && <span>By <Link href={article.author.url}>{article.author.name}</Link></span>}
+                {article.reviewer && <span>Clinically reviewed by <Link href={article.reviewer.url}>{article.reviewer.name}</Link></span>}
+                {article.modifiedAt && <span>Updated <time dateTime={article.modifiedAt}>{new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeZone: 'UTC' }).format(new Date(article.modifiedAt))}</time></span>}
               </div>
             </div>
           </AnimatedSection>
@@ -281,13 +288,13 @@ export default function InsightDetailClient({ slug }) {
         <div className="main-container">
           <AnimatedSection>
             <div className="relative aspect-[21/9] rounded-2xl overflow-hidden">
-              <Image
+              <EditorialImage
                 src={article.image}
                 alt={article.title}
                 fill
                 className="w-full h-full object-cover"
                 priority
-                sizes="(max-width: 1200px) 100vw, 1200px"
+                sizes="(max-width: 1200px) 100vw, 1200px" imageOverride={article.coverImage} cropWidth={1680} cropHeight={720}
               />
             </div>
           </AnimatedSection>
@@ -310,8 +317,10 @@ export default function InsightDetailClient({ slug }) {
                   prose-ul:my-4 prose-li:text-[hsl(var(--color-text-muted))] prose-li:my-1
                   [&_.lead]:text-xl [&_.lead]:text-[hsl(var(--color-text))] [&_.lead]:leading-relaxed [&_.lead]:mb-8
                 "
-                dangerouslySetInnerHTML={{ __html: article.content }}
-              />
+                dangerouslySetInnerHTML={article.body ? undefined : { __html: article.content }}
+              >
+                {article.body && <><InsightBody value={article.body} />{article.sources?.length > 0 && <><h2>Sources</h2><ul>{article.sources.map(source => <li key={source.url}><a href={source.url}>{source.title}</a></li>)}</ul></>}</>}
+              </article>
             </AnimatedSection>
 
             {/* Sidebar */}
@@ -320,11 +329,11 @@ export default function InsightDetailClient({ slug }) {
                 <AnimatedSection>
                   <div className="p-6 rounded-2xl bg-[hsl(var(--bg-alt))] border border-[hsl(var(--border))]">
                     <h3 className="text-lg font-bold text-[hsl(var(--color-text))] mb-3">
-                      Have questions?
-                    </h3>
+                      {presentation?.detail?.sidebarHeading ?? <>Have questions?
+                    </>}</h3>
                     <p className="text-sm text-[hsl(var(--color-text-muted))] mb-5">
-                      Our team is here to help you understand your dental health better.
-                    </p>
+                      {presentation?.detail?.sidebarIntro ?? <>Our team is here to help you understand your dental health better.
+                    </>}</p>
                     <a
                       href={whatsappLink}
                       target="_blank"
@@ -332,8 +341,8 @@ export default function InsightDetailClient({ slug }) {
                       className="inline-flex items-center justify-center gap-2 w-full px-5 py-3 bg-[hsl(var(--accent))] hover:bg-[hsl(var(--accent))]/90 text-[hsl(var(--accent-foreground))] font-semibold rounded-lg transition-all duration-300 text-sm"
                     >
                       <MessageCircle className="w-4 h-4" />
-                      Chat with us
-                    </a>
+                      {presentation?.detail?.whatsappLabel ?? <>Chat with us
+                    </>}</a>
                   </div>
                 </AnimatedSection>
               </div>
@@ -344,8 +353,9 @@ export default function InsightDetailClient({ slug }) {
 
       {/* Related Articles */}
       <InsightsSection 
-        title="More insights"
-        subtitle="Continue exploring our knowledge hub"
+        title={presentation?.detail?.relatedHeading ?? "More insights"}
+        insights={relatedInsights}
+        subtitle={presentation?.detail?.relatedIntro ?? "Continue exploring our knowledge hub"}
         limit={3}
         variant="compact"
         showViewAll={true}
