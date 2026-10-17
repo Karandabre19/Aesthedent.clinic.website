@@ -2,6 +2,11 @@ import { NextResponse } from 'next/server';
 import { MongoClient } from 'mongodb';
 import { v4 as uuidv4 } from 'uuid';
 
+// Legacy endpoints. No current frontend calls them: the intake form hands off to
+// WhatsApp and the contact form POST was removed (see app/contact/ContactClient.js).
+// They stay in place so no write contract disappears silently, but nothing here
+// may list stored patient data, and responses are same-origin only (no CORS).
+
 const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost:27017';
 const DB_NAME = process.env.DB_NAME || 'aesthedent_db';
 
@@ -9,79 +14,59 @@ let client = null;
 
 async function getDatabase() {
   if (!client) {
-    client = new MongoClient(MONGO_URL);
-    await client.connect();
+    // Cache only after a successful connect so one failure is not reused forever.
+    const connecting = new MongoClient(MONGO_URL);
+    await connecting.connect();
+    client = connecting;
   }
   return client.db(DB_NAME);
 }
 
-// CORS headers
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-};
+function methodNotAllowed(allow) {
+  return NextResponse.json({ error: 'Method not allowed' }, { status: 405, headers: { Allow: allow } });
+}
 
 // Health check endpoint
 async function handleHealthCheck() {
   try {
     const db = await getDatabase();
     await db.command({ ping: 1 });
-    return NextResponse.json(
-      { 
-        status: 'healthy', 
-        message: 'Aesthedent Dental Clinic API is running',
-        timestamp: new Date().toISOString()
-      },
-      { headers: corsHeaders }
-    );
+    return NextResponse.json({
+      status: 'healthy',
+      message: 'Aesthedent Dental Clinic API is running',
+      timestamp: new Date().toISOString(),
+    });
   } catch (error) {
-    return NextResponse.json(
-      { status: 'unhealthy', error: error.message },
-      { status: 500, headers: corsHeaders }
-    );
+    // Upstream messages can carry hostnames or credentials; keep them server-side.
+    console.error('API health check failed:', error?.name ?? 'Error');
+    return NextResponse.json({ status: 'unhealthy' }, { status: 500 });
   }
 }
 
-// Appointment endpoints
+// Appointment endpoints. Listing was an unauthenticated read of names, phones and
+// schedules, so only creation remains, and it is refused before touching the database.
 async function handleAppointments(request, method) {
+  if (method !== 'POST') return methodNotAllowed('POST');
+
   const db = await getDatabase();
   const collection = db.collection('appointments');
+  const body = await request.json();
+  const appointment = {
+    id: uuidv4(),
+    name: body.name,
+    phone: body.phone,
+    email: body.email || null,
+    service: body.service,
+    preferredDate: body.preferredDate,
+    preferredTime: body.preferredTime,
+    message: body.message || '',
+    status: 'pending',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
 
-  if (method === 'GET') {
-    const appointments = await collection.find({}, { 
-      projection: { _id: 0, id: 1, name: 1, phone: 1, service: 1, preferredDate: 1, preferredTime: 1, status: 1, createdAt: 1 } 
-    }).sort({ createdAt: -1 }).limit(100).toArray();
-    return NextResponse.json({ appointments }, { headers: corsHeaders });
-  }
-
-  if (method === 'POST') {
-    const body = await request.json();
-    const appointment = {
-      id: uuidv4(),
-      name: body.name,
-      phone: body.phone,
-      email: body.email || null,
-      service: body.service,
-      preferredDate: body.preferredDate,
-      preferredTime: body.preferredTime,
-      message: body.message || '',
-      status: 'pending',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
-
-    await collection.insertOne(appointment);
-    return NextResponse.json(
-      { success: true, appointment },
-      { status: 201, headers: corsHeaders }
-    );
-  }
-
-  return NextResponse.json(
-    { error: 'Method not allowed' },
-    { status: 405, headers: corsHeaders }
-  );
+  await collection.insertOne(appointment);
+  return NextResponse.json({ success: true, appointment }, { status: 201 });
 }
 
 // Contact form endpoint
@@ -96,14 +81,11 @@ async function handleContact(request) {
     phone: body.phone,
     email: body.email || null,
     message: body.message,
-    createdAt: new Date().toISOString()
+    createdAt: new Date().toISOString(),
   };
 
   await collection.insertOne(contact);
-  return NextResponse.json(
-    { success: true, message: 'Thank you for contacting us!' },
-    { status: 201, headers: corsHeaders }
-  );
+  return NextResponse.json({ success: true, message: 'Thank you for contacting us!' }, { status: 201 });
 }
 
 // Main route handler
@@ -113,32 +95,23 @@ async function handleRequest(request, { params }) {
   const method = request.method;
 
   try {
-    // Health check
     if (pathString === 'health' || pathString === '') {
-      return handleHealthCheck();
+      return await handleHealthCheck();
     }
 
-    // Appointments
     if (pathString === 'appointments') {
-      return handleAppointments(request, method);
+      return await handleAppointments(request, method);
     }
 
-    // Contact
     if (pathString === 'contact' && method === 'POST') {
-      return handleContact(request);
+      return await handleContact(request);
     }
 
-    // 404 for unknown routes
-    return NextResponse.json(
-      { error: 'Not found' },
-      { status: 404, headers: corsHeaders }
-    );
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
   } catch (error) {
-    console.error('API Error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error', details: error.message },
-      { status: 500, headers: corsHeaders }
-    );
+    // Name only: request bodies and driver messages may contain personal data.
+    console.error('API Error:', pathString, error?.name ?? 'Error');
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -156,8 +129,4 @@ export async function PUT(request, context) {
 
 export async function DELETE(request, context) {
   return handleRequest(request, context);
-}
-
-export async function OPTIONS() {
-  return new NextResponse(null, { status: 204, headers: corsHeaders });
 }

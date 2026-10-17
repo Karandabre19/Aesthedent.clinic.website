@@ -64,15 +64,8 @@ const nextConfig = {
         headers: [
           { key: "X-Frame-Options", value: "SAMEORIGIN" }, // safer than ALLOWALL
           { key: "Content-Security-Policy", value: "frame-ancestors 'self';" },
-          {
-            key: "Access-Control-Allow-Origin",
-            value: process.env.CORS_ORIGINS || "*",
-          },
-          {
-            key: "Access-Control-Allow-Methods",
-            value: "GET, POST, PUT, DELETE, OPTIONS",
-          },
-          { key: "Access-Control-Allow-Headers", value: "*" },
+          // No CORS headers: every caller is same-origin, and a wildcard origin let
+          // any website read API responses from a visitor's browser.
         ],
       },
     ];
