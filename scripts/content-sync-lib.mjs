@@ -833,3 +833,76 @@ export async function applyDraftOperations(client, manifest, inventory, approval
 
 }
 
+
+// Documents whose copy is labels, calls to action and clinic-confirmed facts only.
+// Clinical, credential and testimonial content is published by people in Studio
+// after sign-off, never by this tool.
+export const publishableIdentities = ['navigation', 'seoSettings', 'servicesPage', 'teamPage', 'insightsPage', 'contactPage', 'localLandingPage'];
+
+const withoutSystemFields = doc => Object.fromEntries(Object.entries(doc ?? {}).filter(([key]) => !['_id', '_rev', '_createdAt', '_updatedAt', '_system'].includes(key)));
+
+export async function publishDrafts(client, identities, { record } = {}) {
+
+  const config = client.config();
+
+  if (config.projectId !== target.projectId || config.dataset !== target.dataset || config.apiHost !== 'https://api.sanity.io') throw new Error('Client target mismatch; nothing published.');
+
+  if (typeof record !== 'function') throw new Error('A durable journal is required. Nothing published.');
+
+  const refused = identities.filter(identity => !publishableIdentities.includes(identity));
+
+  if (refused.length || !identities.length) throw new Error(`Not publishable by this tool: ${refused.join(', ') || '(none given)'}. Clinical content is published in Studio after sign-off.`);
+
+  const results = [];
+
+  for (const identity of identities) {
+
+    const draftId = `drafts.${identity}`;
+
+    const family = await client.fetch('*[_id == $id || _id == $draft || _id in path($versions)]{_id,_rev}', { id: identity, draft: draftId, versions: `versions.*.${identity}` });
+
+    if (!Array.isArray(family) || family.some(doc => doc._id.startsWith('versions.'))) throw new Error(`${identity}: release version present; resolve it in Studio first.`);
+
+    const draft = await client.getDocument(draftId);
+
+    if (!draft) throw new Error(`${identity}: no draft to publish.`);
+
+    const validation = validateCandidate(draft);
+
+    if (!validation.ok) throw new Error(`${identity}: draft fails the website contract: ${validation.issues.join('; ')}`);
+
+    const published = family.find(doc => doc._id === identity);
+
+    await record({ identity, status: 'started', draftRevision: draft._rev, publishedRevision: published?._rev ?? null });
+
+    let committed = false;
+
+    try {
+
+      await client.action({ actionType: 'sanity.action.document.publish', draftId, publishedId: identity, ifDraftRevisionId: draft._rev, ...(published ? { ifPublishedRevisionId: published._rev } : {}) });
+
+      committed = true;
+
+      const saved = await client.getDocument(identity);
+
+      if (!saved || stableHash(withoutSystemFields(saved)) !== stableHash(withoutSystemFields(draft))) throw new Error('Published read-back differs.');
+
+      if (await client.getDocument(draftId)) throw new Error('Draft still present after publish.');
+
+      await record({ identity, status: 'verified', revision: saved._rev });
+
+      results.push({ id: identity, revision: saved._rev });
+
+    } catch {
+
+      await record({ identity, status: committed ? 'committed-not-verified' : 'uncertain' });
+
+      throw new Error(`${identity}: publish stopped. Inspect Studio and the journal before retrying.`);
+
+    }
+
+  }
+
+  return results;
+
+}

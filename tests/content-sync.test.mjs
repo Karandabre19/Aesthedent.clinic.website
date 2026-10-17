@@ -251,3 +251,36 @@ test('the review report names every candidate, its status and the unresolved cli
   assert.match(report, /5,000/); assert.match(report, /Pregnancy Dentistry Specialist/);
   assert.match(report, /Nothing was written, uploaded or published/);
 });
+
+test('publishing is limited to the non-clinical documents and verifies the published read-back', async () => {
+  const { publishDrafts, publishableIdentities } = await import('../scripts/content-sync-lib.mjs');
+  const contact = manifest.documents.find(d => d.identity === 'contactPage').content;
+  const store = new Map([['drafts.contactPage', { ...contact, _id: 'drafts.contactPage', _rev: 'd1' }]]), actions = [], journal = [];
+  const client = {
+    config: () => ({ ...target, apiHost: 'https://api.sanity.io' }),
+    fetch: async () => [...store.values()].map(({ _id, _rev }) => ({ _id, _rev })),
+    getDocument: async id => store.get(id),
+    action: async action => { actions.push(action); const draft = store.get(action.draftId); store.delete(action.draftId); store.set(action.publishedId, { ...draft, _id: action.publishedId, _rev: 'p1' }); },
+  };
+
+  await assert.rejects(publishDrafts(client, ['homePage'], { record: () => {} }), /Not publishable/);
+  await assert.rejects(publishDrafts(client, ['dental-implants'], { record: () => {} }), /Not publishable/);
+  const results = await publishDrafts(client, ['contactPage'], { record: entry => journal.push(entry) });
+
+  assert.ok(!publishableIdentities.some(id => ['homePage', 'aboutPage', 'experiencePage', 'service', 'doctor', 'insight', 'testimonial'].includes(id)));
+  assert.deepEqual(results, [{ id: 'contactPage', revision: 'p1' }]);
+  assert.equal(actions[0].ifDraftRevisionId, 'd1');
+  assert.deepEqual(journal.map(e => e.status), ['started', 'verified']);
+});
+
+test('publishing refuses a draft that fails the website contract', async () => {
+  const { publishDrafts } = await import('../scripts/content-sync-lib.mjs');
+  const contact = manifest.documents.find(d => d.identity === 'contactPage').content;
+  const store = new Map([['drafts.contactPage', { ...contact, hero: { ...contact.hero, heading: '<script>x</script>' }, _id: 'drafts.contactPage', _rev: 'd1' }]]);
+  let published = false;
+  const client = { config: () => ({ ...target, apiHost: 'https://api.sanity.io' }), fetch: async () => [], getDocument: async id => store.get(id), action: async () => { published = true; } };
+
+  await assert.rejects(publishDrafts(client, ['contactPage'], { record: () => {} }), /fails the website contract/);
+
+  assert.equal(published, false);
+});
