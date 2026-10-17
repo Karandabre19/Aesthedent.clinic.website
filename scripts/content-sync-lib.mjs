@@ -6,6 +6,8 @@ import crypto from 'node:crypto';
 
 import { createRequire } from 'node:module';
 
+import { fileURLToPath } from 'node:url';
+
 import ts from 'typescript';
 
 const require = createRequire(import.meta.url);
@@ -42,7 +44,21 @@ const { navigationDefaults } = require('../sanity/lib/navigation-data.ts');
 
 const { siteMetadata } = require('../lib/site-metadata.ts');
 
+const { navigationContent } = require('../sanity/lib/navigation-mapping.ts');
+
+const { seoCopy } = require('../sanity/lib/seo-mapping.ts');
+
+const { testimonialContent } = require('../sanity/lib/testimonial-mapping.ts');
+
+const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+
 export const hash = value => crypto.createHash('sha256').update(JSON.stringify(value)).digest('hex');
+
+// Value comparisons must not depend on key order: Sanity may return the same
+// object with keys in a different order than the manifest built it.
+const canonical = value => Array.isArray(value) ? value.map(canonical) : value && typeof value === 'object' ? Object.fromEntries(Object.keys(value).sort().map(key => [key, canonical(value[key])])) : value;
+
+export const stableHash = value => hash(canonical(value));
 
 const normalizeText = text => text.replace(/\s+/g, ' ').trim();
 
@@ -250,6 +266,54 @@ function assetSlots(file) {
 
 const withKeys = value => Array.isArray(value) ? value.map((item, i) => item && typeof item === 'object' ? { _type: 'object', _key: `item${i + 1}`, ...withKeys(item) } : item) : value && typeof value === 'object' ? Object.fromEntries(Object.entries(value).map(([key, entry]) => [key, withKeys(entry)])) : value;
 
+const sectionSpecs = { homePage: homeSections, aboutPage: aboutSections, experiencePage: experienceSections };
+
+const coreSchemas = { homePage: ['homeContent', homeContent], aboutPage: ['aboutContent', aboutContent], experiencePage: ['experienceContent', experienceContent], service: ['serviceContent', serviceContent], doctor: ['doctorContent', doctorContent], insight: ['insightContent', insightContent], navigation: ['navigationContent', navigationContent], testimonial: ['testimonialContent', testimonialContent] };
+
+const issueText = issues => issues.map(issue => `${issue.path.join('.') || '(root)'}: ${issue.message}`);
+
+// Validate the final keyed payload with the same Zod contracts the website readers use.
+export function validateCandidate(content) {
+
+  const type = content?._type, names = [], issues = [];
+
+  const check = (name, schema, value) => { names.push(name); const result = schema.safeParse(value); if (!result.success) issues.push(...issueText(result.error.issues)); };
+
+  if (coreSchemas[type]) check(coreSchemas[type][0], coreSchemas[type][1], content);
+
+  if (type === 'seoSettings') check('seoCopy', seoCopy, content.defaults ?? {});
+
+  for (const spec of sectionSpecs[type] ?? (presentationDefinitions[type] ? presentationSpecs(type) : [])) check(`sectionCopySchema(${spec.name})`, sectionCopySchema(spec), content[spec.name] ?? {});
+
+  if (!names.length) issues.push(`No runtime contract registered for type ${type}.`);
+
+  return { ok: issues.length === 0, schema: names.join(' + '), issues };
+
+}
+
+export function validateManifestDocuments(documents, reviews = []) {
+
+  const identities = [...documents, ...reviews].map(entry => `${entry.content?._type}:${entry.identity}`);
+
+  const duplicate = identities.find((identity, index) => identities.indexOf(identity) !== index);
+
+  if (duplicate) throw new Error(`Duplicate manifest identity: ${duplicate}`);
+
+  for (const doc of documents) {
+
+    const result = validateCandidate(doc.content);
+
+    if (!result.ok) throw new Error(`Invalid ${doc.content?._type} payload for ${doc.identity}: ${result.issues.join('; ')}`);
+
+    doc.validation = `passed ${result.schema}`;
+
+  }
+
+  // Reviews stay blocked either way; record why their payload is not publishable.
+  for (const review of reviews) { const result = validateCandidate(review.content); review.validation = result.ok ? `passed ${result.schema}` : `fails ${result.schema}: ${result.issues.join('; ')}`; }
+
+}
+
 export function buildContentManifest() {
 
   const homeFile = 'app/HomeClient.js', aboutFile = 'app/about/AboutClient.js', experienceFile = 'app/aesthedent-experience/ExperienceClient.js';
@@ -340,11 +404,14 @@ export function buildContentManifest() {
 
     const file = typeof asset.source === 'string' && asset.source.startsWith('/') ? path.resolve('public', asset.source.slice(1)) : asset.source;
 
-    return typeof file === 'string' && fs.existsSync(file) && fs.statSync(file).isFile() ? { ...asset, localFile: file, sha256: crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex') } : asset;
+    // Repo-relative POSIX paths keep the manifest hash identical across checkouts.
+    return typeof file === 'string' && fs.existsSync(file) && fs.statSync(file).isFile() ? { ...asset, localFile: path.relative(repoRoot, path.resolve(file)).split(path.sep).join('/'), sha256: crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex') } : asset;
 
   });
 
   for (const doc of documents) for (const key of Object.keys(doc.content)) doc.content[key] = withKeys(doc.content[key]);
+
+  validateManifestDocuments(documents, reviews);
 
   const leafEvidence = (value, prefix = '') => Object.entries(value).flatMap(([key, entry]) => key.startsWith('_') ? [] : entry && typeof entry === 'object' ? leafEvidence(entry, prefix ? `${prefix}.${key}` : key) : [{ path: prefix ? `${prefix}.${key}` : key, value: entry }]);
 
@@ -418,27 +485,62 @@ function missingPaths(existing, candidate, prefix = '') {
 
 }
 
+export const generatedTarget = 'Sanity-generated on create';
+
+const entryFor = candidate => ({ identity: candidate.identity, type: candidate.content._type, status: null, targetId: singletonNames.includes(candidate.content._type) ? `drafts.${candidate.identity}` : null, operation: null, reason: '', source: candidate.source, validation: candidate.validation, preservedConflicts: 0 });
+
+// Testimonials never produce operations; they are listed so reviewers see why.
+const reviewEntries = manifest => (manifest.reviews ?? []).map(review => ({ identity: review.identity, type: review.content._type, status: 'blocked', targetId: null, operation: null, reason: review.blocked ?? 'Not eligible for synchronization.', source: review.source, validation: review.validation, preservedConflicts: 0, excludedFromApply: true }));
+
 export function planDraftOperations(manifest, inventory) {
 
-  if (!inventory.authenticated || !inventory.complete) return { blocked: ['Authenticated complete published/draft/release inventory is required.'], operations: [] };
+  if (!inventory.authenticated || !inventory.complete) {
 
-  const operations = [], blocked = [], decisions = [];
+    const reason = 'Authenticated complete published/draft/release inventory is required.';
+
+    return { blocked: [reason], operations: [], candidates: [...manifest.documents.map(candidate => ({ ...entryFor(candidate), status: 'blocked', reason })), ...reviewEntries(manifest)] };
+
+  }
+
+  const operations = [], blocked = [], decisions = [], candidates = [];
+
+  // A stored record whose identity matches no candidate may be one of ours under an
+  // edited slug; creating another record of that type could silently duplicate it.
+  const unmatched = {};
+
+  for (const type of new Set(manifest.documents.map(d => d.content._type))) {
+
+    if (singletonNames.includes(type)) continue;
+
+    const known = new Set(manifest.documents.filter(d => d.content._type === type).map(d => d.identity));
+
+    const strays = [...new Set(inventory.documents.filter(doc => doc._type === type && !known.has(doc.slug?.current)).map(doc => familyId(doc._id)))].sort();
+
+    if (strays.length) unmatched[type] = strays;
+
+  }
 
   for (const candidate of manifest.documents) {
 
-    const singleton = singletonNames.includes(candidate.content._type);
+    const singleton = singletonNames.includes(candidate.content._type), entry = entryFor(candidate);
+
+    const settle = (status, reason, gating = false) => { if (gating) blocked.push(`${candidate.identity}: ${reason}`); candidates.push({ ...entry, status, reason }); };
 
     const matches = inventory.documents.filter(doc => doc._type === candidate.content._type && (singleton || doc.slug?.current === candidate.identity));
 
     const families = new Set(matches.map(doc => familyId(doc._id)));
 
-    if (families.size > 1 || singleton && [...families].some(id => id !== candidate.identity) || matches.some(doc => doc._id.startsWith('versions.'))) { blocked.push(`${candidate.identity}: ambiguous identity or release version requires review.`); continue; }
+    if (matches.some(doc => doc._id.startsWith('versions.'))) { settle('blocked', 'a release version exists; resolve the release in Studio before synchronizing.', true); continue; }
+
+    if (families.size > 1 || singleton && [...families].some(id => id !== candidate.identity)) { settle('conflict', 'ambiguous identity: more than one document family matches; review which record is authoritative.', true); continue; }
 
     const draft = matches.find(doc => doc._id.startsWith('drafts.')), published = matches.find(doc => !doc._id.startsWith('drafts.'));
 
     const existing = draft ?? published;
 
     if (existing) {
+
+      const first = decisions.length;
 
       const compare = (old, next, prefix = '') => {
 
@@ -452,7 +554,7 @@ export function planDraftOperations(manifest, inventory) {
 
           else if (value && typeof value === 'object' && !Array.isArray(value) && old[key] && typeof old[key] === 'object' && !Array.isArray(old[key])) compare(old[key], value, path);
 
-          else decisions.push({ identity: candidate.identity, path, status: hash(old[key]) === hash(value) ? 'unchanged' : 'preserved-conflict', existingValue: old[key], proposedValue: value, existingId: existing._id, revision: existing._rev });
+          else decisions.push({ identity: candidate.identity, path, status: stableHash(old[key]) === stableHash(value) ? 'unchanged' : 'preserved-conflict', existingValue: old[key], proposedValue: value, existingId: existing._id, revision: existing._rev });
 
         }
 
@@ -460,33 +562,158 @@ export function planDraftOperations(manifest, inventory) {
 
       compare(existing, candidate.content);
 
-    } else decisions.push({ identity: candidate.identity, status: 'new-draft', payloadHash: hash(candidate.content) });
+      entry.preservedConflicts = decisions.slice(first).filter(d => d.status === 'preserved-conflict').length;
+
+    } else {
+
+      decisions.push({ identity: candidate.identity, status: 'new-draft', payloadHash: hash(candidate.content) });
+
+      if (unmatched[candidate.content._type]) { settle('conflict', `unmatched existing ${candidate.content._type} record(s) ${unmatched[candidate.content._type].join(', ')} may be this item under another slug; review before creating.`, true); continue; }
+
+    }
 
     try {
 
       if (draft) {
 
-        const setIfMissing = missingPaths(draft, candidate.content);
+        entry.targetId = draft._id;
 
-        if (Object.keys(setIfMissing).length) operations.push({ kind: 'patch', id: draft._id, revision: draft._rev, identity: candidate.identity, setIfMissing });
+        const setIfMissing = missingPaths(draft, candidate.content), count = Object.keys(setIfMissing).length;
+
+        if (!count) { settle('skip', 'existing draft already contains every mapped path; nothing to fill.'); continue; }
+
+        operations.push({ kind: 'patch', id: draft._id, revision: draft._rev, identity: candidate.identity, setIfMissing });
+
+        settle('update', `fill ${count} missing path(s) in the existing draft; existing values are kept.`);
 
       } else {
 
+        entry.targetId = singleton ? `drafts.${candidate.identity}` : published ? `drafts.${published._id}` : generatedTarget;
+
         const content = published ? structuredClone(published) : structuredClone(candidate.content);
 
-        if (published) { const additions = missingPaths(published, candidate.content); if (Object.keys(additions).some(p => p.includes('.') || p.includes('['))) { blocked.push(`${candidate.identity}: nested additions to a published document require a reviewed draft first.`); continue; } Object.assign(content, additions); }
+        if (published) {
+
+          const additions = missingPaths(published, candidate.content);
+
+          if (Object.keys(additions).some(p => p.includes('.') || p.includes('['))) { settle('blocked', 'nested additions to a published document require a reviewed draft first.', true); continue; }
+
+          if (!Object.keys(additions).length) { settle('skip', 'published document already contains every mapped path; no companion draft needed.'); continue; }
+
+          Object.assign(content, additions);
+
+        }
 
         for (const key of ['_rev', '_createdAt', '_updatedAt', '_id']) delete content[key];
 
         operations.push({ kind: 'create', identity: candidate.identity, publishedRevision: published?._rev, publishedId: published?._id, content: { ...content, _id: singleton ? `drafts.${candidate.identity}` : published ? `drafts.${published._id}` : 'drafts.' } });
 
+        settle(published ? 'update' : 'create', published ? 'companion draft from published values plus missing top-level paths.' : 'new draft from mapped source content.');
+
       }
 
-    } catch (error) { blocked.push(`${candidate.identity}: ${error.message}`); }
+      candidates.at(-1).operation = operations.at(-1).kind;
+
+    } catch (error) { settle('blocked', error.message, true); }
 
   }
 
-  return { operations, blocked, decisions };
+  return { operations, blocked, decisions, candidates: [...candidates, ...reviewEntries(manifest)] };
+
+}
+
+export const unresolvedClinicFacts = [
+  'Patient count: About story says over 5,000; lib/clinic.ts confirms 1000+.',
+  'Review count: Experience wording says 260+; elsewhere 280.',
+  'Dr. Aishwarya is described as "Pregnancy Dentistry Specialist"; the clinic authority records BDS/general and family dentistry.',
+  'Doctor route metadata keeps older "surgeon" wording.',
+  'Provider assignments: orthodontic care (C10) and surgery (C11) providers are unconfirmed; no registrations are recorded in CMS content.',
+  'Clinical and outcome claims in treatments, Experience and the six Insights need clinic sign-off.',
+  'Testimonials: specific Google source links and republication permission are not confirmed.',
+];
+
+const preview = value => {
+
+  if (value === undefined) return '(absent)';
+
+  const text = (typeof value === 'string' ? value : JSON.stringify(value)).replace(/\s+/g, ' ');
+
+  return text.length > 120 ? `${text.slice(0, 117)}... (sha256 ${stableHash(value).slice(0, 12)})` : text;
+
+};
+
+const cell = value => String(value ?? '').replaceAll('|', '\\|');
+
+const table = (headers, rows) => [`| ${headers.join(' | ')} |`, `| ${headers.map(() => '---').join(' | ')} |`, ...rows.map(row => `| ${row.map(cell).join(' | ')} |`)].join('\n');
+
+// Human-readable review of a dry-run. Deterministic for a given manifest and inventory.
+export function renderPlanReport(manifest, inventory, plan) {
+
+  const documents = inventory.documents ?? [], state = id => id.startsWith('drafts.') ? 'draft' : id.startsWith('versions.') ? 'release' : 'published';
+
+  const statuses = ['create', 'update', 'skip', 'conflict', 'blocked'];
+
+  const lines = [
+
+    '# Aesthedent CMS draft-synchronization review', '',
+
+    'Dry-run output. Nothing was written, uploaded or published. Approving this report is not approval to apply: applying requires a separate approval file naming the exact hashes below, and writes drafts only.', '',
+
+    `- Target: \`${manifest.target.projectId}\` / \`${manifest.target.dataset}\``,
+
+    `- Manifest hash: \`${manifest.manifestHash}\``,
+
+    `- Operations hash: \`${hash(plan.operations)}\` (${plan.operations.length} operation(s))`,
+
+    `- Inventory: ${inventory.authenticated && inventory.complete ? `authenticated and complete, checked ${inventory.checkedAt}, ${documents.length} record(s)` : `INCOMPLETE. ${inventory.blocker ?? 'Authenticated inventory unavailable.'}`}`,
+
+  ];
+
+  if (inventory.publishedSnapshot?.counts) lines.push(`- Published-only snapshot ${inventory.publishedSnapshot.checkedAt}: ${Object.values(inventory.publishedSnapshot.counts).reduce((a, b) => a + b, 0)} published record(s). This does not establish draft, release or asset inventory.`);
+
+  if (plan.blocked.length) lines.push(`- Apply gate: closed (${plan.blocked.length} gating issue(s)).`);
+
+  lines.push('', '## Summary', '', table(['Status', 'Count'], statuses.map(status => [status, plan.candidates.filter(c => c.status === status).length])));
+
+  if (documents.length) {
+
+    const types = [...new Set(documents.map(doc => doc._type))].sort();
+
+    lines.push('', '## Dataset inventory', '', table(['Type', 'Published', 'Draft', 'Release'], types.map(type => ['published', 'draft', 'release'].reduce((row, s) => [...row, documents.filter(doc => doc._type === type && state(doc._id) === s).length], [type]))));
+
+    const categories = [...new Set(documents.filter(doc => doc._type === 'insight' && doc.category).map(doc => doc.category))].sort();
+
+    lines.push('', `Insight categories present: ${categories.length ? categories.join(', ') : 'none'}.`);
+
+  }
+
+  lines.push('', '## Candidates', '', table(['#', 'Identity', 'Type', 'Status', 'Target ID', 'Operation', 'Preserved conflicts', 'Source', 'Validation', 'Reason'], plan.candidates.map((c, i) => [i + 1, c.identity, c.type, c.status, c.targetId ?? (c.excludedFromApply ? 'none (excluded)' : 'decided after inventory'), c.operation ?? '-', c.preservedConflicts, c.source, preview(c.validation), c.reason])));
+
+  lines.push('', '## Field-level detail', '', 'Existing values always win. `missing` paths would be filled; `preserved-conflict` paths keep the stored value and are listed for review only.');
+
+  for (const candidate of plan.candidates.filter(c => !c.excludedFromApply)) {
+
+    const evidence = Object.fromEntries((manifest.fieldEvidence ?? []).filter(e => e.document === candidate.identity).map(e => [e.path, e.source]));
+
+    const decided = (plan.decisions ?? []).filter(d => d.identity === candidate.identity && d.path);
+
+    lines.push('', `### ${candidate.identity} (${candidate.type}): ${candidate.status}`, '');
+
+    if (decided.length) lines.push(table(['Path', 'Decision', 'Existing', 'Proposed', 'Source line'], decided.map(d => [d.path, d.status, preview(d.existingValue), preview(d.proposedValue), evidence[d.path] ?? candidate.source])));
+
+    else lines.push(table(['Path', 'Proposed', 'Source line'], (manifest.payloadEvidence ?? []).filter(e => e.document === candidate.identity).map(e => [e.path, preview(e.value), evidence[e.path] ?? e.source])));
+
+  }
+
+  const uploads = (manifest.assets ?? []).filter(a => a.uploadAuthorized).length;
+
+  lines.push('', '## Images', '', `${(manifest.assets ?? []).length} image slot(s) and ${(manifest.socialAssets ?? []).length} social-image destination(s) are mapped; ${uploads} upload(s) authorized. Every slot keeps its current website image until an asset and its permission are separately approved.`);
+
+  lines.push('', '## Unresolved clinic and business facts', '', 'Mapped payloads reproduce existing website copy. They do not settle these questions, and none should be published until the clinic decides:', '', ...unresolvedClinicFacts.map(fact => `- ${fact}`));
+
+  lines.push('', '## Before any apply', '', '1. Confirm the inventory above is authenticated and complete for this exact target.', '2. Resolve every conflict and blocked candidate, or remove it from scope.', '3. Obtain clinic approval for the copy of each document to be drafted.', '4. Approve the exact manifest and operations hashes in an approval file; rerun the dry-run first if anything changed.', '');
+
+  return lines.join('\n');
 
 }
 
@@ -584,7 +811,7 @@ export async function applyDraftOperations(client, manifest, inventory, approval
 
       const checks = operation.kind === 'patch' ? operation.setIfMissing : Object.fromEntries(Object.entries(operation.content).filter(([key]) => !key.startsWith('_')));
 
-      if (saved?._type !== candidate.content._type || Object.entries(checks).some(([path, value]) => hash(readPath(saved, path)) !== hash(value))) throw new Error('Saved draft payload differs; review before continuing.');
+      if (saved?._type !== candidate.content._type || Object.entries(checks).some(([path, value]) => stableHash(readPath(saved, path)) !== stableHash(value))) throw new Error('Saved draft payload differs; review before continuing.');
 
       await checkFamily();
 

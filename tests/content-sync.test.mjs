@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
-import { buildContentManifest, htmlToPortableText, planDraftOperations, applyDraftOperations, hash, target } from '../scripts/content-sync-lib.mjs';
+import { buildContentManifest, htmlToPortableText, planDraftOperations, applyDraftOperations, hash, target, validateManifestDocuments, renderPlanReport, generatedTarget } from '../scripts/content-sync-lib.mjs';
 const require = createRequire(import.meta.url);
 const { JSDOM } = require('jsdom');
 const React = require('react');
@@ -107,9 +107,12 @@ test('new ordinary drafts use Sanity-generated IDs; singleton identities and exi
   assert.equal(planDraftOperations(miniManifest(article), complete([])).operations[0].content._id, 'drafts.');
   const home = manifest.documents.find(d => d.identity === 'homePage');
   assert.equal(planDraftOperations(miniManifest(home), complete([])).operations[0].content._id, 'drafts.homePage');
-  const published = { ...article.content, _id: 'existing', _rev: 'published-rev', title: 'Preserve published editorial title', customField: 'Preserve custom value' };
+  const published = { ...article.content, _id: 'existing', _rev: 'published-rev', title: 'Preserve published editorial title', customField: 'Preserve custom value' }; delete published.excerpt;
   const operation = planDraftOperations(miniManifest(article), complete([published])).operations[0];
   assert.equal(operation.content._id, 'drafts.existing'); assert.equal(operation.content.title, published.title); assert.equal(operation.content.customField, published.customField);
+  assert.equal(operation.content.excerpt, article.content.excerpt, 'only the missing top-level path is added');
+  const complete_ = planDraftOperations(miniManifest(article), complete([{ ...article.content, _id: 'existing', _rev: 'r' }]));
+  assert.equal(complete_.operations.length, 0); assert.equal(complete_.candidates[0].status, 'skip', 'no identical companion draft');
 });
 
 test('applying drafts requires exact approval, correct target and the still-current revision', async () => {
@@ -174,4 +177,77 @@ test('receipts are durable on disk before a later operation fails, and resume re
     assert.equal(journal.find(r => r.status === 'verified').id, 'drafts.homePage'); assert.equal(journal.at(-1).status, 'uncertain');
     const refreshed = planDraftOperations(current, complete(dataset)); assert.equal(refreshed.operations.length, 1); assert.equal(refreshed.operations[0].identity, 'aboutPage');
   } finally { fs.closeSync(fd); }
+});
+
+test('repeated dry-runs are deterministic and portable across checkouts', () => {
+  const again = buildContentManifest(), inventory = complete([]);
+
+  const first = planDraftOperations(manifest, inventory), second = planDraftOperations(again, inventory);
+
+  assert.equal(again.manifestHash, manifest.manifestHash);
+  assert.equal(hash(second.operations), hash(first.operations));
+  assert.equal(renderPlanReport(again, inventory, second), renderPlanReport(manifest, inventory, first));
+  for (const asset of manifest.assets.filter(a => a.localFile)) assert.match(asset.localFile, /^public\/[^\:]+$/);
+});
+
+test('manifest validation rejects duplicate identities and invalid navigation or SEO payloads', () => {
+  const navigation = manifest.documents.find(d => d.identity === 'navigation'), seo = manifest.documents.find(d => d.identity === 'seoSettings');
+  const brokenNavigation = structuredClone(navigation); brokenNavigation.content.header[0].route = 'javascript:alert(1)';
+  const brokenSeo = structuredClone(seo); brokenSeo.content.defaults.metaTitle = '<b>bold</b>';
+
+  assert.throws(() => validateManifestDocuments([navigation, structuredClone(navigation)]), /Duplicate manifest identity: navigation:navigation/);
+  assert.throws(() => validateManifestDocuments([brokenNavigation]), /Invalid navigation payload/);
+  assert.throws(() => validateManifestDocuments([brokenSeo]), /Invalid seoSettings payload/);
+  for (const doc of manifest.documents) assert.match(doc.validation, /^passed /, doc.identity);
+});
+
+test('every candidate gets one status with target and reason; testimonials are listed but never planned', () => {
+  const home = manifest.documents.find(d => d.identity === 'homePage'), article = manifest.documents.find(d => d.content._type === 'insight');
+  const draft = { ...structuredClone(home.content), _id: 'drafts.homePage', _rev: 'r1' }; delete draft.hero.eyebrow;
+
+  const plan = planDraftOperations({ ...manifest, documents: [home, article] }, complete([draft]));
+
+  const byIdentity = Object.fromEntries(plan.candidates.map(c => [c.identity, c]));
+  assert.deepEqual([byIdentity.homePage.status, byIdentity.homePage.targetId, byIdentity.homePage.operation], ['update', 'drafts.homePage', 'patch']);
+  assert.deepEqual([byIdentity[article.identity].status, byIdentity[article.identity].targetId], ['create', generatedTarget]);
+  const reviews = plan.candidates.filter(c => c.type === 'testimonial');
+  assert.equal(reviews.length, 6);
+  for (const review of reviews) { assert.equal(review.status, 'blocked'); assert.equal(review.excludedFromApply, true); assert.match(review.validation, /^fails testimonialContent/); }
+  assert.deepEqual(plan.blocked, [], 'blocked testimonials do not close the apply gate for other documents');
+  for (const candidate of plan.candidates) assert.ok(candidate.reason, candidate.identity);
+});
+
+test('stored values equal apart from key order are unchanged, not conflicts', () => {
+  const service = manifest.documents.find(d => d.content._type === 'service');
+  const reordered = value => Array.isArray(value) ? value.map(reordered) : value && typeof value === 'object' ? Object.fromEntries(Object.entries(value).reverse().map(([k, v]) => [k, reordered(v)])) : value;
+  const stored = { ...reordered(structuredClone(service.content)), _id: 'drafts.svc', _rev: 'r' };
+
+  const plan = planDraftOperations(miniManifest(service), complete([stored]));
+
+  assert.equal(plan.decisions.filter(d => d.status === 'preserved-conflict').length, 0);
+  assert.equal(plan.candidates[0].status, 'skip');
+});
+
+test('an unmatched stored record of the same type blocks creation instead of duplicating it', () => {
+  const article = manifest.documents.find(d => d.content._type === 'insight');
+  const renamed = { ...structuredClone(article.content), _id: 'abc123', _rev: 'r', slug: { _type: 'slug', current: 'edited-slug' } };
+
+  const plan = planDraftOperations(miniManifest(article), complete([renamed]));
+
+  assert.equal(plan.operations.length, 0);
+  assert.equal(plan.candidates[0].status, 'conflict');
+  assert.match(plan.candidates[0].reason, /abc123/);
+  assert.equal(plan.blocked.length, 1, 'conflicts close the apply gate');
+});
+
+test('the review report names every candidate, its status and the unresolved clinic facts', () => {
+  const incomplete = { authenticated: false, complete: false, documents: [], blocker: 'Authenticated raw inventory unavailable.' };
+
+  const plan = planDraftOperations(manifest, incomplete), report = renderPlanReport(manifest, incomplete, plan);
+
+  assert.match(report, /Inventory: INCOMPLETE/);
+  assert.equal(plan.candidates.length, manifest.documents.length + manifest.reviews.length);
+  for (const candidate of plan.candidates) assert.ok(report.includes(`| ${candidate.identity} | ${candidate.type} | ${candidate.status} |`), candidate.identity);
+  assert.match(report, /5,000/); assert.match(report, /Pregnancy Dentistry Specialist/);
+  assert.match(report, /Nothing was written, uploaded or published/);
 });
