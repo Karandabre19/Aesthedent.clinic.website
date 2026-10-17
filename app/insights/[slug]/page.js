@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import { getPageSeo } from '@/sanity/lib/seo';
 import { getPresentationPage } from '@/sanity/lib/presentation-pages';
 import { insights } from '@/lib/insights';
@@ -17,12 +18,16 @@ export function generateStaticParams() {
   return insights.map((insight) => ({ slug: insight.slug }));
 }
 
+// Article URLs are a fixed code-owned list; anything else is a real 404 rather
+// than a 200 "not found" page that search engines could index.
+export const dynamicParams = false;
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const articles = applyInsightOverrides(insights, await getInsightOverrides());
   const insight = articles.find((i) => i.slug === slug);
 
-  if (!insight) return {};
+  if (!insight) notFound();
 
   return (await getPageSeo(`/insights/${slug}`, insightSeo(insight).metadata)).metadata;
 }
@@ -33,6 +38,8 @@ export default async function Page({ params }) {
   const overrides = await getInsightOverrides();
   const articles = applyInsightOverrides(insights, overrides);
   const insight = articles.find((i) => i.slug === slug);
+
+  if (!insight) notFound();
 
   return (
     <>
