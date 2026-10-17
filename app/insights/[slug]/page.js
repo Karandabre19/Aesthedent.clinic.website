@@ -18,10 +18,6 @@ export function generateStaticParams() {
   return insights.map((insight) => ({ slug: insight.slug }));
 }
 
-// Article URLs are a fixed code-owned list; anything else is a real 404 rather
-// than a 200 "not found" page that search engines could index.
-export const dynamicParams = false;
-
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const articles = applyInsightOverrides(insights, await getInsightOverrides());

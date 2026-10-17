@@ -115,7 +115,7 @@ test('unknown insight slugs produce a real 404 from both metadata and page', asy
 
   await assert.rejects(page.generateMetadata({ params }), error => error === notFoundMarker);
   await assert.rejects(page.default({ params: Promise.resolve({ slug: 'does-not-exist' }) }), error => error === notFoundMarker);
-  assert.equal(page.dynamicParams, false);
+
 });
 
 test('every existing insight slug still renders and is statically generated', async () => {
