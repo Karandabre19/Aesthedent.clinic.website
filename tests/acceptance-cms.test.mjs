@@ -151,3 +151,23 @@ test('actual treatment metadata handler consumes advanced SEO while retaining th
   assert.equal(seen.route, '/services/' + service.slug); assert.equal(metadata.title, `${service.title} in ${service.locality}`);
   assert.equal(metadata.description, service.shortDesc); assert.equal(metadata.openGraph.title, 'Local sharing fixture'); assert.ok(metadata.openGraph.images); assert.equal(metadata.robots.follow, false);
 });
+
+test('presentation page fields show explicit Studio labels and the text an empty field keeps', () => {
+  const { createSchema } = require('sanity');
+  const { presentationDefaults } = require('../sanity/lib/presentation-definitions.ts');
+  const compiled = createSchema({ name: 'labels', types: schemaTypes });
+  const evidence = Object.fromEntries(manifest.fieldEvidence.map(e => [`${e.document}.${e.path}`, e.value]));
+  const descriptions = new Set();
+
+  for (const name of presentationPageNames) for (const section of presentationSpecs(name)) for (const [key, spec] of Object.entries(section.fields)) {
+    const field = compiled.get(name).fields.find(f => f.name === section.name).type.fields.find(f => f.name === key);
+    const id = `${name}.${section.name}.${key}`, current = presentationDefaults[id];
+
+    assert.equal(field.type.title ?? field.title, spec.title, id);
+    assert.doesNotMatch(spec.title, /^(Heading|Intro|Eyebrow|[A-Z][a-z]+ Label)$/, id);
+    assert.ok(current && evidence[id]?.startsWith(current.replace(/…$/, '')), `${id} default matches the website source`);
+    assert.ok((field.type.description ?? field.description).includes(current), id);
+    descriptions.add(spec.description);
+  }
+  assert.equal(descriptions.size, Object.keys(presentationDefaults).length, 'every field has its own description');
+});
