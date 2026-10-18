@@ -1,9 +1,11 @@
 'use client';
 
-import { X, Instagram, MessageCircle, Phone } from 'lucide-react';
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { X, Instagram, Phone } from 'lucide-react';
+import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
 import { useEffect, useState, useRef } from 'react';
 import { usePathname } from 'next/navigation';
+import { useClinicAvailability } from '@/components/layout/ClinicAvailabilityProvider';
+import { defaultAvailability, getAvailabilityStatus } from '@/lib/clinic-availability';
 
 const WhatsAppIcon = ({ className }) => (
   <svg 
@@ -57,6 +59,7 @@ function MagneticAction({ children, className, glowColor }) {
 
 export default function WhatsAppButton() {
   const pathname = usePathname();
+  const availability = useClinicAvailability();
   const [showBubble, setShowBubble] = useState(false);
   const [hasBeenDismissed, setHasBeenDismissed] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -68,42 +71,28 @@ export default function WhatsAppButton() {
   const phoneNumber = '+919309816336';
 
   const getClinicStatus = () => {
-    const day = currentTime.getDay();
-    const hour = currentTime.getHours();
-
-    if (day === 3) {
-      return {
-        dotColor: 'bg-red-500',
-        pingColor: 'bg-red-400',
-        header: 'WEEKLY HOLIDAY',
-        headerColor: 'text-red-800',
-        main: "Away today",
-        sub: "Emergency? Call us."
-      };
-    }
-
-    if (hour >= 10 && hour < 20) {
-      return {
-        dotColor: 'bg-green-500',
-        pingColor: 'bg-green-400',
-        header: 'ONLINE NOW',
-        headerColor: 'text-green-800',
-        main: "How can we help?",
-        sub: "Replies in minutes"
-      };
-    }
-
+    const state = getAvailabilityStatus(currentTime, availability ?? defaultAvailability);
+    if (state.state === 'closed_weekly' || state.state === 'holiday') return {
+      dotColor: 'bg-red-500', pingColor: 'bg-red-400',
+      header: state.state === 'holiday' ? 'CLOSED TODAY' : 'WEEKLY HOLIDAY', headerColor: 'text-red-800',
+      main: state.holidayName ?? 'Away today', sub: 'Emergency? Call us.',
+    };
+    if (state.state === 'open') return {
+      dotColor: 'bg-green-500', pingColor: 'bg-green-400', header: 'ONLINE NOW', headerColor: 'text-green-800',
+      main: 'How can we help?', sub: 'Replies in minutes',
+    };
     return {
-      dotColor: 'bg-orange-500',
-      pingColor: 'bg-orange-400',
-      header: 'CLOSED',
-      headerColor: 'text-orange-800',
-      main: "Back at 10 AM",
-      sub: "Message us anytime"
+      dotColor: 'bg-orange-500', pingColor: 'bg-orange-400', header: 'CLOSED', headerColor: 'text-orange-800',
+      main: availability && state.nextOpenDisplay ? 'Opens ' + state.nextOpenDisplay : 'Back at 10 AM', sub: 'Message us anytime',
     };
   };
 
   const status = getClinicStatus();
+
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 60_000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     const showTimer = setTimeout(() => {

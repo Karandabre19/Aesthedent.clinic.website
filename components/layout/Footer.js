@@ -1,11 +1,16 @@
 'use client';
 
+import { useClinicAvailability } from '@/components/layout/ClinicAvailabilityProvider';
+import { formatAvailability } from '@/lib/clinic-availability';
+
+
 import Link from 'next/link';
 import { useNavigation } from './NavigationProvider';
 import Image from 'next/image';
-import { Smile, MapPin, Clock, Phone, MessageCircle, Mail, ArrowRight, Instagram } from 'lucide-react';
+import { MapPin, Clock, Phone, MessageCircle, Mail, Instagram } from 'lucide-react';
 
 export default function Footer() {
+  const availability = useClinicAvailability();
   const navigation = useNavigation();
   const footerLinks = { services: navigation.footerServices.filter(item => item.visible).map(item => ({ href: item.route, label: item.label })), quickLinks: navigation.footerQuick.filter(item => item.visible).map(item => ({ href: item.route, label: item.label })) };
   const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
@@ -121,8 +126,7 @@ export default function Footer() {
               <li className="flex items-start gap-3.5 group">
                 <Clock className="w-4 h-4 text-[hsl(var(--color-accent))] flex-shrink-0 mt-1 group-hover:scale-110 transition-transform duration-300" />
                 <span className="text-white/90 text-sm font-normal leading-relaxed">
-                  Mon - Sun: 10:00 AM - 8:00 PM 
-                  <span className="ml-2 font-bold text-[hsl(var(--color-accent))]">(Wednesday Holiday)</span>
+                  {availability ? formatAvailability(availability) : <>Mon - Sun: 10:00 AM - 8:00 PM <span className="ml-2 font-bold text-[hsl(var(--color-accent))]">(Wednesday Holiday)</span></>}
                 </span>
               </li>
               <li className="flex items-start gap-3.5 group">

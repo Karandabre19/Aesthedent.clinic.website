@@ -1,24 +1,18 @@
 'use client';
 
+import { useClinicAvailability } from '@/components/layout/ClinicAvailabilityProvider';
+import { formatAvailability } from '@/lib/clinic-availability';
+
+
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import IntakeWizard from '@/components/forms/IntakeWizard';
 import PageWrapper from '@/components/layout/PageWrapper';
-import SectionHeading from '@/components/ui/SectionHeading';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import { MagneticWrapper } from '@/components/ui/InteractiveHighTech';
-import { 
-  MessageCircle,
-  Phone,
-  Mail,
-  MapPin,
-  Clock,
-  Send,
-  CheckCircle2,
-  Instagram
-} from 'lucide-react';
+import { MessageCircle, Phone, MapPin, Clock, Instagram } from 'lucide-react';
 
 const instagramLink = 'https://www.instagram.com/drwathodkar_aesthedent_clinic?igsh=azFlYTc2b25xaDFn';
 const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
@@ -61,6 +55,7 @@ const contactInfo = [
 ];
 
 export default function ContactPage({ presentation = {} }) {
+  const availability = useClinicAvailability();
   // The form state and the /api/contact POST that lived here were removed with
   // the old form -IntakeWizard owns its own state and sends via WhatsApp
   // click-to-chat instead. The /api/contact route is left in place and is simply
@@ -150,7 +145,7 @@ export default function ContactPage({ presentation = {} }) {
                         unchanged, so nothing moves visually. */}
                     <h2 className="font-semibold text-[hsl(var(--color-text))] mb-3">{info.title}</h2>
                     <div className="space-y-1 mb-4">
-                      {info.details.map((detail, j) => (
+                      {(info.icon === Clock && availability ? [formatAvailability(availability)] : info.details).map((detail, j) => (
                         <p key={j} className="text-[hsl(var(--color-text-muted))] text-sm">{detail}</p>
                       ))}
                     </div>

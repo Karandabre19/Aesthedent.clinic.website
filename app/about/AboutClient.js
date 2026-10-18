@@ -1,5 +1,8 @@
 'use client';
 
+import { useClinicAvailability } from '@/components/layout/ClinicAvailabilityProvider';
+
+
 import EditorialImage from '@/components/insights/EditorialImage';
 
 import { motion } from 'framer-motion';
@@ -11,24 +14,13 @@ import PageWrapper from '@/components/layout/PageWrapper';
 import SectionHeading from '@/components/ui/SectionHeading';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import { REVIEWS, OPENING } from '@/lib/clinic';
-import { 
-  MessageCircle,
-  Heart,
-  Shield,
-  Users,
-  Sparkles,
-  CheckCircle2,
-  ArrowRight,
-  Baby,
-  Accessibility,
-  CreditCard,
-  Award
-} from 'lucide-react';
+import { MessageCircle, Heart, Shield, Users, Sparkles, ArrowRight, Baby, Accessibility, CreditCard } from 'lucide-react';
 import clinicWidePicture from "../../public/clinic/clinic-wide.jpeg";
 
 const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
 
 export default function AboutPage({ editorial }) {
+  const availability = useClinicAvailability();
   return (
     <PageWrapper>
       {/* Hero */}
@@ -158,7 +150,7 @@ export default function AboutPage({ editorial }) {
               { number: REVIEWS.rating, label: "Google Rating" },
               { number: REVIEWS.count, label: "Five-star Reviews" },
               { number: "MDS", label: "Specialist Prosthodontist" },
-              { number: String(OPENING.daysOpenPerWeek), label: "Days a Week, Weekends Included" },
+              { number: String(availability ? availability.weeklyHours.filter(day => day.open).length : OPENING.daysOpenPerWeek), label: availability && !['sat', 'sun'].every(day => availability.weeklyHours.some(row => row.day === day && row.open)) ? 'Days a Week' : 'Days a Week, Weekends Included' },
             ].map((stat, i) => (
               <AnimatedSection key={i} delay={i * 0.1}>
                 <div className="text-center text-[hsl(var(--primary-foreground))]">

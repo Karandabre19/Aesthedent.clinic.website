@@ -1,5 +1,9 @@
 'use client';
 
+import { useClinicAvailability } from '@/components/layout/ClinicAvailabilityProvider';
+import { formatAvailability } from '@/lib/clinic-availability';
+
+
 import Link from 'next/link';
 import { Clock, MapPin, Phone, Star } from 'lucide-react';
 import PageWrapper from '@/components/layout/PageWrapper';
@@ -24,6 +28,7 @@ import { REVIEWS, OPENING, DOCTORS, buildWhatsappMessage } from '@/lib/clinic';
 const whatsappLink = buildWhatsappMessage('your clinic in Kothrud');
 
 export default function AreaClient({ presentation = {} }) {
+  const availability = useClinicAvailability();
   return (
     <PageWrapper>
       {/* Hero */}
@@ -74,8 +79,7 @@ export default function AreaClient({ presentation = {} }) {
                 <div className="flex items-start gap-3">
                   <Clock className="mt-1 h-5 w-5 flex-shrink-0 text-[hsl(var(--color-primary))]" />
                   <p className="text-sm text-[hsl(var(--color-text-muted))]">
-                    {OPENING.hours}, {OPENING.daysOpenPerWeek} days a week
-                    including Saturday and Sunday. Closed {OPENING.closedDay}.
+                    {availability ? formatAvailability(availability) : <>{OPENING.hours}, {OPENING.daysOpenPerWeek} days a week including Saturday and Sunday. Closed {OPENING.closedDay}.</>}
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
@@ -92,11 +96,7 @@ export default function AreaClient({ presentation = {} }) {
                 Open when you actually are
               </h2>
               <p className="text-base leading-relaxed text-[hsl(var(--color-text-muted))] mb-4">
-                We are open six days a week, weekends included, and closed on{' '}
-                {OPENING.closedDay} instead. That is worth knowing if you have
-                been putting off an appointment because you cannot take a weekday
-                morning off &mdash; a Saturday or Sunday slot is a normal booking
-                here, not a favour.
+                {availability ? <>Our opening hours are {formatAvailability(availability)}. Please check the schedule before travelling.</> : <>We are open six days a week, weekends included, and closed on{' '}{OPENING.closedDay} instead. That is worth knowing if you have been putting off an appointment because you cannot take a weekday morning off &mdash; a Saturday or Sunday slot is a normal booking here, not a favour.</>}
               </p>
               <p className="text-base leading-relaxed text-[hsl(var(--color-text-muted))]">
                 If something is painful today, phone rather than email. We will

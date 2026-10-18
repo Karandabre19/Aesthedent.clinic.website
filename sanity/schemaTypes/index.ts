@@ -8,5 +8,9 @@ import { testimonial } from "./testimonial";
 import { presentationPageTypes } from "./presentation-pages";
 import { navigation } from "./navigation";
 import { seoSettings, withPageSeo } from "./seo";
+import { clinicAvailability } from './clinic-availability';
 
-export const schemaTypes: SchemaTypeDefinition[] = [insight, service, doctor, homePage, aboutPage, experiencePage, testimonial, ...presentationPageTypes, navigation, seoSettings].map(withPageSeo).map(model => ({ ...model, components: { ...model.components, input: DocumentStatusInput } }));
+export const schemaTypes: SchemaTypeDefinition[] = [
+  ...[insight, service, doctor, homePage, aboutPage, experiencePage, testimonial, ...presentationPageTypes, navigation, seoSettings].map(withPageSeo).map(model => ({ ...model, components: { ...model.components, input: DocumentStatusInput } })),
+  clinicAvailability,
+];

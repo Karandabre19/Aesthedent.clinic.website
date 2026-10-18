@@ -12,6 +12,9 @@ const { navigationDefaults, publicRoutes } = require('../sanity/lib/navigation-d
 const { resolveNavigation } = require('../sanity/lib/navigation-mapping.ts');
 const { resolveSeoInventory, resolveSeoMetadata, canonicalProblem } = require('../sanity/lib/seo-mapping.ts');
 const { schemaTypes } = require('../sanity/schemaTypes/index.ts');
+const { clinicAvailability } = require('../sanity/schemaTypes/clinic-availability.ts');
+const { availabilityContent, availabilitySnapshot, resolveAvailability } = require('../sanity/lib/availability-mapping.ts');
+const { availabilityClosuresJsonLd, formatAvailability, getAvailabilityStatus } = require('../lib/clinic-availability.ts');
 const manifest = buildContentManifest();
 function execute(file, dependencies = {}) {
   const filename = new URL('../' + file, import.meta.url), localRequire = createRequire(filename), exports = {};
@@ -23,6 +26,30 @@ const { presentationPageQuery } = execute('sanity/lib/presentation-pages.ts', { 
 const { navigationQuery } = execute('sanity/lib/navigation.ts', { './content-reader': {} });
 const { seoQuery } = execute('sanity/lib/seo.ts', { './content-reader': {}, './insights': {}, 'next/headers': {} });
 const groq = async (query, dataset, params = {}) => (await evaluate(parse(query), { dataset, params })).get();
+
+test('actual Services page initializes its icon map and renders every existing treatment', () => {
+  const React = require('react'), { renderToStaticMarkup } = require('react-dom/server'), { JSDOM } = require('jsdom');
+  const { services } = require('../lib/services.js');
+  const wrapper = ({ children }) => React.createElement('div', null, children);
+  const { default: ServicesPage } = execute('app/services/ServicesClient.js', {
+    '@/components/insights/EditorialImage': wrapper,
+    '@/components/ui/button': { Button: wrapper },
+    '@/components/layout/PageWrapper': wrapper,
+    '@/components/ui/SectionHeading': wrapper,
+    '@/components/ui/AnimatedSection': wrapper,
+    '@/lib/services': { services },
+  });
+  const document = new JSDOM(renderToStaticMarkup(React.createElement(ServicesPage))).window.document;
+  for (const service of services) assert.ok([...document.querySelectorAll('button')].some(button => button.textContent.includes(service.title)), service.slug);
+  assert.ok(document.querySelector('svg.lucide'), 'treatment icons remain rendered');
+});
+
+test('production Tailwind scanning retains the TypeScript intake form accessibility and mobile layout utilities', async () => {
+  const postcss = require('postcss'), tailwind = require('tailwindcss');
+  const { css } = await postcss([tailwind(require('../tailwind.config.js'))]).process('@tailwind utilities;', { from: undefined });
+  assert.match(css, /\.sr-only\s*\{[^}]*position:\s*absolute/s);
+  assert.match(css, /\.flex-col-reverse\s*\{[^}]*flex-direction:\s*column-reverse/s);
+});
 
 test('five fixed presentation documents cover every declared field, query and independent section fallback', async () => {
   for (const name of presentationPageNames) {
@@ -130,7 +157,8 @@ test('actual desktop header and footer render approved menu changes while operat
   const React = require('react'), { renderToStaticMarkup } = require('react-dom/server'), { JSDOM } = require('jsdom');
   const changed = structuredClone(navigationDefaults); changed.header.find(i => i.key === 'about').label = 'Clinic story'; changed.header.reverse(); changed.header.find(i => i.key === 'insights').visible = false;
   changed.footerQuick[0].label = 'Start here'; changed.footerQuick[0].route = '/insights'; changed.footerQuick.reverse();
-  const dependencies = { './NavigationProvider': { useNavigation: () => changed }, 'next/navigation': { usePathname: () => '/about' }, '@/lib/services': require('../lib/services.js') };
+  let availability = null;
+  const dependencies = { './NavigationProvider': { useNavigation: () => changed }, 'next/navigation': { usePathname: () => '/about' }, '@/lib/services': require('../lib/services.js'), '@/components/layout/ClinicAvailabilityProvider': { useClinicAvailability: () => availability }, '@/lib/clinic-availability': require('../lib/clinic-availability.ts') };
   const Header = execute('components/layout/Navbar.js', dependencies).default, Footer = execute('components/layout/Footer.js', dependencies).default;
   const render = Component => new JSDOM(renderToStaticMarkup(React.createElement(Component))).window.document;
   const header = render(Header), footer = render(Footer);
@@ -139,6 +167,8 @@ test('actual desktop header and footer render approved menu changes while operat
   assert.ok(!links(header).some(a => a.text === 'Insights'));
   assert.ok(links(footer).some(a => a.text === 'Start here' && a.href === '/insights'));
   for (const d of [header, footer]) { assert.ok(links(d).some(a => a.href === 'tel:+919309816336')); assert.ok(links(d).some(a => a.href?.startsWith('https://api.whatsapp.com/send?phone=919309816336'))); }
+  availability = resolveAvailability([hoursFixture()]).value;
+  assert.ok(render(Footer).body.textContent.includes(formatAvailability(availability)), 'the real footer consumes the mapped published schedule');
 });
 
 test('actual treatment metadata handler consumes advanced SEO while retaining the existing title and copy', async () => {
@@ -171,3 +201,90 @@ test('presentation page fields show explicit Studio labels and the text an empty
   }
   assert.equal(descriptions.size, Object.keys(presentationDefaults).length, 'every field has its own description');
 });
+
+function hoursFixture() {
+  const doc = { ...clinicAvailability.initialValue(), _id: 'clinicAvailability', _type: 'clinicAvailability',  confirmationNote: 'Test-only clinic confirmation fixture', confirmedAt: '2026-10-18T06:00:00.000Z' }
+  doc.confirmedSnapshot = availabilitySnapshot(doc)
+  return doc
+}
+
+test('hours form prefills all seven current website days without approval or invented confirmation', () => {
+  assert.equal(schemaTypes.find(type => type.name === 'clinicAvailability').components?.input, undefined, 'hours form uses the standard editor without the unrelated page-content notice')
+  assert.equal(typeof schemaTypes.find(type => type.name === 'homePage').components?.input, 'function', 'other content forms keep their existing editorial notice')
+  const initial = clinicAvailability.initialValue()
+  assert.equal(initial.weeklyHours.length, 7)
+  assert.ok(initial.weeklyHours.every(row => row._type === 'clinicAvailabilityDay' && row._key === row.day), 'native Sanity array members carry their declared type and stable keys')
+  assert.equal(initial.weeklyHours.find(row => row.day === 'mon').close, '20:00')
+  assert.equal(initial.weeklyHours.find(row => row.day === 'wed').closed, true)
+  assert.equal(initial.confirmedAt, undefined)
+  assert.equal(initial.confirmedSnapshot, undefined)
+  assert.equal(availabilitySnapshot(initial), null)
+})
+
+test('availability validates clock ranges, dates, weekday identity and renewed confirmation', () => {
+  const doc = hoursFixture()
+  assert.equal(resolveAvailability([doc]).status, 'sanity')
+  for (const input of [null, [], [doc, doc], [{ ...doc, _id: 'drafts.clinicAvailability' }], [{ ...doc, _id: 'versions.release.clinicAvailability' }], [{ ...doc, timezone: 'UTC' }], [{ ...doc, confirmedAt: null }], [{ ...doc, confirmedSnapshot: 'stale' }]]) assert.equal(resolveAvailability(input).value, null)
+  for (const mutate of [
+    value => { value.weeklyHours[0].open = '24:00' },
+    value => { value.weeklyHours[0].close = value.weeklyHours[0].open },
+    value => { value.weeklyHours[0].close = '09:00' },
+    value => { value.weeklyHours[1].day = value.weeklyHours[0].day },
+    value => { value.weeklyHours.pop() },
+    value => { value.weeklyHours.forEach(row => row.closed = true) },
+    value => { value.closures = [{ date: '2026-02-30', reason: 'Invalid date fixture' }] },
+    value => { value.closures = [{ date: '2026-10-20', reason: 'One' }, { date: '2026-10-20', reason: 'Duplicate' }] },
+  ]) {
+    const invalid = structuredClone(doc); mutate(invalid)
+    assert.equal(availabilityContent.safeParse(invalid).success, false)
+    assert.equal(resolveAvailability([invalid]).value, null)
+  }
+  const changed = structuredClone(doc); changed.weeklyHours[0].close = '17:00'
+  assert.equal(resolveAvailability([changed]).value, null, 'old confirmation never approves edited hours')
+  changed.confirmedSnapshot = availabilitySnapshot(changed)
+  assert.equal(resolveAvailability([changed]).status, 'sanity')
+})
+
+test('open indicator uses IST boundaries, weekly closures and extended holidays from the same schedule', () => {
+  const doc = hoursFixture(), schedule = resolveAvailability([doc]).value
+  assert.equal(getAvailabilityStatus(new Date('2026-10-19T04:29:59Z'), schedule).state, 'closed_today')
+  assert.equal(getAvailabilityStatus(new Date('2026-10-19T04:30:00Z'), schedule).state, 'open')
+  assert.equal(getAvailabilityStatus(new Date('2026-10-19T14:30:00Z'), schedule).state, 'closed_today')
+  assert.equal(getAvailabilityStatus(new Date('2026-10-21T06:00:00Z'), schedule).state, 'closed_weekly')
+  schedule.holidays = Array.from({ length: 14 }, (_, i) => ({ date: new Date(Date.UTC(2026, 9, 19 + i)).toISOString().slice(0, 10), name: 'Test closure' }))
+  const holiday = getAvailabilityStatus(new Date('2026-10-19T06:00:00Z'), schedule)
+  assert.equal(holiday.state, 'holiday')
+  assert.equal(holiday.nextOpenDisplay, 'Monday at 10:00 AM')
+  assert.equal(availabilityClosuresJsonLd(schedule).length, 14)
+  assert.notEqual(formatAvailability(schedule, 'mr'), formatAvailability(schedule, 'en'))
+  const previous = process.env.TZ
+  try {
+    for (const zone of ['UTC', 'America/New_York', 'Pacific/Honolulu']) {
+      process.env.TZ = zone
+      assert.equal(getAvailabilityStatus(new Date('2026-10-19T06:00:00Z'), { ...schedule, holidays: [] }).state, 'open')
+    }
+  } finally { if (previous === undefined) delete process.env.TZ; else process.env.TZ = previous }
+})
+
+test('actual availability reader projects published hours only and maps one confirmed singleton', async () => {
+  const doc = hoursFixture(); let seen
+  const reader = execute('sanity/lib/availability.ts', {
+    './content-reader': { readPublishedContent: async (query, params, tag, resolve, publishedOnly) => {
+      seen = { params, tag, publishedOnly }
+      return resolve(await groq(query, [doc, { ...doc, _id: 'drafts.clinicAvailability' }, { ...doc, _id: 'versions.release.clinicAvailability' }])).value
+    } },
+  });
+  const schedule = await reader.getClinicAvailability()
+  assert.ok(schedule)
+  assert.deepEqual(seen, { params: {}, tag: 'clinicAvailability', publishedOnly: true })
+  const { buildClinicSchema } = require('../lib/schema.js')
+  assert.equal(buildClinicSchema({ availability: schedule }).openingHoursSpecification[0].closes, '20:00')
+  assert.equal(buildClinicSchema().openingHoursSpecification[0].closes, '20:00')
+  const { createSchema } = require('sanity'), schema = createSchema({ name: 'availability-validation', types: schemaTypes })
+  assert.deepEqual(schema._validation, [])
+  const type = schema.get('clinicAvailability')
+  const validate = async value => (await Promise.all(type.validation.map(rule => rule.validate(value, { document: value, parent: value, path: [], type, schema, i18n: { t: key => key } })))).flat()
+  assert.deepEqual(await validate(doc), [])
+  const changed = structuredClone(doc); changed.weeklyHours[0].close = '17:00'
+  assert.ok((await validate(changed)).length > 0)
+})

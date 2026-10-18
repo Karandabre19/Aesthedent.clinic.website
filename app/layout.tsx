@@ -2,6 +2,8 @@ import { DraftNotice } from '@/components/layout/DraftNotice';
 import { getRootSeoMetadata } from '@/sanity/lib/seo';
 import { getNavigation } from '@/sanity/lib/navigation';
 import { NavigationProvider } from '@/components/layout/NavigationProvider';
+import { ClinicAvailabilityProvider } from '@/components/layout/ClinicAvailabilityProvider';
+import { getClinicAvailability } from '@/sanity/lib/availability';
 import './globals.css';
 import type { ReactNode } from 'react';
 import Script from 'next/script';
@@ -33,6 +35,7 @@ const poppins = Poppins({
 export async function generateMetadata() { return getRootSeoMetadata(); }
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
+  const availability = await getClinicAvailability();
   return (
     <html lang="en" className={poppins.variable}>
       <head>
@@ -70,7 +73,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
             MedicalProcedure, BreadcrumbList) are emitted per route.
             See lib/schema.js for what is included and what is deliberately not. */}
         <JsonLd
-          schema={[buildClinicSchema(), buildOrganizationSchema(), buildWebSiteSchema()]}
+          schema={[buildClinicSchema({ availability }), buildOrganizationSchema(), buildWebSiteSchema()]}
         />
       </head>
       <body className={`${poppins.className} font-sans relative`}>
@@ -86,7 +89,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         {/* End Google Tag Manager (noscript) */}
         <TooltipProvider>
           <MotionProvider>
-            <NavigationProvider value={await getNavigation()}><SmoothScrollProvider>{children}</SmoothScrollProvider></NavigationProvider>
+            <ClinicAvailabilityProvider value={availability}><NavigationProvider value={await getNavigation()}><SmoothScrollProvider>{children}</SmoothScrollProvider></NavigationProvider></ClinicAvailabilityProvider>
           </MotionProvider>
         </TooltipProvider>
         <DraftNotice />
