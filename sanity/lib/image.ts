@@ -13,7 +13,8 @@ export const imageProfiles = {
   aboutClinic: profile("About clinic-experience photo", 1600, 900, "Wide landscape, about 16:9. Keep important details outside the left text overlay and allow responsive cropping."),
   experienceBanner: profile("Experience banner photo", 1600, 900, "Wide landscape, about 16:9. The central headline overlays this image; avoid embedded text and keep the composition calm."),
   experienceVisit: profile("Experience visit-process photo", 800, 1000, "Portrait, about 4:5. Show the clinic chair/equipment; this slot remains hidden below its existing large-screen breakpoint."),
-  service: profile("Treatment image", 1200, 900, "Landscape, about 4:3. Shared across cards and the detail page, which also crops to 16:10. Keep the subject central; use no unapproved patient identity/outcome claims."),
+  service: profile("Card image", 1200, 900, "Landscape, about 4:3. Shown on treatment cards (Home, Treatments, related treatments) and used on the treatment page when no banner is set. Keep the subject central; use no unapproved patient identity/outcome claims."),
+  serviceBanner: profile("Treatment page banner (optional)", 1600, 1000, "Landscape, about 16:10. Shown at the top of this treatment's page; if empty the card image is used, and it fills in for an empty card image. Keep the subject central; use no unapproved patient identity/outcome claims."),
   portrait: profile("Clinician portrait", 600, 750, "Portrait, about 4:5. Confirm this is the named clinician and permission covers both Home and the doctor page. Keep the face within the hotspot.", true),
   insight: profile("Article cover", 1600, 900, "Wide landscape, about 16:9. Cards crop near 16:10, detail to 21:9 and social previews to 1200:630. Keep the subject central and check every crop; use approved editorial imagery."),
 };

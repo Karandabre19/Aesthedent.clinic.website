@@ -12,18 +12,30 @@ export const serviceContent = z.object({
     .refine((steps) => steps.every((step, i) => step.step === i + 1), "Number steps consecutively from 1 in their display order."),
   faqs: z.array(questionAnswer).min(1).max(30),
 });
-export const serviceDocument = serviceContent.extend({ _id: publishedId, slug: z.string().refine((slug) => services.some((item) => item.slug === slug), "Use an existing treatment URL.") });
+export const serviceDocument = serviceContent.extend({ _id: publishedId, slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Use a lowercase, hyphenated treatment URL.") });
+
+/** Website defaults for a treatment that exists only in the CMS; its content comes from the document. */
+const newServiceBase = (slug: string) => ({
+  slug, locality: "Kothrud, Pune", isFeatured: false, icon: "Sparkles",
+  image: "/clinic/treatment-process.jpeg", imageAlt: "Treatment room at Aesthedent Dental Clinic, Kothrud",
+});
+const MAXIMUM_SERVICES = 30;
 
 export function resolveServices(input: unknown) {
-  const result = publishedCollection(input, serviceDocument, (item) => item.slug, services.length);
+  const result = publishedCollection(input, serviceDocument, (item) => item.slug, MAXIMUM_SERVICES);
   if (result.status !== "sanity") return { value: services, status: result.status };
   // The two existing treatment-specific lists must not disappear or be added to other layouts.
-  if (result.records.some((doc) => Boolean(doc.aboutList) !== Boolean(services.find((item) => item.slug === doc.slug)?.aboutList))) return { value: services, status: "invalid" };
-  return { value: services.map((item) => {
-    const doc = result.records.find((record) => record.slug === item.slug);
-    if (!doc) return item;
+  if (result.records.some((doc) => { const known = services.find((item) => item.slug === doc.slug); return known && Boolean(doc.aboutList) !== Boolean(known.aboutList); })) return { value: services, status: "invalid" };
+  const merge = <T extends object>(item: T, doc: (typeof result.records)[number]) => {
     const { _id, slug, aboutList, ...content } = doc;
-    const coverImage = imageForDocument(input, _id, "coverImage");
-    return { ...item, ...content, ...(aboutList ? { aboutList } : {}), ...(coverImage ? { coverImage } : {}) };
-  }), status: result.status };
+    // Either image fills in for the other: the card image on cards, the banner on the page.
+    const card = imageForDocument(input, _id, "coverImage"), banner = imageForDocument(input, _id, "bannerImage");
+    return { ...item, ...content, ...(aboutList ? { aboutList } : {}), ...(card ?? banner ? { coverImage: card ?? banner } : {}), ...(banner ?? card ? { bannerImage: banner ?? card } : {}) };
+  };
+  const existing = services.map((item) => {
+    const doc = result.records.find((record) => record.slug === item.slug);
+    return doc ? merge(item, doc) : item;
+  });
+  const added = result.records.filter((doc) => !services.some((item) => item.slug === doc.slug)).map((doc) => merge(newServiceBase(doc.slug), doc));
+  return { value: [...existing, ...added], status: result.status };
 }

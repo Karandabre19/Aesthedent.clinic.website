@@ -1,4 +1,5 @@
 import { getPageSeo } from '@/sanity/lib/seo';
+import { getClinicAvailability } from '@/sanity/lib/availability';
 import { getPresentationPage } from '@/sanity/lib/presentation-pages';
 import AreaClient from './AreaClient';
 import JsonLd from '@/components/seo/JsonLd';
@@ -49,7 +50,7 @@ export default async function Page() {
         schema={[
           // Same @id as every other page - one clinic, one entity. See the note
           // on buildClinicSchema in lib/schema.js.
-          buildClinicSchema({ mainEntityOfPage: `${SITE_URL}${PAGE_PATH}` }),
+          buildClinicSchema({ mainEntityOfPage: `${SITE_URL}${PAGE_PATH}`, availability: await getClinicAvailability() }),
           buildBreadcrumbSchema([
             { name: 'Home', path: '/' },
             { name: 'Dental Clinic in Kothrud', path: PAGE_PATH },

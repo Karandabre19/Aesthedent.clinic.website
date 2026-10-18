@@ -1,5 +1,9 @@
 'use client';
 
+import { useClinicAvailability } from '@/components/layout/ClinicAvailabilityProvider';
+import { formatAvailability } from '@/lib/clinic-availability';
+
+
 import EditorialImage from '@/components/insights/EditorialImage';
 
 import { pushToDataLayer } from '@/lib/gtm';
@@ -8,12 +12,9 @@ import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import PageWrapper from '@/components/layout/PageWrapper';
 import AnimatedSection from '@/components/ui/AnimatedSection';
-import InstagramShowcase from '@/components/sections/InstagramShowcase';
-import { MagneticWrapper, HeroParticles } from '@/components/ui/InteractiveHighTech';
+import { MagneticWrapper } from '@/components/ui/InteractiveHighTech';
 import { services as fallbackServices } from '@/lib/services';
 import {
   REVIEWS,
@@ -24,28 +25,12 @@ import {
   buildWhatsappMessage,
 } from '@/lib/clinic';
 import IntakeWizard from '@/components/forms/IntakeWizard';
-import {
-  Phone,
-  MessageCircle,
-  Star,
-  Play,
-  ArrowRight,
-  MapPin,
-  Clock,
-  ChevronRight,
-  Quote,
-  Monitor,
-  Info,
-  Hand,
-  Eye,
-  Calendar
-} from 'lucide-react';
+import { Phone, MessageCircle, ArrowRight, MapPin, Clock, Info, Hand, Eye, Calendar } from 'lucide-react';
 import TestimonialsSection from '@/components/sections/TestimonialsSection';
 import InsightsSection from '@/components/sections/InsightsSection';
 import treatmentProcessImage from "../public/clinic/treatment-process.jpeg";
 import treatMentChairImage from "../public/clinic/dentist-chair-proper.jpeg";
 import sahilTreatmentImage from "../public/clinic/treatment-process.2jpeg.jpeg"
-import { toast } from 'sonner';
 
 gsap.registerPlugin(useGSAP);
 
@@ -263,6 +248,7 @@ function HeroWord({ children, className = '' }) {
 }
 
 export default function HomePage({ insightCards, services = fallbackServices, doctorNarratives = [], editorial, reviewCards }) {
+  const availability = useClinicAvailability();
   // GSAP's hero timeline already guards this (see useGSAP below), but the two
   // Framer loops here run forever and were not covered: an endlessly pulsing
   // scroll cue and a shimmer sweeping the trust bar every 7s. Perpetual motion
@@ -1221,11 +1207,7 @@ export default function HomePage({ insightCards, services = fallbackServices, do
                       Hours
                     </p>
                     <p className="text-white/80 leading-relaxed text-sm md:text-base">
-                      Mon - Sun: 10 AM - 8 PM
-                      <br />
-                      <span className="text-sm font-bold text-[hsl(var(--accent))]">
-                        (Wednesday Holiday)
-                      </span>
+                      {availability ? formatAvailability(availability) : <>Mon - Sun: 10 AM - 8 PM<br /><span className="text-sm font-bold text-[hsl(var(--accent))]">(Wednesday Holiday)</span></>}
                     </p>
                   </div>
                 </div>

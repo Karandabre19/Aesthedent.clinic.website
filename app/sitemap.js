@@ -1,5 +1,5 @@
 import { insights } from '@/lib/insights';
-import { services } from '@/lib/services';
+import { getServices } from '@/sanity/lib/services';
 import { getInsightOverrides } from '@/sanity/lib/insights';
 import { applyInsightOverrides } from '@/sanity/lib/insight-overrides';
 import { getSeoState } from '@/sanity/lib/seo';
@@ -33,7 +33,8 @@ function publishedDate(date) {
 export default async function sitemap() {
   const staticRoutes = staticPaths.map((path) => ({ url: absoluteUrl(path) }));
 
-  const serviceRoutes = services.map(({ slug }) => ({
+  // Includes treatments created in the CMS; falls back to the code list if the CMS is unavailable.
+  const serviceRoutes = (await getServices(true)).map(({ slug }) => ({
     url: absoluteUrl(`/services/${slug}`),
   }));
 

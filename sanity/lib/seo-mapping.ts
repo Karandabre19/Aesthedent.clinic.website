@@ -9,6 +9,7 @@ import { siteMetadata } from "../../lib/site-metadata";
 
 const optionalCopy = (maximum: number) => z.preprocess(value => value == null || value === "" ? undefined : value, editorialText.max(maximum).optional());
 export const seoCopy = z.object({
+  focusKeyword: optionalCopy(80), secondaryKeywords: z.preprocess(value => value == null ? undefined : value, z.array(editorialText.max(80)).max(8).optional()),
   metaTitle: optionalCopy(180), metaDescription: optionalCopy(600), ogTitle: optionalCopy(180), ogDescription: optionalCopy(600), twitterTitle: optionalCopy(180), twitterDescription: optionalCopy(600),
   canonicalRoute: z.preprocess(value => value == null || value === "" ? undefined : value, z.string().refine(value => publicRoutes.includes(value), "Select an existing Aesthedent route.").optional()),
   index: z.boolean().nullish(), follow: z.boolean().nullish(), visibilityReason: optionalCopy(1000), structuredData: z.boolean().nullish(), faqStructuredData: z.boolean().nullish(), socialImage: z.unknown().optional(),
@@ -22,7 +23,9 @@ export function documentRoute(value: unknown): string | undefined {
   if (pageRoutes[type]) return pageRoutes[type];
   const current = typeof slug === "string" ? slug : slug && typeof slug === "object" ? Reflect.get(slug, "current") : undefined;
   const route = typeof current === "string" && ["service", "insight"].includes(type) ? `/${type === "service" ? "services" : "insights"}/${current}` : undefined;
-  return route && publicRoutes.includes(route) ? route : undefined;
+  // Treatments created in the CMS have their own page beyond the fixed route list.
+  const newTreatment = type === "service" && typeof current === "string" && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(current);
+  return route && (publicRoutes.includes(route) || newTreatment) ? route : undefined;
 }
 export function mapSeo(value: unknown): SeoControls | undefined {
   const parsed = seoCopy.safeParse(value);
@@ -33,7 +36,7 @@ export function mapSeo(value: unknown): SeoControls | undefined {
 }
 export function canonicalProblem(route: string, seo: SeoControls, records: Record<string, SeoControls> = {}): string | undefined {
   const target = seo.canonicalRoute ?? route;
-  if (!publicRoutes.includes(target)) return "Select an existing canonical route.";
+  if (target !== route && !publicRoutes.includes(target)) return "Select an existing canonical route.";
   if (target !== route) {
     if (!seo.visibilityReason) return "Explain why another page should be canonical.";
     if (seo.index === false) return "Use either noindex or a cross-page canonical; these signals conflict.";
@@ -53,7 +56,7 @@ export function resolveSeoInventory(input: unknown): { value: SeoInventory; stat
       if (raw._id !== "seoSettings" || seenDefaults) return { value: empty, status: "ambiguous" };
       seenDefaults = true; defaults = mapSeo(raw.defaults) ?? {};
       // Shared copy/image defaults never change site-wide indexing or canonical policy.
-      delete defaults.index; delete defaults.follow; delete defaults.canonicalRoute; delete defaults.structuredData; delete defaults.faqStructuredData;
+      delete defaults.index; delete defaults.follow; delete defaults.canonicalRoute; delete defaults.structuredData; delete defaults.faqStructuredData; delete defaults.focusKeyword; delete defaults.secondaryKeywords;
       continue;
     }
     const route = documentRoute(raw);
@@ -78,7 +81,8 @@ export function resolveSeoMetadata(route: string, base: Metadata, defaults: SeoC
   const socialTitle = seo.ogTitle ?? base.openGraph?.title ?? (route === "/" ? defaults.ogTitle ?? siteMetadata.openGraph?.title : `${title}${String(title).includes("Aesthedent") ? "" : " | Aesthedent"}`);
   const socialDescription = seo.ogDescription ?? seo.metaDescription ?? (route === "/" ? defaults.ogDescription : undefined) ?? base.openGraph?.description ?? description;
   const indexable = seo.index !== false && canonicalRoute === route;
-  const metadata: Metadata = { ...base, title: route === "/" ? { absolute: String(title) } : seo.metaTitle ? seo.metaTitle : base.title ?? title, description, alternates: { ...base.alternates, canonical: canonicalRoute }, robots: { index: seo.index !== false, follow: seo.follow !== false },
+  const keywords = [...new Set([seo.focusKeyword, ...(seo.secondaryKeywords ?? [])].map(keyword => keyword?.trim()).filter((keyword): keyword is string => Boolean(keyword)))];
+  const metadata: Metadata = { ...base, title: route === "/" ? { absolute: String(title) } : seo.metaTitle ? seo.metaTitle : base.title ?? title, description, ...(keywords.length ? { keywords } : {}), alternates: { ...base.alternates, canonical: canonicalRoute }, robots: { index: seo.index !== false, follow: seo.follow !== false },
     openGraph: { ...base.openGraph, type: base.openGraph && "type" in base.openGraph ? base.openGraph.type : "website", title: socialTitle, description: socialDescription, url: canonical, locale: "en_IN", siteName: "Aesthedent Dental Clinic", images },
     twitter: { card: "summary_large_image", title: seo.twitterTitle ?? (route === "/" ? defaults.twitterTitle : undefined) ?? seo.ogTitle ?? socialTitle, description: seo.twitterDescription ?? (route === "/" ? defaults.twitterDescription : undefined) ?? socialDescription, images: images as NonNullable<Metadata["twitter"]>["images"] },
   };
