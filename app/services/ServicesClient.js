@@ -5,22 +5,11 @@ import EditorialImage from '@/components/insights/EditorialImage';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import PageWrapper from '@/components/layout/PageWrapper';
 import SectionHeading from '@/components/ui/SectionHeading';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import { services as fallbackServices } from '@/lib/services';
-import { 
-  ArrowRight, 
-  CheckCircle2, 
-  MessageCircle,
-  Sparkles,
-  Shield,
-  Leaf,
-  Baby,
-  Stethoscope,
-  ChevronDown
-} from 'lucide-react';
+import { ArrowRight, CheckCircle2, MessageCircle, Sparkles, Shield, Leaf, Baby, Stethoscope, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 

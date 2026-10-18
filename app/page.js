@@ -18,7 +18,6 @@ const fallbackMetadata = {
 export async function generateMetadata() { return (await getPageSeo('/', fallbackMetadata)).metadata; }
 
 export default async function Page() {
-  const seoState = await getPageSeo('/', fallbackMetadata);
   const [overrides, services, doctorNarratives, reviewCards, editorial] = await Promise.all([
     getInsightOverrides(), getServices(), getDoctors(), getPublishedTestimonials(), getHomeContent(),
   ]);

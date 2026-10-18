@@ -1,7 +1,6 @@
 'use client';
 
 import { Star, ArrowRight, User } from 'lucide-react';
-import Image from 'next/image';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import { getTestimonials } from '@/lib/testimonials';
 import { REVIEWS } from '@/lib/clinic';

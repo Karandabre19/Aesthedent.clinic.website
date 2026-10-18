@@ -12,45 +12,10 @@ import {
 import { landingPageContent } from "@/lib/landing-page-content";
 import { services as fallbackServices } from "@/lib/services";
 import { useGSAP } from "@gsap/react";
-import {
-  animate,
-  motion,
-  useInView,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import {
-  Activity,
-  ArrowRight,
-  Award,
-  CheckCircle2,
-  ChevronDown,
-  Clock,
-  Cpu,
-  Eye,
-  GlassWater,
-  Hand,
-  Heart,
-  Info,
-  MessageCircle,
-  Monitor,
-  Pause,
-  Phone,
-  Play,
-  Search,
-  Shield,
-  Smile,
-  Star,
-  Target,
-  Trees,
-  User,
-  Users,
-  Volume2,
-  VolumeX,
-  Zap,
-} from "lucide-react";
+import { Activity, ArrowRight, Award, CheckCircle2, ChevronDown, Clock, Cpu, Eye, GlassWater, Hand, Heart, Info, Monitor, Pause, Phone, Play, Search, Shield, Smile, Target, Users, Volume2, VolumeX, Zap } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 

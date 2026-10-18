@@ -203,7 +203,7 @@ test('new identity rules preserve published IDs and review positions fail closed
 });
 test('service JSON-LD and clinical prose use the exact same mapped record as the detail page', () => {
   const helpers = {};
-  new Function('require', 'exports', ts.transpileModule(readFileSync(new URL('../lib/schema.js', import.meta.url), 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText)(id => id === './clinic' ? require('../lib/clinic.ts') : require(id), helpers);
+  new Function('require', 'exports', ts.transpileModule(readFileSync(new URL('../lib/schema.js', import.meta.url), 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText)(createRequire(new URL('../lib/schema.js', import.meta.url)), helpers);
   const doc = { ...serviceFixtures()[0], shortDesc: 'Local metadata fixture', faqs: [{ q: 'Local question?', a: 'Local answer.' }] };
   const mapped = resolveServices([doc]).value[0];
   assert.equal(helpers.buildProcedureSchema(mapped).description, doc.shortDesc);

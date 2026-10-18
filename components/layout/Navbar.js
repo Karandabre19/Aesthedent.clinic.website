@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { useNavigation } from './NavigationProvider';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Phone, MessageCircle, Menu, X, ChevronRight, Sparkles, Activity, ShieldCheck, HeartPulse, Stethoscope, Microscope, Zap } from 'lucide-react';
+import { Phone, MessageCircle, Menu, X, ChevronRight, Sparkles, Activity, ShieldCheck, HeartPulse, Stethoscope, Zap } from 'lucide-react';
 import { services } from '@/lib/services';
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useScroll } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring, useScroll } from 'framer-motion';
 
 const defaultNavLinks = [
   { href: '/', label: 'Home' },

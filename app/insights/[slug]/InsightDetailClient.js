@@ -3,7 +3,7 @@
 import EditorialImage from '@/components/insights/EditorialImage';
 
 import Link from 'next/link';
-import { ArrowLeft, Clock, Calendar, ArrowRight, MessageCircle } from 'lucide-react';
+import { ArrowLeft, Clock, Calendar, MessageCircle } from 'lucide-react';
 import PageWrapper from '@/components/layout/PageWrapper';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import InsightsSection from '@/components/sections/InsightsSection';
