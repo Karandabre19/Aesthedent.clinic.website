@@ -26,10 +26,10 @@ export function descriptionList(name: string, title: string, steps = false, opti
 export function faqField(name = "faqs", question = "q", answer = "a") {
   return defineField({ name, title: "Frequently asked questions", type: "array", description: "1–30 questions in display order. Keep clinic-reviewed wording; where present, structured data uses these same answers.", of: [defineArrayMember({ type: "object", fields: [textField(question, "Question", true, false, { maxLength: 300 }), textField(answer, "Answer", true, true, { maxLength: 4000 })], preview: { select: { title: question, subtitle: answer } } })], validation: (r) => r.required().min(1).max(30) });
 }
-export function stableSlug(known: readonly string[], title = "Existing URL") {
-  return defineField({ name: "slug", title, type: "slug", description: `Existing identifiers only: ${known.join(", ")}. Never rename a published identifier.`, validation: (r) => r.required().custom(async (value, context) => {
+export function stableSlug(known: readonly string[], title = "Existing URL", allowNew = false) {
+  return defineField({ name: "slug", title, type: "slug", description: allowNew ? `Lowercase words joined by hyphens, e.g. "teeth-cleaning". Existing pages: ${known.join(", ")}. Never rename a published URL.` : `Existing identifiers only: ${known.join(", ")}. Never rename a published identifier.`, validation: (r) => r.required().custom(async (value, context) => {
     if (!value?.current) return true;
-    if (!known.includes(value.current)) return "Choose an existing identifier.";
+    if (allowNew ? !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value.current) : !known.includes(value.current)) return allowNew ? "Use lowercase letters, numbers and single hyphens." : "Choose an existing identifier.";
     if (!context.document?._id) return true;
     try {
       const { apiVersion } = requireSanityEnvironment();

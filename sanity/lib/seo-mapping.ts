@@ -23,7 +23,9 @@ export function documentRoute(value: unknown): string | undefined {
   if (pageRoutes[type]) return pageRoutes[type];
   const current = typeof slug === "string" ? slug : slug && typeof slug === "object" ? Reflect.get(slug, "current") : undefined;
   const route = typeof current === "string" && ["service", "insight"].includes(type) ? `/${type === "service" ? "services" : "insights"}/${current}` : undefined;
-  return route && publicRoutes.includes(route) ? route : undefined;
+  // Treatments created in the CMS have their own page beyond the fixed route list.
+  const newTreatment = type === "service" && typeof current === "string" && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(current);
+  return route && (publicRoutes.includes(route) || newTreatment) ? route : undefined;
 }
 export function mapSeo(value: unknown): SeoControls | undefined {
   const parsed = seoCopy.safeParse(value);
@@ -34,7 +36,7 @@ export function mapSeo(value: unknown): SeoControls | undefined {
 }
 export function canonicalProblem(route: string, seo: SeoControls, records: Record<string, SeoControls> = {}): string | undefined {
   const target = seo.canonicalRoute ?? route;
-  if (!publicRoutes.includes(target)) return "Select an existing canonical route.";
+  if (target !== route && !publicRoutes.includes(target)) return "Select an existing canonical route.";
   if (target !== route) {
     if (!seo.visibilityReason) return "Explain why another page should be canonical.";
     if (seo.index === false) return "Use either noindex or a cross-page canonical; these signals conflict.";

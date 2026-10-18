@@ -1,6 +1,6 @@
 import { DraftNotice } from '@/components/layout/DraftNotice';
 import { getRootSeoMetadata } from '@/sanity/lib/seo';
-import { getNavigation } from '@/sanity/lib/navigation';
+import { getNavigationWithTreatments } from '@/sanity/lib/navigation';
 import { NavigationProvider } from '@/components/layout/NavigationProvider';
 import { ClinicAvailabilityProvider } from '@/components/layout/ClinicAvailabilityProvider';
 import { getClinicAvailability } from '@/sanity/lib/availability';
@@ -89,7 +89,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         {/* End Google Tag Manager (noscript) */}
         <TooltipProvider>
           <MotionProvider>
-            <ClinicAvailabilityProvider value={availability}><NavigationProvider value={await getNavigation()}><SmoothScrollProvider>{children}</SmoothScrollProvider></NavigationProvider></ClinicAvailabilityProvider>
+            <ClinicAvailabilityProvider value={availability}><NavigationProvider value={await getNavigationWithTreatments()}><SmoothScrollProvider>{children}</SmoothScrollProvider></NavigationProvider></ClinicAvailabilityProvider>
           </MotionProvider>
         </TooltipProvider>
         <DraftNotice />

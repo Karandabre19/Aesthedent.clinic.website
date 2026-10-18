@@ -157,7 +157,7 @@ export default function ServiceDetailClient({ presentation = {}, slug, serviceDa
                   width={800}
                   height={450}
                   className="rounded-3xl shadow-xl object-cover w-full h-[400px] lg:h-[450px]"
-                  priority imageOverride={service.coverImage} cropWidth={1200} cropHeight={675}
+                  priority imageOverride={service.bannerImage ?? service.coverImage} cropWidth={1200} cropHeight={675}
                 />
               </motion.div>
             </div>
