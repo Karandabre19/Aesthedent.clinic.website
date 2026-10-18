@@ -101,7 +101,7 @@ test('every image control has guidance and warning-only dimension/format checks,
   const imageTypes = [];
   function visit(value) { for (const f of value.fields ?? []) { if (f.type.name === 'image') imageTypes.push(f.type); else visit(f.type); } }
   for (const type of schemaTypes) visit(schema.get(type.name));
-  assert.equal(imageTypes.length, 23);
+  assert.equal(imageTypes.length, 24);
   for (const value of imageTypes) {
     assert.match(value.description, /Recommended .*px/); assert.match(value.description, /crop|cropping/); assert.match(value.description, /Original uploads are preserved/);
     assert.equal(value.options.hotspot, true); assert.equal(value.options.maxUploadSize, undefined);

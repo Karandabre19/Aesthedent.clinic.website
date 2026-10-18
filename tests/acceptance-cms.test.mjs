@@ -23,7 +23,7 @@ function execute(file, dependencies = {}) {
   return exports;
 }
 const { presentationPageQuery } = execute('sanity/lib/presentation-pages.ts', { './content-reader': {} });
-const { navigationQuery } = execute('sanity/lib/navigation.ts', { './content-reader': {} });
+const { navigationQuery } = execute('sanity/lib/navigation.ts', { './content-reader': {}, './services': { getServices: async () => [] } });
 const { seoQuery } = execute('sanity/lib/seo.ts', { './content-reader': {}, './insights': {}, 'next/headers': {} });
 const groq = async (query, dataset, params = {}) => (await evaluate(parse(query), { dataset, params })).get();
 

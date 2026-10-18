@@ -24,7 +24,7 @@ test('all eight actual treatments round-trip through validation without changing
 });
 test('treatments retain all static data on missing, malformed, draft, duplicate or unknown records', () => {
   const first = serviceFixtures()[0];
-  for (const input of [[], null, [first, first], [{ ...first, _id: 'drafts.hidden' }], [{ ...first, _id: 'versions.release.hidden' }], [{ ...first, slug: 'new-route' }], [{ ...first, faqs: [] }], [{ ...first, process: [{ step: 2, title: 'Stage', desc: 'Description' }] }]]) assert.deepEqual(resolveServices(input).value, services);
+  for (const input of [[], null, [first, first], [{ ...first, _id: 'drafts.hidden' }], [{ ...first, _id: 'versions.release.hidden' }], [{ ...first, slug: 'New Route' }], [{ ...first, faqs: [] }], [{ ...first, process: [{ step: 2, title: 'Stage', desc: 'Description' }] }]]) assert.deepEqual(resolveServices(input).value, services);
 });
 test('partial treatment coverage updates content, preserving routing, assets, locality, order and other treatments', () => {
   const first = { ...serviceFixtures()[0], title: 'Editorial fixture' };
@@ -32,6 +32,17 @@ test('partial treatment coverage updates content, preserving routing, assets, lo
   assert.equal(result[0].title, first.title); assert.equal(result[1], services[1]);
   for (const field of ['slug', 'locality', 'image', 'imageAlt', 'icon', 'isFeatured']) assert.equal(result[0][field], services[0][field]);
   assert.deepEqual(result.map(s => s.slug), services.map(s => s.slug));
+});
+test('a treatment created in the CMS is appended with website defaults and shared images', () => {
+  const created = { ...serviceFixtures()[0], _id: 'new-treatment', slug: 'teeth-cleaning', title: 'Teeth Cleaning', aboutList: null };
+  const result = resolveServices([created]);
+  const added = result.value.at(-1);
+  assert.equal(result.status, 'sanity');
+  assert.deepEqual(result.value.slice(0, services.length).map(s => s.slug), services.map(s => s.slug));
+  assert.equal(added.slug, 'teeth-cleaning');
+  assert.equal(added.title, 'Teeth Cleaning');
+  assert.equal(added.locality, 'Kothrud, Pune');
+  assert.equal(added.image, '/clinic/treatment-process.jpeg');
 });
 test('treatment-specific optional lists cannot be lost or added to another layout', () => {
   const orthodontics = serviceFixtures().find(s => s.slug === 'orthodontic-treatment');
