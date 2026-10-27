@@ -8,7 +8,10 @@ import { insights } from "../../lib/insights.js";
 export const insightCategories = [...new Set(insights.map((item: { category: string }) => item.category))] as [string, ...string[]];
 
 const text = z.string().min(1).regex(/\S/, "Use nonblank text.").regex(/^(?![\s\S]*<\/?[A-Za-z][^>]*>)[\s\S]*$/, "Use plain text.");
+const optionalText = (maximum: number) => z.preprocess(value => value == null || typeof value === 'string' && !value.trim() ? undefined : value, text.max(maximum).optional());
 const key = z.string().min(1);
+export const insightSlug = z.string().min(1).max(96).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Use lowercase words joined by hyphens, up to 96 characters.');
+export const maxInsights = 1000;
 export const safeInsightLink = z.string().refine((href) => {
   if (/[\s\\\u0000-\u001f\u007f]/.test(href)) return false;
   if (href.startsWith("/") && !href.startsWith("//")) return true;
@@ -48,9 +51,9 @@ export type InsightBody = z.infer<typeof insightBody>;
 
 export const insightContent = z.object({
   seo: seoCopy.nullish(),
-  title: text.max(180), excerpt: text.max(600), metaTitle: text.max(100).nullish(),
-  metaDescription: text.max(320).nullish(), listingTitle: text.max(180).nullish(), listingExcerpt: text.max(600).nullish(),
-  modifiedAt: z.string().datetime({ offset: true }).nullish(),
+  title: text.max(180), excerpt: text.max(600), metaTitle: optionalText(100),
+  metaDescription: optionalText(320), listingTitle: optionalText(180), listingExcerpt: optionalText(600),
+  modifiedAt: z.preprocess(value => value == null || value === '' ? undefined : value, z.string().datetime({ offset: true }).optional()),
   category: z.enum(insightCategories, { message: "Choose one of the existing Insight categories." }), date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Use a date in YYYY-MM-DD format.").refine((value) => {
     const date = new Date(`${value}T00:00:00Z`);
     return !Number.isNaN(date.valueOf()) && date.toISOString().slice(0, 10) === value;
@@ -58,7 +61,7 @@ export const insightContent = z.object({
   readTimeMinutes: z.number().int().min(1).max(60), featured: z.boolean(), body: insightBody,
 });
 export const insightDocument = insightContent.extend({
-  _id: key.refine((id) => !id.startsWith("drafts.") && !id.startsWith("versions.")), slug: text.regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+  _id: key.refine((id) => !id.startsWith("drafts.") && !id.startsWith("versions.")), slug: insightSlug,
 });
 export type InsightOverride = {
   seo?: SeoControls;
@@ -70,17 +73,16 @@ export type InsightOverride = {
 };
 type ExistingInsight = { slug: string; featured?: boolean };
 
-// Studio and the reader must count missing documents' static featured flags too.
+// Once CMS content is supplied, its Featured selection replaces the static default.
 export function getFeaturedInsightSlugs(overrides: readonly ExistingInsight[], existing: readonly ExistingInsight[]): string[] {
-  return existing.filter((item) => overrides.find((doc) => doc.slug === item.slug)?.featured ?? item.featured).map((item) => item.slug);
+  return (overrides.length ? overrides : existing).filter(item => item.featured).map(item => item.slug);
 }
 
 export function resolveInsightOverrides(input: unknown, existing: readonly ExistingInsight[]): { overrides: InsightOverride[]; status: string } {
-  const parsed = z.array(insightDocument).max(existing.length).safeParse(input);
+  const parsed = z.array(insightDocument).max(maxInsights).safeParse(input);
   if (!parsed.success) return { overrides: [], status: "invalid" };
   if (!parsed.data.length) return { overrides: [], status: "missing" };
   if (new Set(parsed.data.map((doc) => doc.slug)).size !== parsed.data.length) return { overrides: [], status: "ambiguous" };
-  if (parsed.data.some((doc) => !existing.some((item) => item.slug === doc.slug))) return { overrides: [], status: "invalid" };
   const overrides = parsed.data.map((doc): InsightOverride => ({
     slug: doc.slug, title: doc.title, excerpt: doc.excerpt, metaTitle: doc.metaTitle ?? doc.title,
     category: doc.category, publishedDate: doc.date,

@@ -14,6 +14,8 @@ import type { StepConfig } from '@/lib/intake-form-types';
 import { assembleMessage, isValidPhone, normalisePhone } from '@/lib/intake-form-message';
 import type { Answers } from '@/lib/intake-form-message';
 import { buildWhatsappLink, WHATSAPP_NUMBER } from '@/lib/clinic';
+import { useClinicAvailability } from '@/components/layout/ClinicAvailabilityProvider';
+import { appointmentOptions, formatAvailability } from '@/lib/clinic-availability';
 
 // The shadcn kit under components/ui is untyped .jsx (the project sets
 // checkJs:false), so TypeScript infers "no props at all" for each forwardRef
@@ -140,6 +142,7 @@ function Field({
   const inputId = `iw-${step.id}`;
   const errorId = `${inputId}-err`;
   const hasError = Boolean(errors[step.id]);
+  const availability = useClinicAvailability();
 
   switch (step.type) {
     case 'text': {
@@ -271,6 +274,7 @@ function Field({
     }
 
     case 'day-time': {
+      const times = availability && a.day ? appointmentOptions(availability, a.day).times.map(value => ({ value })) : step.times;
       return (
         <div>
           <fieldset>
@@ -282,8 +286,8 @@ function Field({
               aria-describedby={hasError ? errorId : undefined}
             >
               {step.days.map((day) => {
-                const disabled = 'disabled' in day && Boolean(day.disabled);
-                const title = 'title' in day ? day.title : undefined;
+                const disabled = availability ? appointmentOptions(availability, day.value).closed : 'disabled' in day && Boolean(day.disabled);
+                const title = availability ? disabled ? 'Closed on this weekday' : undefined : 'title' in day ? day.title : undefined;
                 const selected = a.day === day.value;
                 return (
                   <button
@@ -294,6 +298,7 @@ function Field({
                     aria-pressed={selected}
                     onClick={() => {
                       set('day', day.value);
+                      if (availability && !appointmentOptions(availability, day.value).times.includes(a.time)) set('time', '');
                       setErrors({});
                     }}
                     className={`min-h-[44px] min-w-[44px] rounded-xl border px-3 py-2 text-base font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--color-primary))] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 ${
@@ -314,7 +319,7 @@ function Field({
               {INTAKE_FORM.review.rowLabels.time}
             </legend>
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
-              {step.times.map((time) => {
+              {times.map((time) => {
                 const selected = a.time === time.value;
                 return (
                   <button
@@ -349,6 +354,7 @@ function Field({
 /* ── the wizard ──────────────────────────────────────────────────────────── */
 
 export default function IntakeWizard() {
+  const availability = useClinicAvailability();
   const [screen, setScreen] = useState(0); // 0-indexed; screen === TOTAL is the review step
   const [a, setA] = useState<Answers>(EMPTY_ANSWERS);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -423,7 +429,9 @@ export default function IntakeWizard() {
       }
       if (step.id === 'schedule') {
         if (!a.day) e.schedule = 'Please pick a day.';
+        else if (availability && appointmentOptions(availability, a.day).closed) e.schedule = 'Choose a day when the clinic is open.';
         else if (!a.time) e.schedule = 'Please pick a time.';
+        else if (availability && !appointmentOptions(availability, a.day).times.includes(a.time)) e.schedule = 'Choose a time within the published opening hours.';
         continue;
       }
       if (!(step as { required?: boolean }).required) continue;
@@ -523,7 +531,7 @@ export default function IntakeWizard() {
                     {step.question}
                   </h3>
                   {'helper' in step && step.helper && (
-                    <p className="mb-4 text-[hsl(var(--color-text-muted))]">{step.helper}</p>
+                    <p className="mb-4 text-[hsl(var(--color-text-muted))]">{step.id === 'schedule' && availability ? formatAvailability(availability) : step.helper}</p>
                   )}
                   <Field step={step} a={a} set={set} setErrors={setErrors} errors={errors} />
                   {errors[step.id] && (

@@ -60,7 +60,7 @@ const phoneNumber = '+919309816336';
 
 // The slug arrives resolved from the server shell, which already 404s on an
 // unknown one - see ./page.js.
-export default function ServiceDetailClient({ presentation = {}, slug, serviceData, relatedServices = services }) {
+export default function ServiceDetailClient({ backlinkSection, presentation = {}, slug, serviceData, relatedServices = services }) {
   const service = serviceData ?? getServiceBySlug(slug);
 
   if (!service) {
@@ -77,7 +77,7 @@ export default function ServiceDetailClient({ presentation = {}, slug, serviceDa
   const imageAlt = service.imageAlt ?? `${service.title} at Aesthedent Dental Clinic, Kothrud`;
 
   return (
-    <PageWrapper>
+    <PageWrapper backlinkSection={backlinkSection}>
       <article>
         {/* Hero */}
         <section className="pt-32 pb-16" aria-labelledby="service-title">

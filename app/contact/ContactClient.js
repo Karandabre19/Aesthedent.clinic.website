@@ -54,7 +54,7 @@ const contactInfo = [
   }
 ];
 
-export default function ContactPage({ presentation = {} }) {
+export default function ContactPage({ backlinkSection, presentation = {} }) {
   const availability = useClinicAvailability();
   // The form state and the /api/contact POST that lived here were removed with
   // the old form -IntakeWizard owns its own state and sends via WhatsApp
@@ -62,7 +62,7 @@ export default function ContactPage({ presentation = {} }) {
   // no longer called from this page; delete it separately if nothing else uses it.
 
   return (
-    <PageWrapper>
+    <PageWrapper backlinkSection={backlinkSection}>
       {/* Hero */}
       <section className="pt-32 pb-16 bg-gradient-to-b from-[hsl(var(--color-primary-light))] to-[hsl(var(--background))]">
         <div className="main-container">

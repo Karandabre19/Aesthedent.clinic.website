@@ -85,7 +85,8 @@ function FeaturedArticle({ article }) {
           {/* Image */}
           <div className="relative aspect-[16/10] lg:aspect-auto lg:min-h-[400px] overflow-hidden">
             <EditorialImage
-              src={article.image}
+              src={article.image || ''}
+              cmsOnly={!article.image}
               alt={article.title}
               fill
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -145,7 +146,8 @@ function ArticleCard({ article, index }) {
         {/* Image */}
         <div className="relative aspect-[16/10] overflow-hidden">
           <EditorialImage
-            src={article.image}
+            src={article.image || ''}
+            cmsOnly={!article.image}
             alt={article.title}
             fill
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -184,13 +186,13 @@ function ArticleCard({ article, index }) {
   );
 }
 
-export default function InsightsPage({ presentation = {}, insightOverrides = [] }) {
+export default function InsightsPage({ backlinkSection, presentation = {}, insightOverrides = [] }) {
   const insights = applyInsightOverrides(fallbackInsights, insightOverrides, 'listing');
-  const featuredArticle = insights.find(a => a.featured) || insights[0];
-  const otherArticles = insights.filter(a => a.id !== featuredArticle.id);
+  const featuredArticle = insights.find(a => a.featured);
+  const otherArticles = featuredArticle ? insights.filter(a => a.id !== featuredArticle.id) : insights;
 
   return (
-    <PageWrapper>
+    <PageWrapper backlinkSection={backlinkSection}>
       {/* Hero Section */}
       <section className="pt-32 pb-12 sm:pt-36 sm:pb-16 bg-gradient-to-b from-[hsl(var(--bg-alt))] to-white">
         <div className="main-container">
@@ -221,13 +223,13 @@ export default function InsightsPage({ presentation = {}, insightOverrides = [] 
       </section>
 
       {/* Featured Article */}
-      <section className="py-8 sm:py-12 bg-white">
+      {featuredArticle && <section className="py-8 sm:py-12 bg-white">
         <div className="main-container">
           <AnimatedSection>
             <FeaturedArticle article={featuredArticle} />
           </AnimatedSection>
         </div>
-      </section>
+      </section>}
 
       {/* All Articles Grid */}
       <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-white to-[hsl(var(--bg-alt))]">

@@ -95,6 +95,7 @@ function loadInsightPage() {
   const notFoundMarker = new Error('NEXT_HTTP_ERROR_FALLBACK;404');
   const { insights } = require('../lib/insights.js');
   const page = execute('app/insights/[slug]/page.js', {
+    '@/components/seo/BacklinkReferences': { BacklinkReferences: () => null },
     'next/navigation': { notFound: () => { throw notFoundMarker; } },
     '@/sanity/lib/seo': { getPageSeo: async () => ({ metadata: { title: 'fixture' }, structuredData: false }) },
     '@/sanity/lib/presentation-pages': { getPresentationPage: async () => ({}) },

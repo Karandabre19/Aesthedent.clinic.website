@@ -1,3 +1,4 @@
+import { BacklinkReferences } from '@/components/seo/BacklinkReferences';
 import { getPageSeo } from '@/sanity/lib/seo';
 import { getClinicAvailability } from '@/sanity/lib/availability';
 import { getPresentationPage } from '@/sanity/lib/presentation-pages';
@@ -57,7 +58,7 @@ export default async function Page() {
           ]),
         ]}
       />}</>
-      <AreaClient presentation={await getPresentationPage('localLandingPage')} />
+      <AreaClient backlinkSection={<BacklinkReferences entries={seoState.backlinks} />} presentation={await getPresentationPage('localLandingPage')} />
     </>
   );
 }

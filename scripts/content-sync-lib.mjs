@@ -26,11 +26,12 @@ const { getTestimonials } = require('../lib/testimonials.js');
 
 const { landingPageContent } = require('../lib/landing-page-content.js');
 
-const { homeContent, aboutContent, experienceContent, doctorContent, singletonNames } = require('../sanity/lib/page-mapping.ts');
+const { homeContent, aboutContent, experienceContent, doctorContent, doctorWebsiteFields, singletonNames } = require('../sanity/lib/page-mapping.ts');
 
 const { homeSections, aboutSections, experienceSections, sectionCopySchema } = require('../sanity/lib/editorial-sections.ts');
 
 const { serviceContent } = require('../sanity/lib/service-mapping.ts');
+const { teamValuesContent, teamValuesDefaults } = require('../sanity/lib/team-values.ts');
 
 const { insightContent } = require('../sanity/lib/insight-mapping.ts');
 
@@ -256,7 +257,7 @@ function assetSlots(file) {
 
     const raw = props.src && (ts.isStringLiteral(props.src) ? props.src.text : props.src.expression?.getText(tree));
 
-    output.push({ consumer: `${file}:${tree.getLineAndCharacterOfPosition(node.getStart(tree)).line + 1}`, field: props.imageOverride?.expression?.getText(tree), source: imports.get(raw) ?? raw, cropWidth: Number(props.cropWidth?.expression?.getText(tree)), cropHeight: Number(props.cropHeight?.expression?.getText(tree)), alt: ts.isStringLiteral(props.alt) ? props.alt.text : props.alt?.expression?.getText(tree), uploadAuthorized: false });
+    output.push({ consumer: `${file}:${tree.getLineAndCharacterOfPosition(node.getStart(tree)).line + 1}`, field: props.imageOverride?.expression?.getText(tree), source: imports.get(raw) ?? raw, ...(Object.hasOwn(props, 'cmsOnly') ? { cmsOnly: true } : {}), cropWidth: Number(props.cropWidth?.expression?.getText(tree)), cropHeight: Number(props.cropHeight?.expression?.getText(tree)), alt: ts.isStringLiteral(props.alt) ? props.alt.text : props.alt?.expression?.getText(tree), uploadAuthorized: false });
 
   });
 
@@ -268,7 +269,7 @@ const withKeys = value => Array.isArray(value) ? value.map((item, i) => item && 
 
 const sectionSpecs = { homePage: homeSections, aboutPage: aboutSections, experiencePage: experienceSections };
 
-const coreSchemas = { homePage: ['homeContent', homeContent], aboutPage: ['aboutContent', aboutContent], experiencePage: ['experienceContent', experienceContent], service: ['serviceContent', serviceContent], doctor: ['doctorContent', doctorContent], insight: ['insightContent', insightContent], navigation: ['navigationContent', navigationContent], testimonial: ['testimonialContent', testimonialContent] };
+const coreSchemas = { teamValues: ['teamValuesContent', teamValuesContent], homePage: ['homeContent', homeContent], aboutPage: ['aboutContent', aboutContent], experiencePage: ['experienceContent', experienceContent], service: ['serviceContent', serviceContent], doctor: ['doctorContent', doctorContent], insight: ['insightContent', insightContent], navigation: ['navigationContent', navigationContent], testimonial: ['testimonialContent', testimonialContent] };
 
 const issueText = issues => issues.map(issue => `${issue.path.join('.') || '(root)'}: ${issue.message}`);
 
@@ -336,7 +337,11 @@ export function buildContentManifest() {
 
   const doctors = sourceArray('app/doctor/DoctorClient.js', 'Dr. Sahil', ['bio', 'philosophy']), summaries = sourceArray(homeFile, 'DOCTORS.sahil', ['desc']);
 
-  documents.push(...doctors.map((doc, index) => ({ identity: index === 0 ? 'sahil' : 'aishwarya', source: 'app/doctor/DoctorClient.js + app/HomeClient.js', reviewRequired: true, content: { _type: 'doctor', slug: { _type: 'slug', current: index === 0 ? 'sahil' : 'aishwarya' }, ...doctorContent.parse({ ...doc, homeSummary: summaries[index].desc }) } })));
+  documents.push(...doctors.map((doc, index) => {
+    const identity = index === 0 ? 'sahil' : 'aishwarya', fields = doctorWebsiteFields(identity);
+    return { identity, source: 'app/doctor/DoctorClient.js + app/HomeClient.js + lib/clinic.ts', reviewRequired: true,
+      content: { _type: 'doctor', slug: { _type: 'slug', current: identity }, ...doctorContent.parse({ ...doc, ...fields, homeSummary: summaries[index].desc }), ...fields } };
+  }));
 
   const listing = namedValue('app/insights/InsightsClient.js', 'fallbackInsights'), bodies = namedValue('app/insights/[slug]/InsightDetailClient.js', 'insightsData');
 
@@ -374,7 +379,7 @@ export function buildContentManifest() {
 
     }
 
-    for (const spec of presentationSpecs(name)) {
+    for (const spec of presentationSpecs(name).filter(spec => name !== 'teamPage' || spec.name !== 'values')) {
 
       sectionCopySchema(spec).parse(data[spec.name] ?? {});
 
@@ -382,9 +387,12 @@ export function buildContentManifest() {
 
     }
 
+    if (name === 'teamPage') delete data.values;
     documents.push({ identity: name, source: files.join(' + '), reviewRequired: true, content: { _type: name, ...data } });
 
   }
+
+  documents.push({ identity: 'teamValues', source: 'sanity/lib/team-values.ts (existing Team-page copy)', reviewRequired: true, content: { _type: 'teamValues', ...structuredClone(teamValuesDefaults), cards: teamValuesDefaults.cards.map(card => ({ _type: 'teamValueCard', ...card })) } });
 
   documents.push({ identity: 'navigation', source: 'sanity/lib/navigation-data.ts (verified existing menus)', reviewRequired: true, content: { _type: 'navigation', ...structuredClone(navigationDefaults) } });
 
@@ -398,9 +406,9 @@ export function buildContentManifest() {
 
   const consumers = [homeFile, aboutFile, experienceFile, 'app/doctor/DoctorClient.js', 'app/services/ServicesClient.js', 'app/services/[slug]/ServiceDetailClient.js', 'app/insights/InsightsClient.js', 'app/insights/[slug]/InsightDetailClient.js', 'components/sections/InsightsSection.js'];
 
-  const doctorAssets = sourceArray('app/doctor/DoctorClient.js', 'Dr. Sahil', ['image']);
+  const doctorAssets = sourceArray('app/doctor/DoctorClient.js', 'Dr. Sahil', ['image']).flatMap((doctor, index) => typeof doctor.image === 'string' && doctor.image ? [{ identity: index === 0 ? 'sahil' : 'aishwarya', image: doctor.image }] : []);
 
-  const assets = [...consumers.flatMap(assetSlots), ...services.map(s => ({ identity: s.slug, field: 'coverImage', source: s.image, uploadAuthorized: false })), ...insights.map(s => ({ identity: s.slug, field: 'coverImage', source: s.image, uploadAuthorized: false })), ...doctorAssets.map((s, index) => ({ identity: index === 0 ? 'sahil' : 'aishwarya', field: 'portrait', source: s.image, uploadAuthorized: false }))].map(asset => {
+  const assets = [...consumers.flatMap(assetSlots), ...services.map(s => ({ identity: s.slug, field: 'coverImage', source: s.image, uploadAuthorized: false })), ...insights.map(s => ({ identity: s.slug, field: 'coverImage', source: s.image, uploadAuthorized: false })), ...doctorAssets.map(s => ({ identity: s.identity, field: 'portrait', source: s.image, uploadAuthorized: false }))].map(asset => {
 
     const file = typeof asset.source === 'string' && asset.source.startsWith('/') ? path.resolve('public', asset.source.slice(1)) : asset.source;
 
@@ -419,6 +427,8 @@ export function buildContentManifest() {
 
   const assetDecisions = assets.map(asset => {
 
+    if (asset.cmsOnly) return { ...asset, destinations: documents.filter(doc => doc.content._type === 'doctor').map(doc => ({ identity: doc.identity, field: 'portrait' })), nativeAsset: null, decision: 'Managed through the Doctor portrait fields in Studio. There is no static fallback or source upload to plan; preserve existing native selections.' };
+
     const expression = asset.field ?? '';
 
     const model = expression.includes('service.coverImage') || expression === 's.coverImage' && asset.consumer?.startsWith('app/services') ? 'service' : expression.includes('insight.coverImage') || expression.includes('article.coverImage') ? 'insight' : expression.includes('portrait') || expression.includes('doctor') ? 'doctor' : undefined;
@@ -431,9 +441,9 @@ export function buildContentManifest() {
 
   });
 
-  const socialAssets = documents.filter(doc => singletonNames.includes(doc.identity) && doc.identity !== 'navigation' || ['service','insight'].includes(doc.content._type)).map(doc => ({ identity: doc.identity, field: doc.identity === 'seoSettings' ? 'defaults.socialImage' : 'seo.socialImage', source: doc.content._type === 'insight' ? insights.find(item => item.slug === doc.identity).image : siteMetadata.openGraph.images[0].url, nativeAsset: null, uploadAuthorized: false, altPolicy: 'Describe the approved social image; do not infer credentials or outcomes.', crop: '1200×630 (40:21), subject within central safe area; preserve high-resolution original.' }));
+  const socialAssets = documents.filter(doc => singletonNames.includes(doc.identity) && !['navigation', 'teamValues'].includes(doc.identity) || ['service','insight'].includes(doc.content._type)).map(doc => ({ identity: doc.identity, field: doc.identity === 'seoSettings' ? 'defaults.socialImage' : 'seo.socialImage', source: doc.content._type === 'insight' ? insights.find(item => item.slug === doc.identity).image : siteMetadata.openGraph.images[0].url, nativeAsset: null, uploadAuthorized: false, altPolicy: 'Describe the approved social image; do not infer credentials or outcomes.', crop: '1200×630 (40:21), subject within central safe area; preserve high-resolution original.' }));
 
-  const payload = { target, documents, reviews, fieldEvidence: [...home.evidence.map(e => ({...e, document: 'homePage'})), ...about.evidence.map(e => ({...e, document: 'aboutPage'})), ...experience.evidence.map(e => ({...e, document: 'experiencePage'})), ...addedEvidence], payloadEvidence: detailedEvidence, assets: assetDecisions, socialAssets, nativeImageControls: 23 };
+  const payload = { target, documents, reviews, fieldEvidence: [...home.evidence.map(e => ({...e, document: 'homePage'})), ...about.evidence.map(e => ({...e, document: 'aboutPage'})), ...experience.evidence.map(e => ({...e, document: 'experiencePage'})), ...addedEvidence], payloadEvidence: detailedEvidence, assets: assetDecisions, socialAssets, nativeImageControls: 24 };
 
   return { ...payload, manifestHash: hash(payload) };
 

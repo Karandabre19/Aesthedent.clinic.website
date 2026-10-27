@@ -212,15 +212,15 @@ const insightsData = {
 const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
 
 // Slug arrives resolved from the server shell - see ./page.js.
-export default function InsightDetailClient({ presentation = {}, slug, insightOverrides = [], relatedInsights }) {
+export default function InsightDetailClient({ backlinkSection, presentation = {}, slug, insightOverrides = [], relatedInsights }) {
   const fallback = insightsData[slug];
   const override = insightOverrides.find((item) => item.slug === slug);
-  const article = fallback && override ? { ...fallback, ...override } : fallback;
+  const article = override ? { ...fallback, ...override } : fallback;
 
   // Fallback for unknown slugs
   if (!article) {
     return (
-      <PageWrapper>
+      <PageWrapper backlinkSection={backlinkSection}>
         <section className="pt-32 pb-20 min-h-screen">
           <div className="main-container text-center">
             <h1 className="text-3xl font-bold text-[hsl(var(--color-text))] mb-4">
@@ -243,7 +243,7 @@ export default function InsightDetailClient({ presentation = {}, slug, insightOv
   }
 
   return (
-    <PageWrapper>
+    <PageWrapper backlinkSection={backlinkSection}>
       {/* Hero Section */}
       <section className="pt-32 pb-8 sm:pt-36 sm:pb-12 bg-gradient-to-b from-[hsl(var(--bg-alt))] to-white">
         <div className="main-container">
@@ -289,7 +289,8 @@ export default function InsightDetailClient({ presentation = {}, slug, insightOv
           <AnimatedSection>
             <div className="relative aspect-[21/9] rounded-2xl overflow-hidden">
               <EditorialImage
-                src={article.image}
+                src={article.image || ''}
+                cmsOnly={!article.image}
                 alt={article.title}
                 fill
                 className="w-full h-full object-cover"

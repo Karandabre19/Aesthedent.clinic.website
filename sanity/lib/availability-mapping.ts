@@ -3,13 +3,18 @@ import { availabilityDays, type ClinicAvailability } from '../../lib/clinic-avai
 
 const text = z.string().trim().min(1).max(500).refine(value => !/[<>]/.test(value), 'Use plain text.')
 const time = z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Use 24-hour HH:MM, for example 18:00.').nullish()
+// Closed rows keep their saved inputs in Studio, but hidden times have no
+// operational meaning and must not block confirmation or publication.
+const weeklyDay = z.preprocess(value => value && typeof value === 'object' && 'closed' in value && value.closed === true
+  ? { ...value, open: null, close: null } : value,
+  z.object({ day: z.enum(availabilityDays), closed: z.boolean(), open: time, close: time }))
 const date = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(value => {
   const parsed = new Date(value + 'T00:00:00Z')
   return Number.isFinite(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value
 }, 'Use a real calendar date.')
 const content = z.object({
   timezone: z.literal('Asia/Kolkata'),
-  weeklyHours: z.array(z.object({ day: z.enum(availabilityDays), closed: z.boolean(), open: time, close: time })).length(7),
+  weeklyHours: z.array(weeklyDay).length(7),
   closures: z.array(z.object({ date, reason: text.refine(value => value.length <= 160, 'Keep the public closure name within 160 characters.') })).nullish().transform(rows => rows ?? []),
   confirmationNote: text,
 })

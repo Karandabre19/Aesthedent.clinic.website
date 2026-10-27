@@ -23,6 +23,18 @@ const { insightsQuery } = require('../sanity/lib/insight-query.ts');
 const schema = createSchema({ name: 'editorial-test', types: schemaTypes });
 const field = (name, key) => schema.get(name).fields.find(f => f.name === key).type;
 const rules = value => value.validation.flatMap(r => r._rules);
+
+test('Doctor portrait removal clears the native retained metadata and keeps replacement and read-only behavior', () => {
+  const { DoctorPortraitInput } = require('../sanity/schemaTypes/editorial-fields.ts');
+  const { PatchEvent, unset, set } = require('sanity');
+  let patches, change;
+  const props = { onChange: event => { patches = PatchEvent.from(event).patches; }, renderDefault: input => { change = input.onChange; return null; } };
+  DoctorPortraitInput(props); change([unset(['asset']), unset(['crop'])]);
+  assert.deepEqual(patches.map(patch => ({ type: patch.type, path: patch.path })), [{ type: 'unset', path: [] }]);
+  change(set({ _ref: 'new' }, ['asset'])); assert.equal(patches[0].value._ref, 'new');
+  patches = undefined; DoctorPortraitInput({ ...props, readOnly: true }); change(unset(['asset']));
+  assert.equal(patches, undefined);
+});
 const asset = (width = 12000, height = 8000) => ({ _id: `image-abc123-${width}x${height}-jpg`, _type: 'sanity.imageAsset', url: `https://cdn.sanity.io/images/ae09qs5c/production/abc123-${width}x${height}.jpg`, mimeType: 'image/jpeg', metadata: { dimensions: { width, height } } });
 const media = () => ({ alt: 'Local image fixture', asset: asset(), crop: { top: 0, bottom: 0, left: 0, right: 0 }, hotspot: { x: 0.5, y: 0.5, width: 0.4, height: 0.4 } });
 function queryFrom(path, name) {
@@ -96,13 +108,21 @@ test('media validation accepts high-resolution originals, honors crop/hotspot an
   assert.ok(imageFromRecord({ ...media(), alt: null }, true), 'portrait alt derives from the fixed named clinician');
 });
 
-test('every image control has guidance and warning-only dimension/format checks, without upload size caps', async () => {
+test('image controls retain guidance while Doctor photos require a usable selected asset', async () => {
   assert.deepEqual(schema._validation, []);
   const imageTypes = [];
   function visit(value) { for (const f of value.fields ?? []) { if (f.type.name === 'image') imageTypes.push(f.type); else visit(f.type); } }
   for (const type of schemaTypes) visit(schema.get(type.name));
   assert.equal(imageTypes.length, 24);
   for (const value of imageTypes) {
+    if (value === field('doctor', 'portrait')) {
+      assert.equal(value.options.hotspot, true);
+      const validator = value.validation.find(r => r._level !== 'warning' && r._rules.some(rule => rule.flag === 'custom'))._rules.find(rule => rule.flag === 'custom').constraint;
+      assert.equal(await validator({ asset: { _ref: asset()._id } }, { getClient: () => ({ fetch: async () => asset() }) }), true);
+      const missing = await validator({ asset: { _ref: 'missing' } }, { getClient: () => ({ fetch: async () => null }) });
+      assert.deepEqual(missing.paths, [['asset']]); assert.match(missing.message, /unavailable/);
+      continue;
+    }
     assert.match(value.description, /Recommended .*px/); assert.match(value.description, /crop|cropping/); assert.match(value.description, /Original uploads are preserved/);
     assert.equal(value.options.hotspot, true); assert.equal(value.options.maxUploadSize, undefined);
     const warning = value.validation.find(r => r._level === 'warning')._rules.find(r => r.flag === 'custom').constraint;
@@ -171,6 +191,14 @@ test('a failed CMS image restores the original image and alternative text in the
     assert.equal(dom.window.document.querySelector('img').getAttribute('src'), '/original.jpg');
     assert.equal(dom.window.document.querySelector('img').alt, 'Original description');
     assert.equal(dom.window.document.querySelector('img').getAttribute('width'), null, 'fallback keeps the original static-import props');
+    await React.act(async () => root.render(React.createElement(exports.default, { src: '/original.jpg', alt: 'Doctor name', imageOverride: imageFromRecord(media(), true), cropWidth: 600, cropHeight: 750, cmsOnly: true })));
+    await React.act(async () => dom.window.document.querySelector('img').dispatchEvent(new dom.window.Event('error')));
+    assert.equal(Boolean(dom.window.document.querySelector('img')), false, 'a failed CMS-only portrait cannot resurrect the local photograph');
+    const replacement = imageFromRecord({ ...media(), asset: { ...asset(), _id: asset()._id.replace('abc123', 'replacement'), url: asset().url.replace('abc123', 'replacement') } }, true);
+    await React.act(async () => root.render(React.createElement(exports.default, { src: '', alt: 'Doctor name', imageOverride: replacement, cropWidth: 600, cropHeight: 750, cmsOnly: true })));
+    assert.match(dom.window.document.querySelector('img').src, /replacement/);
+    await React.act(async () => root.render(React.createElement(exports.default, { src: '', alt: 'Doctor name', cropWidth: 600, cropHeight: 750, cmsOnly: true })));
+    assert.equal(Boolean(dom.window.document.querySelector('img')), false, 'removing the photo preserves an empty reserved area');
   } finally {
     await React.act(async () => root.unmount()); dom.window.close();
     globalThis.window = previous.window; globalThis.document = previous.document; globalThis.IS_REACT_ACT_ENVIRONMENT = previous.act;

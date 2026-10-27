@@ -12,7 +12,8 @@ import { MapPin, Clock, Phone, MessageCircle, Mail, Instagram } from 'lucide-rea
 export default function Footer() {
   const availability = useClinicAvailability();
   const navigation = useNavigation();
-  const footerLinks = { services: navigation.footerServices.filter(item => item.visible).map(item => ({ href: item.route, label: item.label })), quickLinks: navigation.footerQuick.filter(item => item.visible).map(item => ({ href: item.route, label: item.label })) };
+  const footerItem = item => ({ href: item.route, label: item.label, opensInNewTab: /^https?:\/\//.test(item.route ?? '') && item.opensInNewTab === true });
+  const footerLinks = { services: navigation.footerServices.filter(item => item.visible).map(footerItem), quickLinks: navigation.footerQuick.filter(item => item.visible).map(footerItem), legal: (navigation.legalLinks ?? []).filter(item => item.visible).map(footerItem) };
   const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
   const phoneNumber = '+919309816336';
 
@@ -81,6 +82,8 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link 
                     href={link.href}
+                    target={link.opensInNewTab ? '_blank' : undefined}
+                    rel={link.opensInNewTab ? 'noopener noreferrer' : undefined}
                     className="inline-flex min-h-[44px] items-center py-2 text-sm font-normal text-white/90 transition-all duration-300 hover:translate-x-1 hover:text-[hsl(var(--color-accent))]"
                   >
                     {link.label}
@@ -98,6 +101,8 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link 
                     href={link.href}
+                    target={link.opensInNewTab ? '_blank' : undefined}
+                    rel={link.opensInNewTab ? 'noopener noreferrer' : undefined}
                     className="inline-flex min-h-[44px] items-center py-2 text-sm font-normal text-white/90 transition-all duration-300 hover:translate-x-1 hover:text-[hsl(var(--color-accent))]"
                   >
                     {link.label}
@@ -151,21 +156,11 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-white/80 text-sm font-normal">
-            © {new Date().getFullYear()} Aesthedent Dental Clinic. All rights reserved.
+            {navigation.footer.copyright.replaceAll('{year}', String(new Date().getFullYear()))}
           </p>
-          {/* The "Privacy Policy" and "Terms of Service" links lived here and
-              pointed at /privacy and /terms, neither of which exists. Because
-              this footer renders on all 22 pages, that was 44 live links into
-              404s -removed 2026-08-08, immediately before submitting the site
-              for indexing, so Googlebot's first real crawl does not spend budget
-              on dead ends.
-
-              The whole wrapper div went with them rather than being left empty:
-              an empty flex child would hold layout space for nothing.
-
-              RE-ADD BOTH once the pages exist with real, reviewed legal copy.
-              See audit/NEEDS-INPUT.md T3. Do not replace them with placeholder
-              pages -thin legal content is its own problem. */}
+          {footerLinks.legal.length > 0 && <div className="flex flex-wrap gap-6">
+            {footerLinks.legal.map(link => <Link key={link.href} href={link.href} target={link.opensInNewTab ? '_blank' : undefined} rel={link.opensInNewTab ? 'noopener noreferrer' : undefined} className="text-sm text-white/80 transition-colors hover:text-[hsl(var(--color-accent))]">{link.label}</Link>)}
+          </div>}
         </div>
       </div>
     </footer>

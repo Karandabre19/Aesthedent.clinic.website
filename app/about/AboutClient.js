@@ -19,10 +19,10 @@ import clinicWidePicture from "../../public/clinic/clinic-wide.jpeg";
 
 const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
 
-export default function AboutPage({ editorial }) {
+export default function AboutPage({ backlinkSection, editorial }) {
   const availability = useClinicAvailability();
   return (
-    <PageWrapper>
+    <PageWrapper backlinkSection={backlinkSection}>
       {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-to-b from-[hsl(var(--color-primary-light))] via-[hsl(var(--background))] to-[hsl(var(--color-bg-alt))] pt-32 pb-16">
         <div className="main-container">

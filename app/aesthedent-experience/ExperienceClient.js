@@ -104,7 +104,7 @@ function AdvancedPromiseCard({ num, title, desc, icon: Icon, isLast }) {
   );
 }
 
-export default function ExperiencePage({ services = fallbackServices, editorial, reviewCards }) {
+export default function ExperiencePage({ backlinkSection, services = fallbackServices, editorial, reviewCards }) {
   const heroRef = useRef(null);
   const specialistVideoRef = useRef(null);
   const hasSpecialistVideoStartedRef = useRef(false);
@@ -390,7 +390,7 @@ export default function ExperiencePage({ services = fallbackServices, editorial,
   );
 
   return (
-    <PageWrapper>
+    <PageWrapper backlinkSection={backlinkSection}>
       {/* SECTION 1: Treatment Portfolio - Immediate Visibility, All Services, No Carousel */}
       <section
         id="services-grid-section"

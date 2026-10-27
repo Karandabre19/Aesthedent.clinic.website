@@ -247,7 +247,7 @@ function HeroWord({ children, className = '' }) {
   );
 }
 
-export default function HomePage({ insightCards, services = fallbackServices, doctorNarratives = [], editorial, reviewCards }) {
+export default function HomePage({ backlinkSection, insightCards, services = fallbackServices, doctorNarratives = [], editorial, reviewCards }) {
   const availability = useClinicAvailability();
   // GSAP's hero timeline already guards this (see useGSAP below), but the two
   // Framer loops here run forever and were not covered: an endlessly pulsing
@@ -505,7 +505,7 @@ export default function HomePage({ insightCards, services = fallbackServices, do
   }, { scope: heroRef });
 
   return (
-    <PageWrapper>
+    <PageWrapper backlinkSection={backlinkSection}>
       {/* Hero Section - Full Screen Cinematic */}
       {/* Height is capped rather than h-screen on purpose. object-cover scales
           by whichever axis needs more, so a hero TALLER than the art's aspect
@@ -701,15 +701,15 @@ export default function HomePage({ insightCards, services = fallbackServices, do
           The generous vertical padding IS the design here. This line is the
           clinic's promise in the language many of its patients think in;
           crowding it with body copy is what made it read as a subheading. */}
-      <section className="relative z-20 bg-gradient-to-b from-[hsl(var(--background))] to-white section-y-airy">
+      {editorial?.brandStatement && <section className="relative z-20 bg-gradient-to-b from-[hsl(var(--background))] to-white section-y-airy">
         <div className="main-container">
           <AnimatedSection>
             <h2 className="mx-auto max-w-4xl text-center font-bold leading-[1.35] text-[hsl(var(--color-primary))] text-[clamp(1.75rem,1.2rem+2.6vw,3.75rem)]">
-              दातों के साथ भी, दातों के बाद भी
+              {editorial.brandStatement}
             </h2>
           </AnimatedSection>
         </div>
-      </section>
+      </section>}
 
 
       {/* Services Section -WHITE ground, gold heading.
@@ -977,12 +977,7 @@ export default function HomePage({ insightCards, services = fallbackServices, do
             </p>
           </AnimatedSection>
 
-          {/* Phase 4B: credentials replace adjectives. "Specializes in implants"
-              and "Expert in painless extractions" were unsourced descriptions;
-              an MDS from a named university is a fact a patient can check.
-              Names, roles and credentials all come from lib/clinic.ts.
-              NOTE: Dr. Aishwarya is BDS / general and family dentist - NOT a
-              specialist. Nothing here may imply otherwise. */}
+          {/* Doctor cards use the CMS homepage summary; full details are on /doctor. */}
           <div className="grid md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
             {[
               {
@@ -990,8 +985,6 @@ export default function HomePage({ insightCards, services = fallbackServices, do
                 name: DOCTORS.sahil.name,
                 tag: "Lead Dentist & Founder",
                 role: "Specialist Prosthodontist, Founder & Co-Owner",
-                credential: DOCTORS.sahil.credential,
-                image: "/assets/doctor-male.jpeg",
                 desc: "Specializes in implants and restorative dentistry with a focus on patient education and comfort.",
               },
               {
@@ -1003,25 +996,23 @@ export default function HomePage({ insightCards, services = fallbackServices, do
                 // makes the clinic prosthodontist-led, and overclaiming her
                 // qualification is a regulatory problem, not just a trust one.
                 role: "General & Family Dentist, Co-Owner",
-                credential: DOCTORS.aishwarya.credential,
-                image: "/assets/doctor-female.jpeg",
                 desc: "Advanced training in endodontics and pregnancy dentistry. Known for her calm, thorough approach.",
               },
             ].map((doctor, i) => (
               <AnimatedSection key={i} delay={i * 0.15}>
                 {/* Cards now link to /doctor - an unindexed page that had no
                     in-body inbound link from the homepage at all. */}
-                <Link href="/doctor" aria-label={`${doctor.name} - ${doctor.credential}`}>
+                <Link href="/doctor" aria-label={doctor.name}>
                 <div className="card-elevated group rounded-xl sm:rounded-2xl bg-white overflow-hidden">
                   {/* Image Container */}
                   <div className="relative overflow-hidden">
                     <div className="aspect-[4/5] overflow-hidden">
                       <EditorialImage
-                        src={doctor.image}
+                        src=""
                         alt={doctor.name}
                         width={600}
                         height={750}
-                        className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105" imageOverride={doctorNarratives.find(narrative => narrative.slug === doctor.personKey)?.portrait} cropWidth={600} cropHeight={750}
+                        className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105" imageOverride={doctorNarratives.find(narrative => narrative.slug === doctor.personKey)?.portrait} cropWidth={600} cropHeight={750} cmsOnly
                       />
                     </div>
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/8 via-transparent to-[hsl(var(--primary))]/15" />
@@ -1056,11 +1047,6 @@ export default function HomePage({ insightCards, services = fallbackServices, do
                           returns at sm: where the panel has the width for it. */}
                       <p className="mb-2 sm:mb-3 inline-flex rounded-full bg-[hsl(var(--color-primary))] px-2.5 py-1 text-[11px] font-semibold uppercase leading-snug tracking-[0.1em] text-[hsl(var(--color-accent))] sm:px-3.5 sm:py-1.5 sm:text-sm sm:tracking-[0.22em]">
                         {doctor.role}
-                      </p>
-                      {/* The qualification, verbatim. This is the proof the
-                          word "specialist" rests on. */}
-                      <p className="mb-1.5 text-xs font-semibold text-[hsl(var(--color-primary))] sm:mb-2 sm:text-sm">
-                        {doctor.credential}
                       </p>
                       <p className="text-[13px] leading-6 text-[hsl(var(--color-text-muted))] sm:text-sm sm:leading-relaxed">
                         {doctorNarratives.find((item) => item.slug === doctor.personKey)?.homeSummary ?? doctor.desc}

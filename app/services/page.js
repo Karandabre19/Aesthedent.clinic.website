@@ -1,3 +1,4 @@
+import { BacklinkReferences } from '@/components/seo/BacklinkReferences';
 import { getPageSeo } from '@/sanity/lib/seo';
 import { getPresentationPage } from '@/sanity/lib/presentation-pages';
 import { getServices } from '@/sanity/lib/services';
@@ -25,7 +26,7 @@ export default async function Page() {
           { name: 'Services', path: '/services' },
         ])}
       />}</>
-      <ServicesClient presentation={await getPresentationPage('servicesPage')} services={await getServices()} />
+      <ServicesClient backlinkSection={<BacklinkReferences entries={seoState.backlinks} />} presentation={await getPresentationPage('servicesPage')} services={await getServices()} />
     </>
   );
 }

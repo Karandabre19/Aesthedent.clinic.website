@@ -12,8 +12,10 @@ export async function readPublishedContent<T>(query: string, params: Record<stri
     const result = resolve(input);
     if (result.status === "invalid" || result.status === "ambiguous") console.error(`[${tag}] Invalid or ambiguous published content; retaining static content.`);
     return result.value;
-  } catch {
-    console.error(`[${tag}] CMS read failed; retaining static content.`);
+  } catch (error) {
+    // Name/status only: Sanity error messages can echo query text, never config values.
+    const reason = error instanceof Error ? `${error.name}${"statusCode" in error ? ` ${String(error.statusCode)}` : ""}` : "unknown error";
+    console.error(`[${tag}] CMS read failed (${reason}); retaining static content.`);
     return resolve([]).value;
   }
 }

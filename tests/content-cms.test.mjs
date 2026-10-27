@@ -14,6 +14,30 @@ const { resolveDoctors, doctorDocument, homeContent, aboutContent, experienceCon
 const { resolveTestimonials, testimonialDocument, reviewSource } = require('../sanity/lib/testimonial-mapping.ts');
 const { getTestimonials } = require('../lib/testimonials.js');
 const schema = createSchema({ name: 'content-test', types: schemaTypes });
+
+test('Homepage brand statement is an optional single-line CMS marketing field', async () => {
+  const home = schema.get('homePage'), field = home.fields.find(item => item.name === 'brandStatement');
+  assert.deepEqual(schema._validation, []);
+  assert.equal(field.type.title, 'Marketing heading');
+  assert.equal(field.type.name, 'string');
+  assert.ok(home.groups.some(group => group.name === 'brandStatement' && group.title === 'Brand statement'));
+  assert.ok(field.type.description.includes('दातों के साथ भी, दातों के बाद भी'));
+  assert.ok(field.type.description.includes('Publish Homepage'));
+  assert.equal(schemaTypes.find(type => type.name === 'homePage').fields.find(item => item.name === 'brandStatement').group, 'brandStatement');
+  assert.equal(schemaTypes.find(type => type.name === 'homePage').initialValue.brandStatement, undefined);
+  const validate = async value => (await Promise.all(field.type.validation.map(rule => rule.validate(value, { document: { _type: 'homePage' }, path: ['brandStatement'], type: field.type, schema, i18n: { t: key => key } })))).flat();
+  for (const value of [undefined, '', 'दातों के साथ भी, दातों के बाद भी', 'a'.repeat(200)]) assert.deepEqual(await validate(value), []);
+  for (const value of ['a'.repeat(201), 'First\nSecond', 'First\rSecond', '<b>Heading</b>']) assert.ok((await validate(value)).length > 0);
+});
+
+test('the Home query and reader preserve a replaced or cleared CMS brand statement', async () => {
+  for (const brandStatement of ['A replacement heading from the CMS', 'दातों के साथ भी, दातों के बाद भी', '']) {
+    const doc = { _id: 'homePage', _type: 'homePage', ...homeFixture, brandStatement };
+    const result = await (await evaluate(parse(queryFrom('sanity/lib/pages.ts', 'homeQuery')), { dataset: [doc] })).get();
+    assert.equal(resolvePage(result, 'homePage', homeContent).value.brandStatement, brandStatement);
+  }
+  assert(!readFileSync(new URL('../app/HomeClient.js', import.meta.url), 'utf8').includes('दातों के साथ भी, दातों के बाद भी'));
+});
 const serviceFixtures = () => services.map((s, i) => ({ ...s, _id: `fixture-${i}` }));
 
 test('all eight actual treatments round-trip through validation without changing sections or assets', () => {
@@ -70,11 +94,12 @@ const experienceFixture = {
   approach: arrayFromSource('app/aesthedent-experience/ExperienceClient.js', 'Evidence-Based Planning', ['title', 'desc']),
   faqs: require('../lib/landing-page-content.js').landingPageContent.faqs,
 };
-test('actual doctor narratives and page arrays validate without exposing credentials or clinic facts', () => {
+test('doctor narratives allow managed qualifications while identity and other clinic facts stay controlled', () => {
   doctorFixtures.forEach(doc => assert.equal(doctorDocument.safeParse(doc).success, true));
   assert.equal(resolveDoctors(doctorFixtures).value.length, 2);
   const fields = schema.get('doctor').fields.map(f => f.name);
-  for (const field of ['name', 'qualifications', 'registrationNumber', 'role', 'image']) assert.equal(fields.includes(field), false);
+  assert.equal(fields.includes('qualifications'), true);
+  for (const field of ['name', 'registrationNumber', 'role', 'image']) assert.equal(fields.includes(field), false);
   for (const [name, contract, content] of [['homePage', homeContent, homeFixture], ['aboutPage', aboutContent, aboutFixture], ['experiencePage', experienceContent, experienceFixture]]) {
     assert.equal(contract.safeParse(content).success, true, name);
     assert.deepEqual(resolvePage([{ _id: name, content }], name, contract).value, content);
@@ -88,9 +113,21 @@ test('doctor duplicates/drafts/unknown identities and invalid or reordered page 
   assert.equal(experienceContent.safeParse({ ...experienceFixture, faqs: [] }).success, false);
 });
 function queryFrom(path, name) {
-  const source = ts.createSourceFile(path, readFileSync(new URL('../' + path, import.meta.url), 'utf8'), ts.ScriptTarget.Latest, true);
-  let value; function visit(n) { if (ts.isVariableDeclaration(n) && n.name.getText(source) === name) value = n.initializer.arguments[0].text; ts.forEachChild(n, visit); } visit(source); assert.ok(value, name); return value;
+  const filename = new URL('../' + path, import.meta.url), localRequire = createRequire(filename), exports = {};
+  const source = ts.transpileModule(readFileSync(filename, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, esModuleInterop: true } }).outputText;
+  new Function('require', 'exports', source)(id => id === 'server-only' || id === './content-reader' ? {} : localRequire(id), exports);
+  assert.equal(typeof exports[name], 'string'); return exports[name];
 }
+
+test('new treatments beyond the former thirty-record ceiling reach the actual query and listing mapper', async () => {
+  const base = serviceFixtures()[0];
+  const dataset = Array.from({ length: 31 }, (_, index) => ({ ...base, _id: `local-treatment-${index}`, _type: 'service', slug: { current: `local-treatment-${index}` } }));
+  const input = await (await evaluate(parse(queryFrom('sanity/lib/services.ts', 'servicesQuery')), { dataset })).get();
+  assert.equal(input.length, 31);
+  const result = resolveServices(input);
+  assert.equal(result.status, 'sanity'); assert(result.value.some(service => service.slug === 'local-treatment-30'));
+  assert.equal(schema.get('service').fields.find(field => field.name === 'slug').type.options.source, 'title');
+});
 test('actual bounded GROQ excludes drafts/releases and retains structured treatment/page content', async () => {
   const cases = [
     ['sanity/lib/services.ts', 'servicesQuery', { ...serviceFixtures()[0], slug: { current: services[0].slug }, _type: 'service' }, result => assert.equal(resolveServices(result).status, 'sanity')],
@@ -186,7 +223,10 @@ test('singleton templates remain available for initialization but cannot create 
   const exports = {};
   new Function('require', 'exports', source)(id => id === './sanity/env' ? { ...env, requireSanityEnvironment: () => ({ projectId: 'ae09qs5c', dataset: 'production' }) } : id === './sanity/schemaTypes' ? { schemaTypes } : id === './sanity/lib/page-mapping' ? require('../sanity/lib/page-mapping.ts') : createRequire(new URL('../sanity.config.ts', import.meta.url))(id), exports);
   const config = exports.default;
-  assert.equal(config.schema.templates, undefined, 'default templates must not be removed before Structure resolves them');
+  const defaults = require('sanity').defaultTemplatesForSchema(schema);
+  const templates = config.schema.templates(defaults);
+  for (const template of defaults) assert(templates.some(item => item.id === template.id), `default template retained: ${template.id}`);
+  for (const key of ['sahil', 'aishwarya']) assert(templates.some(template => template.id === `doctor-${key}`));
   const options = ['homePage', 'aboutPage', 'experiencePage', 'insight', 'service', 'doctor', 'testimonial'].map(templateId => ({ templateId }));
   assert.deepEqual(config.document.newDocumentOptions(options).map(o => o.templateId), ['insight', 'service', 'doctor', 'testimonial']);
   const actions = [{ action: 'duplicate' }, { action: 'publish' }];

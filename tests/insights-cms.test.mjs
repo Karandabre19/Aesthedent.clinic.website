@@ -138,10 +138,10 @@ test('valid partial coverage updates matching cards and metadata without changin
   assert.equal(resolveInsightOverrides([next], insights).overrides[0].metaTitle, next.title);
 });
 
-test('malformed, ambiguous, draft, release and unknown-route documents retain all fallback content', () => {
+test('malformed, ambiguous, draft, release and unsafe-route documents retain all fallback content', () => {
   const empty = fixture(); empty.body = [];
   const invalidDate = fixture(); invalidDate.date = '2025-02-30';
-  for (const input of [null, {}, [empty], [invalidDate], [fixture(), fixture()], [{ ...fixture(), _id: 'drafts.hidden' }], [{ ...fixture(), _id: 'versions.release.hidden' }], [{ ...fixture(), slug: 'new-route' }]]) {
+  for (const input of [null, {}, [empty], [invalidDate], [fixture(), fixture()], [{ ...fixture(), _id: 'drafts.hidden' }], [{ ...fixture(), _id: 'versions.release.hidden' }], [{ ...fixture(), slug: '../unsafe-route' }]]) {
     assert.deepEqual(resolveInsightOverrides(input, insights).overrides, []);
   }
   assert.equal(resolveInsightOverrides([fixture(), fixture()], insights).status, 'ambiguous');
@@ -149,9 +149,48 @@ test('malformed, ambiguous, draft, release and unknown-route documents retain al
 
 test('conflicting featured flags fall back rather than silently choosing different featured cards', () => {
   const next = fixture(insights[1].slug); next.featured = true;
-  assert.equal(resolveInsightOverrides([next], insights).status, 'ambiguous');
+  const result = resolveInsightOverrides([next], insights);
+  assert.equal(result.status, 'sanity');
+  assert.deepEqual(applyInsightOverrides(insights, result.overrides).filter(item => item.featured).map(item => item.slug), [next.slug]);
+  assert.equal(resolveInsightOverrides([fixture(), next], insights).status, 'ambiguous');
   const first = fixture(); first.featured = false;
   assert.equal(resolveInsightOverrides([first, next], insights).status, 'sanity');
+});
+
+test('the actual listing renderer honours the CMS Featured choice and an explicitly empty selection', () => {
+  const filename = new URL('../app/insights/InsightsClient.js', import.meta.url), localRequire = createRequire(filename), exports = {};
+  const code = ts.transpileModule(readFileSync(filename, 'utf8'), { fileName: 'InsightsClient.jsx', compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, esModuleInterop: true, allowJs: true } }).outputText;
+  const wrap = ({ children }) => createElement('div', null, children);
+  const dependencies = {
+    '@/components/insights/EditorialImage': ({ src, alt }) => createElement('img', { src, alt }),
+    '@/components/layout/PageWrapper': wrap, '@/components/ui/AnimatedSection': wrap,
+    '@/sanity/lib/insight-overrides': { applyInsightOverrides },
+  };
+  new Function('require', 'exports', code)(id => dependencies[id] ?? localRequire(id), exports);
+  for (const featured of [true, false]) {
+    const next = { ...fixture(insights[1].slug), featured };
+    const overrides = resolveInsightOverrides([next], insights).overrides;
+    const dom = new JSDOM(renderToStaticMarkup(createElement(exports.default, { insightOverrides: overrides }))).window.document;
+    const badge = [...dom.querySelectorAll('span')].find(node => node.textContent.trim() === 'Featured');
+    assert.equal(Boolean(badge), featured);
+    if (badge) assert.equal(badge.closest('a').getAttribute('href'), '/insights/' + next.slug);
+    assert.equal(dom.querySelectorAll('article').length, insights.length);
+  }
+});
+
+test('the actual detail renderer displays a new CMS article without a built-in HTML body or cover', () => {
+  const filename = new URL('../app/insights/[slug]/InsightDetailClient.js', import.meta.url), localRequire = createRequire(filename), exports = {};
+  const code = ts.transpileModule(readFileSync(filename, 'utf8'), { fileName: 'InsightDetailClient.jsx', compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, esModuleInterop: true, allowJs: true } }).outputText;
+  const wrap = ({ children }) => createElement('div', null, children);
+  const dependencies = { '@/components/insights/EditorialImage': require('../components/insights/EditorialImage.tsx').default, '@/components/insights/InsightBody': InsightBody,
+    '@/components/layout/PageWrapper': wrap, '@/components/ui/AnimatedSection': wrap, '@/components/sections/InsightsSection': () => null };
+  new Function('require', 'exports', code)(id => dependencies[id] ?? localRequire(id), exports);
+  const raw = { ...fixture(), slug: 'local-new-guide', title: 'Local new guide fixture', featured: false };
+  const overrides = resolveInsightOverrides([raw], insights).overrides;
+  const doc = new JSDOM(renderToStaticMarkup(createElement(exports.default, { slug: raw.slug, insightOverrides: overrides, relatedInsights: applyInsightOverrides(insights, overrides) }))).window.document;
+  assert.equal(doc.querySelector('h1').textContent, raw.title);
+  assert.equal(doc.querySelectorAll('.insight-body h2').length > 0 || doc.querySelectorAll('article h2').length > 0, true);
+  assert.equal(Boolean(doc.querySelector('img')), false, 'an optional cover is not replaced with an unrelated photo');
 });
 
 test('unsafe links, unknown rich types, missing mark targets and duplicate keys fail closed', () => {
@@ -189,13 +228,13 @@ test('configuration validates public identifiers and API dates without requiring
   for (const input of [{}, { projectId: 'bad', dataset: 'production' }, { projectId: 'ae09qs5c', dataset: 'production', apiVersion: '2025-02-30' }]) assert.equal(sanityEnvironment.safeParse(input).success, false);
 });
 
-test('featured peer query excludes the current document, drafts, releases and unrelated routes', async () => {
+test('featured peer query excludes the current document, drafts and releases while including new article URLs', async () => {
   const doc = fixture(); doc.slug = { current: doc.slug };
   const dataset = [doc, { ...doc, _id: 'drafts.hidden' }, { ...doc, _id: 'versions.release.hidden' }, { ...doc, _id: 'other-route', slug: { current: 'unknown' } }, { ...doc, _id: 'different-type', _type: 'doctor' }];
   const params = { slugs: insights.map((item) => item.slug), id: doc._id };
-  assert.deepEqual(await (await evaluate(parse(insightFeaturedQuery), { dataset, params })).get(), []);
+  assert.deepEqual(await (await evaluate(parse(insightFeaturedQuery), { dataset, params })).get(), [{ slug: 'unknown', featured: doc.featured }]);
   params.id = 'another-document';
-  assert.deepEqual(await (await evaluate(parse(insightFeaturedQuery), { dataset, params })).get(), [{ slug: doc.slug.current, featured: doc.featured }]);
+  assert.deepEqual(await (await evaluate(parse(insightFeaturedQuery), { dataset, params })).get(), [{ slug: doc.slug.current, featured: doc.featured }, { slug: 'unknown', featured: doc.featured }]);
 });
 
 test('actual server reader forwards one cache policy and distinguishes missing, invalid and failed reads safely', async () => {
@@ -210,7 +249,7 @@ test('actual server reader forwards one cache policy and distinguishes missing, 
   }
   const names = ['NEXT_PUBLIC_SANITY_PROJECT_ID', 'NEXT_PUBLIC_SANITY_DATASET'];
   const previous = names.map((name) => process.env[name]), originalError = console.error;
-  let response = [], fail = false, calls = 0, configuration;
+  let response = [], failure, calls = 0, configuration;
   const messages = [];
   console.error = (message) => messages.push(message);
   try {
@@ -222,14 +261,14 @@ test('actual server reader forwards one cache policy and distinguishes missing, 
         assert.equal(query, insightsQuery);
         assert.deepEqual(params.slugs, insights.map((item) => item.slug));
         assert.deepEqual(options, { cache: 'force-cache', next: { revalidate: 60, tags: ['insights'] } });
-        if (fail) throw new Error('upstream diagnostic must remain private');
+        if (failure) throw failure;
         return response;
       } };
     } } });
     const { getInsightOverrides } = execute('sanity/lib/insights.ts', { './client': client });
     assert.deepEqual(await getInsightOverrides(), []); assert.deepEqual(messages, []);
     assert.equal(configuration.perspective, 'published'); assert.equal(configuration.useCdn, false);
-    assert.equal(configuration.timeout, 5000); assert.equal(configuration.maxRetries, 0);
+    assert.equal(configuration.timeout, 5000); assert.equal(configuration.maxRetries, 2);
     response = [fixture()]; assert.equal((await getInsightOverrides()).length, 0, 'unreviewed legacy content is not an approved CMS override');
     const { reviewChecks, reviewDigest } = require('../sanity/lib/insight-review.ts');
     const ready = { ...fixture(), editorialStatus: 'ready', sources: [{ title: 'Local test evidence only', url: 'https://example.org/local-test' }], review: { clinicianKey: 'sahil', approvalReference: 'Local fixture, never a remote approval', reviewedAt: '2026-10-16T10:00:00Z', recordedAt: '2026-10-16T11:00:00Z', recordedBy: 'local-test', ...Object.fromEntries(Object.keys(reviewChecks).map(key => [key, true])) } };
@@ -237,8 +276,19 @@ test('actual server reader forwards one cache policy and distinguishes missing, 
     const approved = await getInsightOverrides(); assert.equal(approved.length, 1); assert.equal(approved[0].reviewer.name, 'Dr. Sahil Wathodkar'); assert.equal('review' in approved[0], false);
     response = [{ ...fixture(), body: [] }]; assert.deepEqual(await getInsightOverrides(), []);
     assert.match(messages.at(-1), /Invalid or ambiguous/);
-    fail = true; assert.deepEqual(await getInsightOverrides(), []);
+    failure = new Error('upstream diagnostic must remain private'); assert.deepEqual(await getInsightOverrides(), []);
     assert.match(messages.at(-1), /CMS read failed/); assert.doesNotMatch(messages.join(' '), /upstream diagnostic/);
+    failure = Object.assign(new Error('private SDK response'), { name: 'ServerError', statusCode: 503 });
+    assert.deepEqual(await getInsightOverrides(), []);
+    assert.match(messages.at(-1), /request, ServerError, HTTP 503/);
+    failure = new Error('private request URL', { cause: Object.assign(new Error('private connection details'), { code: 'ETIMEDOUT' }) });
+    assert.deepEqual(await getInsightOverrides(), []);
+    assert.match(messages.at(-1), /request, Error, ETIMEDOUT/);
+    assert.doesNotMatch(messages.join(' '), /private SDK|private request|private connection/);
+    failure = undefined; response = [];
+    const failures = messages.length;
+    assert.deepEqual(await getInsightOverrides(), []);
+    assert.equal(messages.length, failures, 'a successful retry with no published articles is not a CMS failure');
     const requests = calls; delete process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
     assert.deepEqual(await getInsightOverrides(), []); assert.equal(calls, requests);
     assert.match(messages.at(-1), /configuration unavailable/);
@@ -249,14 +299,19 @@ test('actual server reader forwards one cache policy and distinguishes missing, 
 });
 
 const schema = createSchema({ name: 'aesthedent-insight-test', types: [insight] });
-test('document errors identify the fields an editor needs to correct', () => {
-  const validate = schema.get('insight').validation.flatMap((rule) => rule._rules).find((rule) => rule.flag === 'custom').constraint;
-  const errors = validate({ ...fixture(), title: ' ', date: '2025-02-30', body: [] });
-  assert.ok(Array.isArray(errors), 'Return field-addressable errors instead of a generic document error');
-  for (const field of ['title', 'date', 'body']) assert.ok(errors.some((error) => error.path?.[0] === field && error.message));
+test('field validation identifies incomplete values without duplicating them at document level', async () => {
+  const doc = { ...fixture(), title: ' ', date: '2025-02-30', body: [] };
+  for (const field of ['title', 'date', 'body']) {
+    const validate = schema.get('insight').fields.find(item => item.name === field).type.validation.flatMap(rule => rule._rules).find(rule => rule.flag === 'custom').constraint;
+    const errors = validate(doc[field]);
+    assert.ok(Array.isArray(errors)); assert.ok(errors.every(error => Array.isArray(error.path) && error.message));
+  }
+  const validate = schema.get('insight').validation.flatMap(rule => rule._rules).find(rule => rule.flag === 'custom').constraint;
+  const cross = await validate(doc);
+  assert.ok(cross.every(issue => !['title', 'date', 'body'].includes(issue.path[0])));
 });
 
-test('Studio prevents a featured conflict before publication and explains the fallback article', async () => {
+test('Studio rejects conflicting CMS Featured choices without counting the hardcoded default', async () => {
   const validate = schema.get('insight').fields.find((field) => field.name === 'featured').type.validation.flatMap((rule) => rule._rules).find((rule) => rule.flag === 'custom')?.constraint;
   assert.equal(typeof validate, 'function', 'Featured must validate the same effective selection as the website');
   const names = ['NEXT_PUBLIC_SANITY_PROJECT_ID', 'NEXT_PUBLIC_SANITY_DATASET'];
@@ -268,22 +323,23 @@ test('Studio prevents a featured conflict before publication and explains the fa
       assert.equal(options.perspective, 'published'); assert.equal(options.useCdn, false);
       return { fetch: async (query, params) => { requested = { query, params }; if (unavailable) throw new Error('unavailable'); return published; } };
     } }) };
-    const conflict = await validate(true, context);
-    assert.match(conflict, new RegExp(insights[0].slug));
-    assert.match(conflict, /publish.*Featured off/i);
+    assert.equal(await validate(true, context), true);
     assert.equal(requested.params.id, 'editorial-fixture');
     assert.equal(await validate(false, context), true);
     published = [{ slug: insights[0].slug, featured: false }];
     assert.equal(await validate(true, context), true);
     assert.equal(resolveInsightOverrides([{ ...fixture(), featured: false }, { ...fixture(insights[1].slug), featured: true }], insights).status, 'sanity');
     published = [{ slug: insights[0].slug, featured: true }];
-    assert.notEqual(await validate(true, context), true);
+    const conflict = await validate(true, context);
+    assert.match(conflict, /turn off Featured.*publish/i);
+    assert.ok(conflict.includes(insights[0].title));
+    assert.ok(!conflict.includes(insights[0].slug));
     published = [{ slug: insights[0].slug, featured: false }, { slug: insights[0].slug, featured: false }];
     assert.match(await validate(true, context), /duplicate/i);
     published = [{ slug: insights[0].slug, featured: 'yes' }];
     assert.match(await validate(true, context), /verify/i);
     unavailable = true;
-    assert.match(await validate(true, context), /retry/i);
+    assert.match(await validate(true, context), /try again/i);
     assert.equal(await validate(false, context), true, 'Unfeaturing remains available to resolve conflicts');
   } finally { names.forEach((name, i) => previous[i] === undefined ? delete process.env[name] : process.env[name] = previous[i]); }
 });
@@ -292,11 +348,11 @@ test('Insight schema retains legacy body content and adds explicit review withou
   assert.deepEqual(schema._validation, []);
   const compiled = schema.get('insight');
   assert.equal(compiled.fields.some((field) => ['reviewStatus', 'language'].includes(field.name)), false);
-  const validate = compiled.validation.flatMap((rule) => rule._rules).find((rule) => rule.flag === 'custom').constraint;
-  assert.equal(validate(fixture()), true);
-  assert.notEqual(validate({ ...fixture(), body: [] }), true);
+  const validate = compiled.fields.find(field => field.name === 'body').type.validation.flatMap(rule => rule._rules).find(rule => rule.flag === 'custom').constraint;
+  assert.equal(validate(fixture().body), true);
+  assert.notEqual(validate([]), true);
   const slug = compiled.fields.find((field) => field.name === 'slug').type.validation.flatMap((rule) => rule._rules).filter((rule) => rule.flag === 'custom').at(-1).constraint;
-  return slug({ current: 'not-an-existing-route' }, {}).then((result) => assert.notEqual(result, true));
+  return slug({ current: 'new-clinic-article' }, {}).then((result) => assert.equal(result, true));
 });
 
 test('actual URL rule preserves published slugs and fails closed on lookup errors', async () => {
@@ -310,6 +366,8 @@ test('actual URL rule preserves published slugs and fails closed on lookup error
     const compiled = schema.get('insight');
     const validate = compiled.fields.find((field) => field.name === 'slug').type.validation.flatMap((rule) => rule._rules).filter((rule) => rule.flag === 'custom').at(-1).constraint;
     const context = { document: { _id: 'drafts.fixture' }, getClient: () => ({ withConfig: () => ({ fetch: async () => insights[0].slug }) }) };
+    assert.match(await validate(undefined, context), /click Generate/);
+    assert.notEqual(await validate({ current: 'new-clinic-article' }, context), true, 'published identifiers remain locked even when new URLs are supported');
     assert.equal(await validate({ current: insights[0].slug }, context), true);
     assert.notEqual(await validate({ current: insights[1].slug }, context), true);
     context.getClient = () => ({ withConfig: () => ({ fetch: async () => { throw new Error('unavailable'); } }) });

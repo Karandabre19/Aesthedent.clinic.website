@@ -76,3 +76,17 @@ export function availabilityJsonLd(schedule: ClinicAvailability) {
 export function availabilityClosuresJsonLd(schedule: ClinicAvailability) {
   return schedule.holidays.map(row => ({ '@type': 'OpeningHoursSpecification', validFrom: row.date, validThrough: row.date, opens: '00:00', closes: '00:00' }))
 }
+
+/** Booking preferences use the same weekly hours as public opening notices. */
+export function appointmentOptions(schedule: ClinicAvailability, preferredDay: string) {
+  const day = availabilityDays.find(day => day === preferredDay.toLowerCase())
+  const row = schedule.weeklyHours.find(row => row.day === day)
+  if (!row?.open || !row.close) return { closed: true, times: [] as string[] }
+  const shortClock = (value: number) => `${Math.floor(value / 60) % 12 || 12}${value % 60 ? ':' + String(value % 60).padStart(2, '0') : ''}`
+  const periods = [{ name: 'Morning', start: 0, end: 13 * 60 }, { name: 'Afternoon', start: 13 * 60, end: 16 * 60 }, { name: 'Evening', start: 16 * 60, end: 24 * 60 }]
+  const times = periods.flatMap(period => {
+    const start = Math.max(minutes(row.open!), period.start), end = Math.min(minutes(row.close!), period.end)
+    return end > start ? [`${period.name} (${shortClock(start)} – ${shortClock(end)})`] : []
+  })
+  return { closed: false, times }
+}

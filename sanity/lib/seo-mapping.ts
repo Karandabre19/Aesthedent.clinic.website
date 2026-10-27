@@ -6,16 +6,20 @@ import { imageFromRecord, type CmsImage } from "./image";
 import { imageUrl } from "./image-url";
 import { SITE_URL } from "../../lib/schema.js";
 import { siteMetadata } from "../../lib/site-metadata";
+import { MAXIMUM_SERVICES } from './service-mapping';
+import { resolveBacklinks, type Backlink } from './backlinks';
 
-const optionalCopy = (maximum: number) => z.preprocess(value => value == null || value === "" ? undefined : value, editorialText.max(maximum).optional());
+const optionalCopy = (maximum: number) => z.preprocess(value => value == null || typeof value === 'string' && !value.trim() ? undefined : value, editorialText.max(maximum).optional());
 export const seoCopy = z.object({
+  backlinks: z.unknown().optional(),
   focusKeyword: optionalCopy(80), secondaryKeywords: z.preprocess(value => value == null ? undefined : value, z.array(editorialText.max(80)).max(8).optional()),
   metaTitle: optionalCopy(180), metaDescription: optionalCopy(600), ogTitle: optionalCopy(180), ogDescription: optionalCopy(600), twitterTitle: optionalCopy(180), twitterDescription: optionalCopy(600),
   canonicalRoute: z.preprocess(value => value == null || value === "" ? undefined : value, z.string().refine(value => publicRoutes.includes(value), "Select an existing Aesthedent route.").optional()),
   index: z.boolean().nullish(), follow: z.boolean().nullish(), visibilityReason: optionalCopy(1000), structuredData: z.boolean().nullish(), faqStructuredData: z.boolean().nullish(), socialImage: z.unknown().optional(),
 }).superRefine((seo, context) => { if ((seo.index === false || seo.follow === false) && !seo.visibilityReason) context.addIssue({ code: "custom", path: ["visibilityReason"], message: "Explain this search-visibility decision before publication." }); });
-export type SeoControls = Omit<z.infer<typeof seoCopy>, "socialImage"> & { socialImage?: CmsImage };
+export type SeoControls = Omit<z.infer<typeof seoCopy>, "socialImage" | "backlinks"> & { socialImage?: CmsImage; backlinks?: readonly Backlink[] };
 export const pageRoutes: Record<string, string> = { homePage: "/", aboutPage: "/about", experiencePage: "/aesthedent-experience", servicesPage: "/services", teamPage: "/doctor", insightsPage: "/insights", contactPage: "/contact", localLandingPage: "/dental-clinic-in-kothrud" };
+export const maximumSeoDocuments = Object.keys(pageRoutes).length + MAXIMUM_SERVICES + 1;
 export function documentRoute(value: unknown): string | undefined {
   if (!value || typeof value !== "object") return undefined;
   const type = Reflect.get(value, "_type"), slug = Reflect.get(value, "slug");
@@ -24,15 +28,15 @@ export function documentRoute(value: unknown): string | undefined {
   const current = typeof slug === "string" ? slug : slug && typeof slug === "object" ? Reflect.get(slug, "current") : undefined;
   const route = typeof current === "string" && ["service", "insight"].includes(type) ? `/${type === "service" ? "services" : "insights"}/${current}` : undefined;
   // Treatments created in the CMS have their own page beyond the fixed route list.
-  const newTreatment = type === "service" && typeof current === "string" && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(current);
-  return route && (publicRoutes.includes(route) || newTreatment) ? route : undefined;
+  const newContent = ["service", "insight"].includes(type) && typeof current === "string" && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(current);
+  return route && (publicRoutes.includes(route) || newContent) ? route : undefined;
 }
 export function mapSeo(value: unknown): SeoControls | undefined {
   const parsed = seoCopy.safeParse(value);
   if (!parsed.success) return undefined;
-  const { socialImage, ...copy } = parsed.data;
+  const { socialImage, backlinks, ...copy } = parsed.data;
   const image = imageFromRecord(socialImage);
-  return { ...copy, ...(image ? { socialImage: image } : {}) };
+  return { ...copy, ...(backlinks != null ? { backlinks: resolveBacklinks(backlinks, SITE_URL) } : {}), ...(image ? { socialImage: image } : {}) };
 }
 export function canonicalProblem(route: string, seo: SeoControls, records: Record<string, SeoControls> = {}): string | undefined {
   const target = seo.canonicalRoute ?? route;
@@ -47,7 +51,7 @@ export function canonicalProblem(route: string, seo: SeoControls, records: Recor
 export type SeoInventory = { pages: Record<string, SeoControls>; defaults: SeoControls };
 export function resolveSeoInventory(input: unknown): { value: SeoInventory; status: string } {
   const empty: SeoInventory = { pages: {}, defaults: {} };
-  const parsed = z.array(z.object({ _id: z.string(), _type: z.string(), slug: z.unknown().optional(), seo: z.unknown().optional(), defaults: z.unknown().optional() })).max(40).safeParse(input);
+  const parsed = z.array(z.object({ _id: z.string(), _type: z.string(), slug: z.unknown().optional(), seo: z.unknown().optional(), defaults: z.unknown().optional() })).max(maximumSeoDocuments).safeParse(input);
   if (!parsed.success) return { value: empty, status: "invalid" };
   const pages: Record<string, SeoControls> = {}; let defaults: SeoControls = {}, seenDefaults = false;
   for (const raw of parsed.data) {
@@ -55,6 +59,7 @@ export function resolveSeoInventory(input: unknown): { value: SeoInventory; stat
     if (raw._type === "seoSettings") {
       if (raw._id !== "seoSettings" || seenDefaults) return { value: empty, status: "ambiguous" };
       seenDefaults = true; defaults = mapSeo(raw.defaults) ?? {};
+      delete defaults.backlinks;
       // Shared copy/image defaults never change site-wide indexing or canonical policy.
       delete defaults.index; delete defaults.follow; delete defaults.canonicalRoute; delete defaults.structuredData; delete defaults.faqStructuredData; delete defaults.focusKeyword; delete defaults.secondaryKeywords;
       continue;

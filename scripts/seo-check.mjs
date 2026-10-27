@@ -152,7 +152,8 @@ for (const [route, file] of routes) {
   const html = read(file);
   if (!html) continue;
 
-  check(`${route} has no keywords meta`, !/<meta[^>]+name="keywords"/i.test(html), 'keywords meta still present');
+  const keywords = html.match(/<meta[^>]+name="keywords"[^>]+content="([^"]*)"/i)?.[1];
+  check(`${route} optional CMS keywords are nonblank`, keywords === undefined || Boolean(keywords.trim()), 'empty keywords metadata');
 
   const tw = html.match(/<meta[^>]+name="twitter:card"[^>]+content="([^"]+)"/i);
   check(`${route} twitter:card is summary_large_image`, tw?.[1] === 'summary_large_image', `got "${tw?.[1] ?? 'none'}"`);

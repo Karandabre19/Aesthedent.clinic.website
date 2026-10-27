@@ -18,13 +18,15 @@ const complete = documents => ({ authenticated: true, complete: true, documents 
 const miniManifest = candidate => ({ ...manifest, documents: [candidate] });
 
 test('dry-run maps every existing identity without approvals, duplicate shared page records or protected facts', () => {
-  assert.equal(manifest.documents.length, 26); assert.equal(manifest.reviews.length, 6);
+  assert.equal(manifest.documents.length, 27); assert.equal(manifest.reviews.length, 6);
   assert.equal(manifest.manifestHash, buildContentManifest().manifestHash);
   assert.deepEqual(manifest.documents.filter(d => d.content._type === 'service').map(d => d.identity), services.map(s => s.slug));
   assert.deepEqual(manifest.documents.filter(d => d.content._type === 'insight').map(d => d.identity), insights.map(s => s.slug));
   for (const doc of manifest.documents) {
     assert.equal(doc.content._id, undefined, 'ordinary IDs are not fabricated');
-    for (const key of ['credentials', 'qualifications', 'registrationNumber', 'phone', 'address', 'hours', 'stats', 'promises']) assert.equal(key in doc.content, false);
+    for (const key of ['credentials', 'registrationNumber', 'phone', 'address', 'hours', 'stats', 'promises']) assert.equal(key in doc.content, false);
+    if (doc.content._type === 'doctor') assert.deepEqual(doc.content.qualifications, require('../sanity/lib/page-mapping.ts').doctorWebsiteFields(doc.identity).qualifications);
+    else assert.equal('qualifications' in doc.content, false);
     if (doc.content._type === 'insight') { assert.equal(doc.content.editorialStatus, 'draft'); assert.equal(doc.content.review, undefined); assert.equal(doc.content.authorKey, undefined); assert.equal(doc.content.sources, undefined); }
   }
   for (const review of manifest.reviews) { assert.ok(review.blocked); assert.equal(review.content.publicationPermissionConfirmed, false); assert.equal(review.content.verifiedGoogleReview, false); }
@@ -36,7 +38,7 @@ test('dry-run maps every existing identity without approvals, duplicate shared p
 });
 
 test('mapped page text is actually present in the pre-change rendered baseline, including CTA labels', () => {
-  const baseline = JSON.parse(fs.readFileSync('.cache/acceptance-implementation/baseline-pages.json', 'utf8'));
+  const baseline = JSON.parse(fs.readFileSync(new URL('./fixtures/content-baseline.json', import.meta.url), 'utf8'));
   const routeFor = source => source.startsWith('app/about') ? '/about' : source.startsWith('app/aesthedent-experience') ? '/aesthedent-experience' : source.startsWith('app/services/[slug]') ? '/services/dental-implants' : source.startsWith('app/insights/[slug]') ? '/insights/' + manifest.documents.find(d => d.content._type === 'insight').identity : source.startsWith('app/services') ? '/services' : source.startsWith('app/doctor') ? '/doctor' : source.startsWith('app/insights') ? '/insights' : source.startsWith('app/contact') ? '/contact' : source.startsWith('app/dental-clinic') ? '/dental-clinic-in-kothrud' : '/';
   const normalize = text => text.replace(/\s+/g, ' ').trim();
   const unresolved = [];
@@ -73,9 +75,11 @@ test('source HTML conversion preserves lead, heading, emphasis and link semantic
   for (const article of manifest.documents.filter(d => d.content._type === 'insight')) assert.ok(article.content.body.length > 1);
 });
 
-test('image manifest identifies exact static originals and shared portraits without fabricating native references', () => {
+test('image manifest identifies static originals and leaves CMS-only portraits without fabricated upload sources', () => {
   assert.ok(manifest.assets.some(a => a.source === '/homepage-banner-mobile.png' && a.sha256));
-  assert.equal(manifest.assets.filter(a => a.field === 'portrait' && a.sha256).length, 2);
+  assert.equal(manifest.assets.filter(a => a.field === 'portrait').length, 0, 'doctor photos are now selected in Studio, without a static original to import');
+  assert.ok(manifest.assets.every(asset => asset.cmsOnly && asset.source === '' || typeof asset.source === 'string' && asset.source));
+  assert.equal(manifest.assets.filter(asset => asset.cmsOnly && asset.field.includes('portrait')).length, 2, 'both native portrait consumers remain inventoried');
   assert.ok(manifest.assets.some(a => a.source.includes('pexels.com')));
   assert.ok(manifest.assets.every(a => a.uploadAuthorized === false));
   for (const doc of manifest.documents) assert.equal(doc.content.coverImage, undefined);
@@ -167,6 +171,7 @@ test('partial failure retains the first draft receipt and an uncertain operation
 
 test('receipts are durable on disk before a later operation fails, and resume requires a fresh plan', async () => {
   const { parse, evaluate } = require('groq-js');
+  fs.mkdirSync('.cache/acceptance-implementation', { recursive: true });
   const directory = fs.mkdtempSync('.cache/acceptance-implementation/receipt-test-'), file = directory + '/journal.jsonl', fd = fs.openSync(file, 'wx');
   const records = ['homePage','aboutPage'].map(name => manifest.documents.find(d => d.identity === name));
   const current = { documents: records, manifestHash: 'local-disk-journal-test' }, inventory = complete([]), plan = planDraftOperations(current, inventory), dataset = [];

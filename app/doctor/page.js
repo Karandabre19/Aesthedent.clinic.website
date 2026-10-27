@@ -1,13 +1,13 @@
+import { BacklinkReferences } from '@/components/seo/BacklinkReferences';
 import { getPageSeo } from '@/sanity/lib/seo';
 import { getPresentationPage } from '@/sanity/lib/presentation-pages';
-import { getDoctors } from '@/sanity/lib/pages';
+import { getDoctors, getTeamValues } from '@/sanity/lib/pages';
 import DoctorClient from './DoctorClient';
 import JsonLd from '@/components/seo/JsonLd';
 import { buildBreadcrumbSchema } from '@/lib/schema';
 
-// NOTE: credentials (BDS/MDS, registration numbers, education) are still
-// missing from this page - see audit/NEEDS-INPUT.md C1–C7. Phase 4D builds
-// per-doctor pages once Dr. Sahil supplies them.
+// Doctor documents own photos and qualifications. Registration/identity facts
+// retain their existing source; this page never invents missing credentials.
 const fallbackMetadata = {
   title: 'Dentists in Kothrud, Pune - Our Team',
   description:
@@ -28,7 +28,7 @@ export default async function Page() {
           { name: 'Our Team', path: '/doctor' },
         ])}
       />}</>
-      <DoctorClient presentation={await getPresentationPage('teamPage')} doctorNarratives={await getDoctors()} />
+      <DoctorClient backlinkSection={<BacklinkReferences entries={seoState.backlinks} />} presentation={await getPresentationPage('teamPage')} doctorNarratives={await getDoctors()} teamValues={await getTeamValues()} />
     </>
   );
 }

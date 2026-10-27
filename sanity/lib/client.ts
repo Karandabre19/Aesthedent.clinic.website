@@ -12,7 +12,8 @@ export function getSanityClient() {
     useCdn: false,
     stega: false,
     timeout: 5000,
-    maxRetries: 0,
+    // Cold-start network blips otherwise drop straight to static fallback.
+    maxRetries: 2,
   });
 }
 
