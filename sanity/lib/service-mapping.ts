@@ -9,7 +9,9 @@ export const serviceContent = z.object({
   aboutList: z.object({ heading: text.max(200), items: z.array(titleDescription).min(1).max(20) }).nullish(),
   benefits: z.array(text.max(2000)).min(1).max(20), whyAesthedent: z.array(titleDescription).min(1).max(12),
   process: z.array(titleDescription.extend({ step: z.number().int().min(1).max(20) })).min(1).max(20)
-    .refine((steps) => steps.every((step, i) => step.step === i + 1), "Number steps consecutively from 1 in their display order."),
+    .superRefine((steps, context) => steps.forEach((step, index) => {
+      if (step.step !== index + 1) context.addIssue({ code: 'custom', path: [index, 'step'], message: `Use step ${index + 1} at this position. Renumber after moving a step.` });
+    })),
   faqs: z.array(questionAnswer).min(1).max(30),
 });
 export const serviceDocument = serviceContent.extend({ _id: publishedId, slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Use a lowercase, hyphenated treatment URL.") });
@@ -19,7 +21,7 @@ const newServiceBase = (slug: string) => ({
   slug, locality: "Kothrud, Pune", isFeatured: false, icon: "Sparkles",
   image: "/clinic/treatment-process.jpeg", imageAlt: "Treatment room at Aesthedent Dental Clinic, Kothrud",
 });
-const MAXIMUM_SERVICES = 30;
+export const MAXIMUM_SERVICES = 1000;
 
 export function resolveServices(input: unknown) {
   const result = publishedCollection(input, serviceDocument, (item) => item.slug, MAXIMUM_SERVICES);

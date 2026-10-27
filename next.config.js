@@ -21,6 +21,7 @@ const nextConfig = {
   serverExternalPackages: ['mongodb'],
 
   experimental: {
+    globalNotFound: true,
     optimizeCss: true, // Inlines critical CSS & defers the rest
   },
 

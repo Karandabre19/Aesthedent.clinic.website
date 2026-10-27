@@ -19,9 +19,10 @@ const iconMap = {
 
 const whatsappLink = 'https://api.whatsapp.com/send?phone=919309816336&text=Hello%2C%20Aesthedent%20Dental%20Clinic.%0AI%20would%20like%20to%20book%20an%20appointment.';
 
-export default function ServicesPage({ presentation = {}, services = fallbackServices }) {
+export default function ServicesPage({ backlinkSection, presentation = {}, services = fallbackServices }) {
+  const [expandedSlugs, setExpandedSlugs] = useState(() => new Set());
   return (
-    <PageWrapper>
+    <PageWrapper backlinkSection={backlinkSection}>
       {/* Hero */}
       <section className="pt-32 pb-16 bg-gradient-to-b from-[hsl(var(--color-primary-light))] to-[hsl(var(--background))]">
         <div className="main-container">
@@ -53,7 +54,7 @@ export default function ServicesPage({ presentation = {}, services = fallbackSer
           <div className="max-w-4xl mx-auto space-y-4">
             {services.map((service, i) => {
               const IconComponent = iconMap[service.icon] || Sparkles;
-              const [isExpanded, setIsExpanded] = useState(false);
+              const isExpanded = expandedSlugs.has(service.slug);
 
               return (
                 <AnimatedSection key={service.slug} delay={i * 0.05}>
@@ -65,7 +66,12 @@ export default function ServicesPage({ presentation = {}, services = fallbackSer
                     }`}
                   >
                     <button
-                      onClick={() => setIsExpanded(!isExpanded)}
+                      onClick={() => setExpandedSlugs(previous => {
+                        const next = new Set(previous);
+                        if (next.has(service.slug)) next.delete(service.slug);
+                        else next.add(service.slug);
+                        return next;
+                      })}
                       className="w-full flex items-center justify-between p-6 lg:p-8 text-left"
                     >
                       <div className="flex items-center gap-4 lg:gap-6">

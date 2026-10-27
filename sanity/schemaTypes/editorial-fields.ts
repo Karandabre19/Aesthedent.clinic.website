@@ -1,18 +1,38 @@
-import { defineField, type FieldDefinition } from "sanity";
+import { defineField, PatchEvent, unset, type ObjectInputProps, type ImageValue, type FieldDefinition } from "sanity";
 import { contentErrors } from "../lib/content-validation";
-import { imageProfiles, transformableImageTypes, type ImageProfileKey } from "../lib/image";
+import { imageFromRecord, imageProfiles, transformableImageTypes, type ImageProfileKey } from "../lib/image";
 import { headlineFields, optionalText, sectionCopySchema, type SectionSpec } from "../lib/editorial-sections";
 import { requireSanityEnvironment } from "../env";
 
-export function editorialImage(name: string, profileKey: ImageProfileKey) {
+/** Clear custom photo metadata with the asset so native Remove leaves a valid empty field. */
+export function OptionalImageInput(props: ObjectInputProps<ImageValue>) {
+  return props.renderDefault({ ...props, onChange: event => {
+    if (props.readOnly) return;
+    const removingAsset = PatchEvent.from(event).patches.some(patch => patch.type === 'unset' && patch.path.length === 1 && patch.path[0] === 'asset');
+    props.onChange(removingAsset ? unset() : event);
+  } });
+}
+export { OptionalImageInput as DoctorPortraitInput };
+
+export function editorialImage(name: string, profileKey: ImageProfileKey, strictAsset = false) {
   const guide = imageProfiles[profileKey];
   return defineField({ name, title: guide.title, type: "image", options: { hotspot: true },
-    description: `${guide.composition} Recommended ${guide.width} × ${guide.height}px or higher resolution. Original uploads are preserved; the website serves responsive optimized crops. Set the hotspot on the subject and check narrow/wide previews. Dimensions are guidance, not upload limits. Select an existing approved asset or upload a permitted image. ${guide.portrait ? "Alternative text uses the existing named-clinician description." : "Add alternative text describing the selected image."} Leave unset to retain the original website image.`,
+    components: { input: OptionalImageInput },
+    description: strictAsset ? 'Optional: upload a permitted photo of this doctor, ideally 600 × 750px or larger. Set the hotspot on the face. Used on Home and the Doctor page. Removing it leaves the photo area empty.' : `${guide.composition} Recommended ${guide.width} × ${guide.height}px or higher resolution. Original uploads are preserved; the website serves responsive optimized crops. Set the hotspot on the subject and check narrow/wide previews. Dimensions are guidance, not upload limits. Select an existing approved asset or upload a permitted image. ${guide.portrait ? "Alternative text uses the existing named-clinician description." : "Add alternative text describing the selected image."} Leave unset to retain the original website image.`,
     fields: guide.portrait ? [] : [defineField({ name: "alt", title: "Alternative text", type: "string", description: "Describe this particular image without unverified patient identities or clinical promises. Required when an image is selected; up to 200 characters.", validation: r => r.max(200).custom((value, context) => {
       const selected = context.parent && typeof context.parent === "object" && Reflect.get(context.parent, "asset");
       return !selected || typeof value === "string" && /\S/.test(value) && !/<\/?[A-Za-z][^>]*>/.test(value) || "Add a meaningful plain-text description for the selected image.";
     }) })],
-    validation: r => [r.assetRequired(), r.custom(async (value, context) => {
+    validation: r => [r.assetRequired().error('Upload or select a photo, or remove the whole image field.'), r.custom(async (value, context) => {
+      if (!value?.asset?._ref) return true;
+      try {
+        const { apiVersion } = requireSanityEnvironment();
+        const asset = await context.getClient({ apiVersion }).fetch<unknown>('*[_id == $id && _type == "sanity.imageAsset"][0]{_id,url,mimeType,metadata{dimensions{width,height}}}', { id: value.asset._ref });
+        // Use the renderer's contract, including reference, crop and hotspot.
+        // Alt text has its own field validator; portrait descriptions stay fixed.
+        return imageFromRecord({ ...value, asset }, true) ? true : { message: 'This image is unavailable or unsupported, or its crop is invalid. Select a JPEG, PNG, WebP, TIFF, AVIF or GIF image and check its crop.', paths: [['asset']] };
+      } catch { return { message: 'Could not verify this image. Check your connection and select it again.', paths: [['asset']] }; }
+    }), ...(!strictAsset ? [r.custom(async (value, context) => {
       if (!value?.asset?._ref) return true;
       try {
         const { apiVersion } = requireSanityEnvironment();
@@ -23,7 +43,7 @@ export function editorialImage(name: string, profileKey: ImageProfileKey) {
         if (d?.width && d.height && (d.width < guide.width || d.height < guide.height)) return `Below the recommended ${guide.width} × ${guide.height}px. Check sharpness and cropping at the displayed size; this is not an upload restriction.`;
         return true;
       } catch { return "Could not check image guidance. Verify sharpness, crop and permission before publishing."; }
-    }).warning()],
+    }).warning()] : [])],
   });
 }
 export function sectionFields(specs: SectionSpec[]): FieldDefinition[] {

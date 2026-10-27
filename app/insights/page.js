@@ -1,3 +1,4 @@
+import { BacklinkReferences } from '@/components/seo/BacklinkReferences';
 import { getPageSeo } from '@/sanity/lib/seo';
 import { getPresentationPage } from '@/sanity/lib/presentation-pages';
 import InsightsClient from './InsightsClient';
@@ -26,7 +27,7 @@ export default async function Page() {
           { name: 'Insights', path: '/insights' },
         ])}
       />}</>
-      <InsightsClient presentation={await getPresentationPage('insightsPage')} insightOverrides={overrides} />
+      <InsightsClient backlinkSection={<BacklinkReferences entries={seoState.backlinks} />} presentation={await getPresentationPage('insightsPage')} insightOverrides={overrides} />
     </>
   );
 }

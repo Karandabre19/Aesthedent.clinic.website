@@ -1,3 +1,4 @@
+import { BacklinkReferences } from '@/components/seo/BacklinkReferences';
 import { getPageSeo } from '@/sanity/lib/seo';
 import { getPublishedTestimonials } from '@/sanity/lib/testimonials';
 import { getServices } from '@/sanity/lib/services';
@@ -18,9 +19,10 @@ const fallbackMetadata = {
 export async function generateMetadata() { return (await getPageSeo('/', fallbackMetadata)).metadata; }
 
 export default async function Page() {
+  const seoState = await getPageSeo('/', {});
   const [overrides, services, doctorNarratives, reviewCards, editorial] = await Promise.all([
     getInsightOverrides(), getServices(), getDoctors(), getPublishedTestimonials(), getHomeContent(),
   ]);
   const cards = applyInsightOverrides(insights, overrides);
-  return <HomeClient insightCards={cards} services={services} doctorNarratives={doctorNarratives} reviewCards={reviewCards} editorial={editorial} />;
+  return <HomeClient backlinkSection={<BacklinkReferences entries={seoState.backlinks} />} insightCards={cards} services={services} doctorNarratives={doctorNarratives} reviewCards={reviewCards} editorial={editorial} />;
 }

@@ -7,7 +7,7 @@ export function textField(name: string, title: string, required = true, multilin
   return defineField({ name, title, type: multiline ? "text" : "string",
     ...(multiline ? { rows: options.rows ?? 5 } : {}),
     description: options.description ?? `Plain text, up to ${maximum.toLocaleString("en")} characters. Keep clinic-reviewed wording.`,
-    validation: (r) => (required ? r.required() : r).max(maximum).custom((value) => value == null || editorialText.safeParse(value).success || "Use nonblank plain text without HTML."),
+    validation: (r) => (required ? r.required() : r).max(maximum).custom((value) => value == null || !required && typeof value === 'string' && !value.trim() || editorialText.safeParse(value).success || "Use nonblank plain text without HTML."),
   });
 }
 export function textList(name: string, title: string, minimum = 1, maximum = 20) {
@@ -27,7 +27,7 @@ export function faqField(name = "faqs", question = "q", answer = "a") {
   return defineField({ name, title: "Frequently asked questions", type: "array", description: "1–30 questions in display order. Keep clinic-reviewed wording; where present, structured data uses these same answers.", of: [defineArrayMember({ type: "object", fields: [textField(question, "Question", true, false, { maxLength: 300 }), textField(answer, "Answer", true, true, { maxLength: 4000 })], preview: { select: { title: question, subtitle: answer } } })], validation: (r) => r.required().min(1).max(30) });
 }
 export function stableSlug(known: readonly string[], title = "Existing URL", allowNew = false) {
-  return defineField({ name: "slug", title, type: "slug", description: allowNew ? `Lowercase words joined by hyphens, e.g. "teeth-cleaning". Existing pages: ${known.join(", ")}. Never rename a published URL.` : `Existing identifiers only: ${known.join(", ")}. Never rename a published identifier.`, validation: (r) => r.required().custom(async (value, context) => {
+  return defineField({ name: "slug", title, type: "slug", ...(allowNew ? { options: { source: 'title', maxLength: 96 } } : {}), description: allowNew ? 'Enter the treatment title, then click Generate. For example teeth-cleaning becomes /services/teeth-cleaning. Keep published page addresses unchanged.' : `Existing identifiers only: ${known.join(", ")}. Never rename a published identifier.`, validation: (r) => r.required().custom(async (value, context) => {
     if (!value?.current) return true;
     if (allowNew ? !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value.current) : !known.includes(value.current)) return allowNew ? "Use lowercase letters, numbers and single hyphens." : "Choose an existing identifier.";
     if (!context.document?._id) return true;

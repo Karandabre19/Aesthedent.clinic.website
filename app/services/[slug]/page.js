@@ -1,3 +1,4 @@
+import { BacklinkReferences } from '@/components/seo/BacklinkReferences';
 import { getPageSeo } from '@/sanity/lib/seo';
 import { getPresentationPage } from '@/sanity/lib/presentation-pages';
 import { notFound } from 'next/navigation';
@@ -52,13 +53,13 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
   const { slug } = await params;
-  const seoState = await getPageSeo(`/services/${slug}`, {});
   const catalog = await getServices();
   const service = catalog.find((item) => item.slug === slug);
 
   if (!service) {
     notFound();
   }
+  const seoState = await getPageSeo(`/services/${slug}`, {});
 
   return (
     <>
@@ -76,7 +77,7 @@ export default async function Page({ params }) {
           ]),
         ]}
       />}</>
-      <ServiceDetailClient presentation={await getPresentationPage('servicesPage')} slug={slug} serviceData={service} relatedServices={catalog} />
+      <ServiceDetailClient backlinkSection={<BacklinkReferences entries={seoState.backlinks} />} presentation={await getPresentationPage('servicesPage')} slug={slug} serviceData={service} relatedServices={catalog} />
     </>
   );
 }

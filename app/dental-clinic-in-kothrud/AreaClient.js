@@ -27,10 +27,10 @@ import { REVIEWS, OPENING, DOCTORS, buildWhatsappMessage } from '@/lib/clinic';
 
 const whatsappLink = buildWhatsappMessage('your clinic in Kothrud');
 
-export default function AreaClient({ presentation = {} }) {
+export default function AreaClient({ backlinkSection, presentation = {} }) {
   const availability = useClinicAvailability();
   return (
-    <PageWrapper>
+    <PageWrapper backlinkSection={backlinkSection}>
       {/* Hero */}
       <section className="pt-32 pb-12">
         <div className="main-container">

@@ -1,6 +1,7 @@
 'use client';
 
 import EditorialImage from '@/components/insights/EditorialImage';
+import { TeamValuesSection } from '@/components/doctor/TeamValuesSection';
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -13,9 +14,7 @@ import AnimatedSection from '@/components/ui/AnimatedSection';
 import {
   MessageCircle,
   GraduationCap,
-  Award,
-  Heart,
-  Users
+  Award
 } from 'lucide-react';
 import clinicAssistancePic from "../../public/clinic/clinicAssistancePic.png";
 
@@ -26,34 +25,18 @@ const fallbackDoctors = [
     personKey: 'sahil',
     name: 'Dr. Sahil Wathodkar',
     role: 'Founder & Co-Owner | Prosthodontist',
-    image: '/assets/doctor-male.jpeg',
     bio: 'Dr. Sahil Wathodkar is a dedicated prosthodontist with focused expertise in the restoration and rehabilitation of missing or worn teeth. He focuses on designing long-lasting, functional, and aesthetic solutions for complex oral health issues. With a strong inclination towards digital dentistry, Dr. Wathodkar integrates modern technology into treatment planning to enhance accuracy, predictability, and patient outcomes.',
-    qualifications: ['BDS - Bharati Vidyapeeth, Pune', 'MDS - Bharati Vidyapeeth, Pune', 'Advanced Training in Digital Dentistry'],
-    specializations: [
-      'Dental Implants',
-      'Full Mouth Rehabilitation',
-      'Crowns & Bridges',
-      'Veneers',
-      'Complete & Partial Dentures',
-      'Minimally Invasive Smile Designing',
-      'Rubber Dam Techniques'
-    ],
+    qualifications: [],
+    specializations: [],
     philosophy: 'My focus is on precision and the preservation of natural tooth structure. High-quality dental care requires advanced technology and a deep commitment to patient-centric results.'
   },
   {
     personKey: 'aishwarya',
     name: 'Dr. Aishwarya Kulkarni Wathodkar',
     role: 'Co-Owner | General & Family Dentist',
-    image: '/assets/doctor-female.jpeg',
     bio: 'Guided by the belief that “A better life starts with a smile,” Dr. Aishwarya is committed to helping patients achieve and maintain healthy, confident teeth. Her approach is rooted in thorough diagnosis, gentle care, and meticulous attention to comfort at every step of the treatment journey.',
-    qualifications: ['BDS - Bharati Vidyapeeth, Pune', 'Pregnancy Dentistry Specialist', 'Endodontics Training'],
-    specializations: [
-      'Pregnancy Dentistry Specialist',
-      'Endodontics (Root Canal Treatment)',
-      'Conservative (Restorative) Dentistry',
-      'General Dental Care',
-      'Specialized Dental Care for Pregnant Patients'
-    ],
+    qualifications: [],
+    specializations: [],
     philosophy: 'I emphasize clear communication and proactive preventive care. Every patient deserves a safe, thoughtful, and comfortable dental experience tailored to their unique needs.'
   }
 ];
@@ -68,13 +51,13 @@ const staff = [
   }
 ];
 
-export default function DoctorPage({ presentation = {}, doctorNarratives = [] }) {
+export default function DoctorPage({ backlinkSection, presentation = {}, doctorNarratives = [], teamValues = null }) {
   const doctors = fallbackDoctors.map((doctor, index) => {
     const copy = doctorNarratives.find((item) => item.slug === doctor.personKey);
-    return copy ? { ...doctor, bio: copy.bio, philosophy: copy.philosophy, ...(copy.portrait ? { portrait: copy.portrait } : {}) } : doctor;
+    return copy ? { ...doctor, bio: copy.bio, philosophy: copy.philosophy, specializations: copy.specializations ?? [], qualifications: (copy.qualifications ?? []).map(qualification => qualification.label), portrait: copy.portrait } : doctor;
   });
   return (
-    <PageWrapper>
+    <PageWrapper backlinkSection={backlinkSection}>
       {/* Hero */}
       <section className="pt-32 pb-16 bg-gradient-to-b from-[hsl(var(--color-primary-light))] to-[hsl(var(--background))]">
         <div className="main-container">
@@ -110,12 +93,12 @@ export default function DoctorPage({ presentation = {}, doctorNarratives = [] })
                     <div className="relative">
                       <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--color-primary))]/10 to-[hsl(var(--color-primary))]/5 rounded-3xl transform rotate-3"></div>
                       <EditorialImage
-                        src={doctor.image}
+                        src=""
                         alt={doctor.name}
                         width={600}
                         height={750}
                         className="relative rounded-3xl shadow-xl object-cover w-full h-[450px] lg:h-[550px]"
-                        priority={i === 0} imageOverride={doctor.portrait} cropWidth={600} cropHeight={750}
+                        priority={i === 0} imageOverride={doctor.portrait} cropWidth={600} cropHeight={750} cmsOnly
                       />
                     </div>
                   </div>
@@ -127,7 +110,7 @@ export default function DoctorPage({ presentation = {}, doctorNarratives = [] })
                     <p className="text-[hsl(var(--color-text-muted))] leading-relaxed mb-8">{doctor.bio}</p>
 
                     {/* Qualifications */}
-                    <div className="mb-8">
+                    {doctor.qualifications.length > 0 && <div className="mb-8">
                       <div className="flex items-center gap-2 mb-4">
                         <GraduationCap className="w-5 h-5 text-[hsl(var(--color-primary))]" />
                         <h3 className="font-semibold text-[hsl(var(--color-text))]">Qualifications</h3>
@@ -140,22 +123,22 @@ export default function DoctorPage({ presentation = {}, doctorNarratives = [] })
                           </li>
                         ))}
                       </ul>
-                    </div>
+                    </div>}
 
                     {/* Specializations */}
-                    <div className="mb-8">
+                    {doctor.specializations.length > 0 && <div className="mb-8">
                       <div className="flex items-center gap-2 mb-4">
                         <Award className="w-5 h-5 text-[hsl(var(--color-primary))]" />
                         <h3 className="font-semibold text-[hsl(var(--color-text))]">Specializations</h3>
                       </div>
                       <div className="flex flex-wrap gap-2">
-                        {doctor.specializations.map((s, j) => (
-                          <Badge key={j} variant="secondary" className="bg-[hsl(var(--color-primary-light))] text-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary-light))]/70">
-                            {s}
+                        {doctor.specializations.map((specialization) => (
+                          <Badge key={specialization._key} variant="secondary" className="bg-[hsl(var(--color-primary-light))] text-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary-light))]/70">
+                            {specialization.title}
                           </Badge>
                         ))}
                       </div>
-                    </div>
+                    </div>}
 
                     {/* Philosophy */}
                     <div className="bg-[hsl(var(--color-bg-alt))] rounded-2xl p-6 border-l-4 border-[hsl(var(--color-primary))]">
@@ -212,47 +195,7 @@ export default function DoctorPage({ presentation = {}, doctorNarratives = [] })
           </div>
         </div>
       </section>
-      <section className="section-spacing bg-[hsl(var(--color-bg-alt))]">
-        <div className="main-container">
-          <SectionHeading
-            badge={presentation?.values?.eyebrow ?? "Our Values"}
-            title={presentation?.values?.heading ?? "What Drives Our Team"}
-            subtitle={presentation?.values?.intro ?? "The principles that guide everything we do"}
-          />
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Heart,
-                title: 'Clinical Excellence',
-                desc: 'We use state-of-the-art dental technology to ensure precision in diagnosis, treatment, and long-term oral health management.'
-              },
-              {
-                icon: Users,
-                title: 'Specialist-Led Planning',
-                desc: 'Every patient receiving complex treatment benefits from a specialized clinical roadmap and detailed biomechanical planning.'
-              },
-              {
-                icon: Award,
-                title: 'Advanced Expertise',
-                desc: 'From routine scaling to complex dental implants in Pune, our specialized team is meticulously trained in modern, evidence-based dentistry.'
-              }
-            ].map((value, i) => (
-              <AnimatedSection key={i} delay={i * 0.1}>
-                <Card className="border-[hsl(var(--color-border))] h-full text-center hover:shadow-lg transition-shadow">
-                  <CardContent className="p-8">
-                    <div className="w-14 h-14 bg-[hsl(var(--color-primary-light))] rounded-2xl flex items-center justify-center mx-auto mb-6">
-                      <value.icon className="w-7 h-7 text-[hsl(var(--color-primary))]" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-[hsl(var(--color-text))] mb-3">{value.title}</h3>
-                    <p className="text-[hsl(var(--color-text-muted))]">{value.desc}</p>
-                  </CardContent>
-                </Card>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
+      <TeamValuesSection values={teamValues} legacy={presentation?.values} />
 
       {/* CTA */}
       <section className="section-spacing">

@@ -5,7 +5,7 @@ export const publishedId = z.string().min(1).refine((id) => !id.startsWith("draf
 export const questionAnswer = z.object({ q: editorialText.max(300), a: editorialText.max(4000) });
 export const titleDescription = z.object({ title: editorialText.max(180), desc: editorialText.max(4000) });
 
-function studioPath(value: unknown, path: (string | number)[]) {
+export function studioPath(value: unknown, path: (string | number)[]) {
   let current = value;
   return path.map((segment) => {
     if (typeof segment === "number" && Array.isArray(current)) {

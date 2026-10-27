@@ -132,7 +132,7 @@ function TestimonialCard({ testimonial, delay = 0 }) {
           </p>
           <p className="text-xs text-[hsl(var(--color-text-muted))] sm:text-sm">
             {isVerified
-              ? `One of ${REVIEWS.count} five-star reviews`
+              ? `One of ${REVIEWS.count} ${testimonial.rating === 5 ? 'five-star' : 'Google'} reviews`
               : 'Awaiting profile confirmation'}
           </p>
         </div>

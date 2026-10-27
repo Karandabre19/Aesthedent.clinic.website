@@ -14,7 +14,7 @@ const { createClient } = require('@sanity/client');
 function queries(file) {
   const filename = new URL('../' + file, import.meta.url), local = createRequire(filename), exports = {};
   const js = ts.transpileModule(fs.readFileSync(filename, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, esModuleInterop: true } }).outputText;
-  const stubs = { 'server-only': {}, './content-reader': {}, './insights': {}, 'next/headers': {}, react: { cache: fn => fn } };
+  const stubs = { 'server-only': {}, './content-reader': {}, './insights': {}, './services': {}, 'next/headers': {}, react: { cache: fn => fn } };
   new Function('require', 'exports', js)(id => stubs[id] ?? local(id), exports);
   return exports;
 }
@@ -24,7 +24,7 @@ const client = createClient({ ...config, perspective: 'published', useCdn: false
 const { presentationPageQuery } = queries('sanity/lib/presentation-pages.ts');
 const { navigationQuery } = queries('sanity/lib/navigation.ts');
 const { seoQuery } = queries('sanity/lib/seo.ts');
-const { homeQuery, aboutQuery, experienceQuery, doctorsQuery } = queries('sanity/lib/pages.ts');
+const { homeQuery, aboutQuery, experienceQuery, doctorsQuery, teamValuesQuery } = queries('sanity/lib/pages.ts');
 const { servicesQuery } = queries('sanity/lib/services.ts');
 const { testimonialsQuery } = queries('sanity/lib/testimonials.ts');
 const { resolvePresentationPage } = require('../sanity/lib/presentation-mapping.ts');
@@ -34,6 +34,12 @@ const { resolveSeoInventory } = require('../sanity/lib/seo-mapping.ts');
 const { resolvePage, homeContent, aboutContent, experienceContent, resolveDoctors } = require('../sanity/lib/page-mapping.ts');
 const { resolveServices } = require('../sanity/lib/service-mapping.ts');
 const { resolveTestimonials } = require('../sanity/lib/testimonial-mapping.ts');
+const { availabilityQuery } = queries('sanity/lib/availability.ts');
+const { insightsQuery } = require('../sanity/lib/insight-query.ts');
+const { resolveAvailability } = require('../sanity/lib/availability-mapping.ts');
+const { resolveTeamValues } = require('../sanity/lib/team-values.ts');
+const { resolvePublishedInsights } = require('../sanity/lib/insight-review.ts');
+const { insights } = require('../lib/insights.js');
 
 const checks = [
   ...presentationPageNames.map(name => [name, presentationPageQuery, { name }, input => resolvePresentationPage(input, name)]),
@@ -45,11 +51,14 @@ const checks = [
   ['services', servicesQuery, {}, resolveServices],
   ['doctors', doctorsQuery, {}, resolveDoctors],
   ['testimonials', testimonialsQuery, {}, resolveTestimonials],
+  ['teamValues', teamValuesQuery, {}, resolveTeamValues],
+  ['clinicAvailability', availabilityQuery, {}, resolveAvailability],
+  ['insights', insightsQuery, {}, input => resolvePublishedInsights(input, insights)],
 ];
 const report = [];
 for (const [model, query, params, resolve] of checks) {
   const input = await client.fetch(query, params);
-  const { status } = resolve(input);
+  const { status } = await resolve(input);
   report.push({ model, publishedRecords: Array.isArray(input) ? input.length : input ? 1 : 0, status });
 }
 console.table(report);

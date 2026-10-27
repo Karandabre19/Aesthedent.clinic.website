@@ -1,3 +1,4 @@
+import { BacklinkReferences } from '@/components/seo/BacklinkReferences';
 import { getPageSeo } from '@/sanity/lib/seo';
 import { getAboutContent } from '@/sanity/lib/pages';
 import AboutClient from './AboutClient';
@@ -43,7 +44,7 @@ export default async function Page() {
           { name: 'About Our Clinic', path: '/about' },
         ])}
       />}</>
-      <AboutClient editorial={await getAboutContent()} />
+      <AboutClient backlinkSection={<BacklinkReferences entries={seoState.backlinks} />} editorial={await getAboutContent()} />
     </>
   );
 }
